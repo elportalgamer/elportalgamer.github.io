@@ -107,7 +107,7 @@
   </section>
 
   <section>
-    <h2>Videos Recientes</h2>
+    <h2>Videos de la Playlist</h2>
     <div id="videos-recientes" class="video-grid"></div>
   </section>
 
@@ -115,19 +115,24 @@
 
   <script>
     const API_KEY = "AIzaSyCqPlM0Ab3-_mtFHPmrrgJTS1S4dBCbbMA";  
-    const CHANNEL_ID = "UCsGQTEtsMT4Aqnpyv0uyNxA";  
-    const MAX_RESULTS = 6;
+    const PLAYLIST_ID = "PLk3cei5OOiyvTQzg5FGgIRY3xs44F7Wzv"; 
+    const MAX_RESULTS = 13;
 
     async function cargarVideos() {
-      // Último video
-      let urlLast = `https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&channelId=${CHANNEL_ID}&part=snippet,id&order=date&maxResults=1`;
-      let respLast = await fetch(urlLast);
-      let dataLast = await respLast.json();
+      let url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${PLAYLIST_ID}&maxResults=${MAX_RESULTS}&key=${API_KEY}`;
+      let resp = await fetch(url);
+      let data = await resp.json();
 
-      let ultimo = dataLast.items[0];
-      document.getElementById("ultimo-video").src = `https://www.youtube.com/embed/${ultimo.id.videoId}`;
-      document.getElementById("ultimo-titulo").innerText = ultimo.snippet.title;
-      document.getElementById("ultimo-desc").innerText = ultimo.snippet.description;
+      if (!data.items) {
+        console.error("Error al cargar la playlist:", data);
+        return;
+      }
+
+      // Último video
+      let ultimo = data.items[0].snippet;
+      document.getElementById("ultimo-video").src = `https://www.youtube.com/embed/${data.items[0].snippet.resourceId.videoId}`;
+      document.getElementById("ultimo-titulo").innerText = ultimo.title;
+      document.getElementById("ultimo-desc").innerText = ultimo.description;
 
       const ultimoBtn = document.getElementById("ultimo-btn");
       const ultimoDesc = document.getElementById("ultimo-desc");
@@ -136,37 +141,32 @@
         ultimoBtn.innerText = ultimoDesc.classList.contains("expanded") ? "Ver menos" : "Ver más";
       });
 
-      // Videos recientes
-      let urlRecent = `https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&channelId=${CHANNEL_ID}&part=snippet,id&order=date&maxResults=${MAX_RESULTS}`;
-      let respRecent = await fetch(urlRecent);
-      let dataRecent = await respRecent.json();
-
+      // Resto de videos
       let contenedor = document.getElementById("videos-recientes");
       contenedor.innerHTML = "";
 
-      dataRecent.items.slice(1).forEach(video => {
-        if (video.id.kind === "youtube#video") {
-          const card = document.createElement("div");
-          card.className = "video-card";
+      data.items.slice(1).forEach(video => {
+        const snippet = video.snippet;
+        const card = document.createElement("div");
+        card.className = "video-card";
 
-          card.innerHTML = `
-            <div class="video-wrapper">
-              <iframe src="https://www.youtube.com/embed/${video.id.videoId}" frameborder="0" allowfullscreen></iframe>
-            </div>
-            <p class="video-title">${video.snippet.title}</p>
-            <p class="video-description">${video.snippet.description}</p>
-            <button class="toggle-btn">Ver más</button>
-          `;
+        card.innerHTML = `
+          <div class="video-wrapper">
+            <iframe src="https://www.youtube.com/embed/${snippet.resourceId.videoId}" frameborder="0" allowfullscreen></iframe>
+          </div>
+          <p class="video-title">${snippet.title}</p>
+          <p class="video-description">${snippet.description}</p>
+          <button class="toggle-btn">Ver más</button>
+        `;
 
-          const btn = card.querySelector(".toggle-btn");
-          const desc = card.querySelector(".video-description");
-          btn.addEventListener("click", () => {
-            desc.classList.toggle("expanded");
-            btn.innerText = desc.classList.contains("expanded") ? "Ver menos" : "Ver más";
-          });
+        const btn = card.querySelector(".toggle-btn");
+        const desc = card.querySelector(".video-description");
+        btn.addEventListener("click", () => {
+          desc.classList.toggle("expanded");
+          btn.innerText = desc.classList.contains("expanded") ? "Ver menos" : "Ver más";
+        });
 
-          contenedor.appendChild(card);
-        }
+        contenedor.appendChild(card);
       });
     }
 
