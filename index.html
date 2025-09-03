@@ -88,11 +88,23 @@
       padding: 0;
       margin-top: 5px;
     }
+    #buscador {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      font-size: 1rem;
+      border-radius: 5px;
+      border: none;
+    }
   </style>
 </head>
 <body>
 
   <header>El Portal Gamer</header>
+
+  <section>
+    <input type="text" id="buscador" placeholder="Buscar video...">
+  </section>
 
   <section>
     <h2>Último Video</h2>
@@ -171,6 +183,24 @@
     }
 
     cargarVideos();
+
+    // Buscador
+    const buscador = document.getElementById("buscador");
+    buscador.addEventListener("input", () => {
+      const texto = buscador.value.toLowerCase();
+
+      // Filtrar último video
+      const ultimoCard = document.querySelector("#ultimo-video").closest(".video-card");
+      const tituloUltimo = document.getElementById("ultimo-titulo").innerText.toLowerCase();
+      ultimoCard.style.display = tituloUltimo.includes(texto) ? "block" : "none";
+
+      // Filtrar los videos de la playlist
+      document.querySelectorAll("#videos-recientes .video-card").forEach(card => {
+        const titulo = card.querySelector(".video-title").innerText.toLowerCase();
+        card.style.display = titulo.includes(texto) ? "block" : "none";
+      });
+    });
   </script>
 </body>
 </html>
+
