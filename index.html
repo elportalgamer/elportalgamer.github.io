@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>El Portal Gamer</title>
+  <!-- Favicon para la pestaña -->
+  <link rel="icon" type="image/png" href="tu-logo.png">
   <style>
     body {
       margin: 0;
@@ -14,10 +16,16 @@
     header {
       background: #1f1f1f;
       padding: 20px;
-      text-align: center;
       font-size: 2rem;
       font-weight: bold;
       color: #ff4500;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    header img {
+      height: 40px;
+      width: auto;
     }
     section {
       padding: 20px;
@@ -100,7 +108,10 @@
 </head>
 <body>
 
-  <header>El Portal Gamer</header>
+  <header>
+    <img src="tu-logo.png" alt="Logo El Portal Gamer">
+    El Portal Gamer
+  </header>
 
   <section>
     <input type="text" id="buscador" placeholder="Buscar video...">
@@ -200,6 +211,9 @@
         card.style.display = titulo.includes(texto) ? "block" : "none";
       });
     });
+  </script>
+</body>
+</html>
   </script>
 </body>
 </html>
