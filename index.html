@@ -42,6 +42,8 @@
       margin: 10px 0;
       box-shadow: 0 2px 10px rgba(0,0,0,0.5);
       transition: transform 0.2s;
+      flex: 0 0 300px; /* ancho fijo */
+      scroll-snap-align: start;
     }
     .video-card:hover {
       transform: scale(1.03);
@@ -58,11 +60,6 @@
       width: 100%;
       height: 100%;
       border-radius: 10px;
-    }
-    .video-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill,minmax(250px,1fr));
-      gap: 15px;
     }
     footer {
       text-align: center;
@@ -104,6 +101,30 @@
       border-radius: 5px;
       border: none;
     }
+
+    /* Carrusel */
+    .video-carousel-container {
+      position: relative;
+      overflow: hidden;
+    }
+    .video-carousel {
+      display: flex;
+      gap: 15px;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      scroll-snap-type: x mandatory;
+      padding: 10px 0;
+    }
+    .video-carousel::-webkit-scrollbar {
+      height: 8px;
+    }
+    .video-carousel::-webkit-scrollbar-thumb {
+      background: #444;
+      border-radius: 4px;
+    }
+    .video-carousel::-webkit-scrollbar-track {
+      background: #1f1f1f;
+    }
   </style>
 </head>
 <body>
@@ -131,7 +152,9 @@
 
   <section>
     <h2>Videos de la Playlist</h2>
-    <div id="videos-recientes" class="video-grid"></div>
+    <div class="video-carousel-container">
+      <div id="videos-recientes" class="video-carousel"></div>
+    </div>
   </section>
 
   <footer>© 2024 El Portal Gamer</footer>
@@ -164,7 +187,7 @@
         ultimoBtn.innerText = ultimoDesc.classList.contains("expanded") ? "Ver menos" : "Ver más";
       });
 
-      // Resto de videos
+      // Resto de videos en carrusel
       let contenedor = document.getElementById("videos-recientes");
       contenedor.innerHTML = "";
 
@@ -191,6 +214,16 @@
 
         contenedor.appendChild(card);
       });
+
+      // Duplicar contenido para efecto infinito
+      contenedor.innerHTML += contenedor.innerHTML;
+
+      // Reiniciar scroll al llegar a la mitad
+      contenedor.addEventListener("scroll", () => {
+        if (contenedor.scrollLeft >= contenedor.scrollWidth / 2) {
+          contenedor.scrollLeft = 0;
+        }
+      });
     }
 
     cargarVideos();
@@ -214,7 +247,3 @@
   </script>
 </body>
 </html>
-  </script>
-</body>
-</html>
-
