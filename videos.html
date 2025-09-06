@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Videos - El Portal Gamer</title>
+  <!-- Favicon para la pestaña -->
+  <link rel="icon" type="image/png" href="mago.png">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #121212;
+      color: #f0f0f0;
+    }
+    header {
+      background: #1f1f1f;
+      padding: 15px 20px;
+      font-size: 2rem;
+      font-weight: bold;
+      color: #ff4500;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header img {
+      height: 40px;
+      width: auto;
+      margin-right: 10px;
+    }
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    nav a {
+      margin-left: 20px;
+      color: #f0f0f0;
+      text-decoration: none;
+      font-size: 1rem;
+      font-weight: normal;
+      transition: color 0.2s;
+    }
+    nav a:hover {
+      color: #ff4500;
+    }
+    section {
+      padding: 20px;
+    }
+    h2 {
+      border-bottom: 2px solid #ff4500;
+      padding-bottom: 10px;
+      margin-bottom: 15px;
+    }
+    .video-card {
+      background: #1f1f1f;
+      border-radius: 10px;
+      padding: 10px;
+      margin: 10px 0;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      transition: transform 0.2s;
+      flex: 0 0 300px; /* ancho fijo */
+      scroll-snap-align: start;
+    }
+    .video-card:hover {
+      transform: scale(1.03);
+    }
+    .video-wrapper {
+      position: relative;
+      width: 100%;
+      padding-top: 56.25%;
+    }
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 10px;
+    }
+    footer {
+      text-align: center;
+      padding: 15px;
+      background: #1f1f1f;
+      margin-top: 20px;
+      color: #888;
+    }
+    .video-title {
+      margin-top: 8px;
+      font-weight: bold;
+      font-size: 1rem;
+      color: #fff;
+    }
+    .video-description {
+      font-size: 0.9rem;
+      color: #ccc;
+      max-height: 60px;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+    .video-description.expanded {
+      max-height: 500px;
+    }
+    .toggle-btn {
+      background: none;
+      border: none;
+      color: #ff4500;
+      cursor: pointer;
+      font-size: 0.9rem;
+      padding: 0;
+      margin-top: 5px;
+    }
+    #buscador {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      font-size: 1rem;
+      border-radius: 5px;
+      border: none;
+    }
+
+    /* Carrusel */
+    .video-carousel-container {
+      position: relative;
+      overflow: hidden;
+    }
+    .video-carousel {
+      display: flex;
+      gap: 15px;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      scroll-snap-type: x mandatory;
+      padding: 10px 0;
+    }
+    .video-carousel::-webkit-scrollbar {
+      display: none;
+    }
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0,0,0,0.5);
+      border: none;
+      color: white;
+      font-size: 2rem;
+      cursor: pointer;
+      padding: 10px;
+      border-radius: 50%;
+      z-index: 2;
+    }
+    .carousel-btn.left {
+      left: 10px;
+    }
+    .carousel-btn.right {
+      right: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo-container">
+      <img src="mago.png" alt="Logo El Portal Gamer">
+      El Portal Gamer
+    </div>
+    <nav>
+      <a href="index.html">Inicio</a> <!-- LINK AQUI -->
+      <a href="noticias.html">Noticias</a> <!-- LINK AQUI -->
+      <a href="videos.html">Videos</a> <!-- LINK AQUI -->
+      <a href="reseñas.html">Reseñas</a> <!-- LINK AQUI -->
+      <a href="series.html">Series</a> <!-- LINK AQUI -->
+      <a href="apoyo.html">Apoya el canal</a> <!-- LINK AQUI -->
+    </nav>
+  </header>
+
+  <section>
+    <input type="text" id="buscador" placeholder="Buscar video...">
+  </section>
+
+  <section>
+    <h2>Último Video</h2>
+    <div class="video-card">
+      <div class="video-wrapper">
+        <iframe id="ultimo-video" src="" frameborder="0" allowfullscreen></iframe>
+      </div>
+      <p class="video-title" id="ultimo-titulo"></p>
+      <p class="video-description" id="ultimo-desc"></p>
+      <button class="toggle-btn" id="ultimo-btn">Ver más</button>
+    </div>
+  </section>
+
+  <section>
+    <h2>Videos anteriores</h2>
+    <div class="video-carousel-container">
+      <button class="carousel-btn left" onclick="moverCarrusel(-1)">&#10094;</button>
+      <div id="videos-recientes" class="video-carousel"></div>
+      <button class="carousel-btn right" onclick="moverCarrusel(1)">&#10095;</button>
+    </div>
+  </section>
+
+  <footer>© 2024 El Portal Gamer</footer>
+
+  <script>
+    const API_KEY = "AIzaSyCqPlM0Ab3-_mtFHPmrrgJTS1S4dBCbbMA";  
+    const PLAYLIST_ID = "PLk3cei5OOiyvTQzg5FGgIRY3xs44F7Wzv"; 
+    const MAX_RESULTS = 40;
+
+    async function cargarVideos() {
+      let url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${PLAYLIST_ID}&maxResults=${MAX_RESULTS}&key=${API_KEY}`;
+      let resp = await fetch(url);
+      let data = await resp.json();
+
+      if (!data.items) {
+        console.error("Error al cargar la playlist:", data);
+        return;
+      }
+
+      // Último video
+      let ultimo = data.items[0].snippet;
+      document.getElementById("ultimo-video").src = `https://www.youtube.com/embed/${data.items[0].snippet.resourceId.videoId}`;
+      document.getElementById("ultimo-titulo").innerText = ultimo.title;
+      document.getElementById("ultimo-desc").innerText = ultimo.description;
+
+      const ultimoBtn = document.getElementById("ultimo-btn");
+      const ultimoDesc = document.getElementById("ultimo-desc");
+      ultimoBtn.addEventListener("click", () => {
+        ultimoDesc.classList.toggle("expanded");
+        ultimoBtn.innerText = ultimoDesc.classList.contains("expanded") ? "Ver menos" : "Ver más";
+      });
+
+      // Resto de videos en carrusel
+      let contenedor = document.getElementById("videos-recientes");
+      contenedor.innerHTML = "";
+
+      data.items.slice(1).forEach(video => {
+        const snippet = video.snippet;
+        const card = document.createElement("div");
+        card.className = "video-card";
+
+        card.innerHTML = `
+          <div class="video-wrapper">
+            <iframe src="https://www.youtube.com/embed/${snippet.resourceId.videoId}" frameborder="0" allowfullscreen></iframe>
+          </div>
+          <p class="video-title">${snippet.title}</p>
+          <p class="video-description">${snippet.description}</p>
+          <button class="toggle-btn">Ver más</button>
+        `;
+
+        const btn = card.querySelector(".toggle-btn");
+        const desc = card.querySelector(".video-description");
+        btn.addEventListener("click", () => {
+          desc.classList.toggle("expanded");
+          btn.innerText = desc.classList.contains("expanded") ? "Ver menos" : "Ver más";
+        });
+
+        contenedor.appendChild(card);
+      });
+
+      // Duplicar contenido para efecto infinito
+      contenedor.innerHTML += contenedor.innerHTML;
+
+      // Reiniciar scroll al llegar a la mitad
+      contenedor.addEventListener("scroll", () => {
+        if (contenedor.scrollLeft >= contenedor.scrollWidth / 2) {
+          contenedor.scrollLeft = 0;
+        }
+      });
+    }
+
+    function moverCarrusel(direccion) {
+      const contenedor = document.getElementById("videos-recientes");
+      const cardWidth = contenedor.querySelector(".video-card").offsetWidth + 15;
+      contenedor.scrollBy({ left: direccion * cardWidth, behavior: "smooth" });
+    }
+
+    cargarVideos();
+
+    // Buscador
+    const buscador = document.getElementById("buscador");
+    buscador.addEventListener("input", () => {
+      const texto = buscador.value.toLowerCase();
+
+      // Filtrar último video
+      const ultimoCard = document.querySelector("#ultimo-video").closest(".video-card");
+      const tituloUltimo = document.getElementById("ultimo-titulo").innerText.toLowerCase();
+      ultimoCard.style.display = tituloUltimo.includes(texto) ? "block" : "none";
+
+      // Filtrar los videos de la playlist
+      document.querySelectorAll("#videos-recientes .video-card").forEach(card => {
+        const titulo = card.querySelector(".video-title").innerText.toLowerCase();
+        card.style.display = titulo.includes(texto) ? "block" : "none";
+      });
+    });
+  </script>
+</body>
+</html>
