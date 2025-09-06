@@ -6,15 +6,15 @@
   <title>El Portal Gamer — Reseñas y retro</title>
 
   <!-- =========================================================
-       DOMINIO & REFERRER (LEER Y LUEGO BORRAR ESTE BLOQUE)
-       - Google Cloud → APIs & Services → Credentials → tu API KEY:
-         Application restrictions: HTTP referrers (web sites)
-         Website restrictions:
-           https://www.elportalgamer.com/*
-           https://elportalgamer.com/*            (si apuntás el apex)
-           (TEMPORAL) https://elportalgamer.github.io/*
-           (TEMPORAL) https://elportalgamer.github.io/elportalgamer/*
-         API restrictions: YouTube Data API v3
+       API KEY YOUTUBE (borra este bloque luego de configurarlo)
+       Google Cloud → Credentials → tu API Key
+       Application restrictions: HTTP referrers (web sites)
+       Website restrictions:
+         https://www.elportalgamer.com/*
+         https://elportalgamer.com/*
+         https://elportalgamer.github.io/*
+         https://elportalgamer.github.io/elportalgamer/*
+       API restrictions: YouTube Data API v3
      ========================================================= -->
 
   <link rel="canonical" href="https://www.elportalgamer.com/" />
@@ -33,10 +33,7 @@
   <meta name="twitter:image" content="https://www.elportalgamer.com/og.jpg" />
 
   <style>
-    :root{
-      --bg:#121212; --surface:#1f1f1f; --text:#f0f0f0; --muted:#b5b5b5; --brand:#ff4500; --card:#171717;
-      --radius:14px;
-    }
+    :root{ --bg:#121212; --surface:#1f1f1f; --text:#f0f0f0; --muted:#b5b5b5; --brand:#ff4500; --card:#171717; --radius:14px; }
     *{box-sizing:border-box}
     body{ margin:0; font-family:system-ui,-apple-system,"Segoe UI",Roboto,Ubuntu,"Helvetica Neue",Arial; background:var(--bg); color:var(--text); }
     header{ position:sticky; top:0; z-index:5; background:#161616; border-bottom:1px solid #242424; }
@@ -65,9 +62,7 @@
     .videobox{position:relative; width:100%; padding-top:56.25%; overflow:hidden; background:#000; border-bottom:1px solid #262626}
     .lite-yt{ position:absolute; inset:0; background-position:center; background-size:cover; cursor:pointer; }
     .lite-yt::before{ content:""; position:absolute; inset:0; background:linear-gradient(0deg, rgba(0,0,0,.35), rgba(0,0,0,.05)); }
-    .lty-playbtn{ position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
-      width:72px; height:52px; border:0; border-radius:10px; background:rgba(0,0,0,.6);
-      display:grid; place-items:center; box-shadow:0 8px 20px rgba(0,0,0,.45); }
+    .lty-playbtn{ position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:72px; height:52px; border:0; border-radius:10px; background:rgba(0,0,0,.6); display:grid; place-items:center; box-shadow:0 8px 20px rgba(0,0,0,.45); }
     .lty-playbtn svg{width:28px;height:28px;fill:#fff}
     iframe{position:absolute; inset:0; width:100%; height:100%; border:0}
 
@@ -102,10 +97,10 @@
   <div class="nav">
     <div class="brand"><img src="mago.png" alt="Logo" />El Portal Gamer</div>
     <a href="#ultimo">Inicio</a>
-    <a href="#news">Noticias</a>
     <a href="#mini">Reseñas</a>
     <a href="#series">Series</a>
-    <a href="#top">Top listas</a>
+    <a href="#top">Videos</a>
+    <a href="#news">Noticias</a>
     <a href="#apoya">Apoya el canal</a>
     <a href="#contacto">Contacto</a>
     <div class="spacer"></div>
@@ -132,10 +127,10 @@
     </div>
   </section>
 
-  <!-- Noticias (AHORA va después del Último video) -->
+  <!-- Noticias (después del último video) -->
   <section id="news">
     <h2>Noticias</h2>
-    <p class="sub">Publicá gratis como <b>Issues</b> con label <code>news</code> en tu repo y aparecen acá. Soporta imagen en Markdown y link “Leer más”.</p>
+    <p class="sub">Se cargan desde <b>portalgamerok.blogspot.com</b>. Publicá en Blogger y aparecen acá (muestra 2).</p>
     <div class="grid cols-3" id="news-grid"></div>
   </section>
 
@@ -153,9 +148,9 @@
     <div class="grid cols-2" id="series-grid"></div>
   </section>
 
-  <!-- Top Listas -->
+  <!-- Videos -->
   <section id="top">
-    <h2>Top listas</h2>
+    <h2>Videos</h2>
     <div class="grid cols-2" id="top-grid"></div>
   </section>
 
@@ -226,39 +221,18 @@
 
 <script defer>
 /** ================================
- *  CONFIG (TU YouTube)
+ *  CONFIG (tus valores)
  *  ================================ */
-const API_KEY = "TU_API_KEY_YT";
-const PLAYLIST_ID = "TU_PLAYLIST_ID";
+const API_KEY = "AIzaSyCqPlM0Ab3-_mtFHPmrrgJTS1S4dBCbbMA";
+const PLAYLIST_ID = "PLk3cei5OOiyvTQzg5FGgIRY3xs44F7Wzv";
 const MAX_RESULTS = 20;
+
+/** Blogger feed para Noticias */
+const BLOG_FEED = "https://portalgamerok.blogspot.com/feeds/posts/default";
+const NEWS_LIMIT = 2;
 
 /** Opcional: video de respaldo si la API falla */
 const FALLBACK_VIDEO_ID = "";
-
-/** Series/Top (palabras clave en título) */
-const SERIES_KEYWORDS = {
-  "Saga Parasite Eve": ["parasite eve","parasite-eve","koudelka"],
-  "Survival Horror PS1/PS2": ["resident evil","silent hill","dino crisis","fear effect","rule of rose","haunting ground"],
-  "JRPG & Square": ["final fantasy","chrono","xenogears","vagrant story","valkyrie profile"]
-};
-const TOP_KEYWORDS = {
-  "Los RPG más raros de PS1": ["jrpg","ps1","rareza","retro","rpg"],
-  "Dreamcast olvidados": ["dreamcast","blue stinger","sega","shen"]
-};
-
-/** ================================
- *  CONFIG (NOTICIAS desde GitHub Issues)
- *  - Cambiá OWNER/REPO por los tuyos
- *  - Creá Issues con label "news"
- *  - Primera imagen del body (Markdown) se usa de thumbnail
- *  - Primer link del body se usa como "Leer más" (si existe)
- *  ================================ */
-const GITHUB_NEWS = {
-  owner: "OWNER",          // ej: "elportalgamer"
-  repo: "REPO",            // ej: "elportalgamer.github.io" o tu repo del sitio
-  label: "news",
-  limit: 2
-};
 
 /** Helpers */
 const $ = (s, p=document) => p.querySelector(s);
@@ -288,6 +262,7 @@ function renderUltimo(v){
   $("#ultimo-ver").href = `https://www.youtube.com/watch?v=${v.id}`;
   $("#ultimo-oferta").href = "https://www.instant-gaming.com/es/?igr=TUAFILIADO";
 
+  // JSON-LD del último video
   const ld = {
     "@context":"https://schema.org","@type":"VideoObject",
     "name": v.title,"description": truncate(v.desc, 220),
@@ -327,8 +302,14 @@ function renderMini(arr){ const grid = $("#mini-grid"); grid.innerHTML = ""; arr
 
 function renderSeries(items){
   const grid = $("#series-grid"); grid.innerHTML = "";
-  for(const [name,keys] of Object.entries(SERIES_KEYWORDS)){
-    const hits = items.filter(v => keys.some(k => words(v.title).includes(k))); if(!hits.length) continue;
+  const words = (x)=> (x||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
+  for(const [name,keys] of Object.entries({
+    "Saga Parasite Eve": ["parasite eve","parasite-eve","koudelka"],
+    "Survival Horror PS1/PS2": ["resident evil","silent hill","dino crisis","fear effect","rule of rose","haunting ground"],
+    "JRPG & Square": ["final fantasy","chrono","xenogears","vagrant story","valkyrie profile"]
+  })){
+    const hits = items.filter(v => keys.some(k => words(v.title).includes(k)));
+    if(!hits.length) continue;
     const top = hits.slice(0,3);
     const el = document.createElement("article");
     el.className = "card pad filterable";
@@ -341,17 +322,23 @@ function renderSeries(items){
     grid.appendChild(el);
   }
 }
+
 function renderTop(items){
   const grid = $("#top-grid"); grid.innerHTML = "";
-  for(const [name,keys] of Object.entries(TOP_KEYWORDS)){
-    const hits = items.filter(v => keys.some(k => words(v.title).includes(k))); if(!hits.length) continue;
+  const words = (x)=> (x||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
+  for(const [name,keys] of Object.entries({
+    "Los RPG más raros de PS1": ["jrpg","ps1","rareza","retro","rpg"],
+    "Dreamcast olvidados": ["dreamcast","blue stinger","sega","shen"]
+  })){
+    const hits = items.filter(v => keys.some(k => words(v.title).includes(k)));
+    if(!hits.length) continue;
     const v = hits[0];
     const el = document.createElement("article");
     el.className = "card pad filterable";
     el.dataset.title = name; el.dataset.desc = v.title;
     el.innerHTML = `<div class="title">${name}</div>
       <p class="muted">${truncate(v.title,90)}</p>
-      <a class="btn brand" href="https://www.youtube.com/watch?v=${v.id}" target="_blank" rel="noopener">▶ Ver lista</a>`;
+      <a class="btn brand" href="https://www.youtube.com/watch?v=${v.id}" target="_blank" rel="noopener">▶ Ver video</a>`;
     grid.appendChild(el);
   }
 }
@@ -370,7 +357,6 @@ function showFallback(msg){
   }
 }
 
-/** Fetch YouTube */
 async function loadPlaylist(){
   try{
     const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${PLAYLIST_ID}&maxResults=${MAX_RESULTS}&key=${API_KEY}`;
@@ -405,8 +391,7 @@ async function loadPlaylist(){
   }
 }
 
-/** ====== NOTICIAS ====== */
-/* Util: "hace X tiempo" */
+/** ====== NOTICIAS (Blogger) ====== */
 function timeAgo(iso){
   const d = new Date(iso); const diff = (Date.now() - d.getTime())/1000;
   const units = [[31536000,'a'],[2592000,'m'],[604800,'sem'],[86400,'d'],[3600,'h'],[60,'min']];
@@ -414,102 +399,94 @@ function timeAgo(iso){
   return 'ahora';
 }
 
-/* Parseos del body del Issue */
-function firstMarkdownImage(md){
-  // ![alt](url)
-  const m = md.match(/!\[[^\]]*\]\((https?:\/\/[^\s)]+)\)/i);
-  if (m) return m[1];
-  // Link a imagen suelta
-  const m2 = md.match(/https?:\/\/[^\s)]+?\.(png|jpe?g|gif|webp)/i);
-  return m2 ? m2[0] : "";
-}
-function firstLink(md){
-  const m = md.match(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/i);
-  if (m) return m[2];
-  const m2 = md.match(/https?:\/\/[^\s)]+/i);
-  return m2 ? m2[0] : "";
+function extractImgFromHtml(html=''){
+  const m = html.match(/<img[^>]+src=["']([^"']+\.(?:png|jpg|jpeg|webp|gif))["']/i);
+  return m ? m[1] : '';
 }
 
-/* Render news cards */
-function renderNews(items){
+function parseBloggerJson(data){
+  const entries = data?.feed?.entry || [];
+  return entries.map(e => {
+    const title = e.title?.$t || 'Sin título';
+    const link = (e.link || []).find(l=>l.rel==='alternate')?.href || '#';
+    const date = e.published?.$t || e.updated?.$t || new Date().toISOString();
+    const raw = e.summary?.$t || e.content?.$t || '';
+    const summary = raw.replace(/<[^>]+>/g,' ');
+    const thumb = e['media$thumbnail']?.url || extractImgFromHtml(raw);
+    const source = data?.feed?.title?.$t ? `${data.feed.title.$t}` : 'Blogger';
+    return { title, url: link, date, summary, image: thumb, source };
+  });
+}
+
+async function fetchBloggerJSON(limit=5){
+  const url = `${BLOG_FEED.replace(/\/$/,'')}?alt=json&max-results=${limit}`;
+  const res = await fetch(url);
+  if(!res.ok) throw new Error('Blogger JSON CORS/error');
+  const data = await res.json();
+  return parseBloggerJson(data);
+}
+
+function fetchBloggerJSONP(limit=5){
+  return new Promise((resolve)=>{
+    const cb = `_bg_cb_${Date.now()}`;
+    window[cb] = (data)=>{ try{ resolve(parseBloggerJson(data)); } catch{ resolve([]);} finally{
+      delete window[cb]; script.remove(); }};
+    const script = document.createElement('script');
+    script.src = `${BLOG_FEED.replace(/\/$/,'')}?alt=json-in-script&max-results=${limit}&callback=${cb}`;
+    script.onerror = ()=>{ delete window[cb]; resolve([]); };
+    document.head.appendChild(script);
+    setTimeout(()=>{ if(window[cb]){ delete window[cb]; try{script.remove();}catch{} resolve([]);} }, 8000);
+  });
+}
+
+async function loadNews(){
+  let items = [];
+  // 1) Blogger JSON (CORS)
+  try{ items = await fetchBloggerJSON(5); }catch(e){ /* intenta JSONP */ }
+  // 2) Blogger JSONP (sin CORS)
+  if(!items.length){ try{ items = await fetchBloggerJSONP(5); }catch(e){ } }
+  // 3) news.json local
+  if(!items.length){
+    try{
+      const res = await fetch('news.json',{cache:'no-store'});
+      if(res.ok){ items = await res.json(); }
+    }catch{}
+  }
+  // 4) fallback mínimo
+  if(!items.length){
+    items = [{
+      title: "No pudimos leer el feed de Blogger",
+      url: "https://portalgamerok.blogspot.com/",
+      source: "Blogger",
+      date: new Date().toISOString(),
+      summary: "Revisá que el blog sea público. También podés crear news.json como respaldo.",
+      image: ""
+    }];
+  }
+
+  items = items
+    .map(n => ({ title:n.title, url:n.url, source:n.source||'Blogger', date:n.date, summary:n.summary||'', image:n.image||'' }))
+    .sort((a,b)=> new Date(b.date)-new Date(a.date))
+    .slice(0, NEWS_LIMIT);
+
   const grid = $("#news-grid"); grid.innerHTML = "";
   for(const n of items){
     const card = document.createElement('article');
     card.className = "card pad filterable";
-    card.dataset.title = n.title; card.dataset.desc = (n.summary||"") + " " + (n.source||"");
+    card.dataset.title = n.title; card.dataset.desc = n.summary + " " + n.source;
 
     const img = n.image ? `<img loading="lazy" src="${n.image}" alt="">` : "";
     card.innerHTML = `
       <div class="news-thumb">${img}</div>
       <div class="news-meta">
         <span class="badge">Noticia</span>
-        <span>${n.source||"Fuente"}</span> • <span>${timeAgo(n.date)}</span>
+        <span>${n.source}</span> • <span>${timeAgo(n.date)}</span>
       </div>
       <div class="title">${n.title}</div>
-      <p class="desc">${truncate(n.summary||"", 220)}</p>
+      <p class="desc">${truncate(n.summary, 220)}</p>
       <a class="btn brand" href="${n.url}" target="_blank" rel="noopener">📰 Leer más</a>
     `;
     grid.appendChild(card);
-  }
-}
-
-/* 1) GitHub Issues (gratis) */
-async function loadNewsFromGitHub(){
-  const {owner, repo, label, limit} = GITHUB_NEWS;
-  if (!owner || !repo) throw new Error("Falta OWNER/REPO en GITHUB_NEWS");
-  const url = `https://api.github.com/repos/${owner}/${repo}/issues?state=open&labels=${encodeURIComponent(label)}&per_page=${limit}&sort=created&direction=desc`;
-  const r = await fetch(url, { headers:{ "Accept":"application/vnd.github+json" }});
-  if(!r.ok) throw new Error("GH API fail");
-  const issues = await r.json();
-
-  const items = issues.map(i => {
-    const img = firstMarkdownImage(i.body||"");
-    const urlMore = firstLink(i.body||"") || i.html_url;
-    return {
-      title: i.title,
-      url: urlMore,
-      source: "GitHub",
-      date: i.created_at,
-      summary: (i.body||"").replace(/!\[[^\]]*\]\([^)]+\)/g,"").replace(/\[([^\]]+)\]\(([^)]+)\)/g,"$1"),
-      image: img
-    }
-  });
-  return items;
-}
-
-/* 2) Fallback a news.json (en tu repo) */
-async function loadNewsFromJSON(){
-  const res = await fetch('news.json', {cache:'no-store'});
-  if(!res.ok) throw new Error('no json');
-  const items = await res.json();
-  return items.map(n => ({
-    title:n.title, url:n.url, source:n.source||'Fuente',
-    date:n.date, summary:n.summary||'', image:n.image||''
-  }));
-}
-
-/* Orquestador */
-async function loadNews(){
-  try{
-    const gh = await loadNewsFromGitHub();
-    if (gh && gh.length){
-      renderNews(gh.slice(0, GITHUB_NEWS.limit));
-      return;
-    }
-  }catch(e){ console.warn("GitHub Issues no disponible:", e); }
-
-  try{
-    const js = await loadNewsFromJSON();
-    renderNews(js.slice(0, GITHUB_NEWS.limit));
-  }catch(e){
-    console.warn("news.json no disponible, uso ejemplo");
-    const demo = [
-      { title:"Rumor retro: ¿Vuelve Parasite Eve?", url:"#", source:"Portal Gamer",
-        date:new Date().toISOString(), summary:"Otra vez suenan campanas en Square para revivir el híbrido de terror y RPG.", image:"" },
-      { title:"Dreamcast está más viva que nunca", url:"#", source:"Homebrew Scene",
-        date:new Date(Date.now()-86400000).toISOString(), summary:"Nuevos ports y traducciones fan siguen alimentando la consola.", image:"" }
-    ];
-    renderNews(demo);
   }
 }
 
@@ -544,6 +521,7 @@ loadNews();
     }
   });
 
+  // Mailto directo
   const mail = ['contacto','@','elportalgamer.com'].join('');
   const mailto = document.getElementById('mailto');
   if (mailto) mailto.href = `mailto:${mail}?subject=El%20Portal%20Gamer&body=Hola%20Paul,%0D%0A`;
