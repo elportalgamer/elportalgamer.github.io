@@ -200,16 +200,14 @@
 
 <script defer>
 /** ================================
- *  CONFIG
- *  ================================
- *  REEMPLAZA estos valores por los reales.
- */
-const API_KEY = "TU_API_KEY";           // ← PONÉ TU API KEY (restringida por HTTP referrer)
-const PLAYLIST_ID = "TU_PLAYLIST_ID";   // ← PONÉ TU PLAYLIST ID
+ *  CONFIG (con tus valores)
+ *  ================================ */
+const API_KEY = "AIzaSyCqPlM0Ab3-_mtFHPmrrgJTS1S4dBCbbMA";
+const PLAYLIST_ID = "PLk3cei5OOiyvTQzg5FGgIRY3xs44F7Wzv";
 const MAX_RESULTS = 20;
 
-// Si la API falla, podés mostrar un video de respaldo acá:
-const FALLBACK_VIDEO_ID = ""; // ej. "abcdEFGhijk"
+/** Opcional: video de respaldo si la API falla */
+const FALLBACK_VIDEO_ID = ""; // ej. "dQw4w9WgXcQ"
 
 /** Series/Top (palabras clave en título) */
 const SERIES_KEYWORDS = {
@@ -319,7 +317,6 @@ function renderTop(items){
   }
 }
 
-/** Fallbacks si la API no responde o las claves siguen de ejemplo */
 function showFallback(msg){
   $("#ultimo-titulo").textContent = msg || "No se pudo cargar la playlist";
   $("#ultimo-fecha").textContent = "";
@@ -336,11 +333,6 @@ function showFallback(msg){
 
 /** Fetch YouTube */
 async function loadPlaylist(){
-  // Si dejaste los placeholders, ni intento la API para que no muestre negro
-  if (API_KEY.startsWith("TU_") || PLAYLIST_ID.startsWith("TU_")){
-    showFallback("Configurá tu API_KEY y PLAYLIST_ID para mostrar el último video");
-    return;
-  }
   try{
     const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${PLAYLIST_ID}&maxResults=${MAX_RESULTS}&key=${API_KEY}`;
     const r = await fetch(url);
@@ -360,7 +352,6 @@ async function loadPlaylist(){
     renderSeries(items);
     renderTop(items);
 
-    // Buscador
     const inp = $("#buscador");
     inp.addEventListener("input", ()=>{
       const q = words(inp.value);
