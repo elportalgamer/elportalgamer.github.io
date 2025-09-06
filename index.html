@@ -5,10 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>El Portal Gamer — Reseñas y retro</title>
 
-  <!-- Canonical -->
   <link rel="canonical" href="https://tudominio.com/" />
-
-  <!-- Favicon -->
   <link rel="icon" type="image/png" href="mago.png" />
 
   <!-- Open Graph / Twitter -->
@@ -29,17 +26,9 @@
       --radius:14px;
     }
     *{box-sizing:border-box}
-    body{
-      margin:0; font-family:system-ui,-apple-system,"Segoe UI",Roboto,Ubuntu,"Helvetica Neue",Arial;
-      background:var(--bg); color:var(--text);
-    }
-    header{
-      position:sticky; top:0; z-index:5;
-      background:#161616; border-bottom:1px solid #242424;
-    }
-    .nav{
-      max-width:1100px; margin:0 auto; display:flex; align-items:center; gap:16px; padding:12px 16px;
-    }
+    body{ margin:0; font-family:system-ui,-apple-system,"Segoe UI",Roboto,Ubuntu,"Helvetica Neue",Arial; background:var(--bg); color:var(--text); }
+    header{ position:sticky; top:0; z-index:5; background:#161616; border-bottom:1px solid #242424; }
+    .nav{ max-width:1100px; margin:0 auto; display:flex; align-items:center; gap:16px; padding:12px 16px; }
     .brand{ display:flex; align-items:center; gap:10px; font-weight:800; font-size:1.25rem; color:var(--brand)}
     .brand img{height:34px;width:auto;border-radius:6px}
     .nav a{color:#eaeaea;text-decoration:none;opacity:.9}
@@ -62,17 +51,11 @@
 
     /* Lite YouTube */
     .videobox{position:relative; width:100%; padding-top:56.25%; overflow:hidden; background:#000; border-bottom:1px solid #262626}
-    .lite-yt{
-      position:absolute; inset:0; background-position:center; background-size:cover; cursor:pointer;
-    }
-    .lite-yt::before{
-      content:""; position:absolute; inset:0; background:linear-gradient(0deg, rgba(0,0,0,.35), rgba(0,0,0,.05));
-    }
-    .lty-playbtn{
-      position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+    .lite-yt{ position:absolute; inset:0; background-position:center; background-size:cover; cursor:pointer; }
+    .lite-yt::before{ content:""; position:absolute; inset:0; background:linear-gradient(0deg, rgba(0,0,0,.35), rgba(0,0,0,.05)); }
+    .lty-playbtn{ position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
       width:72px; height:52px; border:0; border-radius:10px; background:rgba(0,0,0,.6);
-      display:grid; place-items:center; box-shadow:0 8px 20px rgba(0,0,0,.45);
-    }
+      display:grid; place-items:center; box-shadow:0 8px 20px rgba(0,0,0,.45); }
     .lty-playbtn svg{width:28px;height:28px;fill:#fff}
     iframe{position:absolute; inset:0; width:100%; height:100%; border:0}
 
@@ -80,14 +63,20 @@
     .desc{color:#cfcfcf; font-size:.95rem; line-height:1.45; max-height:4.5em; overflow:hidden}
     .desc.expanded{max-height:600px}
     .muted{color:var(--muted); font-size:.9rem}
-    .btn{
-      display:inline-flex; align-items:center; gap:8px; padding:10px 12px; border-radius:10px; border:1px solid #333; background:#151515; color:#fff; text-decoration:none;
-    }
+    .btn{ display:inline-flex; align-items:center; gap:8px; padding:10px 12px; border-radius:10px; border:1px solid #333; background:#151515; color:#fff; text-decoration:none; }
     .btn.brand{background:var(--brand); border-color:#ff5e1f; color:#111; font-weight:800}
     .pill{display:inline-block; font-size:.8rem; color:#ffb18f; border:1px solid #3a1c12; background:#1b0f0a; padding:4px 8px; border-radius:999px}
 
     footer{margin:40px 0 20px; color:#9b9b9b; text-align:center}
     @media (max-width:560px){ .search{width:100%} .nav{flex-wrap:wrap} }
+
+    /* ===== Contacto ===== */
+    label { display:block; margin:8px 0 12px; font-size:.95rem; }
+    input, textarea, select { width:100%; padding:10px 12px; border-radius:10px; border:1px solid #2a2a2a; background:#0f0f0f; color:#fff; }
+    input:focus, textarea:focus, select:focus { outline:2px solid var(--brand); outline-offset:2px; }
+    .form-grid { display:grid; gap:12px; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); }
+    button.btn { cursor:pointer; }
+    #form-result { margin-top:10px; }
   </style>
 </head>
 <body>
@@ -99,6 +88,7 @@
     <a href="#series">Series</a>
     <a href="#top">Top listas</a>
     <a href="#apoya">Apoya el canal</a>
+    <a href="#contacto">Contacto</a>
     <div class="spacer"></div>
     <input id="buscador" class="search" type="search" placeholder="Buscar video o reseña…" />
   </div>
@@ -156,6 +146,39 @@
       <p class="muted" style="margin-top:10px">* Enlaces afiliados. Gracias por el aguante, pa.</p>
     </div>
   </section>
+
+  <!-- Contacto -->
+  <section id="contacto">
+    <h2>Contacto</h2>
+    <div class="card pad">
+      <form id="contact-form" action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="POST" novalidate>
+        <div class="form-grid">
+          <label>Nombre
+            <input type="text" name="name" placeholder="Tu nombre" required>
+          </label>
+          <label>Email
+            <input type="email" name="_replyto" placeholder="tu@email.com" required>
+          </label>
+        </div>
+        <label>Asunto
+          <input type="text" name="subject" placeholder="Propuesta, sugerencia, colaboración…">
+        </label>
+        <label>Mensaje
+          <textarea name="message" rows="6" placeholder="Contame en qué te puedo ayudar" required></textarea>
+        </label>
+
+        <!-- Honeypot anti-spam -->
+        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+
+        <div class="row">
+          <button type="submit" class="btn brand">📨 Enviar</button>
+          <a class="btn" id="mailto" href="#">📧 Escribime directo</a>
+        </div>
+
+        <p id="form-result" class="muted" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
 </main>
 
 <footer>© 2025 El Portal Gamer</footer>
@@ -178,12 +201,17 @@
 <script defer>
 /** ================================
  *  CONFIG
- *  ================================ */
-const API_KEY = "TU_API_KEY";           // ⚠️ RESTRINGIR por HTTP referrer en Google Cloud
-const PLAYLIST_ID = "TU_PLAYLIST_ID";   // p.ej. la playlist de tus reseñas
+ *  ================================
+ *  REEMPLAZA estos valores por los reales.
+ */
+const API_KEY = "TU_API_KEY";           // ← PONÉ TU API KEY (restringida por HTTP referrer)
+const PLAYLIST_ID = "TU_PLAYLIST_ID";   // ← PONÉ TU PLAYLIST ID
 const MAX_RESULTS = 20;
 
-// Series y Top por palabras clave en títulos (simple y efectivo)
+// Si la API falla, podés mostrar un video de respaldo acá:
+const FALLBACK_VIDEO_ID = ""; // ej. "abcdEFGhijk"
+
+/** Series/Top (palabras clave en título) */
 const SERIES_KEYWORDS = {
   "Saga Parasite Eve": ["parasite eve","parasite-eve","koudelka"],
   "Survival Horror PS1/PS2": ["resident evil","silent hill","dino crisis","fear effect","rule of rose","haunting ground"],
@@ -194,71 +222,14 @@ const TOP_KEYWORDS = {
   "Dreamcast olvidados": ["dreamcast","blue stinger","sega","shen"]
 };
 
-/** ================================
- *  HELPERS
- *  ================================ */
+/** Helpers */
 const $ = (s, p=document) => p.querySelector(s);
 const $$ = (s, p=document) => [...p.querySelectorAll(s)];
+const truncate = (str, n) => (str||"").length>n ? str.slice(0,n).replace(/\s+\S*$/,'')+"…" : str;
+const words = (x)=> (x||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
 
-function truncate(str, n){ return (str||"").length>n ? str.slice(0,n).replace(/\s+\S*$/,'')+"…" : str; }
-function words(x){ return (x||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase(); }
-
-function createLite(container, videoId, title){
-  const box = document.createElement("div");
-  box.className = "lite-yt";
-  box.style.backgroundImage = `url(https://i.ytimg.com/vi/${videoId}/hqdefault.jpg)`;
-  box.innerHTML = `
-    <button class="lty-playbtn" aria-label="Reproducir ${title}">
-      <svg viewBox="0 0 68 48"><path d="M66.52 7.02a8 8 0 0 0-5.64-5.66C56.8 0 34 0 34 0S11.2 0 7.12 1.36A8 8 0 0 0 1.48 7.02 83.3 83.3 0 0 0 0 24a83.3 83.3 0 0 0 1.48 16.98 8 8 0 0 0 5.64 5.66C11.2 48 34 48 34 48s22.8 0 26.88-1.36a8 8 0 0 0 5.64-5.66A83.3 83.3 0 0 0 68 24a83.3 83.3 0 0 0-1.48-16.98zM27 34V14l18 10-18 10z"/></svg>
-    </button>`;
-  box.addEventListener("click", ()=>{
-    const iframe = document.createElement("iframe");
-    iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
-    iframe.allow = "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture";
-    iframe.allowFullscreen = true;
-    const wrap = document.createElement("div");
-    wrap.className = "videobox";
-    wrap.appendChild(iframe);
-    const parent = box.parentElement;
-    parent.replaceChild(wrap, box);
-  });
-  container.appendChild(box);
-}
-
-/** ================================
- *  FETCH YOUTUBE
- *  ================================ */
-async function loadPlaylist(){
-  const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${PLAYLIST_ID}&maxResults=${MAX_RESULTS}&key=${API_KEY}`;
-  const r = await fetch(url);
-  const data = await r.json();
-  if(!data.items){ console.error("Error YouTube:", data); return; }
-  const items = data.items.map(i => ({
-    id: i.snippet.resourceId.videoId,
-    title: i.snippet.title,
-    desc: i.snippet.description,
-    date: i.snippet.publishedAt,
-    thumb: (i.snippet.thumbnails?.maxres?.url || i.snippet.thumbnails?.high?.url || i.snippet.thumbnails?.medium?.url || "")
-  }));
-
-  renderUltimo(items[0]);
-  renderMini(items.slice(1, 10));
-  renderSeries(items);
-  renderTop(items);
-
-  // Buscador
-  const inp = $("#buscador");
-  inp.addEventListener("input", ()=>{
-    const q = words(inp.value);
-    for(const card of $$(".filterable")){
-      const hay = words(card.dataset.title + " " + (card.dataset.desc||"")).includes(q);
-      card.style.display = (!q || hay) ? "" : "none";
-    }
-  });
-}
-
+/** Render último con lite */
 function renderUltimo(v){
-  // Lite embed
   const box = $("#ultimo-lite");
   box.className = "videobox";
   const lite = document.createElement("div");
@@ -277,25 +248,20 @@ function renderUltimo(v){
   $("#ultimo-fecha").textContent = new Date(v.date).toLocaleDateString();
   $("#ultimo-desc").textContent = truncate(v.desc, 420);
   $("#ultimo-ver").href = `https://www.youtube.com/watch?v=${v.id}`;
-  $("#ultimo-oferta").href = "https://www.instant-gaming.com/es/?igr=TUAFILIADO"; // ← cámbialo
+  $("#ultimo-oferta").href = "https://www.instant-gaming.com/es/?igr=TUAFILIADO";
 
-  // JSON-LD dinámico del último video (ayuda Rich Results)
+  // JSON-LD dinámico del último video
   const ld = {
     "@context":"https://schema.org","@type":"VideoObject",
-    "name": v.title,
-    "description": truncate(v.desc, 220),
-    "thumbnailUrl":[v.thumb],
-    "uploadDate": v.date,
+    "name": v.title,"description": truncate(v.desc, 220),
+    "thumbnailUrl":[v.thumb],"uploadDate": v.date,
     "embedUrl": `https://www.youtube.com/embed/${v.id}`,
     "publisher":{"@type":"Organization","name":"El Portal Gamer"},
     "potentialAction":{"@type":"WatchAction","target":[`https://www.youtube.com/watch?v=${v.id}`]}
   };
-  let s = document.getElementById("ld-video");
-  if (s) s.remove();
-  s = document.createElement("script");
-  s.type = "application/ld+json"; s.id="ld-video";
-  s.textContent = JSON.stringify(ld);
-  document.head.appendChild(s);
+  let s = document.getElementById("ld-video"); if (s) s.remove();
+  s = document.createElement("script"); s.type="application/ld+json"; s.id="ld-video";
+  s.textContent = JSON.stringify(ld); document.head.appendChild(s);
 }
 
 function makeMiniCard(v){
@@ -303,7 +269,7 @@ function makeMiniCard(v){
   el.className = "card pad filterable";
   el.dataset.title = v.title; el.dataset.desc = v.desc;
   el.innerHTML = `
-    <div class="videobox">${/* mini lite */""}
+    <div class="videobox">
       <div class="lite-yt" style="background-image:url(${v.thumb})">
         <button class="lty-playbtn" aria-label="Reproducir ${v.title}">
           <svg viewBox="0 0 68 48"><path d="M66.52 7.02a8 8 0 0 0-5.64-5.66C56.8 0 34 0 34 0S11.2 0 7.12 1.36A8 8 0 0 0 1.48 7.02 83.3 83.3 0 0 0 0 24a83.3 83.3 0 0 0 1.48 16.98 8 8 0 0 0 5.64 5.66C11.2 48 34 48 34 48s22.8 0 26.88-1.36a8 8 0 0 0 5.64-5.66A83.3 83.3 0 0 0 68 24a83.3 83.3 0 0 0-1.48-16.98zM27 34V14l18 10-18 10z"/></svg>
@@ -312,9 +278,7 @@ function makeMiniCard(v){
     </div>
     <div class="title">${v.title}</div>
     <p class="desc">${truncate(v.desc, 360)}</p>
-    <a class="btn brand" href="https://www.youtube.com/watch?v=${v.id}" target="_blank" rel="noopener">▶ Ver video</a>
-  `;
-  // activar lite en la mini
+    <a class="btn brand" href="https://www.youtube.com/watch?v=${v.id}" target="_blank" rel="noopener">▶ Ver video</a>`;
   const thumb = el.querySelector(".videobox");
   thumb.addEventListener("click", ()=>{
     thumb.innerHTML = `<iframe src="https://www.youtube.com/embed/${v.id}?autoplay=1" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="${v.title}"></iframe>`;
@@ -322,55 +286,129 @@ function makeMiniCard(v){
   return el;
 }
 
-function renderMini(arr){
-  const grid = $("#mini-grid");
-  grid.innerHTML = "";
-  arr.forEach(v => grid.appendChild(makeMiniCard(v)));
-}
+function renderMini(arr){ const grid = $("#mini-grid"); grid.innerHTML = ""; arr.forEach(v => grid.appendChild(makeMiniCard(v))); }
 
 function renderSeries(items){
-  const grid = $("#series-grid");
-  grid.innerHTML = "";
+  const grid = $("#series-grid"); grid.innerHTML = "";
   for(const [name,keys] of Object.entries(SERIES_KEYWORDS)){
-    const hits = items.filter(v => keys.some(k => words(v.title).includes(k)));
-    if(!hits.length) continue;
+    const hits = items.filter(v => keys.some(k => words(v.title).includes(k))); if(!hits.length) continue;
     const top = hits.slice(0,3);
     const el = document.createElement("article");
     el.className = "card pad filterable";
     el.dataset.title = name; el.dataset.desc = top.map(x=>x.title).join(" ");
-    el.innerHTML = `
-      <div class="title">${name}</div>
+    el.innerHTML = `<div class="title">${name}</div>
       <p class="muted" style="margin-top:-2px">${top.length} videos</p>
-      <div class="grid cols-3" style="margin-top:8px" >
-        ${top.map(v=>`
-          <a class="btn" href="https://www.youtube.com/watch?v=${v.id}" target="_blank" rel="noopener">▶ ${truncate(v.title,38)}</a>
-        `).join("")}
-      </div>
-    `;
+      <div class="grid cols-3" style="margin-top:8px">
+        ${top.map(v=>`<a class="btn" href="https://www.youtube.com/watch?v=${v.id}" target="_blank" rel="noopener">▶ ${truncate(v.title,38)}</a>`).join("")}
+      </div>`;
     grid.appendChild(el);
   }
 }
-
 function renderTop(items){
-  const grid = $("#top-grid");
-  grid.innerHTML = "";
+  const grid = $("#top-grid"); grid.innerHTML = "";
   for(const [name,keys] of Object.entries(TOP_KEYWORDS)){
-    const hits = items.filter(v => keys.some(k => words(v.title).includes(k)));
-    if(!hits.length) continue;
+    const hits = items.filter(v => keys.some(k => words(v.title).includes(k))); if(!hits.length) continue;
     const v = hits[0];
     const el = document.createElement("article");
     el.className = "card pad filterable";
     el.dataset.title = name; el.dataset.desc = v.title;
-    el.innerHTML = `
-      <div class="title">${name}</div>
+    el.innerHTML = `<div class="title">${name}</div>
       <p class="muted">${truncate(v.title,90)}</p>
-      <a class="btn brand" href="https://www.youtube.com/watch?v=${v.id}" target="_blank" rel="noopener">▶ Ver lista</a>
-    `;
+      <a class="btn brand" href="https://www.youtube.com/watch?v=${v.id}" target="_blank" rel="noopener">▶ Ver lista</a>`;
     grid.appendChild(el);
   }
 }
 
+/** Fallbacks si la API no responde o las claves siguen de ejemplo */
+function showFallback(msg){
+  $("#ultimo-titulo").textContent = msg || "No se pudo cargar la playlist";
+  $("#ultimo-fecha").textContent = "";
+  $("#ultimo-desc").textContent = "Tocá el botón para ver el canal, o probá más tarde.";
+  if (FALLBACK_VIDEO_ID){
+    const box = $("#ultimo-lite");
+    box.className = "videobox";
+    box.innerHTML = `<iframe src="https://www.youtube.com/embed/${FALLBACK_VIDEO_ID}" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+    $("#ultimo-ver").href = `https://www.youtube.com/watch?v=${FALLBACK_VIDEO_ID}`;
+  } else {
+    $("#ultimo-ver").href = "https://www.youtube.com/@TuCanal/videos";
+  }
+}
+
+/** Fetch YouTube */
+async function loadPlaylist(){
+  // Si dejaste los placeholders, ni intento la API para que no muestre negro
+  if (API_KEY.startsWith("TU_") || PLAYLIST_ID.startsWith("TU_")){
+    showFallback("Configurá tu API_KEY y PLAYLIST_ID para mostrar el último video");
+    return;
+  }
+  try{
+    const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${PLAYLIST_ID}&maxResults=${MAX_RESULTS}&key=${API_KEY}`;
+    const r = await fetch(url);
+    const data = await r.json();
+    if(!data.items){ console.error("Error YouTube:", data); showFallback("No se pudo cargar la playlist"); return; }
+
+    const items = data.items.map(i => ({
+      id: i.snippet.resourceId.videoId,
+      title: i.snippet.title,
+      desc: i.snippet.description,
+      date: i.snippet.publishedAt,
+      thumb: (i.snippet.thumbnails?.maxres?.url || i.snippet.thumbnails?.high?.url || i.snippet.thumbnails?.medium?.url || "")
+    }));
+
+    renderUltimo(items[0]);
+    renderMini(items.slice(1, 10));
+    renderSeries(items);
+    renderTop(items);
+
+    // Buscador
+    const inp = $("#buscador");
+    inp.addEventListener("input", ()=>{
+      const q = words(inp.value);
+      for(const card of $$(".filterable")){
+        const hay = words(card.dataset.title + " " + (card.dataset.desc||"")).includes(q);
+        card.style.display = (!q || hay) ? "" : "none";
+      }
+    });
+  }catch(e){
+    console.error(e);
+    showFallback("No se pudo conectar con YouTube");
+  }
+}
 loadPlaylist();
+</script>
+
+<!-- Contacto: envío + mailto fallback -->
+<script>
+(function(){
+  const form = document.getElementById('contact-form');
+  if (!form) return;
+  const result = document.getElementById('form-result');
+
+  form.addEventListener('submit', async (e)=>{
+    e.preventDefault();
+    result.textContent = 'Enviando…';
+    try{
+      const r = await fetch(form.action, {
+        method:'POST',
+        body: new FormData(form),
+        headers: { 'Accept':'application/json' }
+      });
+      if(r.ok){
+        result.textContent = '¡Mensaje enviado! Te respondo apenas pueda.';
+        form.reset();
+      }else{
+        result.textContent = 'Hubo un error al enviar. Probá con el botón de email.';
+      }
+    }catch(err){
+      result.textContent = 'No se pudo enviar. Probá con el botón de email.';
+    }
+  });
+
+  // Mailto fallback (cambiá el correo)
+  const mail = ['contacto','@','tudominio.com'].join('');
+  const mailto = document.getElementById('mailto');
+  if (mailto) mailto.href = `mailto:${mail}?subject=El%20Portal%20Gamer&body=Hola%20Paul,%0D%0A`;
+})();
 </script>
 </body>
 </html>
