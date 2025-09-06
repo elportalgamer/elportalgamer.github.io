@@ -1,240 +1,376 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>El Portal Gamer</title>
-  <link rel="icon" type="image/png" href="mago.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>El Portal Gamer — Reseñas y retro</title>
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://tudominio.com/" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="mago.png" />
+
+  <!-- Open Graph / Twitter -->
+  <meta name="description" content="Reseñas sinceras, retro y rarezas: PS1, PS2, Dreamcast, JRPG y survival horror. Videos y mini-reseñas en El Portal Gamer." />
+  <meta property="og:title" content="El Portal Gamer — Reseñas y retro" />
+  <meta property="og:description" content="Reseñas sinceras, retro y rarezas: PS1, PS2, Dreamcast, JRPG y survival horror." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://tudominio.com/" />
+  <meta property="og:image" content="https://tudominio.com/og.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="El Portal Gamer — Reseñas y retro" />
+  <meta name="twitter:description" content="Reseñas sinceras, retro y rarezas: PS1, PS2, Dreamcast, JRPG y survival horror." />
+  <meta name="twitter:image" content="https://tudominio.com/og.jpg" />
+
   <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: #121212;
-      color: #f0f0f0;
+    :root{
+      --bg:#121212; --surface:#1f1f1f; --text:#f0f0f0; --muted:#b5b5b5; --brand:#ff4500; --card:#171717;
+      --radius:14px;
     }
-    header {
-      background: #1f1f1f;
-      padding: 20px;
-      font-size: 2rem;
-      font-weight: bold;
-      color: #ff4500;
-      display: flex;
-      align-items: center;
-      gap: 10px;
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family:system-ui,-apple-system,"Segoe UI",Roboto,Ubuntu,"Helvetica Neue",Arial;
+      background:var(--bg); color:var(--text);
     }
-    header img {
-      height: 40px;
-      width: auto;
+    header{
+      position:sticky; top:0; z-index:5;
+      background:#161616; border-bottom:1px solid #242424;
     }
-    section {
-      padding: 20px;
+    .nav{
+      max-width:1100px; margin:0 auto; display:flex; align-items:center; gap:16px; padding:12px 16px;
     }
-    h2 {
-      border-bottom: 2px solid #ff4500;
-      padding-bottom: 10px;
-      margin-bottom: 15px;
+    .brand{ display:flex; align-items:center; gap:10px; font-weight:800; font-size:1.25rem; color:var(--brand)}
+    .brand img{height:34px;width:auto;border-radius:6px}
+    .nav a{color:#eaeaea;text-decoration:none;opacity:.9}
+    .nav a:hover{opacity:1}
+    .spacer{flex:1}
+    .search{width:320px; max-width:55vw; padding:10px 12px; border-radius:10px; border:1px solid #2a2a2a; background:#0f0f0f; color:#fff}
+
+    main{max-width:1100px; margin:20px auto; padding:0 16px}
+    section{margin:24px 0}
+    h2{margin:0 0 12px; font-size:1.25rem}
+    .sub{color:var(--muted); font-size:.95rem; margin:4px 0 14px}
+
+    .grid{display:grid; gap:16px}
+    .grid.cols-3{grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}
+    .grid.cols-2{grid-template-columns:repeat(auto-fill,minmax(360px,1fr))}
+
+    .card{background:var(--surface); border:1px solid #262626; border-radius:var(--radius); overflow:hidden}
+    .card.pad{padding:14px}
+    .row{display:flex; gap:16px; align-items:center}
+
+    /* Lite YouTube */
+    .videobox{position:relative; width:100%; padding-top:56.25%; overflow:hidden; background:#000; border-bottom:1px solid #262626}
+    .lite-yt{
+      position:absolute; inset:0; background-position:center; background-size:cover; cursor:pointer;
     }
-    .video-card {
-      background: #1f1f1f;
-      border-radius: 10px;
-      padding: 10px;
-      margin: 10px 0;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
-      transition: transform 0.2s;
-      flex: 0 0 300px;
-      scroll-snap-align: start;
+    .lite-yt::before{
+      content:""; position:absolute; inset:0; background:linear-gradient(0deg, rgba(0,0,0,.35), rgba(0,0,0,.05));
     }
-    .video-card:hover {
-      transform: scale(1.03);
+    .lty-playbtn{
+      position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+      width:72px; height:52px; border:0; border-radius:10px; background:rgba(0,0,0,.6);
+      display:grid; place-items:center; box-shadow:0 8px 20px rgba(0,0,0,.45);
     }
-    .video-wrapper {
-      position: relative;
-      width: 100%;
-      padding-top: 56.25%;
+    .lty-playbtn svg{width:28px;height:28px;fill:#fff}
+    iframe{position:absolute; inset:0; width:100%; height:100%; border:0}
+
+    .title{font-weight:700; margin:8px 0 6px; font-size:1.05rem}
+    .desc{color:#cfcfcf; font-size:.95rem; line-height:1.45; max-height:4.5em; overflow:hidden}
+    .desc.expanded{max-height:600px}
+    .muted{color:var(--muted); font-size:.9rem}
+    .btn{
+      display:inline-flex; align-items:center; gap:8px; padding:10px 12px; border-radius:10px; border:1px solid #333; background:#151515; color:#fff; text-decoration:none;
     }
-    .video-wrapper iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border-radius: 10px;
-    }
-    footer {
-      text-align: center;
-      padding: 15px;
-      background: #1f1f1f;
-      margin-top: 20px;
-      color: #888;
-    }
-    .video-title {
-      margin-top: 8px;
-      font-weight: bold;
-      font-size: 1rem;
-      color: #fff;
-    }
-    .video-description {
-      font-size: 0.9rem;
-      color: #ccc;
-      max-height: 60px;
-      overflow: hidden;
-      transition: max-height 0.3s ease;
-    }
-    .video-description.expanded {
-      max-height: 500px;
-    }
-    .toggle-btn {
-      background: none;
-      border: none;
-      color: #ff4500;
-      cursor: pointer;
-      font-size: 0.9rem;
-      padding: 0;
-      margin-top: 5px;
-    }
-    #buscador {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 20px;
-      font-size: 1rem;
-      border-radius: 5px;
-      border: none;
-    }
-    .video-carousel-container {
-      position: relative;
-      overflow: hidden;
-    }
-    .video-carousel {
-      display: flex;
-      gap: 15px;
-      overflow-x: auto;
-      scroll-behavior: smooth;
-      scroll-snap-type: x mandatory;
-      padding: 10px 0;
-    }
-    .video-carousel::-webkit-scrollbar {
-      height: 8px;
-    }
-    .video-carousel::-webkit-scrollbar-thumb {
-      background: #444;
-      border-radius: 4px;
-    }
-    .video-carousel::-webkit-scrollbar-track {
-      background: #1f1f1f;
-    }
+    .btn.brand{background:var(--brand); border-color:#ff5e1f; color:#111; font-weight:800}
+    .pill{display:inline-block; font-size:.8rem; color:#ffb18f; border:1px solid #3a1c12; background:#1b0f0a; padding:4px 8px; border-radius:999px}
+
+    footer{margin:40px 0 20px; color:#9b9b9b; text-align:center}
+    @media (max-width:560px){ .search{width:100%} .nav{flex-wrap:wrap} }
   </style>
 </head>
 <body>
-
 <header>
-  <img src="mago.png" alt="Logo El Portal Gamer"> El Portal Gamer
+  <div class="nav">
+    <div class="brand"><img src="mago.png" alt="Logo" />El Portal Gamer</div>
+    <a href="#ultimo">Inicio</a>
+    <a href="#mini">Reseñas</a>
+    <a href="#series">Series</a>
+    <a href="#top">Top listas</a>
+    <a href="#apoya">Apoya el canal</a>
+    <div class="spacer"></div>
+    <input id="buscador" class="search" type="search" placeholder="Buscar video o reseña…" />
+  </div>
 </header>
 
-<section>
-  <input type="text" id="buscador" placeholder="Buscar video...">
-</section>
-
-<section>
-  <h2>Último Video</h2>
-  <div class="video-card">
-    <div class="video-wrapper">
-      <iframe id="ultimo-video" src="" frameborder="0" allowfullscreen></iframe>
-    </div>
-    <p class="video-title" id="ultimo-titulo"></p>
-    <p class="video-description" id="ultimo-desc"></p>
-    <button class="toggle-btn" id="ultimo-btn">Ver más</button>
-  </div>
-</section>
-
-<section>
-  <h2>Videos de la Playlist</h2>
-  <div class="video-carousel-container">
-    <div id="videos-recientes" class="video-carousel"></div>
-  </div>
-</section>
-
-<footer>© 2024 El Portal Gamer</footer>
-
-<script>
-  const API_KEY = "AIzaSyCqPlM0Ab3-_mtFHPmrrgJTS1S4dBCbbMA";
-  const PLAYLIST_ID = "PLk3cei5OOiyvTQzg5FGgIRY3xs44F7Wzv";
-  const MAX_RESULTS = 13;
-
-  async function cargarVideos() {
-    let url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${PLAYLIST_ID}&maxResults=${MAX_RESULTS}&key=${API_KEY}`;
-    let resp = await fetch(url);
-    let data = await resp.json();
-    if (!data.items) {
-      console.error("Error al cargar la playlist:", data);
-      return;
-    }
-
-    // Último video
-    let ultimo = data.items[0].snippet;
-    document.getElementById("ultimo-video").src = `https://www.youtube.com/embed/${data.items[0].snippet.resourceId.videoId}`;
-    document.getElementById("ultimo-titulo").innerText = ultimo.title;
-    document.getElementById("ultimo-desc").innerText = ultimo.description;
-
-    const ultimoBtn = document.getElementById("ultimo-btn");
-    const ultimoDesc = document.getElementById("ultimo-desc");
-    ultimoBtn.addEventListener("click", () => {
-      ultimoDesc.classList.toggle("expanded");
-      ultimoBtn.innerText = ultimoDesc.classList.contains("expanded") ? "Ver menos" : "Ver más";
-    });
-
-    // Carrusel
-    let contenedor = document.getElementById("videos-recientes");
-    contenedor.innerHTML = "";
-
-    data.items.slice(1).forEach(video => {
-      const snippet = video.snippet;
-      const card = document.createElement("div");
-      card.className = "video-card";
-      card.innerHTML = `
-        <div class="video-wrapper">
-          <iframe src="https://www.youtube.com/embed/${snippet.resourceId.videoId}" frameborder="0" allowfullscreen></iframe>
+<main>
+  <!-- Último Video -->
+  <section id="ultimo">
+    <h2>Último video</h2>
+    <div class="card">
+      <div class="videobox" id="ultimo-lite"></div>
+      <div class="pad">
+        <div class="title" id="ultimo-titulo">Cargando…</div>
+        <div class="muted" id="ultimo-fecha"></div>
+        <p class="desc" id="ultimo-desc"></p>
+        <div class="row">
+          <a id="ultimo-ver" class="btn brand" target="_blank" rel="noopener">▶ Ver en YouTube</a>
+          <a id="ultimo-oferta" class="btn" target="_blank" rel="noopener">🎮 Ver oferta del juego</a>
+          <span class="pill">Mini-reseña</span>
         </div>
-        <p class="video-title">${snippet.title}</p>
-        <p class="video-description">${snippet.description}</p>
-        <button class="toggle-btn">Ver más</button>
-      `;
-      const btn = card.querySelector(".toggle-btn");
-      const desc = card.querySelector(".video-description");
-      btn.addEventListener("click", () => {
-        desc.classList.toggle("expanded");
-        btn.innerText = desc.classList.contains("expanded") ? "Ver menos" : "Ver más";
-      });
-      contenedor.appendChild(card);
-    });
+      </div>
+    </div>
+  </section>
 
-    // Efecto infinito
-    contenedor.innerHTML += contenedor.innerHTML;
-    contenedor.addEventListener("scroll", () => {
-      if (contenedor.scrollLeft >= contenedor.scrollWidth / 2) {
-        contenedor.scrollLeft = 0;
-      }
-    });
+  <!-- Mini Reseñas -->
+  <section id="mini">
+    <h2>Mini reseñas</h2>
+    <p class="sub">Texto corto (100–140 palabras) + botón al video. Perfecto para SEO sin “quemar” el contenido del video.</p>
+    <div class="grid cols-3" id="mini-grid"></div>
+  </section>
+
+  <!-- Series -->
+  <section id="series">
+    <h2>Series</h2>
+    <p class="sub">Sagas y temas que tu público ama: agrupadas automáticamente por palabras clave.</p>
+    <div class="grid cols-2" id="series-grid"></div>
+  </section>
+
+  <!-- Top Listas -->
+  <section id="top">
+    <h2>Top listas</h2>
+    <div class="grid cols-2" id="top-grid"></div>
+  </section>
+
+  <!-- Apoya el canal -->
+  <section id="apoya">
+    <h2>Apoya el canal</h2>
+    <div class="card pad">
+      <p class="muted">Si te gustan las reseñas y querés que sigan saliendo, podés invitarme un café ☕ o comprar con mis enlaces afiliados (no pagás extra).</p>
+      <div class="row">
+        <a class="btn brand" href="https://ko-fi.com/TUUSUARIO" target="_blank" rel="noopener">☕ Invítame un café</a>
+        <a class="btn" href="https://www.instant-gaming.com/es/?igr=TUAFILIADO" target="_blank" rel="noopener">🎮 Instant-Gaming</a>
+        <a class="btn" href="https://www.amazon.com/?tag=TU_TAG_AFILIADO" target="_blank" rel="noopener">🛒 Amazon</a>
+      </div>
+      <p class="muted" style="margin-top:10px">* Enlaces afiliados. Gracias por el aguante, pa.</p>
+    </div>
+  </section>
+</main>
+
+<footer>© 2025 El Portal Gamer</footer>
+
+<!-- JSON-LD del sitio -->
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"WebSite",
+  "name":"El Portal Gamer",
+  "url":"https://tudominio.com/",
+  "potentialAction":{
+    "@type":"SearchAction",
+    "target":"https://tudominio.com/?q={search_term_string}",
+    "query-input":"required name=search_term_string"
   }
-
-  cargarVideos();
-
-  // Buscador
-  const buscador = document.getElementById("buscador");
-  buscador.addEventListener("input", () => {
-    const texto = buscador.value.toLowerCase();
-
-    // Último video
-    const ultimoCard = document.querySelector("#ultimo-video").closest(".video-card");
-    const tituloUltimo = document.getElementById("ultimo-titulo").innerText.toLowerCase();
-    ultimoCard.style.display = tituloUltimo.includes(texto) ? "block" : "none";
-
-    // Playlist
-    document.querySelectorAll("#videos-recientes .video-card").forEach(card => {
-      const titulo = card.querySelector(".video-title").innerText.toLowerCase();
-      card.style.display = titulo.includes(texto) ? "block" : "none";
-    });
-  });
+}
 </script>
 
+<script defer>
+/** ================================
+ *  CONFIG
+ *  ================================ */
+const API_KEY = "TU_API_KEY";           // ⚠️ RESTRINGIR por HTTP referrer en Google Cloud
+const PLAYLIST_ID = "TU_PLAYLIST_ID";   // p.ej. la playlist de tus reseñas
+const MAX_RESULTS = 20;
+
+// Series y Top por palabras clave en títulos (simple y efectivo)
+const SERIES_KEYWORDS = {
+  "Saga Parasite Eve": ["parasite eve","parasite-eve","koudelka"],
+  "Survival Horror PS1/PS2": ["resident evil","silent hill","dino crisis","fear effect","rule of rose","haunting ground"],
+  "JRPG & Square": ["final fantasy","chrono","xenogears","vagrant story","valkyrie profile"]
+};
+const TOP_KEYWORDS = {
+  "Los RPG más raros de PS1": ["jrpg","ps1","rareza","retro","rpg"],
+  "Dreamcast olvidados": ["dreamcast","blue stinger","sega","shen"]
+};
+
+/** ================================
+ *  HELPERS
+ *  ================================ */
+const $ = (s, p=document) => p.querySelector(s);
+const $$ = (s, p=document) => [...p.querySelectorAll(s)];
+
+function truncate(str, n){ return (str||"").length>n ? str.slice(0,n).replace(/\s+\S*$/,'')+"…" : str; }
+function words(x){ return (x||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase(); }
+
+function createLite(container, videoId, title){
+  const box = document.createElement("div");
+  box.className = "lite-yt";
+  box.style.backgroundImage = `url(https://i.ytimg.com/vi/${videoId}/hqdefault.jpg)`;
+  box.innerHTML = `
+    <button class="lty-playbtn" aria-label="Reproducir ${title}">
+      <svg viewBox="0 0 68 48"><path d="M66.52 7.02a8 8 0 0 0-5.64-5.66C56.8 0 34 0 34 0S11.2 0 7.12 1.36A8 8 0 0 0 1.48 7.02 83.3 83.3 0 0 0 0 24a83.3 83.3 0 0 0 1.48 16.98 8 8 0 0 0 5.64 5.66C11.2 48 34 48 34 48s22.8 0 26.88-1.36a8 8 0 0 0 5.64-5.66A83.3 83.3 0 0 0 68 24a83.3 83.3 0 0 0-1.48-16.98zM27 34V14l18 10-18 10z"/></svg>
+    </button>`;
+  box.addEventListener("click", ()=>{
+    const iframe = document.createElement("iframe");
+    iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+    iframe.allow = "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture";
+    iframe.allowFullscreen = true;
+    const wrap = document.createElement("div");
+    wrap.className = "videobox";
+    wrap.appendChild(iframe);
+    const parent = box.parentElement;
+    parent.replaceChild(wrap, box);
+  });
+  container.appendChild(box);
+}
+
+/** ================================
+ *  FETCH YOUTUBE
+ *  ================================ */
+async function loadPlaylist(){
+  const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${PLAYLIST_ID}&maxResults=${MAX_RESULTS}&key=${API_KEY}`;
+  const r = await fetch(url);
+  const data = await r.json();
+  if(!data.items){ console.error("Error YouTube:", data); return; }
+  const items = data.items.map(i => ({
+    id: i.snippet.resourceId.videoId,
+    title: i.snippet.title,
+    desc: i.snippet.description,
+    date: i.snippet.publishedAt,
+    thumb: (i.snippet.thumbnails?.maxres?.url || i.snippet.thumbnails?.high?.url || i.snippet.thumbnails?.medium?.url || "")
+  }));
+
+  renderUltimo(items[0]);
+  renderMini(items.slice(1, 10));
+  renderSeries(items);
+  renderTop(items);
+
+  // Buscador
+  const inp = $("#buscador");
+  inp.addEventListener("input", ()=>{
+    const q = words(inp.value);
+    for(const card of $$(".filterable")){
+      const hay = words(card.dataset.title + " " + (card.dataset.desc||"")).includes(q);
+      card.style.display = (!q || hay) ? "" : "none";
+    }
+  });
+}
+
+function renderUltimo(v){
+  // Lite embed
+  const box = $("#ultimo-lite");
+  box.className = "videobox";
+  const lite = document.createElement("div");
+  lite.className = "lite-yt";
+  lite.style.backgroundImage = `url(${v.thumb})`;
+  lite.innerHTML = `
+    <button class="lty-playbtn" aria-label="Reproducir ${v.title}">
+      <svg viewBox="0 0 68 48"><path d="M66.52 7.02a8 8 0 0 0-5.64-5.66C56.8 0 34 0 34 0S11.2 0 7.12 1.36A8 8 0 0 0 1.48 7.02 83.3 83.3 0 0 0 0 24a83.3 83.3 0 0 0 1.48 16.98 8 8 0 0 0 5.64 5.66C11.2 48 34 48 34 48s22.8 0 26.88-1.36a8 8 0 0 0 5.64-5.66A83.3 83.3 0 0 0 68 24a83.3 83.3 0 0 0-1.48-16.98zM27 34V14l18 10-18 10z"/></svg>
+    </button>`;
+  lite.addEventListener("click", ()=>{
+    box.innerHTML = `<iframe src="https://www.youtube.com/embed/${v.id}?autoplay=1" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="${v.title}"></iframe>`;
+  });
+  box.appendChild(lite);
+
+  $("#ultimo-titulo").textContent = v.title;
+  $("#ultimo-fecha").textContent = new Date(v.date).toLocaleDateString();
+  $("#ultimo-desc").textContent = truncate(v.desc, 420);
+  $("#ultimo-ver").href = `https://www.youtube.com/watch?v=${v.id}`;
+  $("#ultimo-oferta").href = "https://www.instant-gaming.com/es/?igr=TUAFILIADO"; // ← cámbialo
+
+  // JSON-LD dinámico del último video (ayuda Rich Results)
+  const ld = {
+    "@context":"https://schema.org","@type":"VideoObject",
+    "name": v.title,
+    "description": truncate(v.desc, 220),
+    "thumbnailUrl":[v.thumb],
+    "uploadDate": v.date,
+    "embedUrl": `https://www.youtube.com/embed/${v.id}`,
+    "publisher":{"@type":"Organization","name":"El Portal Gamer"},
+    "potentialAction":{"@type":"WatchAction","target":[`https://www.youtube.com/watch?v=${v.id}`]}
+  };
+  let s = document.getElementById("ld-video");
+  if (s) s.remove();
+  s = document.createElement("script");
+  s.type = "application/ld+json"; s.id="ld-video";
+  s.textContent = JSON.stringify(ld);
+  document.head.appendChild(s);
+}
+
+function makeMiniCard(v){
+  const el = document.createElement("article");
+  el.className = "card pad filterable";
+  el.dataset.title = v.title; el.dataset.desc = v.desc;
+  el.innerHTML = `
+    <div class="videobox">${/* mini lite */""}
+      <div class="lite-yt" style="background-image:url(${v.thumb})">
+        <button class="lty-playbtn" aria-label="Reproducir ${v.title}">
+          <svg viewBox="0 0 68 48"><path d="M66.52 7.02a8 8 0 0 0-5.64-5.66C56.8 0 34 0 34 0S11.2 0 7.12 1.36A8 8 0 0 0 1.48 7.02 83.3 83.3 0 0 0 0 24a83.3 83.3 0 0 0 1.48 16.98 8 8 0 0 0 5.64 5.66C11.2 48 34 48 34 48s22.8 0 26.88-1.36a8 8 0 0 0 5.64-5.66A83.3 83.3 0 0 0 68 24a83.3 83.3 0 0 0-1.48-16.98zM27 34V14l18 10-18 10z"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="title">${v.title}</div>
+    <p class="desc">${truncate(v.desc, 360)}</p>
+    <a class="btn brand" href="https://www.youtube.com/watch?v=${v.id}" target="_blank" rel="noopener">▶ Ver video</a>
+  `;
+  // activar lite en la mini
+  const thumb = el.querySelector(".videobox");
+  thumb.addEventListener("click", ()=>{
+    thumb.innerHTML = `<iframe src="https://www.youtube.com/embed/${v.id}?autoplay=1" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="${v.title}"></iframe>`;
+  });
+  return el;
+}
+
+function renderMini(arr){
+  const grid = $("#mini-grid");
+  grid.innerHTML = "";
+  arr.forEach(v => grid.appendChild(makeMiniCard(v)));
+}
+
+function renderSeries(items){
+  const grid = $("#series-grid");
+  grid.innerHTML = "";
+  for(const [name,keys] of Object.entries(SERIES_KEYWORDS)){
+    const hits = items.filter(v => keys.some(k => words(v.title).includes(k)));
+    if(!hits.length) continue;
+    const top = hits.slice(0,3);
+    const el = document.createElement("article");
+    el.className = "card pad filterable";
+    el.dataset.title = name; el.dataset.desc = top.map(x=>x.title).join(" ");
+    el.innerHTML = `
+      <div class="title">${name}</div>
+      <p class="muted" style="margin-top:-2px">${top.length} videos</p>
+      <div class="grid cols-3" style="margin-top:8px" >
+        ${top.map(v=>`
+          <a class="btn" href="https://www.youtube.com/watch?v=${v.id}" target="_blank" rel="noopener">▶ ${truncate(v.title,38)}</a>
+        `).join("")}
+      </div>
+    `;
+    grid.appendChild(el);
+  }
+}
+
+function renderTop(items){
+  const grid = $("#top-grid");
+  grid.innerHTML = "";
+  for(const [name,keys] of Object.entries(TOP_KEYWORDS)){
+    const hits = items.filter(v => keys.some(k => words(v.title).includes(k)));
+    if(!hits.length) continue;
+    const v = hits[0];
+    const el = document.createElement("article");
+    el.className = "card pad filterable";
+    el.dataset.title = name; el.dataset.desc = v.title;
+    el.innerHTML = `
+      <div class="title">${name}</div>
+      <p class="muted">${truncate(v.title,90)}</p>
+      <a class="btn brand" href="https://www.youtube.com/watch?v=${v.id}" target="_blank" rel="noopener">▶ Ver lista</a>
+    `;
+    grid.appendChild(el);
+  }
+}
+
+loadPlaylist();
+</script>
 </body>
 </html>
