@@ -162,7 +162,7 @@
   <script>
     const API_KEY = "AIzaSyCqPlM0Ab3-_mtFHPmrrgJTS1S4dBCbbMA";  
     const PLAYLIST_ID = "PLk3cei5OOiyvTQzg5FGgIRY3xs44F7Wzv"; 
-    const MAX_RESULTS = 13;
+    const MAX_RESULTS = 400;
 
     async function cargarVideos() {
       let url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${PLAYLIST_ID}&maxResults=${MAX_RESULTS}&key=${API_KEY}`;
