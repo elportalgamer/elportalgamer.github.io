@@ -15,17 +15,34 @@
     }
     header {
       background: #1f1f1f;
-      padding: 20px;
+      padding: 15px 20px;
       font-size: 2rem;
       font-weight: bold;
       color: #ff4500;
       display: flex;
+      justify-content: space-between;
       align-items: center;
-      gap: 10px;
     }
     header img {
       height: 40px;
       width: auto;
+      margin-right: 10px;
+    }
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    nav a {
+      margin-left: 20px;
+      color: #f0f0f0;
+      text-decoration: none;
+      font-size: 1rem;
+      font-weight: normal;
+      transition: color 0.2s;
+    }
+    nav a:hover {
+      color: #ff4500;
     }
     section {
       padding: 20px;
@@ -116,22 +133,44 @@
       padding: 10px 0;
     }
     .video-carousel::-webkit-scrollbar {
-      height: 8px;
+      display: none;
     }
-    .video-carousel::-webkit-scrollbar-thumb {
-      background: #444;
-      border-radius: 4px;
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0,0,0,0.5);
+      border: none;
+      color: white;
+      font-size: 2rem;
+      cursor: pointer;
+      padding: 10px;
+      border-radius: 50%;
+      z-index: 2;
     }
-    .video-carousel::-webkit-scrollbar-track {
-      background: #1f1f1f;
+    .carousel-btn.left {
+      left: 10px;
+    }
+    .carousel-btn.right {
+      right: 10px;
     }
   </style>
 </head>
 <body>
 
   <header>
-    <img src="mago.png" alt="Logo El Portal Gamer">
-    El Portal Gamer
+    <div class="logo-container">
+      <img src="mago.png" alt="Logo El Portal Gamer">
+      El Portal Gamer
+    </div>
+    <nav>
+      <a href="index.html">Inicio</a> <!-- LINK AQUI -->
+      <a href="noticias.html">Noticias</a> <!-- LINK AQUI -->
+      <a href="videos.html">Videos</a> <!-- LINK AQUI -->
+      <a href="reseñas.html">Reseñas</a> <!-- LINK AQUI -->
+      <a href="series.html">Series</a> <!-- LINK AQUI -->
+      <a href="apoyo.html">Apoya el canal</a> <!-- LINK AQUI -->
+    </nav>
   </header>
 
   <section>
@@ -153,7 +192,9 @@
   <section>
     <h2>Videos de la Playlist</h2>
     <div class="video-carousel-container">
+      <button class="carousel-btn left" onclick="moverCarrusel(-1)">&#10094;</button>
       <div id="videos-recientes" class="video-carousel"></div>
+      <button class="carousel-btn right" onclick="moverCarrusel(1)">&#10095;</button>
     </div>
   </section>
 
@@ -224,6 +265,12 @@
           contenedor.scrollLeft = 0;
         }
       });
+    }
+
+    function moverCarrusel(direccion) {
+      const contenedor = document.getElementById("videos-recientes");
+      const cardWidth = contenedor.querySelector(".video-card").offsetWidth + 15;
+      contenedor.scrollBy({ left: direccion * cardWidth, behavior: "smooth" });
     }
 
     cargarVideos();
