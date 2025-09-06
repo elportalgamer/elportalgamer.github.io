@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>El Portal Gamer</title>
-  <link rel="icon" type="image/png" href="mago.png" />
+  <link rel="icon" type="image/png" href="mago.png">
   <style>
     body {
       margin: 0;
@@ -15,22 +15,16 @@
     header {
       background: #1f1f1f;
       padding: 20px;
-      font-size: 1.8rem;
+      font-size: 2rem;
       font-weight: bold;
       color: #ff4500;
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;
+      gap: 10px;
     }
-    header nav a {
-      margin-left: 15px;
-      color: #f0f0f0;
-      text-decoration: none;
-      font-size: 1rem;
-    }
-    header nav a:hover {
-      text-decoration: underline;
+    header img {
+      height: 40px;
+      width: auto;
     }
     section {
       padding: 20px;
@@ -38,145 +32,209 @@
     h2 {
       border-bottom: 2px solid #ff4500;
       padding-bottom: 10px;
-      margin-bottom: 20px;
+      margin-bottom: 15px;
+    }
+    .video-card {
+      background: #1f1f1f;
+      border-radius: 10px;
+      padding: 10px;
+      margin: 10px 0;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      transition: transform 0.2s;
+      flex: 0 0 300px;
+      scroll-snap-align: start;
+    }
+    .video-card:hover {
+      transform: scale(1.03);
     }
     .video-wrapper {
       position: relative;
       width: 100%;
-      max-width: 720px;
-      margin: auto;
       padding-top: 56.25%;
     }
     .video-wrapper iframe {
       position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      border: none;
-    }
-    .grid {
-      display: grid;
-      gap: 20px;
-    }
-    .grid.cols-3 { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
-    .grid.cols-2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
-
-    .card {
-      background: #1f1f1f;
-      border-radius: 10px;
-      padding: 15px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
-    }
-    .card img {
+      top: 0;
+      left: 0;
       width: 100%;
-      border-radius: 8px;
-      margin-bottom: 10px;
+      height: 100%;
+      border-radius: 10px;
+    }
+    footer {
+      text-align: center;
+      padding: 15px;
+      background: #1f1f1f;
+      margin-top: 20px;
+      color: #888;
     }
     .video-title {
+      margin-top: 8px;
       font-weight: bold;
-      margin-bottom: 8px;
+      font-size: 1rem;
       color: #fff;
     }
     .video-description {
       font-size: 0.9rem;
       color: #ccc;
+      max-height: 60px;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
     }
-    .btn {
-      display: inline-block;
-      margin-top: 10px;
-      padding: 8px 12px;
-      background: #ff4500;
-      color: #fff;
-      border-radius: 6px;
-      text-decoration: none;
-      font-weight: bold;
+    .video-description.expanded {
+      max-height: 500px;
     }
-    footer {
+    .toggle-btn {
+      background: none;
+      border: none;
+      color: #ff4500;
+      cursor: pointer;
+      font-size: 0.9rem;
+      padding: 0;
+      margin-top: 5px;
+    }
+    #buscador {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      font-size: 1rem;
+      border-radius: 5px;
+      border: none;
+    }
+    .video-carousel-container {
+      position: relative;
+      overflow: hidden;
+    }
+    .video-carousel {
+      display: flex;
+      gap: 15px;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      scroll-snap-type: x mandatory;
+      padding: 10px 0;
+    }
+    .video-carousel::-webkit-scrollbar {
+      height: 8px;
+    }
+    .video-carousel::-webkit-scrollbar-thumb {
+      background: #444;
+      border-radius: 4px;
+    }
+    .video-carousel::-webkit-scrollbar-track {
       background: #1f1f1f;
-      text-align: center;
-      padding: 20px;
-      color: #888;
-      margin-top: 40px;
     }
   </style>
 </head>
 <body>
 
 <header>
-  <div>El Portal Gamer</div>
-  <nav>
-    <a href="#inicio">Inicio</a>
-    <a href="#resenas">Reseñas</a>
-    <a href="#series">Series</a>
-    <a href="#apoya">Apoya el Canal</a>
-  </nav>
+  <img src="mago.png" alt="Logo El Portal Gamer"> El Portal Gamer
 </header>
 
-<main>
-  <!-- Último video -->
-  <section id="inicio">
-    <h2>Último Video</h2>
+<section>
+  <input type="text" id="buscador" placeholder="Buscar video...">
+</section>
+
+<section>
+  <h2>Último Video</h2>
+  <div class="video-card">
     <div class="video-wrapper">
-      <iframe src="https://www.youtube.com/embed/D2xA_kFzp4E" allowfullscreen title="Último Video"></iframe>
+      <iframe id="ultimo-video" src="" frameborder="0" allowfullscreen></iframe>
     </div>
-    <p class="video-title">El Hijo PROHIBIDO de Resident Evil y Final Fantasy</p>
-    <p class="video-description">Una historia oculta detrás de Parasite Eve, la joya perdida de Square. Un crossover entre horror biológico y RPGs que no sabías que necesitabas.</p>
-    <a class="btn" href="https://www.youtube.com/watch?v=D2xA_kFzp4E" target="_blank">Ver video</a>
-  </section>
+    <p class="video-title" id="ultimo-titulo"></p>
+    <p class="video-description" id="ultimo-desc"></p>
+    <button class="toggle-btn" id="ultimo-btn">Ver más</button>
+  </div>
+</section>
 
-  <!-- Mini Reseñas -->
-  <section id="resenas">
-    <h2>Mini Reseñas</h2>
-    <div class="grid cols-3">
-      <div class="card">
-        <p class="video-title">Parasite Eve</p>
-        <p class="video-description">Parasite Eve fue el ambicioso intento de Squaresoft de mezclar horror y RPG en una sola obra.</p>
-        <a class="btn" href="#">Ver video</a>
-      </div>
-      <div class="card">
-        <p class="video-title">Final Fantasy fue RECHAZADO</p>
-        <p class="video-description">Argumentos enrevesados, decisiones editoriales y censura marcaron la salida del FF perdido.</p>
-        <a class="btn" href="#">Ver video</a>
-      </div>
-      <div class="card">
-        <p class="video-title">Cuando MUERES debes cambiar de personaje</p>
-        <p class="video-description">Un experimento de la era PS1 donde la muerte era parte del progreso narrativo.</p>
-        <a class="btn" href="#">Ver video</a>
-      </div>
-    </div>
-  </section>
+<section>
+  <h2>Videos de la Playlist</h2>
+  <div class="video-carousel-container">
+    <div id="videos-recientes" class="video-carousel"></div>
+  </div>
+</section>
 
-  <!-- Series -->
-  <section id="series">
-    <h2>Series</h2>
-    <div class="grid cols-2">
-      <div class="card">
-        <img src="serie1.jpg" alt="Serie Parasite Eve">
-        <p class="video-title">Saga Parasite Eve</p>
-        <p class="video-description">Análisis, guías y curiosidades de toda la trilogía de acción y terror de Square.</p>
-        <a class="btn" href="#">Ver video</a>
-      </div>
-      <div class="card">
-        <img src="serie2.jpg" alt="RPGs raros de PS1">
-        <p class="video-title">Los RPG más raros de PS1</p>
-        <p class="video-description">Desde Koudelka hasta The Legend of Dragoon. RPGs olvidados pero inolvidables.</p>
-        <a class="btn" href="#">Ver video</a>
-      </div>
-    </div>
-  </section>
+<footer>© 2024 El Portal Gamer</footer>
 
-  <!-- Apoyo -->
-  <section id="apoya">
-    <h2>Apoya el Canal</h2>
-    <div class="card">
-      <p class="video-description">Si te gustan mis reseñas y análisis, podés apoyar mi trabajo invitándome un café ☕.</p>
-      <a class="btn" href="https://ko-fi.com/TUUSUARIO" target="_blank">Apóyame</a>
-    </div>
-  </section>
-</main>
+<script>
+  const API_KEY = "AIzaSyCqPlM0Ab3-_mtFHPmrrgJTS1S4dBCbbMA";
+  const PLAYLIST_ID = "PLk3cei5OOiyvTQzg5FGgIRY3xs44F7Wzv";
+  const MAX_RESULTS = 13;
 
-<footer>
-  © 2025 El Portal Gamer
-</footer>
+  async function cargarVideos() {
+    let url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${PLAYLIST_ID}&maxResults=${MAX_RESULTS}&key=${API_KEY}`;
+    let resp = await fetch(url);
+    let data = await resp.json();
+    if (!data.items) {
+      console.error("Error al cargar la playlist:", data);
+      return;
+    }
+
+    // Último video
+    let ultimo = data.items[0].snippet;
+    document.getElementById("ultimo-video").src = `https://www.youtube.com/embed/${data.items[0].snippet.resourceId.videoId}`;
+    document.getElementById("ultimo-titulo").innerText = ultimo.title;
+    document.getElementById("ultimo-desc").innerText = ultimo.description;
+
+    const ultimoBtn = document.getElementById("ultimo-btn");
+    const ultimoDesc = document.getElementById("ultimo-desc");
+    ultimoBtn.addEventListener("click", () => {
+      ultimoDesc.classList.toggle("expanded");
+      ultimoBtn.innerText = ultimoDesc.classList.contains("expanded") ? "Ver menos" : "Ver más";
+    });
+
+    // Carrusel
+    let contenedor = document.getElementById("videos-recientes");
+    contenedor.innerHTML = "";
+
+    data.items.slice(1).forEach(video => {
+      const snippet = video.snippet;
+      const card = document.createElement("div");
+      card.className = "video-card";
+      card.innerHTML = `
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/${snippet.resourceId.videoId}" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <p class="video-title">${snippet.title}</p>
+        <p class="video-description">${snippet.description}</p>
+        <button class="toggle-btn">Ver más</button>
+      `;
+      const btn = card.querySelector(".toggle-btn");
+      const desc = card.querySelector(".video-description");
+      btn.addEventListener("click", () => {
+        desc.classList.toggle("expanded");
+        btn.innerText = desc.classList.contains("expanded") ? "Ver menos" : "Ver más";
+      });
+      contenedor.appendChild(card);
+    });
+
+    // Efecto infinito
+    contenedor.innerHTML += contenedor.innerHTML;
+    contenedor.addEventListener("scroll", () => {
+      if (contenedor.scrollLeft >= contenedor.scrollWidth / 2) {
+        contenedor.scrollLeft = 0;
+      }
+    });
+  }
+
+  cargarVideos();
+
+  // Buscador
+  const buscador = document.getElementById("buscador");
+  buscador.addEventListener("input", () => {
+    const texto = buscador.value.toLowerCase();
+
+    // Último video
+    const ultimoCard = document.querySelector("#ultimo-video").closest(".video-card");
+    const tituloUltimo = document.getElementById("ultimo-titulo").innerText.toLowerCase();
+    ultimoCard.style.display = tituloUltimo.includes(texto) ? "block" : "none";
+
+    // Playlist
+    document.querySelectorAll("#videos-recientes .video-card").forEach(card => {
+      const titulo = card.querySelector(".video-title").innerText.toLowerCase();
+      card.style.display = titulo.includes(texto) ? "block" : "none";
+    });
+  });
+</script>
 
 </body>
 </html>
