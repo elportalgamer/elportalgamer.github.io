@@ -5,7 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>El Portal Gamer — Reseñas y retro</title>
 
-  <link rel="canonical" href="https://tudominio.com/" />
+  <!-- =========================================================
+       DOMINIO & REFERRER (LEER Y LUEGO BORRAR ESTE BLOQUE)
+       - En Google Cloud Console → APIs & Services → Credentials → TU API KEY:
+         Application restrictions: HTTP referrers (web sites)
+         Website restrictions (pegá EXACTO):
+           https://www.elportalgamer.com/*
+           https://elportalgamer.com/*           (si apuntás el apex)
+           https://elportalgamer.github.io/*     (mientras uses Pages directo)
+           https://elportalgamer.github.io/elportalgamer/*   (si tu Pages es de proyecto)
+         API restrictions: Restrict key → YouTube Data API v3
+       - Cuando el dominio quede 100% en producción, podés quitar los de GitHub.
+     ========================================================= -->
+
+  <link rel="canonical" href="https://www.elportalgamer.com/" />
   <link rel="icon" type="image/png" href="mago.png" />
 
   <!-- Open Graph / Twitter -->
@@ -13,12 +26,12 @@
   <meta property="og:title" content="El Portal Gamer — Reseñas y retro" />
   <meta property="og:description" content="Reseñas sinceras, retro y rarezas: PS1, PS2, Dreamcast, JRPG y survival horror." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://tudominio.com/" />
-  <meta property="og:image" content="https://tudominio.com/og.jpg" />
+  <meta property="og:url" content="https://www.elportalgamer.com/" />
+  <meta property="og:image" content="https://www.elportalgamer.com/og.jpg" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="El Portal Gamer — Reseñas y retro" />
   <meta name="twitter:description" content="Reseñas sinceras, retro y rarezas: PS1, PS2, Dreamcast, JRPG y survival horror." />
-  <meta name="twitter:image" content="https://tudominio.com/og.jpg" />
+  <meta name="twitter:image" content="https://www.elportalgamer.com/og.jpg" />
 
   <style>
     :root{
@@ -67,6 +80,12 @@
     .btn.brand{background:var(--brand); border-color:#ff5e1f; color:#111; font-weight:800}
     .pill{display:inline-block; font-size:.8rem; color:#ffb18f; border:1px solid #3a1c12; background:#1b0f0a; padding:4px 8px; border-radius:999px}
 
+    /* Noticias */
+    .news-thumb{position:relative; width:100%; padding-top:56%; background:#0e0e0e; border-radius:10px; overflow:hidden; border:1px solid #262626}
+    .news-thumb img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover}
+    .news-meta{display:flex; gap:10px; align-items:center; color:#cfcfcf; font-size:.9rem; margin:6px 0 10px}
+    .badge{font-size:.75rem; border:1px solid #333; padding:4px 8px; border-radius:999px; color:#ffcfbd; background:#1b0f0a}
+
     footer{margin:40px 0 20px; color:#9b9b9b; text-align:center}
     @media (max-width:560px){ .search{width:100%} .nav{flex-wrap:wrap} }
 
@@ -87,10 +106,11 @@
     <a href="#mini">Reseñas</a>
     <a href="#series">Series</a>
     <a href="#top">Top listas</a>
+    <a href="#news">Noticias</a>
     <a href="#apoya">Apoya el canal</a>
     <a href="#contacto">Contacto</a>
     <div class="spacer"></div>
-    <input id="buscador" class="search" type="search" placeholder="Buscar video o reseña…" />
+    <input id="buscador" class="search" type="search" placeholder="Buscar video, reseña o noticia…" />
   </div>
 </header>
 
@@ -131,6 +151,13 @@
   <section id="top">
     <h2>Top listas</h2>
     <div class="grid cols-2" id="top-grid"></div>
+  </section>
+
+  <!-- Noticias -->
+  <section id="news">
+    <h2>Noticias</h2>
+    <p class="sub">Actualidad gamer, retro y curiosidades. Podés editar <code>news.json</code> para actualizar esto sin tocar el HTML.</p>
+    <div class="grid cols-3" id="news-grid"></div>
   </section>
 
   <!-- Apoya el canal -->
@@ -189,10 +216,10 @@
   "@context":"https://schema.org",
   "@type":"WebSite",
   "name":"El Portal Gamer",
-  "url":"https://tudominio.com/",
+  "url":"https://www.elportalgamer.com/",
   "potentialAction":{
     "@type":"SearchAction",
-    "target":"https://tudominio.com/?q={search_term_string}",
+    "target":"https://www.elportalgamer.com/?q={search_term_string}",
     "query-input":"required name=search_term_string"
   }
 }
@@ -226,7 +253,7 @@ const $$ = (s, p=document) => [...p.querySelectorAll(s)];
 const truncate = (str, n) => (str||"").length>n ? str.slice(0,n).replace(/\s+\S*$/,'')+"…" : str;
 const words = (x)=> (x||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
 
-/** Render último con lite */
+/** ===== YOUTUBE ===== */
 function renderUltimo(v){
   const box = $("#ultimo-lite");
   box.className = "videobox";
@@ -365,7 +392,79 @@ async function loadPlaylist(){
     showFallback("No se pudo conectar con YouTube");
   }
 }
+
+/** ===== NOTICIAS ===== */
+function timeAgo(iso){
+  const d = new Date(iso); const diff = (Date.now() - d.getTime())/1000;
+  const units = [[31536000,'a'],[2592000,'m'],[604800,'sem'],[86400,'d'],[3600,'h'],[60,'min']];
+  for(const [s,n] of units){ if(diff>=s) return `${Math.floor(diff/s)} ${n}`; }
+  return 'ahora';
+}
+
+async function loadNews(){
+  let items = [];
+  try{
+    const res = await fetch('news.json', {cache:'no-store'});
+    if(!res.ok) throw new Error('no json');
+    items = await res.json();
+  }catch{
+    // Fallback de ejemplo (podés editarlo o borrar cuando tengas news.json)
+    items = [
+      {
+        title: "Rumor retro: ¿Vuelve Parasite Eve?",
+        url: "https://example.com/parasite-eve-rumor",
+        source: "Portal Gamer",
+        date: new Date().toISOString(),
+        summary: "Otra vez suenan campanas en Square para revivir el híbrido de terror y RPG. ¿Reboot, remaster o humo del bueno?",
+        image: "https://i.imgur.com/8xU7N7E.jpeg"
+      },
+      {
+        title: "Dreamcast está más viva que nunca",
+        url: "https://example.com/dreamcast-scene",
+        source: "Homebrew Scene",
+        date: "2025-02-01T10:00:00Z",
+        summary: "Nuevos ports y traducciones fan siguen alimentando la consola de SEGA. Elegimos cinco joyas para jugar hoy.",
+        image: "https://i.imgur.com/3g9y1hJ.jpeg"
+      },
+      {
+        title: "Silent Hill: 25 años de niebla",
+        url: "https://example.com/silent-hill-25",
+        source: "Retro Weekly",
+        date: "2025-01-25T09:30:00Z",
+        summary: "Un repaso por la estética, el sonido y el trauma que definieron el survival psicológico.",
+        image: "https://i.imgur.com/2H7m1qg.jpeg"
+      }
+    ];
+  }
+
+  items = items.map(n => ({
+    title: n.title, url: n.url, source: n.source || 'Fuente',
+    date: n.date, summary: n.summary || '', image: n.image || ''
+  })).sort((a,b)=> new Date(b.date)-new Date(a.date));
+
+  const grid = $("#news-grid"); grid.innerHTML = "";
+  for(const n of items){
+    const card = document.createElement('article');
+    card.className = "card pad filterable";
+    card.dataset.title = n.title; card.dataset.desc = n.summary + " " + n.source;
+
+    const img = n.image ? `<img loading="lazy" src="${n.image}" alt="">` : "";
+    card.innerHTML = `
+      <div class="news-thumb">${img}</div>
+      <div class="news-meta">
+        <span class="badge">Noticia</span>
+        <span>${n.source}</span> • <span>${timeAgo(n.date)}</span>
+      </div>
+      <div class="title">${n.title}</div>
+      <p class="desc">${truncate(n.summary, 220)}</p>
+      <a class="btn brand" href="${n.url}" target="_blank" rel="noopener">📰 Leer más</a>
+    `;
+    grid.appendChild(card);
+  }
+}
+
 loadPlaylist();
+loadNews();
 </script>
 
 <!-- Contacto: envío + mailto fallback -->
@@ -395,8 +494,8 @@ loadPlaylist();
     }
   });
 
-  // Mailto fallback (cambiá el correo)
-  const mail = ['contacto','@','tudominio.com'].join('');
+  // Mailto directo
+  const mail = ['contacto','@','elportalgamer.com'].join('');
   const mailto = document.getElementById('mailto');
   if (mailto) mailto.href = `mailto:${mail}?subject=El%20Portal%20Gamer&body=Hola%20Paul,%0D%0A`;
 })();
