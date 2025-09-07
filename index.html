@@ -36,7 +36,7 @@
     .search{width:320px; max-width:55vw; padding:10px 12px; border-radius:10px; border:1px solid #2a2a2a; background:#0f0f0f; color:#fff}
 
     main{max-width:1100px; margin:20px auto; padding:0 16px}
-    section{margin:24px 0}
+    section{margin:24px 0; position:relative}
     h2{margin:0 0 12px; font-size:1.25rem}
 
     .grid{display:grid; gap:16px}
@@ -64,6 +64,32 @@
     .btn{ display:inline-flex; align-items:center; gap:8px; padding:10px 12px; border-radius:10px; border:1px solid #333; background:#151515; color:#fff; text-decoration:none; }
     .btn.brand{background:var(--brand); border-color:#ff5e1f; color:#111; font-weight:800}
     .pill{display:inline-block; font-size:.8rem; color:#ffb18f; border:1px solid #3a1c12; background:#1b0f0a; padding:4px 8px; border-radius:999px}
+
+    /* -------- Mejora visual secciones -------- */
+    .section-band{
+      padding:16px;
+      border:1px solid #262626;
+      border-radius:18px;
+      background:linear-gradient(180deg,#191919 0%, #141414 100%);
+      box-shadow:0 8px 28px rgba(0,0,0,.25);
+    }
+    .section-bar{
+      height:3px;
+      background:linear-gradient(90deg,var(--brand),#ff7a3c 60%, transparent);
+      border-radius:999px;
+      margin:6px 0 16px;
+      opacity:.9;
+    }
+    .section-hr{
+      height:1px;
+      background:linear-gradient(90deg,transparent,#2b2b2b,transparent);
+      border-radius:999px;
+      margin:28px 0;
+    }
+
+    /* Noticias con hover suave */
+    #news .card{background:#181818;border-color:#2a2a2a; transition:transform .15s ease, box-shadow .15s ease;}
+    #news .card:hover{transform:translateY(-2px); box-shadow:0 10px 24px rgba(0,0,0,.35)}
 
     /* Noticias cuadradas */
     .news-thumb{position:relative; width:100%; padding-top:100%; background:#0e0e0e; border-radius:10px; overflow:hidden; border:1px solid #262626}
@@ -118,17 +144,24 @@
     </div>
   </section>
 
-  <!-- Noticias (después del último video) -->
+  <!-- Noticias en banda -->
   <section id="news">
-    <h2>Noticias</h2>
-    <div class="grid cols-3" id="news-grid"></div>
+    <div class="section-band">
+      <h2>Noticias</h2>
+      <div class="section-bar" aria-hidden="true"></div>
+      <div class="grid cols-3" id="news-grid"></div>
+    </div>
   </section>
+
+  <div class="section-hr" aria-hidden="true"></div>
 
   <!-- Reseñas -->
   <section id="reseñas">
     <h2>Reseñas</h2>
     <div class="grid cols-3" id="mini-grid"></div>
   </section>
+
+  <div class="section-hr" aria-hidden="true"></div>
 
   <!-- Series -->
   <section id="series">
@@ -201,7 +234,6 @@
 const API_KEY = "AIzaSyCqPlM0Ab3-_mtFHPmrrgJTS1S4dBCbbMA";
 const PLAYLIST_ID = "PLk3cei5OOiyvTQzg5FGgIRY3xs44F7Wzv";
 const MAX_RESULTS = 20;
-
 const BLOGGER_FEED = "https://portalgamerok.blogspot.com/feeds/posts/summary?alt=json&max-results=3&orderby=published";
 
 /* ====== HELPERS ====== */
@@ -231,14 +263,12 @@ function renderUltimo(v){
   $("#ultimo-desc").textContent = truncate(v.desc, 420);
   $("#ultimo-ver").href = `https://www.youtube.com/watch?v=${v.id}`;
 
-  const ld = {
-    "@context":"https://schema.org","@type":"VideoObject",
+  const ld = {"@context":"https://schema.org","@type":"VideoObject",
     "name": v.title,"description": truncate(v.desc, 220),
     "thumbnailUrl":[v.thumb],"uploadDate": v.date,
     "embedUrl": `https://www.youtube.com/embed/${v.id}`,
     "publisher":{"@type":"Organization","name":"El Portal Gamer"},
-    "potentialAction":{"@type":"WatchAction","target":[`https://www.youtube.com/watch?v=${v.id}`]}
-  };
+    "potentialAction":{"@type":"WatchAction","target":[`https://www.youtube.com/watch?v=${v.id}`]}};
   let s = document.getElementById("ld-video"); if (s) s.remove();
   s = document.createElement("script"); s.type="application/ld+json"; s.id="ld-video";
   s.textContent = JSON.stringify(ld); document.head.appendChild(s);
@@ -265,7 +295,6 @@ function makeMiniCard(v){
   });
   return el;
 }
-
 function renderMini(arr){ const grid = $("#mini-grid"); grid.innerHTML = ""; arr.forEach(v => grid.appendChild(makeMiniCard(v))); }
 
 function renderSeries(items){
@@ -288,22 +317,18 @@ function renderSeries(items){
     grid.appendChild(el);
   }
 }
-
 function showFallback(msg){
   $("#ultimo-titulo").textContent = msg || "No se pudo cargar la playlist";
   $("#ultimo-fecha").textContent = "";
   $("#ultimo-desc").textContent = "Tocá el botón para ver el canal, o probá más tarde.";
   $("#ultimo-ver").href = "https://www.youtube.com/@TuCanal/videos";
 }
-
-/* Fetch YouTube */
 async function loadPlaylist(){
   try{
     const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${PLAYLIST_ID}&maxResults=${MAX_RESULTS}&key=${API_KEY}`;
     const r = await fetch(url);
     const data = await r.json();
     if(!data.items){ console.error("Error YouTube:", data); showFallback("No se pudo cargar la playlist"); return; }
-
     const items = data.items.map(i => ({
       id: i.snippet.resourceId.videoId,
       title: i.snippet.title,
@@ -311,7 +336,6 @@ async function loadPlaylist(){
       date: i.snippet.publishedAt,
       thumb: (i.snippet.thumbnails?.maxres?.url || i.snippet.thumbnails?.high?.url || i.snippet.thumbnails?.medium?.url || "")
     }));
-
     renderUltimo(items[0]);
     renderMini(items.slice(1, 10));
     renderSeries(items);
@@ -324,10 +348,7 @@ async function loadPlaylist(){
         card.style.display = (!q || hay) ? "" : "none";
       }
     });
-  }catch(e){
-    console.error(e);
-    showFallback("No se pudo conectar con YouTube");
-  }
+  }catch(e){ console.error(e); showFallback("No se pudo conectar con YouTube"); }
 }
 
 /* ====== NOTICIAS (Blogger) ====== */
@@ -361,11 +382,9 @@ function parseBloggerJson(data){
     const title = titleRaw || (textOnly ? textOnly.split(/\s+/).slice(0,12).join(" ") + "…" : "Sin título");
     const link  = (e.link || []).find(l=>l.rel==='alternate')?.href || '#';
     const date  = e.published?.$t || e.updated?.$t || new Date().toISOString();
-
     const thumbRaw = e['media$thumbnail']?.url || extractImgFromHtml(rawHtml) || DEFAULT_NEWS_IMAGE;
     const image = upsizeBloggerImage(thumbRaw, 800);
     const source = NEWS_SHOW_SOURCE ? (data?.feed?.title?.$t || NEWS_BRAND_NAME) : "";
-
     return { title, url: link, date, summary: textOnly, image, source };
   });
 }
@@ -375,14 +394,12 @@ function renderNews(items){
     const card = document.createElement('article');
     card.className = "card pad filterable";
     card.dataset.title = n.title; card.dataset.desc = n.summary + " " + n.source;
-
     const imgTag = n.image ? `
       <img loading="lazy" src="${n.image}"
            srcset="${upsizeBloggerImage(n.image,400)} 400w,
                    ${upsizeBloggerImage(n.image,800)} 800w,
                    ${upsizeBloggerImage(n.image,1200)} 1200w"
            sizes="(min-width: 900px) 33vw, 90vw" alt="">` : "";
-
     card.innerHTML = `
       <div class="news-thumb">${imgTag}</div>
       <div class="news-meta">
@@ -412,13 +429,12 @@ loadPlaylist();
 loadNews();
 </script>
 
-<!-- Contacto: envío (sin mailto) -->
+<!-- Contacto: envío -->
 <script>
 (function(){
   const form = document.getElementById('contact-form');
   if (!form) return;
   const result = document.getElementById('form-result');
-
   form.addEventListener('submit', async (e)=>{
     e.preventDefault();
     result.textContent = 'Enviando…';
@@ -428,15 +444,9 @@ loadNews();
         body: new FormData(form),
         headers: { 'Accept':'application/json' }
       });
-      if(r.ok){
-        result.textContent = '¡Mensaje enviado! Te respondo apenas pueda.';
-        form.reset();
-      }else{
-        result.textContent = 'Hubo un error al enviar. Probá de nuevo en unos minutos.';
-      }
-    }catch(err){
-      result.textContent = 'No se pudo enviar. Probá de nuevo más tarde.';
-    }
+      if(r.ok){ result.textContent = '¡Mensaje enviado! Te respondo apenas pueda.'; form.reset(); }
+      else{ result.textContent = 'Hubo un error al enviar. Probá de nuevo en unos minutos.'; }
+    }catch(err){ result.textContent = 'No se pudo enviar. Probá de nuevo más tarde.'; }
   });
 })();
 </script>
