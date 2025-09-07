@@ -53,20 +53,19 @@
     .videobox{position:relative; width:100%; padding-top:56.25%; overflow:hidden; background:#000; border-bottom:1px solid #262626}
     .lite-yt{ position:absolute; inset:0; background-position:center; background-size:cover; cursor:pointer; }
     .lite-yt::before{ content:""; position:absolute; inset:0; background:linear-gradient(0deg, rgba(0,0,0,.35), rgba(0,0,0,.05)); }
-    .lty-playbtn{ position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
-      width:72px; height:52px; border:0; border-radius:10px; background:rgba(0,0,0,.6);
-      display:grid; place-items:center; box-shadow:0 8px 20px rgba(0,0,0,.45); }
+    .lty-playbtn{ position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:72px; height:52px; border:0; border-radius:10px; background:rgba(0,0,0,.6); display:grid; place-items:center; box-shadow:0 8px 20px rgba(0,0,0,.45); }
     .lty-playbtn svg{width:28px;height:28px;fill:#fff}
     iframe{position:absolute; inset:0; width:100%; height:100%; border:0}
 
     .title{font-weight:700; margin:8px 0 6px; font-size:1.05rem}
     .desc{color:#cfcfcf; font-size:.95rem; line-height:1.45; max-height:4.5em; overflow:hidden}
-    .muted{color:#b5b5b5; font-size:.9rem}
+    .desc.expanded{max-height:600px}
+    .muted{color:var(--muted); font-size:.9rem}
     .btn{ display:inline-flex; align-items:center; gap:8px; padding:10px 12px; border-radius:10px; border:1px solid #333; background:#151515; color:#fff; text-decoration:none; }
     .btn.brand{background:var(--brand); border-color:#ff5e1f; color:#111; font-weight:800}
     .pill{display:inline-block; font-size:.8rem; color:#ffb18f; border:1px solid #3a1c12; background:#1b0f0a; padding:4px 8px; border-radius:999px}
 
-    /* Noticias (cuadrado) */
+    /* Noticias cuadradas */
     .news-thumb{position:relative; width:100%; padding-top:100%; background:#0e0e0e; border-radius:10px; overflow:hidden; border:1px solid #262626}
     .news-thumb img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover}
     .news-meta{display:flex; gap:10px; align-items:center; color:#cfcfcf; font-size:.9rem; margin:6px 0 10px}
@@ -75,7 +74,7 @@
     footer{margin:40px 0 20px; color:#9b9b9b; text-align:center}
     @media (max-width:560px){ .search{width:100%} .nav{flex-wrap:wrap} }
 
-    /* ===== Contacto ===== */
+    /* Contacto */
     label { display:block; margin:8px 0 12px; font-size:.95rem; }
     input, textarea, select { width:100%; padding:10px 12px; border-radius:10px; border:1px solid #2a2a2a; background:#0f0f0f; color:#fff; }
     input:focus, textarea:focus, select:focus { outline:2px solid var(--brand); outline-offset:2px; }
@@ -112,17 +111,17 @@
         <p class="desc" id="ultimo-desc"></p>
         <div class="row">
           <a id="ultimo-ver" class="btn brand" target="_blank" rel="noopener">▶ Ver en YouTube</a>
-          <a id="ultimo-oferta" class="btn" target="_blank" rel="noopener nofollow sponsored">🎮 Ver juegos en oferta</a>
+          <a id="ultimo-oferta" class="btn" target="_blank" rel="noopener">🔥 Ver Juegos en Oferta</a>
           <span class="pill">Mini-reseña</span>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Noticias -->
+  <!-- Noticias (DESPUÉS del último video) -->
   <section id="news">
     <h2>Noticias</h2>
-    <p class="sub">Publicá en Blogger y aparecen acá. Muestra las 3 más nuevas.</p>
+    <p class="sub">Publicá en tu Blogger y aparecen acá. Muestra las 3 más nuevas.</p>
     <div class="grid cols-3" id="news-grid"></div>
   </section>
 
@@ -147,8 +146,8 @@
       <p class="muted">Si te gustan las reseñas y querés que sigan saliendo, podés invitarme un café ☕ o comprar con mis enlaces afiliados (no pagás extra).</p>
       <div class="row">
         <a class="btn brand" href="https://ko-fi.com/portalgamer" target="_blank" rel="noopener">☕ Invítame un café</a>
-        <a class="btn" href="https://www.instant-gaming.com/es/?igr=portalgamerx" target="_blank" rel="noopener nofollow sponsored">🎮 Instant-Gaming</a>
-        <a class="btn" href="https://www.amazon.com/shop/viajealodesconocido" target="_blank" rel="noopener nofollow sponsored">🛒 Amazon</a>
+        <a class="btn" href="https://www.instant-gaming.com/es/?igr=portalgamerx" target="_blank" rel="noopener">🔥 Ver Juegos en Oferta</a>
+        <a class="btn" href="https://www.amazon.com/shop/viajealodesconocido" target="_blank" rel="noopener">🛒 Amazon</a>
       </div>
       <p class="muted" style="margin-top:10px">* Enlaces afiliados. ¡Gracias por el aguante!</p>
     </div>
@@ -158,13 +157,13 @@
   <section id="contacto">
     <h2>Contacto</h2>
     <div class="card pad">
-      <form id="contact-form" action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="POST" novalidate>
+      <form id="contact-form" action="https://formspree.io/f/mjkejwvg" method="POST" novalidate>
         <div class="form-grid">
           <label>Nombre
             <input type="text" name="name" placeholder="Tu nombre" required>
           </label>
           <label>Email
-            <input type="email" name="_replyto" placeholder="tu@email.com" required>
+            <input type="email" name="email" placeholder="tu@email.com" required>
           </label>
         </div>
         <label>Asunto
@@ -209,17 +208,17 @@
 /** ================================
  *  CONFIG
  *  ================================ */
-const API_KEY     = "AIzaSyCqPlM0Ab3-_mtFHPmrrgJTS1S4dBCbbMA";
+const API_KEY = "AIzaSyCqPlM0Ab3-_mtFHPmrrgJTS1S4dBCbbMA";
 const PLAYLIST_ID = "PLk3cei5OOiyvTQzg5FGgIRY3xs44F7Wzv";
 const MAX_RESULTS = 20;
 
+/** Blogger feed (3 noticias, JSONP) */
+const BLOG_JSONP = "https://portalgamerok.blogspot.com/feeds/posts/summary?alt=json-in-script&max-results=3&orderby=published&callback=__onBloggerNews";
+
 /** Afiliados */
-const AFFILIATE_IG = "https://www.instant-gaming.com/es/?igr=portalgamerx";
+const INSTANT_GAMING = "https://www.instant-gaming.com/es/?igr=portalgamerx";
 
-/** Blogger feed (JSONP para evitar CORS) */
-const BLOG_JSONP = "https://portalgamerok.blogspot.com/feeds/posts/summary?alt=json-in-script&max-results=3&orderby=published&callback=__blogCB";
-
-/** Fallback YouTube (opcional) */
+/** Opcional: video de respaldo si la API falla */
 const FALLBACK_VIDEO_ID = "";
 
 /** Series (palabras clave en título) */
@@ -255,9 +254,9 @@ function renderUltimo(v){
   $("#ultimo-fecha").textContent = new Date(v.date).toLocaleDateString();
   $("#ultimo-desc").textContent = truncate(v.desc, 420);
   $("#ultimo-ver").href = `https://www.youtube.com/watch?v=${v.id}`;
-  $("#ultimo-oferta").href = AFFILIATE_IG;
+  $("#ultimo-oferta").href = INSTANT_GAMING;
 
-  // JSON-LD dinámico
+  // JSON-LD dinámico del último video
   const ld = {
     "@context":"https://schema.org","@type":"VideoObject",
     "name": v.title,"description": truncate(v.desc, 220),
@@ -361,8 +360,8 @@ async function loadPlaylist(){
 }
 
 /** ===== NOTICIAS (Blogger JSONP) ===== */
-const DEFAULT_NEWS_IMAGE = "og.jpg";
-const NEWS_SHOW_SOURCE = false;
+const DEFAULT_NEWS_IMAGE = "og.jpg"; // fallback si el post no trae imagen
+const NEWS_BRAND_NAME = "";          // vacío para no mostrar fuente
 
 function upsizeBloggerImage(url, size = 800){
   if(!url) return "";
@@ -397,7 +396,7 @@ function parseBloggerJson(data){
       DEFAULT_NEWS_IMAGE;
 
     const image = upsizeBloggerImage(thumbRaw, 800);
-    const source = NEWS_SHOW_SOURCE ? (data?.feed?.title?.$t || "El Portal Gamer") : "";
+    const source = NEWS_BRAND_NAME;
 
     return { title, url: link, date, summary: textOnly, image, source };
   });
@@ -407,10 +406,10 @@ function renderNews(items){
   items.forEach(n => {
     const card = document.createElement('article');
     card.className = "card pad filterable";
-    card.dataset.title = n.title; card.dataset.desc = n.summary + " " + n.source;
+    card.dataset.title = n.title; card.dataset.desc = n.summary + " " + (n.source||"");
 
     const imgTag = n.image ? `
-      <img loading="lazy" src="${n.image}"
+      <img loading="lazy" src="${upsizeBloggerImage(n.image,800)}"
            srcset="${upsizeBloggerImage(n.image,400)} 400w,
                    ${upsizeBloggerImage(n.image,800)} 800w,
                    ${upsizeBloggerImage(n.image,1200)} 1200w"
@@ -431,29 +430,33 @@ function renderNews(items){
     grid.appendChild(card);
   });
 }
+function loadNewsJsonp(){
+  return new Promise((resolve,reject)=>{
+    window.__onBloggerNews = (data)=>{
+      try{
+        const items = parseBloggerJson(data);
+        renderNews(items);
+        resolve();
+      }catch(err){ reject(err); }
+    };
+    const s = document.createElement('script');
+    s.src = BLOG_JSONP;
+    s.async = true;
+    s.onerror = () => reject(new Error('jsonp error'));
+    document.head.appendChild(s);
 
-/* JSONP (sin CORS) */
-window.__blogCB = function(data){
-  try{
-    const items = parseBloggerJson(data);
-    renderNews(items);
-  }catch(e){
-    console.error("Noticias Blogger:", e);
+    // timeout safeguard
+    setTimeout(()=>reject(new Error('jsonp timeout')), 8000);
+  }).catch(()=>{
     $("#news-grid").innerHTML = `<div class="muted">No se pudieron cargar las noticias.</div>`;
-  }
-};
-function loadNews(){
-  const s = document.createElement('script');
-  s.src = BLOG_JSONP + '&_=' + Date.now();
-  s.onerror = () => { $("#news-grid").innerHTML = `<div class="muted">No se pudieron cargar las noticias.</div>`; };
-  document.head.appendChild(s);
+  });
 }
 
 loadPlaylist();
-loadNews();
+loadNewsJsonp();
 </script>
 
-<!-- Contacto: envío + mailto ofuscado -->
+<!-- Contacto: envío + mailto obfuscado -->
 <script>
 (function(){
   const form = document.getElementById('contact-form');
@@ -480,10 +483,11 @@ loadNews();
     }
   });
 
-  /* Mailto ofuscado (Base64) — elportalgameroriginal@gmail.com */
-  const email = atob('ZWxwb3J0YWxnYW1lcm9yaWdpbmFsQGdtYWlsLmNvbQ==');
+  // Mailto directo (ofuscado)
+  const parts = ["elportalga","merorigi","nal","@","gmail",".com"];
+  const mail = parts.join('');
   const mailto = document.getElementById('mailto');
-  if (mailto) mailto.href = `mailto:${email}?subject=El%20Portal%20Gamer&body=Hola,%0D%0A`;
+  if (mailto) mailto.href = `mailto:${mail}?subject=El%20Portal%20Gamer&body=Hola!%0D%0A`;
 })();
 </script>
 </body>
