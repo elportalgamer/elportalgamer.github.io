@@ -62,7 +62,7 @@
     .title{font-weight:700; margin:8px 0 6px; font-size:1.05rem}
     .desc{color:#cfcfcf; font-size:.95rem; line-height:1.45; max-height:4.5em; overflow:hidden}
     .desc.expanded{max-height:600px}
-    .muted{color:var(--muted); font-size:.9rem}
+    .muted{color:#bfbfbf; font-size:.9rem}
     .btn{ display:inline-flex; align-items:center; gap:8px; padding:10px 12px; border-radius:10px; border:1px solid #333; background:#151515; color:#fff; text-decoration:none; }
     .btn.brand{background:var(--brand); border-color:#ff5e1f; color:#111; font-weight:800}
     .pill{display:inline-block; font-size:.8rem; color:#ffb18f; border:1px solid #3a1c12; background:#1b0f0a; padding:4px 8px; border-radius:999px}
@@ -126,9 +126,9 @@
     <div class="grid cols-3" id="news-grid"></div>
   </section>
 
-  <!-- Mini Reseñas -->
+  <!-- Reseñas -->
   <section id="mini">
-    <h2>Mini reseñas</h2>
+    <h2>Reseñas</h2>
     <div class="grid cols-3" id="mini-grid"></div>
   </section>
 
@@ -209,8 +209,8 @@ const API_KEY = "AIzaSyCqPlM0Ab3-_mtFHPmrrgJTS1S4dBCbbMA";
 const PLAYLIST_ID = "PLk3cei5OOiyvTQzg5FGgIRY3xs44F7Wzv";
 const MAX_RESULTS = 20;
 
-/** Blogger feed (3 noticias) */
-const BLOGGER_FEED = "https://portalgamerok.blogspot.com/feeds/posts/summary?alt=json&max-results=3&orderby=published";
+/** Blogger feed (3 noticias) via JSONP (sin CORS) */
+const BLOGGER_FEED_BASE = "https://portalgamerok.blogspot.com/feeds/posts/summary";
 
 /** Opcional: video de respaldo si la API falla */
 const FALLBACK_VIDEO_ID = ""; // ej. "dQw4w9WgXcQ"
@@ -351,9 +351,9 @@ async function loadPlaylist(){
   }
 }
 
-/** ===== NOTICIAS (Blogger) ===== */
-const DEFAULT_NEWS_IMAGE = "og.jpg"; // fallback si el post no trae imagen
-const NEWS_SHOW_SOURCE = false; // no mostrar fuente
+/** ===== NOTICIAS (Blogger via JSONP) ===== */
+const DEFAULT_NEWS_IMAGE = "og.jpg";
+const NEWS_SHOW_SOURCE = false;
 
 function upsizeBloggerImage(url, size = 800){
   if(!url) return "";
@@ -362,19 +362,16 @@ function upsizeBloggerImage(url, size = 800){
     .replace(/=s\d+(-c)?/, `=s${size}`)
     .replace(/\/w\d+-h\d+(-c)?\//, `/s${size}/`);
 }
-
 function extractImgFromHtml(html){
   const m = (html||"").match(/<img[^>]+src=["']([^"']+)["']/i);
   return m ? m[1] : "";
 }
-
 function timeAgo(iso){
   const d = new Date(iso); const diff = (Date.now() - d.getTime())/1000;
   const units = [[31536000,'a'],[2592000,'m'],[604800,'sem'],[86400,'d'],[3600,'h'],[60,'min']];
   for(const [s,n] of units){ if(diff>=s) return `${Math.floor(diff/s)} ${n}`; }
   return 'ahora';
 }
-
 function parseBloggerJson(data){
   const entries = data?.feed?.entry || [];
   return entries.map(e => {
@@ -396,7 +393,6 @@ function parseBloggerJson(data){
     return { title, url: link, date, summary: textOnly, image, source };
   });
 }
-
 function renderNews(items){
   const grid = $("#news-grid"); grid.innerHTML = "";
   items.forEach(n => {
@@ -425,17 +421,38 @@ function renderNews(items){
     grid.appendChild(card);
   });
 }
-
-async function loadNews(){
-  try{
-    const r = await fetch(BLOGGER_FEED, {cache:'no-store'});
-    const data = await r.json();
-    const items = parseBloggerJson(data);
-    renderNews(items);
-  }catch(e){
-    console.error("Noticias Blogger:", e);
+function loadNews(){
+  // JSONP para evitar CORS
+  const cb = 'news_cb_' + Math.random().toString(36).slice(2);
+  const url = `${BLOGGER_FEED_BASE}?alt=json-in-script&max-results=3&orderby=published&callback=${cb}`;
+  const s = document.createElement('script');
+  let done = false;
+  window[cb] = (data)=>{
+    done = true;
+    try{
+      const items = parseBloggerJson(data);
+      renderNews(items);
+    }catch(err){
+      console.error('Noticias Blogger parse:', err);
+      $("#news-grid").innerHTML = `<div class="muted">No se pudieron cargar las noticias.</div>`;
+    }finally{
+      delete window[cb];
+      s.remove();
+    }
+  };
+  s.src = url;
+  s.onerror = ()=>{
     $("#news-grid").innerHTML = `<div class="muted">No se pudieron cargar las noticias.</div>`;
-  }
+    delete window[cb];
+  };
+  document.body.appendChild(s);
+  // timeout de seguridad
+  setTimeout(()=>{
+    if(!done){
+      $("#news-grid").innerHTML = `<div class="muted">No se pudieron cargar las noticias.</div>`;
+      try{ delete window[cb]; s.remove(); }catch(_){}
+    }
+  }, 10000);
 }
 
 loadPlaylist();
