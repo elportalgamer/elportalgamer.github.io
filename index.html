@@ -9,17 +9,8 @@
   <link rel="canonical" href="https://www.elportalgamer.com/" />
   <link rel="icon" type="image/png" href="mago.png" />
 
-  <!-- Preconnects para mejorar LCP (YouTube/Imágenes) -->
-  <link rel="preconnect" href="https://www.googleapis.com" crossorigin>
-  <link rel="preconnect" href="https://i.ytimg.com" crossorigin>
-  <link rel="preconnect" href="https://img.youtube.com" crossorigin>
-
-  <!-- RSS del blog (descubrimiento) -->
-  <link rel="alternate" type="application/rss+xml" title="Noticias — El Portal Gamer"
-        href="https://portalgamerok.blogspot.com/feeds/posts/default?alt=rss">
-
   <!-- Open Graph / Twitter -->
-  <meta name="description" content="Reseñas sinceras, retro y rarezas: PS1, PS2, Dreamcast, JRPG y survival horror." />
+  <meta name="description" content="Reseñas sinceras, retro y rarezas: PS1, PS2, Dreamcast, JRPG y survival horror. Videos y reseñas en El Portal Gamer." />
   <meta property="og:title" content="El Portal Gamer — Reseñas y retro" />
   <meta property="og:description" content="Reseñas sinceras, retro y rarezas: PS1, PS2, Dreamcast, JRPG y survival horror." />
   <meta property="og:type" content="website" />
@@ -37,19 +28,19 @@
     }
     *{box-sizing:border-box}
     body{ margin:0; font-family:system-ui,-apple-system,"Segoe UI",Roboto,Ubuntu,"Helvetica Neue",Arial; background:var(--bg); color:var(--text); }
-    header{ position:sticky; top:0; z-index:5; background:#161616; border-bottom:1px solid #242424; -webkit-backdrop-filter:saturate(1.2) blur(4px); backdrop-filter:saturate(1.2) blur(4px);}
+    header{ position:sticky; top:0; z-index:5; background:#161616; border-bottom:1px solid #242424; }
     .nav{ max-width:1100px; margin:0 auto; display:flex; align-items:center; gap:16px; padding:12px 16px; }
     .brand{ display:flex; align-items:center; gap:10px; font-weight:800; font-size:1.25rem; color:var(--brand)}
     .brand img{height:34px;width:auto;border-radius:6px}
-    .nav a{color:#eaeaea;text-decoration:none;opacity:.9}
-    .nav a:hover{opacity:1}
+    .nav a{color:#eaeaea;text-decoration:none;opacity:.9; padding:6px 8px; border-radius:10px}
+    .nav a:hover{opacity:1; background:#1b1b1b}
     .spacer{flex:1}
     .search{width:320px; max-width:55vw; padding:10px 12px; border-radius:10px; border:1px solid #2a2a2a; background:#0f0f0f; color:#fff}
 
     main{max-width:1100px; margin:20px auto; padding:0 16px}
     section{margin:24px 0}
     h2{margin:0 0 12px; font-size:1.25rem}
-    .sub{color:var(--muted); font-size:.95rem; margin:4px 0 14px; display:none} /* Oculto textos aclaratorios */
+    .sub{color:var(--muted); font-size:.95rem; margin:4px 0 14px}
 
     .grid{display:grid; gap:16px}
     .grid.cols-3{grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}
@@ -57,7 +48,10 @@
 
     .card{background:var(--surface); border:1px solid #262626; border-radius:var(--radius); overflow:hidden}
     .card.pad{padding:14px}
-    .row{display:flex; gap:16px; align-items:center}
+    .row{display:flex; gap:16px; align-items:center; flex-wrap:wrap}
+
+    /* Separadores */
+    .divider{height:8px; border-radius:999px; background:linear-gradient(90deg,#ff6a00,#ff3b00,#ff6a00); margin:18px 0}
 
     /* Lite YouTube */
     .videobox{position:relative; width:100%; padding-top:56.25%; overflow:hidden; background:#000; border-bottom:1px solid #262626}
@@ -75,26 +69,23 @@
     .muted{color:var(--muted); font-size:.9rem}
     .btn{ display:inline-flex; align-items:center; gap:8px; padding:10px 12px; border-radius:10px; border:1px solid #333; background:#151515; color:#fff; text-decoration:none; }
     .btn.brand{background:var(--brand); border-color:#ff5e1f; color:#111; font-weight:800}
-    .pill{display:none}
+    .pill{display:inline-block; font-size:.8rem; color:#ffb18f; border:1px solid #3a1c12; background:#1b0f0a; padding:4px 8px; border-radius:999px}
 
-    /* Separadores bonitos */
-    .divider{height:8px; border-radius:999px; background:linear-gradient(90deg,#ff5e1f, #ff8a3d 60%, transparent 95%); margin:18px 0 10px; opacity:.9}
-
-    /* Noticias (cuadrado HD) */
+    /* Noticias (thumb cuadrado HD) */
     .news-thumb{position:relative; width:100%; padding-top:100%; background:#0e0e0e; border-radius:10px; overflow:hidden; border:1px solid #262626}
     .news-thumb img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover}
     .news-meta{display:flex; gap:10px; align-items:center; color:#cfcfcf; font-size:.9rem; margin:6px 0 10px}
     .badge{font-size:.75rem; border:1px solid #333; padding:4px 8px; border-radius:999px; color:#ffcfbd; background:#1b0f0a}
 
     /* Redes */
-    .social{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px }
-    .social a{ display:flex; align-items:center; gap:10px; padding:12px 14px; border:1px solid #2b2b2b; border-radius:12px; background:#171717; text-decoration:none; color:#fff }
-    .social a:hover{ background:#1d1d1d; border-color:#353535 }
+    .socials{display:grid; gap:16px; grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+    .soc-card{background:#1a1a1a; border:1px solid #2a2a2a; padding:14px; border-radius:14px; display:flex; align-items:center; gap:12px}
+    .soc-card img{width:28px;height:28px}
 
     /* Contacto */
     label { display:block; margin:8px 0 12px; font-size:.95rem; }
-    input, textarea, select { width:100%; padding:10px 12px; border-radius:10px; border:1px solid #2a2a2a; background:#0f0f0f; color:#fff; }
-    input:focus, textarea:focus, select:focus { outline:2px solid var(--brand); outline-offset:2px; }
+    input, textarea { width:100%; padding:10px 12px; border-radius:10px; border:1px solid #2a2a2a; background:#0f0f0f; color:#fff; }
+    input:focus, textarea:focus { outline:2px solid var(--brand); outline-offset:2px; }
     .form-grid { display:grid; gap:12px; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); }
     button.btn { cursor:pointer; }
     #form-result { margin-top:10px; }
@@ -107,22 +98,22 @@
 <header>
   <div class="nav">
     <div class="brand"><img src="mago.png" alt="Logo" />El Portal Gamer</div>
-    <a href="#ultimo" data-i18n="nav.home">Inicio</a>
-    <a href="#mini" data-i18n="nav.reviews">Reseñas</a>
-    <a href="#series" data-i18n="nav.series">Series</a>
-    <a href="/videos.html" data-i18n="nav.videos">Videos</a>
-    <a href="#news" data-i18n="nav.news">Noticias</a>
-    <a href="#apoya" data-i18n="nav.support">Apoya el canal</a>
-    <a href="#contacto" data-i18n="nav.contact">Contacto</a>
+    <a href="#ultimo">Inicio</a>
+    <a href="#news">Noticias</a>
+    <a href="#mini">Reseñas</a>
+    <a href="#series">Series</a>
+    <a href="videos.html">Videos</a>
+    <a href="#apoya">Apoya el canal</a>
+    <a href="#contacto">Contacto</a>
     <div class="spacer"></div>
-    <input id="buscador" class="search" type="search" placeholder="Buscar…" />
+    <input id="buscador" class="search" type="search" placeholder="Buscar video, reseña o noticia…" />
   </div>
 </header>
 
 <main>
   <!-- Último Video -->
   <section id="ultimo">
-    <h2 data-i18n="sec.lastVideo">Último video</h2>
+    <h2>Último video</h2>
     <div class="card">
       <div class="videobox" id="ultimo-lite"></div>
       <div class="pad">
@@ -130,90 +121,96 @@
         <div class="muted" id="ultimo-fecha"></div>
         <p class="desc" id="ultimo-desc"></p>
         <div class="row">
-          <a id="ultimo-ver" class="btn brand" target="_blank" rel="noopener" data-i18n="btn.watch">▶ Ver en YouTube</a>
-          <a id="ultimo-oferta" class="btn" target="_blank" rel="noopener" data-i18n="btn.deals">🎮 Ver Juegos en Oferta</a>
+          <a id="ultimo-ver" class="btn brand" target="_blank" rel="noopener">▶ Ver en YouTube</a>
+          <a id="ultimo-oferta" class="btn" href="https://www.instant-gaming.com/es/?igr=portalgamerx" target="_blank" rel="noopener">🎮 Ver Juegos en Oferta</a>
         </div>
       </div>
     </div>
-    <div class="divider" aria-hidden="true"></div>
   </section>
+
+  <div class="divider" aria-hidden="true"></div>
 
   <!-- Noticias (DESPUÉS del último video) -->
   <section id="news">
-    <h2 data-i18n="sec.news">Noticias</h2>
+    <h2>Noticias</h2>
     <div class="grid cols-3" id="news-grid"></div>
-    <div class="divider" aria-hidden="true"></div>
   </section>
+
+  <div class="divider" aria-hidden="true"></div>
 
   <!-- Reseñas -->
   <section id="mini">
-    <h2 data-i18n="sec.reviews">Reseñas</h2>
+    <h2>Reseñas</h2>
     <div class="grid cols-3" id="mini-grid"></div>
-    <div class="divider" aria-hidden="true"></div>
   </section>
+
+  <div class="divider" aria-hidden="true"></div>
 
   <!-- Series -->
   <section id="series">
-    <h2 data-i18n="sec.series">Series</h2>
+    <h2>Series</h2>
     <div class="grid cols-2" id="series-grid"></div>
-    <div class="divider" aria-hidden="true"></div>
   </section>
 
-  <!-- Redes -->
-  <section id="redes">
-    <h2 data-i18n="sec.social">Redes</h2>
-    <div class="social">
-      <a href="https://www.facebook.com/ElPortalGamerX" target="_blank" rel="noopener" aria-label="Facebook">
-        <span>📘</span> <strong>Facebook</strong> / ElPortalGamerX
-      </a>
-      <a href="https://www.instagram.com/elportalgamerx" target="_blank" rel="noopener" aria-label="Instagram">
-        <span>📸</span> <strong>Instagram</strong> / elportalgamerx
-      </a>
-      <a href="https://www.twitch.tv/soypaulangel" target="_blank" rel="noopener" aria-label="Twitch">
-        <span>🎮</span> <strong>Twitch</strong> / soypaulangel
-      </a>
-    </div>
-    <div class="divider" aria-hidden="true"></div>
-  </section>
+  <div class="divider" aria-hidden="true"></div>
 
   <!-- Apoya el canal -->
   <section id="apoya">
-    <h2 data-i18n="sec.support">Apoya el canal</h2>
+    <h2>Apoya el canal</h2>
     <div class="card pad">
       <div class="row">
-        <a class="btn brand" href="https://ko-fi.com/portalgamer" target="_blank" rel="noopener">☕ Ko-fi</a>
-        <a class="btn" href="https://www.instant-gaming.com/es/?igr=portalgamerx" target="_blank" rel="noopener">🎮 Instant-Gaming</a>
+        <a class="btn brand" href="https://ko-fi.com/portalgamer" target="_blank" rel="noopener">☕ Invítame un café</a>
+        <a class="btn" href="https://www.instant-gaming.com/es/?igr=portalgamerx" target="_blank" rel="noopener">🎮 Ver Juegos en Oferta</a>
         <a class="btn" href="https://www.amazon.com/shop/viajealodesconocido" target="_blank" rel="noopener">🛒 Amazon</a>
       </div>
     </div>
-    <div class="divider" aria-hidden="true"></div>
   </section>
+
+  <div class="divider" aria-hidden="true"></div>
+
+  <!-- Redes -->
+  <section id="redes">
+    <h2>Redes</h2>
+    <div class="socials">
+      <a class="soc-card" href="https://www.facebook.com/ElPortalGamerX" target="_blank" rel="noopener">
+        <img src="icons/facebook.svg" alt="" /> <span>Facebook</span>
+      </a>
+      <a class="soc-card" href="https://www.instagram.com/elportalgamerx" target="_blank" rel="noopener">
+        <img src="icons/instagram.svg" alt="" /> <span>Instagram</span>
+      </a>
+      <a class="soc-card" href="https://www.twitch.tv/soypaulangel" target="_blank" rel="noopener">
+        <img src="icons/twitch.svg" alt="" /> <span>Twitch</span>
+      </a>
+    </div>
+  </section>
+
+  <div class="divider" aria-hidden="true"></div>
 
   <!-- Contacto -->
   <section id="contacto">
-    <h2 data-i18n="sec.contact">Contacto</h2>
+    <h2>Contacto</h2>
     <div class="card pad">
       <form id="contact-form" action="https://formspree.io/f/mjkejwvg" method="POST" novalidate>
         <div class="form-grid">
-          <label data-i18n="form.name">Nombre
-            <input type="text" name="name" placeholder="" required>
+          <label>Nombre
+            <input type="text" name="name" placeholder="Tu nombre" required>
           </label>
-          <label data-i18n="form.email">Email
-            <input type="email" name="email" placeholder="" required>
+          <label>Email
+            <input type="email" name="_replyto" placeholder="tu@email.com" required>
           </label>
         </div>
-        <label data-i18n="form.subject">Asunto
-          <input type="text" name="subject" placeholder="">
+        <label>Asunto
+          <input type="text" name="subject" placeholder="Propuesta, sugerencia, colaboración…">
         </label>
-        <label data-i18n="form.message">Mensaje
-          <textarea name="message" rows="6" placeholder="" required></textarea>
+        <label>Mensaje
+          <textarea name="message" rows="6" placeholder="Contame en qué te puedo ayudar" required></textarea>
         </label>
 
         <!-- Honeypot anti-spam -->
         <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
 
         <div class="row">
-          <button type="submit" class="btn brand" data-i18n="btn.send">📨 Enviar</button>
+          <button type="submit" class="btn brand">📨 Enviar</button>
         </div>
 
         <p id="form-result" class="muted" aria-live="polite"></p>
@@ -222,100 +219,42 @@
   </section>
 </main>
 
-<footer>© <span id="year"></span> El Portal Gamer</footer>
+<footer>© 2025 El Portal Gamer</footer>
 
-<!-- ===== Structured Data extra (SEO) ===== -->
-<script id="news-list-ld" type="application/ld+json"></script>
+<!-- JSON-LD del sitio -->
 <script type="application/ld+json">
 {
   "@context":"https://schema.org",
-  "@type":"Organization",
+  "@type":"WebSite",
   "name":"El Portal Gamer",
   "url":"https://www.elportalgamer.com/",
-  "logo":"https://www.elportalgamer.com/mago.png",
-  "sameAs":[
-    "https://www.facebook.com/ElPortalGamerX",
-    "https://www.instagram.com/elportalgamerx",
-    "https://www.twitch.tv/soypaulangel",
-    "https://www.youtube.com/@TuCanal"
-  ]
+  "potentialAction":{
+    "@type":"SearchAction",
+    "target":"https://www.elportalgamer.com/?q={search_term_string}",
+    "query-input":"required name=search_term_string"
+  }
 }
 </script>
-<script type="application/ld+json">
-{
- "@context":"https://schema.org",
- "@type":"FAQPage",
- "mainEntity":[
-  {"@type":"Question","name":"¿Cómo apoyo el canal?",
-   "acceptedAnswer":{"@type":"Answer","text":"Podés invitarme un café en Ko-fi o comprar con mis enlaces afiliados (Instant-Gaming y Amazon)."}},
-  {"@type":"Question","name":"¿Dónde publico noticias?",
-   "acceptedAnswer":{"@type":"Answer","text":"Publico en portalgamerok.blogspot.com y aparecen automáticamente en la portada."}}
- ]
-}
-</script>
-
-<!-- Fallback indexable si el bot no ejecuta JS -->
-<noscript>
-  <section>
-    <h2>Últimos contenidos</h2>
-    <ul>
-      <li><a href="https://www.youtube.com/@TuCanal/videos">Videos en YouTube</a></li>
-      <li><a href="https://portalgamerok.blogspot.com/">Noticias del blog</a></li>
-      <li><a href="/videos.html">Página de videos</a></li>
-    </ul>
-  </section>
-</noscript>
 
 <script defer>
 /** ================================
  *  CONFIG
  *  ================================ */
-const API_KEY      = "AIzaSyCqPlM0Ab3-_mtFHPmrrgJTS1S4dBCbbMA";      // ← YouTube Data API v3
-const PLAYLIST_ID  = "PLk3cei5OOiyvTQzg5FGgIRY3xs44F7Wzv";            // ← tu playlist
-const MAX_RESULTS  = 20;
-const BLOGGER_FEED = "https://portalgamerok.blogspot.com/feeds/posts/summary?alt=json&max-results=3&orderby=published";
+const API_KEY = "AIzaSyCqPlM0Ab3-_mtFHPmrrgJTS1S4dBCbbMA";
+const PLAYLIST_ID = "PLk3cei5OOiyvTQzg5FGgIRY3xs44F7Wzv";
+const MAX_RESULTS = 20;
 
-/** Opcional: video de respaldo si la API falla */
-const FALLBACK_VIDEO_ID = ""; // ej. "dQw4w9WgXcQ"
+/** Blogger feed (3 noticias) - con proxy CORS y fallback a /news.json */
+const BLOGGER_PROXY_FEED = "https://r.jina.ai/http://portalgamerok.blogspot.com/feeds/posts/summary?alt=json&max-results=3&orderby=published";
+const BLOGGER_DIRECT_FEED = "https://portalgamerok.blogspot.com/feeds/posts/summary?alt=json&max-results=3&orderby=published";
 
 /** Helpers */
-const $  = (s, p=document) => p.querySelector(s);
+const $ = (s, p=document) => p.querySelector(s);
 const $$ = (s, p=document) => [...p.querySelectorAll(s)];
 const truncate = (str, n) => (str||"").length>n ? str.slice(0,n).replace(/\s+\S*$/,'')+"…" : str;
 const words = (x)=> (x||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
 
-/** ================================
- *  I18N (ES/EN básico)
- *  ================================ */
-const I18N = {
-  es: {
-    "nav.home":"Inicio","nav.reviews":"Reseñas","nav.series":"Series","nav.videos":"Videos","nav.news":"Noticias","nav.support":"Apoya el canal","nav.contact":"Contacto",
-    "sec.lastVideo":"Último video","sec.news":"Noticias","sec.reviews":"Reseñas","sec.series":"Series","sec.social":"Redes","sec.support":"Apoya el canal","sec.contact":"Contacto",
-    "btn.watch":"▶ Ver en YouTube","btn.deals":"🎮 Ver Juegos en Oferta","btn.send":"📨 Enviar",
-    "form.name":"Nombre","form.email":"Email","form.subject":"Asunto","form.message":"Mensaje",
-    "msg.sending":"Enviando…","msg.sent":"¡Mensaje enviado! Te respondo apenas pueda.","msg.error":"Hubo un error al enviar. Probá más tarde.",
-    "news.badge":"Noticia"
-  },
-  en: {
-    "nav.home":"Home","nav.reviews":"Reviews","nav.series":"Series","nav.videos":"Videos","nav.news":"News","nav.support":"Support","nav.contact":"Contact",
-    "sec.lastVideo":"Latest video","sec.news":"News","sec.reviews":"Reviews","sec.series":"Series","sec.social":"Social","sec.support":"Support","sec.contact":"Contact",
-    "btn.watch":"▶ Watch on YouTube","btn.deals":"🎮 See Game Deals","btn.send":"📨 Send",
-    "form.name":"Name","form.email":"Email","form.subject":"Subject","form.message":"Message",
-    "msg.sending":"Sending…","msg.sent":"Message sent!","msg.error":"Could not send. Please try again later.",
-    "news.badge":"News"
-  }
-};
-const LANG = (navigator.language || "es").startsWith("en") ? "en" : "es";
-function t(k){ return (I18N[LANG] && I18N[LANG][k]) || (I18N.es[k]||k); }
-function applyI18N(){
-  $$("[data-i18n]").forEach(el => { el.textContent = t(el.dataset.i18n); });
-  $("#buscador").placeholder = LANG==="en" ? "Search…" : "Buscar…";
-}
-applyI18N();
-
-/** ================================
- *  YOUTUBE
- *  ================================ */
+/** ====== YOUTUBE ====== */
 function renderUltimo(v){
   const box = $("#ultimo-lite");
   box.className = "videobox";
@@ -323,7 +262,7 @@ function renderUltimo(v){
   lite.className = "lite-yt";
   lite.style.backgroundImage = `url(${v.thumb})`;
   lite.innerHTML = `
-    <button class="lty-playbtn" aria-label="${t('btn.watch')}">
+    <button class="lty-playbtn" aria-label="Reproducir ${v.title}">
       <svg viewBox="0 0 68 48"><path d="M66.52 7.02a8 8 0 0 0-5.64-5.66C56.8 0 34 0 34 0S11.2 0 7.12 1.36A8 8 0 0 0 1.48 7.02 83.3 83.3 0 0 0 0 24a83.3 83.3 0 0 0 1.48 16.98 8 8 0 0 0 5.64 5.66C11.2 48 34 48 34 48s22.8 0 26.88-1.36a8 8 0 0 0 5.64-5.66A83.3 83.3 0 0 0 68 24a83.3 83.3 0 0 0-1.48-16.98zM27 34V14l18 10-18 10z"/></svg>
     </button>`;
   lite.addEventListener("click", ()=>{
@@ -335,7 +274,6 @@ function renderUltimo(v){
   $("#ultimo-fecha").textContent = new Date(v.date).toLocaleDateString();
   $("#ultimo-desc").textContent = truncate(v.desc, 420);
   $("#ultimo-ver").href = `https://www.youtube.com/watch?v=${v.id}`;
-  $("#ultimo-oferta").href = "https://www.instant-gaming.com/es/?igr=portalgamerx";
 
   // JSON-LD dinámico del último video
   const ld = {
@@ -358,14 +296,14 @@ function makeMiniCard(v){
   el.innerHTML = `
     <div class="videobox">
       <div class="lite-yt" style="background-image:url(${v.thumb})">
-        <button class="lty-playbtn" aria-label="${t('btn.watch')}">
+        <button class="lty-playbtn" aria-label="Reproducir ${v.title}">
           <svg viewBox="0 0 68 48"><path d="M66.52 7.02a8 8 0 0 0-5.64-5.66C56.8 0 34 0 34 0S11.2 0 7.12 1.36A8 8 0 0 0 1.48 7.02 83.3 83.3 0 0 0 0 24a83.3 83.3 0 0 0 1.48 16.98 8 8 0 0 0 5.64 5.66C11.2 48 34 48 34 48s22.8 0 26.88-1.36a8 8 0 0 0 5.64-5.66A83.3 83.3 0 0 0 68 24a83.3 83.3 0 0 0-1.48-16.98zM27 34V14l18 10-18 10z"/></svg>
         </button>
       </div>
     </div>
     <div class="title">${v.title}</div>
     <p class="desc">${truncate(v.desc, 360)}</p>
-    <a class="btn brand" href="https://www.youtube.com/watch?v=${v.id}" target="_blank" rel="noopener">${t('btn.watch')}</a>`;
+    <a class="btn brand" href="https://www.youtube.com/watch?v=${v.id}" target="_blank" rel="noopener">▶ Ver video</a>`;
   const thumb = el.querySelector(".videobox");
   thumb.addEventListener("click", ()=>{
     thumb.innerHTML = `<iframe src="https://www.youtube.com/embed/${v.id}?autoplay=1" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="${v.title}"></iframe>`;
@@ -375,13 +313,12 @@ function makeMiniCard(v){
 
 function renderMini(arr){ const grid = $("#mini-grid"); grid.innerHTML = ""; arr.forEach(v => grid.appendChild(makeMiniCard(v))); }
 
-const SERIES_KEYWORDS = {
-  "Saga Parasite Eve": ["parasite eve","parasite-eve","koudelka"],
-  "Survival Horror PS1/PS2": ["resident evil","silent hill","dino crisis","fear effect","rule of rose","haunting ground"],
-  "JRPG & Square": ["final fantasy","chrono","xenogears","vagrant story","valkyrie profile"]
-};
-
 function renderSeries(items){
+  const SERIES_KEYWORDS = {
+    "Saga Parasite Eve": ["parasite eve","parasite-eve","koudelka"],
+    "Survival Horror PS1/PS2": ["resident evil","silent hill","dino crisis","fear effect","rule of rose","haunting ground"],
+    "JRPG & Square": ["final fantasy","chrono","xenogears","vagrant story","valkyrie profile"]
+  };
   const grid = $("#series-grid"); grid.innerHTML = "";
   for(const [name,keys] of Object.entries(SERIES_KEYWORDS)){
     const hits = items.filter(v => keys.some(k => words(v.title).includes(k))); if(!hits.length) continue;
@@ -398,27 +335,12 @@ function renderSeries(items){
   }
 }
 
-function showFallback(msg){
-  $("#ultimo-titulo").textContent = msg || (LANG==="en"?"Playlist could not be loaded":"No se pudo cargar la playlist");
-  $("#ultimo-fecha").textContent = "";
-  $("#ultimo-desc").textContent = LANG==="en"?"Open the channel or try later.":"Tocá el botón para ver el canal, o probá más tarde.";
-  if (FALLBACK_VIDEO_ID){
-    const box = $("#ultimo-lite");
-    box.className = "videobox";
-    box.innerHTML = `<iframe src="https://www.youtube.com/embed/${FALLBACK_VIDEO_ID}" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
-    $("#ultimo-ver").href = `https://www.youtube.com/watch?v=${FALLBACK_VIDEO_ID}`;
-  } else {
-    $("#ultimo-ver").href = "https://www.youtube.com/@TuCanal/videos";
-  }
-}
-
 async function loadPlaylist(){
   try{
     const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${PLAYLIST_ID}&maxResults=${MAX_RESULTS}&key=${API_KEY}`;
     const r = await fetch(url);
     const data = await r.json();
-    if(!data.items){ console.error("Error YouTube:", data); showFallback(); return; }
-
+    if(!data.items){ throw new Error("YouTube sin items"); }
     const items = data.items.map(i => ({
       id: i.snippet.resourceId.videoId,
       title: i.snippet.title,
@@ -440,15 +362,18 @@ async function loadPlaylist(){
       }
     });
   }catch(e){
-    console.error(e);
-    showFallback();
+    console.error("YouTube:", e);
+    $("#ultimo-titulo").textContent = "No se pudo cargar la playlist";
+    $("#ultimo-fecha").textContent = "";
+    $("#ultimo-desc").textContent = "Probá más tarde o visitá el canal.";
+    $("#ultimo-ver").href = "https://www.youtube.com/@TuCanal/videos";
   }
 }
 
-/** ================================
- *  NOTICIAS (Blogger)
- *  ================================ */
+/** ====== NOTICIAS (Blogger con CORS proxy + fallback news.json) ====== */
 const DEFAULT_NEWS_IMAGE = "og.jpg";
+const NEWS_SHOW_SOURCE = false;
+
 function upsizeBloggerImage(url, size = 800){
   if(!url) return "";
   return url
@@ -462,9 +387,9 @@ function extractImgFromHtml(html){
 }
 function timeAgo(iso){
   const d = new Date(iso); const diff = (Date.now() - d.getTime())/1000;
-  const units = [[31536000, LANG==='en'?'y':'a'],[2592000, LANG==='en'?'mo':'m'],[604800, LANG==='en'?'w':'sem'],[86400, LANG==='en'?'d':'d'],[3600, LANG==='en'?'h':'h'],[60, LANG==='en'?'min':'min']];
+  const units = [[31536000,'a'],[2592000,'m'],[604800,'sem'],[86400,'d'],[3600,'h'],[60,'min']];
   for(const [s,n] of units){ if(diff>=s) return `${Math.floor(diff/s)} ${n}`; }
-  return LANG==='en'?'now':'ahora';
+  return 'ahora';
 }
 function parseBloggerJson(data){
   const entries = data?.feed?.entry || [];
@@ -472,12 +397,19 @@ function parseBloggerJson(data){
     const rawHtml = e.summary?.$t || e.content?.$t || "";
     const textOnly = rawHtml.replace(/<[^>]+>/g, " ").trim();
     const titleRaw = (e.title?.$t || "").trim();
-    const title = titleRaw || (textOnly ? textOnly.split(/\s+/).slice(0,12).join(" ") + "…" : (LANG==='en'?'Untitled':'Sin título'));
+    const title = titleRaw || (textOnly ? textOnly.split(/\s+/).slice(0,12).join(" ") + "…" : "Sin título");
     const link  = (e.link || []).find(l=>l.rel==='alternate')?.href || '#';
     const date  = e.published?.$t || e.updated?.$t || new Date().toISOString();
-    const thumbRaw = e['media$thumbnail']?.url || extractImgFromHtml(rawHtml) || DEFAULT_NEWS_IMAGE;
+
+    const thumbRaw =
+      e['media$thumbnail']?.url ||
+      extractImgFromHtml(rawHtml) ||
+      DEFAULT_NEWS_IMAGE;
+
     const image = upsizeBloggerImage(thumbRaw, 800);
-    return { title, url: link, date, summary: textOnly, image };
+    const source = NEWS_SHOW_SOURCE ? (data?.feed?.title?.$t || "El Portal Gamer") : "";
+
+    return { title, url: link, date, summary: textOnly, image, source };
   });
 }
 function renderNews(items){
@@ -485,72 +417,89 @@ function renderNews(items){
   items.forEach(n => {
     const card = document.createElement('article');
     card.className = "card pad filterable";
-    card.dataset.title = n.title; card.dataset.desc = n.summary;
+    card.dataset.title = n.title; card.dataset.desc = n.summary + " " + n.source;
 
     const imgTag = n.image ? `
-      <img loading="lazy" src="${n.image}" width="800" height="800"
+      <img loading="lazy" src="${n.image}"
            srcset="${upsizeBloggerImage(n.image,400)} 400w,
                    ${upsizeBloggerImage(n.image,800)} 800w,
                    ${upsizeBloggerImage(n.image,1200)} 1200w"
-           sizes="(min-width: 900px) 33vw, 90vw" alt="${n.title}">
+           sizes="(min-width: 900px) 33vw, 90vw"
+           alt="">
     ` : "";
 
     card.innerHTML = `
       <div class="news-thumb">${imgTag}</div>
       <div class="news-meta">
-        <span class="badge">${t('news.badge')}</span>
-        <span>${timeAgo(n.date)}</span>
+        <span class="badge">Noticia</span>
+        ${n.source ? `<span>${n.source}</span> • ` : ""}<span>${timeAgo(n.date)}</span>
       </div>
       <div class="title">${n.title}</div>
       <p class="desc">${truncate(n.summary, 220)}</p>
-      <a class="btn brand" href="${n.url}" target="_blank" rel="noopener">📰 ${LANG==='en'?'Read more':'Leer más'}</a>
+      <a class="btn brand" href="${n.url}" target="_blank" rel="noopener">📰 Leer más</a>
     `;
     grid.appendChild(card);
   });
+}
 
-  // ItemList JSON-LD para la lista de noticias
-  const ld = {
-    "@context":"https://schema.org",
-    "@type":"ItemList",
-    "itemListElement": items.map((n,i)=>({
-      "@type":"ListItem","position": i+1,"url": n.url,"name": n.title
-    }))
-  };
-  const s = document.getElementById("news-list-ld");
-  if(s) s.textContent = JSON.stringify(ld);
+async function fetchJson(url){
+  const r = await fetch(url, {cache:'no-store'});
+  const ct = r.headers.get('content-type') || '';
+  if (ct.includes('application/json')) return await r.json();
+  // r.jina.ai a veces devuelve text/plain con JSON adentro
+  return JSON.parse(await r.text());
 }
 async function loadNews(){
   try{
-    const r = await fetch(BLOGGER_FEED, {cache:'no-store'});
-    const data = await r.json();
-    const items = parseBloggerJson(data);
+    // 1) Proxy CORS
+    let data = await fetchJson(BLOGGER_PROXY_FEED);
+    if (!data?.feed?.entry?.length) {
+      // 2) Directo (si el navegador lo permite)
+      data = await fetchJson(BLOGGER_DIRECT_FEED);
+    }
+    let items = parseBloggerJson(data);
+    if (!items.length) throw new Error("Sin items");
     renderNews(items);
   }catch(e){
-    console.error("Noticias Blogger:", e);
-    $("#news-grid").innerHTML = `<div class="muted">${LANG==='en'?'Could not load news.':'No se pudieron cargar las noticias.'}</div>`;
+    console.warn("Blogger feed falló, usando /news.json:", e);
+    try{
+      const items = await (await fetch('/news.json', {cache:'no-store'})).json();
+      if (items?.length) renderNews(items);
+      else throw new Error('news.json vacío');
+    }catch{
+      $("#news-grid").innerHTML = `<div class="muted">No se pudieron cargar las noticias.</div>`;
+    }
   }
 }
 
-/** ================================
- *  CONTACTO (Formspree)
- *  ================================ */
+/** ===== Contacto (Formspree) ===== */
 (function(){
   const form = document.getElementById('contact-form');
+  if (!form) return;
   const result = document.getElementById('form-result');
-  if(!form) return;
+
   form.addEventListener('submit', async (e)=>{
     e.preventDefault();
-    result.textContent = t('msg.sending');
+    result.textContent = 'Enviando…';
     try{
-      const r = await fetch(form.action, { method:'POST', body:new FormData(form), headers:{'Accept':'application/json'} });
-      if(r.ok){ result.textContent = t('msg.sent'); form.reset(); }
-      else{ result.textContent = t('msg.error'); }
-    }catch(err){ result.textContent = t('msg.error'); }
+      const r = await fetch(form.action, {
+        method:'POST',
+        body: new FormData(form),
+        headers: { 'Accept':'application/json' }
+      });
+      if(r.ok){
+        result.textContent = '¡Mensaje enviado! Te respondo apenas pueda.';
+        form.reset();
+      }else{
+        result.textContent = 'Hubo un error al enviar. Probá más tarde.';
+      }
+    }catch(err){
+      result.textContent = 'No se pudo enviar. Probá más tarde.';
+    }
   });
 })();
 
 /** Init */
-document.getElementById('year').textContent = new Date().getFullYear();
 loadPlaylist();
 loadNews();
 </script>
