@@ -63,7 +63,7 @@
     .title{font-weight:700; margin:8px 0 6px; font-size:1.05rem}
     .desc{color:#cfcfcf; font-size:.95rem; line-height:1.45; max-height:4.5em; overflow:hidden}
     .desc.expanded{max-height:600px}
-    .muted{color:#b5b5b5; font-size:.9rem}
+    .muted{color:var(--muted); font-size:.9rem}
     .btn{ display:inline-flex; align-items:center; gap:8px; padding:10px 12px; border-radius:10px; border:1px solid #333; background:#151515; color:#fff; text-decoration:none; }
     .btn.brand{background:var(--brand); border-color:#ff5e1f; color:#111; font-weight:800}
     .pill{display:inline-block; font-size:.8rem; color:#ffb18f; border:1px solid #3a1c12; background:#1b0f0a; padding:4px 8px; border-radius:999px}
@@ -114,8 +114,7 @@
         <p class="desc" id="ultimo-desc"></p>
         <div class="row">
           <a id="ultimo-ver" class="btn brand" target="_blank" rel="noopener">▶ Ver en YouTube</a>
-          <!-- 👇 cambiado el texto del botón -->
-          <a id="ultimo-oferta" class="btn" target="_blank" rel="noopener nofollow">🎮 Ver juegos en oferta</a>
+          <a id="ultimo-oferta" class="btn" target="_blank" rel="noopener nofollow">🎮 Ver oferta del juego</a>
           <span class="pill">Mini-reseña</span>
         </div>
       </div>
@@ -353,7 +352,7 @@ async function loadPlaylist(){
     inp.addEventListener("input", ()=>{
       const q = words(inp.value);
       for(const card of $$(".filterable")){
-        const hay = words(card.dataset.title + " " + (card.dataset.desc||"")).includes q;
+        const hay = words(card.dataset.title + " " + (card.dataset.desc||"")).includes(q);
         card.style.display = (!q || hay) ? "" : "none";
       }
     });
@@ -477,7 +476,7 @@ loadNews();
     }
   });
 
-  /* Mailto ofuscado (Base64): elportalgameroriginal@gmail.com */
+  // Mailto ofuscado (Base64) -> elportalgameroriginal@gmail.com
   const email = atob('ZWxwb3J0YWxnYW1lcm9yaWdpbmFsQGdtYWlsLmNvbQ==');
   const mailto = document.getElementById('mailto');
   if (mailto) mailto.href = `mailto:${email}?subject=El%20Portal%20Gamer&body=Hola,%0D%0A`;
