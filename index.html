@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>El Portal Gamer — Reseñas y retro</title>
 
-  <!-- Canonical y Favicon -->
   <link rel="canonical" href="https://www.elportalgamer.com/" />
   <link rel="icon" type="image/png" href="mago.png" />
 
@@ -62,7 +61,6 @@
 
     .title{font-weight:700; margin:8px 0 6px; font-size:1.05rem}
     .desc{color:#cfcfcf; font-size:.95rem; line-height:1.45; max-height:4.5em; overflow:hidden}
-    .desc.expanded{max-height:600px}
     .muted{color:#b5b5b5; font-size:.9rem}
     .btn{ display:inline-flex; align-items:center; gap:8px; padding:10px 12px; border-radius:10px; border:1px solid #333; background:#151515; color:#fff; text-decoration:none; }
     .btn.brand{background:var(--brand); border-color:#ff5e1f; color:#111; font-weight:800}
@@ -114,7 +112,7 @@
         <p class="desc" id="ultimo-desc"></p>
         <div class="row">
           <a id="ultimo-ver" class="btn brand" target="_blank" rel="noopener">▶ Ver en YouTube</a>
-          <a id="ultimo-oferta" class="btn" target="_blank" rel="noopener nofollow">🎮 Ver juegos en oferta</a>
+          <a id="ultimo-oferta" class="btn" target="_blank" rel="noopener nofollow sponsored">🎮 Ver juegos en oferta</a>
           <span class="pill">Mini-reseña</span>
         </div>
       </div>
@@ -149,8 +147,8 @@
       <p class="muted">Si te gustan las reseñas y querés que sigan saliendo, podés invitarme un café ☕ o comprar con mis enlaces afiliados (no pagás extra).</p>
       <div class="row">
         <a class="btn brand" href="https://ko-fi.com/portalgamer" target="_blank" rel="noopener">☕ Invítame un café</a>
-        <a class="btn" href="https://www.instant-gaming.com/es/?igr=portalgamerx" target="_blank" rel="noopener nofollow">🎮 Instant-Gaming</a>
-        <a class="btn" href="https://www.amazon.com/" target="_blank" rel="noopener nofollow">🛒 Amazon (opcional)</a>
+        <a class="btn" href="https://www.instant-gaming.com/es/?igr=portalgamerx" target="_blank" rel="noopener nofollow sponsored">🎮 Instant-Gaming</a>
+        <a class="btn" href="https://www.amazon.com/shop/viajealodesconocido" target="_blank" rel="noopener nofollow sponsored">🛒 Amazon</a>
       </div>
       <p class="muted" style="margin-top:10px">* Enlaces afiliados. ¡Gracias por el aguante!</p>
     </div>
@@ -434,7 +432,7 @@ function renderNews(items){
   });
 }
 
-/* Carga mediante JSONP (sin CORS) */
+/* JSONP (sin CORS) */
 window.__blogCB = function(data){
   try{
     const items = parseBloggerJson(data);
@@ -446,7 +444,7 @@ window.__blogCB = function(data){
 };
 function loadNews(){
   const s = document.createElement('script');
-  s.src = BLOG_JSONP + '&_=' + Date.now(); // cache-buster
+  s.src = BLOG_JSONP + '&_=' + Date.now();
   s.onerror = () => { $("#news-grid").innerHTML = `<div class="muted">No se pudieron cargar las noticias.</div>`; };
   document.head.appendChild(s);
 }
@@ -482,7 +480,7 @@ loadNews();
     }
   });
 
-  /* Mailto ofuscado (Base64): elportalgameroriginal@gmail.com */
+  /* Mailto ofuscado (Base64) — elportalgameroriginal@gmail.com */
   const email = atob('ZWxwb3J0YWxnYW1lcm9yaWdpbmFsQGdtYWlsLmNvbQ==');
   const mailto = document.getElementById('mailto');
   if (mailto) mailto.href = `mailto:${email}?subject=El%20Portal%20Gamer&body=Hola,%0D%0A`;
