@@ -1,0 +1,25 @@
+name: Update news.json from Blogger
+
+on:
+  workflow_dispatch:       # para lanzarlo a mano
+  schedule:
+    - cron: "0 */6 * * *"  # cada 6 horas
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Build news.json
+        run: node scripts/build-news.mjs
+      - name: Commit & push
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: update news.json from Blogger"
+          branch: main
