@@ -51,7 +51,9 @@
     .videobox{position:relative; width:100%; padding-top:56.25%; overflow:hidden; background:#000; border-bottom:1px solid #262626}
     .lite-yt{ position:absolute; inset:0; background-position:center; background-size:cover; cursor:pointer; }
     .lite-yt::before{ content:""; position:absolute; inset:0; background:linear-gradient(0deg, rgba(0,0,0,.35), rgba(0,0,0,.05)); }
-    .lty-playbtn{ position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:72px; height:52px; border:0; border-radius:10px; background:rgba(0,0,0,.6); display:grid; place-items:center; box-shadow:0 8px 20px rgba(0,0,0,.45); }
+    .lty-playbtn{ position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+      width:72px; height:52px; border:0; border-radius:10px; background:rgba(0,0,0,.6);
+      display:grid; place-items:center; box-shadow:0 8px 20px rgba(0,0,0,.45); }
     .lty-playbtn svg{width:28px;height:28px;fill:#fff}
     iframe{position:absolute; inset:0; width:100%; height:100%; border:0}
 
@@ -69,15 +71,19 @@
     .badge{font-size:.75rem; border:1px solid #333; padding:4px 8px; border-radius:999px; color:#ffcfbd; background:#1b0f0a}
 
     /* Banda separadora para Noticias */
-    .band{
-      position:relative; padding-top:18px; margin-top:26px;
-    }
+    .band{ position:relative; padding-top:18px; margin-top:26px; }
     .band::before{
-      content:""; position:absolute; left:0; right:0; top:0;
-      height:10px; border-radius:10px;
-      background: linear-gradient(90deg, #ff4500 0%, #ff9a00 50%, #ff4500 100%);
-      filter:saturate(1.1);
+      content:""; position:absolute; left:0; right:0; top:0; height:10px; border-radius:10px;
+      background: linear-gradient(90deg, #ff4500 0%, #ff9a00 50%, #ff4500 100%); filter:saturate(1.1);
     }
+
+    /* Redes */
+    .socials-grid{ display:grid; gap:14px; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); }
+    .social-card{ display:flex; align-items:center; gap:12px; padding:14px; background:#151515; border:1px solid #2a2a2a; border-radius:var(--radius); text-decoration:none; color:var(--text); transition:transform .15s ease, border-color .15s ease; }
+    .social-card:hover{ transform:translateY(-2px); border-color:#3a3a3a; }
+    .social-card svg{ width:28px; height:28px; }
+    .social-name{ font-weight:800; }
+    .social-handle{ color:var(--muted); font-size:.9rem; }
 
     footer{margin:40px 0 20px; color:#9b9b9b; text-align:center}
     @media (max-width:560px){ .search{width:100%} .nav{flex-wrap:wrap} }
@@ -119,7 +125,7 @@
         <p class="desc" id="ultimo-desc"></p>
         <div class="row">
           <a id="ultimo-ver" class="btn brand" target="_blank" rel="noopener">▶ Ver en YouTube</a>
-          <a id="ultimo-oferta" class="btn" href="https://www.instant-gaming.com/es/?igr=portalgamerx" target="_blank" rel="noopener">🎮 Ver Juegos en Oferta</a>
+          <a class="btn" href="https://www.instant-gaming.com/es/?igr=portalgamerx" target="_blank" rel="noopener">🎮 Ver Juegos en Oferta</a>
         </div>
       </div>
     </div>
@@ -159,7 +165,6 @@
   <section id="contacto">
     <h2>Contacto</h2>
     <div class="card pad">
-      <!-- Formspree: cambia la URL si tu endpoint es distinto -->
       <form id="contact-form" action="https://formspree.io/f/mjkejwvg" method="POST" novalidate>
         <div class="form-grid">
           <label>Nombre
@@ -175,16 +180,45 @@
         <label>Mensaje
           <textarea name="message" rows="6" placeholder="Contame en qué te puedo ayudar" required></textarea>
         </label>
-
-        <!-- Honeypot anti-spam -->
         <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
-
         <div class="row">
           <button type="submit" class="btn brand">📨 Enviar</button>
         </div>
-
         <p id="form-result" class="muted" aria-live="polite"></p>
       </form>
+    </div>
+  </section>
+
+  <!-- Redes (abajo de todo) -->
+  <section id="redes" class="band">
+    <h2>Redes</h2>
+    <div class="socials-grid">
+      <a class="social-card" href="https://www.facebook.com/ElPortalGamerX" target="_blank" rel="noopener" aria-label="Facebook El Portal Gamer">
+        <!-- Facebook SVG -->
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#1877F2" d="M24 12.07C24 5.402 18.627 0 12 0S0 5.402 0 12.07C0 18.1 4.388 23.094 10.125 24v-8.43H7.078v-3.5h3.047v-2.67c0-3.017 1.792-4.685 4.533-4.685 1.313 0 2.686.235 2.686.235v2.97h-1.514c-1.492 0-1.956.93-1.956 1.884v2.266h3.328l-.532 3.5h-2.796V24C19.612 23.094 24 18.1 24 12.07z"/></svg>
+        <div>
+          <div class="social-name">Facebook</div>
+          <div class="social-handle">@ElPortalGamerX</div>
+        </div>
+      </a>
+
+      <a class="social-card" href="https://www.instagram.com/elportalgamerx" target="_blank" rel="noopener" aria-label="Instagram El Portal Gamer">
+        <!-- Instagram SVG -->
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#E1306C" d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.35 3.608 1.325.975.975 1.263 2.242 1.325 3.608.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.062 1.366-.35 2.633-1.325 3.608-.975.975-2.242 1.263-3.608 1.325-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.35-3.608-1.325-.975-.975-1.263-2.242-1.325-3.608C2.175 15.584 2.163 15.204 2.163 12s.012-3.584.07-4.85c.062-1.366.35-2.633 1.325-3.608S5.8 2.295 7.166 2.233C8.432 2.175 8.812 2.163 12 2.163zm0 1.8c-3.153 0-3.524.012-4.767.069-1.027.047-1.584.218-1.954.364-.492.19-.843.417-1.212.786-.369.369-.596.72-.786 1.212-.146.37-.317.927-.364 1.954-.057 1.243-.069 1.614-.069 4.767s.012 3.524.069 4.767c.047 1.027.218 1.584.364 1.954.19.492.417.843.786 1.212.369.369.72.596 1.212.786.37.146.927.317 1.954.364 1.243.057 1.614.069 4.767.069s3.524-.012 4.767-.069c1.027-.047 1.584-.218 1.954-.364.492-.19.843-.417 1.212-.786.369-.369.596-.72.786-1.212.146-.37.317-.927.364-1.954.057-1.243.069-1.614.069-4.767s-.012-3.524-.069-4.767c-.047-1.027-.218-1.584-.364-1.954-.19-.492-.417-.843-.786-1.212-.369-.369-.72-.596-1.212-.786-.37-.146-.927-.317-1.954-.364-1.243-.057-1.614-.069-4.767-.069zm0 3.274a5.763 5.763 0 1 1 0 11.526 5.763 5.763 0 0 1 0-11.526zm0 9.527a3.764 3.764 0 1 0 0-7.528 3.764 3.764 0 0 0 0 7.528zm6.406-10.93a1.348 1.348 0 1 1-2.696 0 1.348 1.348 0 0 1 2.696 0z"/></svg>
+        <div>
+          <div class="social-name">Instagram</div>
+          <div class="social-handle">@elportalgamerx</div>
+        </div>
+      </a>
+
+      <a class="social-card" href="https://www.twitch.tv/soypaulangel" target="_blank" rel="noopener" aria-label="Twitch SoyPaulAngel">
+        <!-- Twitch SVG -->
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#9146FF" d="M4 2h16v11.5l-4 4H12l-2 2H8v-2H4V2zm14 10V4H6v10h3v2h2l2-2h3l2-2z"/><path fill="#9146FF" d="M14 6h2v5h-2V6zm-4 0h2v5h-2V6z"/></svg>
+        <div>
+          <div class="social-name">Twitch</div>
+          <div class="social-handle">/soypaulangel</div>
+        </div>
+      </a>
     </div>
   </section>
 </main>
@@ -253,8 +287,7 @@ function renderUltimo(v){
   $("#ultimo-fecha").textContent = new Date(v.date).toLocaleDateString();
   $("#ultimo-desc").textContent = truncate(v.desc, 420);
   $("#ultimo-ver").href = `https://www.youtube.com/watch?v=${v.id}`;
-  // ofertas ya está fija en el HTML
-  // JSON-LD dinámico del último video
+
   const ld = {
     "@context":"https://schema.org","@type":"VideoObject",
     "name": v.title,"description": truncate(v.desc, 220),
@@ -289,7 +322,6 @@ function makeMiniCard(v){
   });
   return el;
 }
-
 function renderMini(arr){ const grid = $("#mini-grid"); grid.innerHTML = ""; arr.forEach(v => grid.appendChild(makeMiniCard(v))); }
 
 function renderSeries(items){
@@ -428,7 +460,6 @@ function renderNews(items){
   });
 }
 function loadNewsJSONP(){
-  // Fallback de error si nunca llega el callback
   const failTimer = setTimeout(()=>{
     if ($("#news-grid").children.length === 0){
       $("#news-grid").innerHTML = `<div class="muted">No se pudieron cargar las noticias.</div>`;
