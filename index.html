@@ -8,7 +8,8 @@
   <link rel="canonical" href="https://www.elportalgamer.com/" />
   <link rel="icon" type="image/png" href="mago.png" />
 
-  <meta name="description" content="Reseñas sinceras, retro y rarezas: PS1, PS2, Dreamcast, JRPG y survival horror. Videos y reseñas en El Portal Gamer." />
+  <!-- Open Graph / Twitter -->
+  <meta name="description" content="Reseñas sinceras, retro y rarezas: PS1, PS2, Dreamcast, JRPG y survival horror. Videos, noticias y reseñas en El Portal Gamer." />
   <meta property="og:title" content="El Portal Gamer — Reseñas y retro" />
   <meta property="og:description" content="Reseñas sinceras, retro y rarezas: PS1, PS2, Dreamcast, JRPG y survival horror." />
   <meta property="og:type" content="website" />
@@ -36,9 +37,8 @@
     .search{width:320px; max-width:55vw; padding:10px 12px; border-radius:10px; border:1px solid #2a2a2a; background:#0f0f0f; color:#fff}
 
     main{max-width:1100px; margin:20px auto; padding:0 16px}
-    section{margin:24px 0; position:relative}
+    section{margin:24px 0}
     h2{margin:0 0 12px; font-size:1.25rem}
-
     .grid{display:grid; gap:16px}
     .grid.cols-3{grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}
     .grid.cols-2{grid-template-columns:repeat(auto-fill,minmax(360px,1fr))}
@@ -51,9 +51,7 @@
     .videobox{position:relative; width:100%; padding-top:56.25%; overflow:hidden; background:#000; border-bottom:1px solid #262626}
     .lite-yt{ position:absolute; inset:0; background-position:center; background-size:cover; cursor:pointer; }
     .lite-yt::before{ content:""; position:absolute; inset:0; background:linear-gradient(0deg, rgba(0,0,0,.35), rgba(0,0,0,.05)); }
-    .lty-playbtn{ position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
-      width:72px; height:52px; border:0; border-radius:10px; background:rgba(0,0,0,.6);
-      display:grid; place-items:center; box-shadow:0 8px 20px rgba(0,0,0,.45); }
+    .lty-playbtn{ position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:72px; height:52px; border:0; border-radius:10px; background:rgba(0,0,0,.6); display:grid; place-items:center; box-shadow:0 8px 20px rgba(0,0,0,.45); }
     .lty-playbtn svg{width:28px;height:28px;fill:#fff}
     iframe{position:absolute; inset:0; width:100%; height:100%; border:0}
 
@@ -63,44 +61,28 @@
     .muted{color:var(--muted); font-size:.9rem}
     .btn{ display:inline-flex; align-items:center; gap:8px; padding:10px 12px; border-radius:10px; border:1px solid #333; background:#151515; color:#fff; text-decoration:none; }
     .btn.brand{background:var(--brand); border-color:#ff5e1f; color:#111; font-weight:800}
-    .pill{display:inline-block; font-size:.8rem; color:#ffb18f; border:1px solid #3a1c12; background:#1b0f0a; padding:4px 8px; border-radius:999px}
 
-    /* -------- Mejora visual secciones -------- */
-    .section-band{
-      padding:16px;
-      border:1px solid #262626;
-      border-radius:18px;
-      background:linear-gradient(180deg,#191919 0%, #141414 100%);
-      box-shadow:0 8px 28px rgba(0,0,0,.25);
-    }
-    .section-bar{
-      height:3px;
-      background:linear-gradient(90deg,var(--brand),#ff7a3c 60%, transparent);
-      border-radius:999px;
-      margin:6px 0 16px;
-      opacity:.9;
-    }
-    .section-hr{
-      height:1px;
-      background:linear-gradient(90deg,transparent,#2b2b2b,transparent);
-      border-radius:999px;
-      margin:28px 0;
-    }
-
-    /* Noticias con hover suave */
-    #news .card{background:#181818;border-color:#2a2a2a; transition:transform .15s ease, box-shadow .15s ease;}
-    #news .card:hover{transform:translateY(-2px); box-shadow:0 10px 24px rgba(0,0,0,.35)}
-
-    /* Noticias cuadradas */
+    /* Noticias (cuadrado HD) */
     .news-thumb{position:relative; width:100%; padding-top:100%; background:#0e0e0e; border-radius:10px; overflow:hidden; border:1px solid #262626}
     .news-thumb img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover}
     .news-meta{display:flex; gap:10px; align-items:center; color:#cfcfcf; font-size:.9rem; margin:6px 0 10px}
     .badge{font-size:.75rem; border:1px solid #333; padding:4px 8px; border-radius:999px; color:#ffcfbd; background:#1b0f0a}
 
+    /* Banda separadora para Noticias */
+    .band{
+      position:relative; padding-top:18px; margin-top:26px;
+    }
+    .band::before{
+      content:""; position:absolute; left:0; right:0; top:0;
+      height:10px; border-radius:10px;
+      background: linear-gradient(90deg, #ff4500 0%, #ff9a00 50%, #ff4500 100%);
+      filter:saturate(1.1);
+    }
+
     footer{margin:40px 0 20px; color:#9b9b9b; text-align:center}
     @media (max-width:560px){ .search{width:100%} .nav{flex-wrap:wrap} }
 
-    /* Formulario */
+    /* ===== Contacto ===== */
     label { display:block; margin:8px 0 12px; font-size:.95rem; }
     input, textarea, select { width:100%; padding:10px 12px; border-radius:10px; border:1px solid #2a2a2a; background:#0f0f0f; color:#fff; }
     input:focus, textarea:focus, select:focus { outline:2px solid var(--brand); outline-offset:2px; }
@@ -114,7 +96,7 @@
   <div class="nav">
     <div class="brand"><img src="mago.png" alt="Logo" />El Portal Gamer</div>
     <a href="#ultimo">Inicio</a>
-    <a href="#reseñas">Reseñas</a>
+    <a href="#mini">Reseñas</a>
     <a href="#series">Series</a>
     <a href="videos.html">Videos</a>
     <a href="#news">Noticias</a>
@@ -138,30 +120,22 @@
         <div class="row">
           <a id="ultimo-ver" class="btn brand" target="_blank" rel="noopener">▶ Ver en YouTube</a>
           <a id="ultimo-oferta" class="btn" href="https://www.instant-gaming.com/es/?igr=portalgamerx" target="_blank" rel="noopener">🎮 Ver Juegos en Oferta</a>
-          <span class="pill">Mini-reseña</span>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Noticias en banda -->
-  <section id="news">
-    <div class="section-band">
-      <h2>Noticias</h2>
-      <div class="section-bar" aria-hidden="true"></div>
-      <div class="grid cols-3" id="news-grid"></div>
-    </div>
+  <!-- Noticias (DESPUÉS del último video) -->
+  <section id="news" class="band">
+    <h2>Noticias</h2>
+    <div class="grid cols-3" id="news-grid"></div>
   </section>
 
-  <div class="section-hr" aria-hidden="true"></div>
-
   <!-- Reseñas -->
-  <section id="reseñas">
+  <section id="mini">
     <h2>Reseñas</h2>
     <div class="grid cols-3" id="mini-grid"></div>
   </section>
-
-  <div class="section-hr" aria-hidden="true"></div>
 
   <!-- Series -->
   <section id="series">
@@ -173,10 +147,10 @@
   <section id="apoya">
     <h2>Apoya el canal</h2>
     <div class="card pad">
-      <div class="row">
+      <div class="row" style="flex-wrap:wrap">
         <a class="btn brand" href="https://ko-fi.com/portalgamer" target="_blank" rel="noopener">☕ Invítame un café</a>
         <a class="btn" href="https://www.instant-gaming.com/es/?igr=portalgamerx" target="_blank" rel="noopener">🎮 Ver Juegos en Oferta</a>
-        <a class="btn" href="https://www.amazon.com/shop/viajealodesconocido" target="_blank" rel="noopener">🛒 Amazon</a>
+        <a class="btn" href="https://www.amazon.com/shop/viajealodesconocido" target="_blank" rel="noopener">🛒 Mi tienda Amazon</a>
       </div>
     </div>
   </section>
@@ -185,6 +159,7 @@
   <section id="contacto">
     <h2>Contacto</h2>
     <div class="card pad">
+      <!-- Formspree: cambia la URL si tu endpoint es distinto -->
       <form id="contact-form" action="https://formspree.io/f/mjkejwvg" method="POST" novalidate>
         <div class="form-grid">
           <label>Nombre
@@ -201,6 +176,7 @@
           <textarea name="message" rows="6" placeholder="Contame en qué te puedo ayudar" required></textarea>
         </label>
 
+        <!-- Honeypot anti-spam -->
         <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
 
         <div class="row">
@@ -215,6 +191,7 @@
 
 <footer>© 2025 El Portal Gamer</footer>
 
+<!-- JSON-LD del sitio -->
 <script type="application/ld+json">
 {
   "@context":"https://schema.org",
@@ -230,19 +207,33 @@
 </script>
 
 <script defer>
-/* ====== CONFIG ====== */
+/** ================================
+ *  CONFIG (tu data)
+ *  ================================ */
 const API_KEY = "AIzaSyCqPlM0Ab3-_mtFHPmrrgJTS1S4dBCbbMA";
 const PLAYLIST_ID = "PLk3cei5OOiyvTQzg5FGgIRY3xs44F7Wzv";
 const MAX_RESULTS = 20;
-const BLOGGER_FEED = "https://portalgamerok.blogspot.com/feeds/posts/summary?alt=json&max-results=3&orderby=published";
 
-/* ====== HELPERS ====== */
-const $ = (s,p=document)=>p.querySelector(s);
-const $$ = (s,p=document)=>[...p.querySelectorAll(s)];
-const truncate = (str,n)=> (str||"").length>n ? str.slice(0,n).replace(/\s+\S*$/,'')+"…" : str;
-const words = x => (x||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
+/** Blogger feed (3 noticias, JSONP) */
+const BLOG_JSONP = "https://portalgamerok.blogspot.com/feeds/posts/summary?alt=json-in-script&max-results=3&orderby=published&callback=handleBlogger";
 
-/* ====== YOUTUBE ====== */
+/** Opcional: video de respaldo si la API falla */
+const FALLBACK_VIDEO_ID = ""; // ej. "dQw4w9WgXcQ"
+
+/** Series (palabras clave en título) */
+const SERIES_KEYWORDS = {
+  "Saga Parasite Eve": ["parasite eve","parasite-eve","koudelka"],
+  "Survival Horror PS1/PS2": ["resident evil","silent hill","dino crisis","fear effect","rule of rose","haunting ground"],
+  "JRPG & Square": ["final fantasy","chrono","xenogears","vagrant story","valkyrie profile"]
+};
+
+/** Helpers */
+const $ = (s, p=document) => p.querySelector(s);
+const $$ = (s, p=document) => [...p.querySelectorAll(s)];
+const truncate = (str, n) => (str||"").length>n ? str.slice(0,n).replace(/\s+\S*$/,'')+"…" : str;
+const words = (x)=> (x||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
+
+/** ===== YOUTUBE ===== */
 function renderUltimo(v){
   const box = $("#ultimo-lite");
   box.className = "videobox";
@@ -262,13 +253,16 @@ function renderUltimo(v){
   $("#ultimo-fecha").textContent = new Date(v.date).toLocaleDateString();
   $("#ultimo-desc").textContent = truncate(v.desc, 420);
   $("#ultimo-ver").href = `https://www.youtube.com/watch?v=${v.id}`;
-
-  const ld = {"@context":"https://schema.org","@type":"VideoObject",
+  // ofertas ya está fija en el HTML
+  // JSON-LD dinámico del último video
+  const ld = {
+    "@context":"https://schema.org","@type":"VideoObject",
     "name": v.title,"description": truncate(v.desc, 220),
     "thumbnailUrl":[v.thumb],"uploadDate": v.date,
     "embedUrl": `https://www.youtube.com/embed/${v.id}`,
     "publisher":{"@type":"Organization","name":"El Portal Gamer"},
-    "potentialAction":{"@type":"WatchAction","target":[`https://www.youtube.com/watch?v=${v.id}`]}};
+    "potentialAction":{"@type":"WatchAction","target":[`https://www.youtube.com/watch?v=${v.id}`]}
+  };
   let s = document.getElementById("ld-video"); if (s) s.remove();
   s = document.createElement("script"); s.type="application/ld+json"; s.id="ld-video";
   s.textContent = JSON.stringify(ld); document.head.appendChild(s);
@@ -295,14 +289,10 @@ function makeMiniCard(v){
   });
   return el;
 }
+
 function renderMini(arr){ const grid = $("#mini-grid"); grid.innerHTML = ""; arr.forEach(v => grid.appendChild(makeMiniCard(v))); }
 
 function renderSeries(items){
-  const SERIES_KEYWORDS = {
-    "Saga Parasite Eve": ["parasite eve","parasite-eve","koudelka"],
-    "Survival Horror PS1/PS2": ["resident evil","silent hill","dino crisis","fear effect","rule of rose","haunting ground"],
-    "JRPG & Square": ["final fantasy","chrono","xenogears","vagrant story","valkyrie profile"]
-  };
   const grid = $("#series-grid"); grid.innerHTML = "";
   for(const [name,keys] of Object.entries(SERIES_KEYWORDS)){
     const hits = items.filter(v => keys.some(k => words(v.title).includes(k))); if(!hits.length) continue;
@@ -317,18 +307,29 @@ function renderSeries(items){
     grid.appendChild(el);
   }
 }
+
 function showFallback(msg){
   $("#ultimo-titulo").textContent = msg || "No se pudo cargar la playlist";
   $("#ultimo-fecha").textContent = "";
   $("#ultimo-desc").textContent = "Tocá el botón para ver el canal, o probá más tarde.";
-  $("#ultimo-ver").href = "https://www.youtube.com/@TuCanal/videos";
+  if (FALLBACK_VIDEO_ID){
+    const box = $("#ultimo-lite");
+    box.className = "videobox";
+    box.innerHTML = `<iframe src="https://www.youtube.com/embed/${FALLBACK_VIDEO_ID}" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+    $("#ultimo-ver").href = `https://www.youtube.com/watch?v=${FALLBACK_VIDEO_ID}`;
+  } else {
+    $("#ultimo-ver").href = "https://www.youtube.com/@TuCanal/videos";
+  }
 }
+
+/** Fetch YouTube */
 async function loadPlaylist(){
   try{
     const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${PLAYLIST_ID}&maxResults=${MAX_RESULTS}&key=${API_KEY}`;
     const r = await fetch(url);
     const data = await r.json();
     if(!data.items){ console.error("Error YouTube:", data); showFallback("No se pudo cargar la playlist"); return; }
+
     const items = data.items.map(i => ({
       id: i.snippet.resourceId.videoId,
       title: i.snippet.title,
@@ -336,6 +337,7 @@ async function loadPlaylist(){
       date: i.snippet.publishedAt,
       thumb: (i.snippet.thumbnails?.maxres?.url || i.snippet.thumbnails?.high?.url || i.snippet.thumbnails?.medium?.url || "")
     }));
+
     renderUltimo(items[0]);
     renderMini(items.slice(1, 10));
     renderSeries(items);
@@ -348,15 +350,17 @@ async function loadPlaylist(){
         card.style.display = (!q || hay) ? "" : "none";
       }
     });
-  }catch(e){ console.error(e); showFallback("No se pudo conectar con YouTube"); }
+  }catch(e){
+    console.error(e);
+    showFallback("No se pudo conectar con YouTube");
+  }
 }
 
-/* ====== NOTICIAS (Blogger) ====== */
+/** ===== NOTICIAS (Blogger JSONP) ===== */
 const DEFAULT_NEWS_IMAGE = "og.jpg";
-const NEWS_BRAND_NAME = "El Portal Gamer";
 const NEWS_SHOW_SOURCE = false;
 
-function upsizeBloggerImage(url,size=800){
+function upsizeBloggerImage(url, size = 800){
   if(!url) return "";
   return url
     .replace(/\/s\d+(-c)?\//, `/s${size}/`)
@@ -382,9 +386,15 @@ function parseBloggerJson(data){
     const title = titleRaw || (textOnly ? textOnly.split(/\s+/).slice(0,12).join(" ") + "…" : "Sin título");
     const link  = (e.link || []).find(l=>l.rel==='alternate')?.href || '#';
     const date  = e.published?.$t || e.updated?.$t || new Date().toISOString();
-    const thumbRaw = e['media$thumbnail']?.url || extractImgFromHtml(rawHtml) || DEFAULT_NEWS_IMAGE;
+
+    const thumbRaw =
+      e['media$thumbnail']?.url ||
+      extractImgFromHtml(rawHtml) ||
+      DEFAULT_NEWS_IMAGE;
+
     const image = upsizeBloggerImage(thumbRaw, 800);
-    const source = NEWS_SHOW_SOURCE ? (data?.feed?.title?.$t || NEWS_BRAND_NAME) : "";
+    const source = NEWS_SHOW_SOURCE ? (data?.feed?.title?.$t || "El Portal Gamer") : "";
+
     return { title, url: link, date, summary: textOnly, image, source };
   });
 }
@@ -393,13 +403,17 @@ function renderNews(items){
   items.forEach(n => {
     const card = document.createElement('article');
     card.className = "card pad filterable";
-    card.dataset.title = n.title; card.dataset.desc = n.summary + " " + n.source;
+    card.dataset.title = n.title; card.dataset.desc = n.summary + " " + (n.source||"");
+
     const imgTag = n.image ? `
       <img loading="lazy" src="${n.image}"
            srcset="${upsizeBloggerImage(n.image,400)} 400w,
                    ${upsizeBloggerImage(n.image,800)} 800w,
                    ${upsizeBloggerImage(n.image,1200)} 1200w"
-           sizes="(min-width: 900px) 33vw, 90vw" alt="">` : "";
+           sizes="(min-width: 900px) 33vw, 90vw"
+           alt="">
+    ` : "";
+
     card.innerHTML = `
       <div class="news-thumb">${imgTag}</div>
       <div class="news-meta">
@@ -408,25 +422,32 @@ function renderNews(items){
       </div>
       <div class="title">${n.title}</div>
       <p class="desc">${truncate(n.summary, 220)}</p>
-      <a class="btn brand" href="${n.url}" target="_blank" rel="noopener">📰 Leer más</a>`;
+      <a class="btn brand" href="${n.url}" target="_blank" rel="noopener">📰 Leer más</a>
+    `;
     grid.appendChild(card);
   });
 }
-async function loadNews(){
-  try{
-    const proxied = "https://api.allorigins.win/raw?url=" + encodeURIComponent(BLOGGER_FEED);
-    const r = await fetch(proxied, {cache:'no-store'});
-    const data = await r.json();
-    renderNews(parseBloggerJson(data));
-  }catch(e){
-    console.error("Noticias Blogger:", e);
-    $("#news-grid").innerHTML = `<div class="muted">No se pudieron cargar las noticias.</div>`;
-  }
+function loadNewsJSONP(){
+  // Fallback de error si nunca llega el callback
+  const failTimer = setTimeout(()=>{
+    if ($("#news-grid").children.length === 0){
+      $("#news-grid").innerHTML = `<div class="muted">No se pudieron cargar las noticias.</div>`;
+    }
+  }, 6000);
+
+  window.handleBlogger = (data)=>{
+    clearTimeout(failTimer);
+    const items = parseBloggerJson(data);
+    renderNews(items);
+  };
+  const s = document.createElement('script');
+  s.src = BLOG_JSONP;
+  s.async = true;
+  document.body.appendChild(s);
 }
 
-/* Init */
 loadPlaylist();
-loadNews();
+loadNewsJSONP();
 </script>
 
 <!-- Contacto: envío -->
@@ -435,6 +456,7 @@ loadNews();
   const form = document.getElementById('contact-form');
   if (!form) return;
   const result = document.getElementById('form-result');
+
   form.addEventListener('submit', async (e)=>{
     e.preventDefault();
     result.textContent = 'Enviando…';
@@ -444,9 +466,15 @@ loadNews();
         body: new FormData(form),
         headers: { 'Accept':'application/json' }
       });
-      if(r.ok){ result.textContent = '¡Mensaje enviado! Te respondo apenas pueda.'; form.reset(); }
-      else{ result.textContent = 'Hubo un error al enviar. Probá de nuevo en unos minutos.'; }
-    }catch(err){ result.textContent = 'No se pudo enviar. Probá de nuevo más tarde.'; }
+      if(r.ok){
+        result.textContent = '¡Mensaje enviado! Te respondo apenas pueda.';
+        form.reset();
+      }else{
+        result.textContent = 'Hubo un error al enviar. Probá más tarde.';
+      }
+    }catch(err){
+      result.textContent = 'No se pudo enviar. Revisá tu conexión e intentá de nuevo.';
+    }
   });
 })();
 </script>
