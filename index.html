@@ -5,7 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>El Portal Gamer — Reseñas y retro</title>
 
-  <!-- Canonical + Favicon -->
+  <!-- =========================================================
+       API KEY YOUTUBE: RESTRINGIR POR REFERRER
+       Google Cloud → Credentials → tu API key
+       - Application restrictions: HTTP referrers (web sites)
+       - Website restrictions (agrega exactamente):
+           https://www.elportalgamer.com/*
+           https://elportalgamer.com/*
+           https://elportalgamer.github.io/*
+           https://elportalgamer.github.io/elportalgamer/*
+       - API restrictions: YouTube Data API v3
+     ========================================================= -->
+
   <link rel="canonical" href="https://www.elportalgamer.com/" />
   <link rel="icon" type="image/png" href="mago.png" />
 
@@ -68,12 +79,11 @@
     .btn.brand{background:var(--brand); border-color:#ff5e1f; color:#111; font-weight:800}
     .pill{display:inline-block; font-size:.8rem; color:#ffb18f; border:1px solid #3a1c12; background:#1b0f0a; padding:4px 8px; border-radius:999px}
 
-    /* Noticias: miniatura CUADRADA 1:1 */
-    .news-thumb{
-      position:relative; width:100%; padding-top:100%;
-      background:#0e0e0e; border-radius:10px; overflow:hidden; border:1px solid #262626;
-    }
-    .news-thumb img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+    /* Noticias (cuadradas) */
+    .news-thumb{position:relative; width:100%; padding-top:100%; background:#0e0e0e; border-radius:10px; overflow:hidden; border:1px solid #262626}
+    .news-thumb img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover}
+    .news-meta{display:flex; gap:10px; align-items:center; color:#cfcfcf; font-size:.9rem; margin:6px 0 10px}
+    .badge{font-size:.75rem; border:1px solid #333; padding:4px 8px; border-radius:999px; color:#ffcfbd; background:#1b0f0a}
 
     footer{margin:40px 0 20px; color:#9b9b9b; text-align:center}
     @media (max-width:560px){ .search{width:100%} .nav{flex-wrap:wrap} }
@@ -94,7 +104,7 @@
     <a href="#ultimo">Inicio</a>
     <a href="#mini">Reseñas</a>
     <a href="#series">Series</a>
-    <a href="/videos.html">Videos</a>
+    <a href="videos.html">Videos</a>
     <a href="#news">Noticias</a>
     <a href="#apoya">Apoya el canal</a>
     <a href="#contacto">Contacto</a>
@@ -122,7 +132,7 @@
     </div>
   </section>
 
-  <!-- Noticias (inmediatamente después del último video) -->
+  <!-- Noticias (3) -->
   <section id="news">
     <h2>Noticias</h2>
     <div class="grid cols-3" id="news-grid"></div>
@@ -152,7 +162,7 @@
         <a class="btn" href="https://www.instant-gaming.com/es/?igr=TUAFILIADO" target="_blank" rel="noopener">🎮 Instant-Gaming</a>
         <a class="btn" href="https://www.amazon.com/?tag=TU_TAG_AFILIADO" target="_blank" rel="noopener">🛒 Amazon</a>
       </div>
-      <p class="muted" style="margin-top:10px">* Enlaces afiliados. ¡Gracias por el aguante!</p>
+      <p class="muted" style="margin-top:10px">* Enlaces afiliados. Gracias por el aguante, pa.</p>
     </div>
   </section>
 
@@ -176,11 +186,14 @@
           <textarea name="message" rows="6" placeholder="Contame en qué te puedo ayudar" required></textarea>
         </label>
 
+        <!-- Honeypot anti-spam -->
         <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+
         <div class="row">
           <button type="submit" class="btn brand">📨 Enviar</button>
           <a class="btn" id="mailto" href="#">📧 Escribime directo</a>
         </div>
+
         <p id="form-result" class="muted" aria-live="polite"></p>
       </form>
     </div>
@@ -204,22 +217,19 @@
 }
 </script>
 
+<!-- ========================= SCRIPTS ========================= -->
 <script defer>
 /** ================================
- *  CONFIG (tuyos)
+ *  CONFIG (con tus valores)
  *  ================================ */
-const API_KEY = "AIzaSyCqPlM0Ab3-_mtFHPmrrgJTS1S4dBCbbMA";      // RESTRINGIR por HTTP referrer
+const API_KEY = "AIzaSyCqPlM0Ab3-_mtFHPmrrgJTS1S4dBCbbMA";
 const PLAYLIST_ID = "PLk3cei5OOiyvTQzg5FGgIRY3xs44F7Wzv";
 const MAX_RESULTS = 20;
 
-/** Noticias (Blogger) */
-const NEWS_LIMIT = 3;
-const NEWS_SHOW_SOURCE = false;  // ocultar fuente para que no diga "Blogger"
-const NEWS_BRAND_NAME = "El Portal Gamer";
-const DEFAULT_NEWS_IMAGE = "https://www.elportalgamer.com/default-news.jpg"; // opcional
-const BLOG_FEED = `https://portalgamerok.blogspot.com/feeds/posts/default?alt=json&max-results=${NEWS_LIMIT}`;
+/** Opcional: video de respaldo si la API falla */
+const FALLBACK_VIDEO_ID = ""; // ej. "dQw4w9WgXcQ"
 
-/** Series (keywords en títulos) */
+/** Series (palabras clave en título) */
 const SERIES_KEYWORDS = {
   "Saga Parasite Eve": ["parasite eve","parasite-eve","koudelka"],
   "Survival Horror PS1/PS2": ["resident evil","silent hill","dino crisis","fear effect","rule of rose","haunting ground"],
@@ -290,16 +300,12 @@ function makeMiniCard(v){
   return el;
 }
 
-function renderMini(arr){
-  const grid = $("#mini-grid"); grid.innerHTML = "";
-  arr.forEach(v => grid.appendChild(makeMiniCard(v)));
-}
+function renderMini(arr){ const grid = $("#mini-grid"); grid.innerHTML = ""; arr.forEach(v => grid.appendChild(makeMiniCard(v))); }
 
 function renderSeries(items){
   const grid = $("#series-grid"); grid.innerHTML = "";
   for(const [name,keys] of Object.entries(SERIES_KEYWORDS)){
-    const hits = items.filter(v => keys.some(k => words(v.title).includes(k)));
-    if(!hits.length) continue;
+    const hits = items.filter(v => keys.some(k => words(v.title).includes(k))); if(!hits.length) continue;
     const top = hits.slice(0,3);
     const el = document.createElement("article");
     el.className = "card pad filterable";
@@ -313,81 +319,27 @@ function renderSeries(items){
   }
 }
 
-/** ===== NOTICIAS (Blogger) ===== */
-function extractImgFromHtml(html){
-  const m = html?.match(/<img[^>]+src=["']([^"']+)["']/i);
-  return m ? m[1] : "";
-}
-function parseBloggerJson(data){
-  const entries = data?.feed?.entry || [];
-  return entries.map(e => {
-    const rawHtml = e.summary?.$t || e.content?.$t || "";
-    const textOnly = rawHtml.replace(/<[^>]+>/g, " ").trim();
-    const titleRaw = (e.title?.$t || "").trim();
-    const title = titleRaw || (textOnly ? textOnly.split(/\s+/).slice(0,12).join(" ") + "…" : "Sin título");
-    const link  = (e.link || []).find(l=>l.rel==='alternate')?.href || '#';
-    const date  = e.published?.$t || e.updated?.$t || new Date().toISOString();
-    const thumb = e['media$thumbnail']?.url || extractImgFromHtml(rawHtml) || DEFAULT_NEWS_IMAGE;
-    const source = NEWS_SHOW_SOURCE ? (data?.feed?.title?.$t || NEWS_BRAND_NAME) : "";
-    return { title, url: link, date, summary: textOnly, image: thumb, source };
-  });
-}
-function timeAgo(iso){
-  const d = new Date(iso); const diff = (Date.now() - d.getTime())/1000;
-  const units = [[31536000,'a'],[2592000,'m'],[604800,'sem'],[86400,'d'],[3600,'h'],[60,'min']];
-  for(const [s,n] of units){ if(diff>=s) return `${Math.floor(diff/s)} ${n}`; }
-  return 'ahora';
-}
-async function loadNews(){
-  let items = [];
-  try{
-    const res = await fetch(BLOG_FEED, {cache:'no-store'});
-    const data = await res.json();
-    items = parseBloggerJson(data)
-      .sort((a,b)=> new Date(b.date) - new Date(a.date))
-      .slice(0, NEWS_LIMIT);
-  }catch(err){
-    console.error('Blogger feed error', err);
-    items = [
-      {title:"Ejemplo 1", url:"#", source:NEWS_BRAND_NAME, date:new Date().toISOString(),
-       summary:"Noticia de prueba.", image:"https://via.placeholder.com/1200x1200?text=Noticia+1"},
-      {title:"Ejemplo 2", url:"#", source:NEWS_BRAND_NAME, date:new Date().toISOString(),
-       summary:"Noticia de prueba.", image:"https://via.placeholder.com/1200x1200?text=Noticia+2"},
-      {title:"Ejemplo 3", url:"#", source:NEWS_BRAND_NAME, date:new Date().toISOString(),
-       summary:"Noticia de prueba.", image:"https://via.placeholder.com/1200x1200?text=Noticia+3"},
-    ];
-  }
-
-  const grid = $("#news-grid"); grid.innerHTML = "";
-  for(const n of items){
-    const card = document.createElement('article');
-    card.className = "card pad filterable";
-    card.dataset.title = n.title; card.dataset.desc = n.summary + " " + (n.source||"");
-    const img = n.image ? `<img loading="lazy" src="${n.image}" alt="">` : "";
-    const summary = n.summary.length>160 ? n.summary.slice(0,160).replace(/\s+\S*$/,'')+'…' : n.summary;
-
-    card.innerHTML = `
-      <div class="news-thumb">${img}</div>
-      <div class="news-meta">
-        <span class="badge">Noticia</span>
-        ${n.source ? `<span>${n.source}</span> • ` : ``}
-        <span>${timeAgo(n.date)}</span>
-      </div>
-      <div class="title">${n.title}</div>
-      <p class="desc">${summary}</p>
-      <a class="btn brand" href="${n.url}" target="_blank" rel="noopener">📰 Leer más</a>
-    `;
-    grid.appendChild(card);
+function showFallback(msg){
+  $("#ultimo-titulo").textContent = msg || "No se pudo cargar la playlist";
+  $("#ultimo-fecha").textContent = "";
+  $("#ultimo-desc").textContent = "Tocá el botón para ver el canal, o probá más tarde.";
+  if (FALLBACK_VIDEO_ID){
+    const box = $("#ultimo-lite");
+    box.className = "videobox";
+    box.innerHTML = `<iframe src="https://www.youtube.com/embed/${FALLBACK_VIDEO_ID}" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+    $("#ultimo-ver").href = `https://www.youtube.com/watch?v=${FALLBACK_VIDEO_ID}`;
+  } else {
+    $("#ultimo-ver").href = "https://www.youtube.com/@TuCanal/videos";
   }
 }
 
-/** ===== FETCH YT + bind buscador ===== */
+/** Fetch YouTube */
 async function loadPlaylist(){
   try{
     const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${PLAYLIST_ID}&maxResults=${MAX_RESULTS}&key=${API_KEY}`;
     const r = await fetch(url);
     const data = await r.json();
-    if(!data.items){ console.error("Error YouTube:", data); return; }
+    if(!data.items){ console.error("Error YouTube:", data); showFallback("No se pudo cargar la playlist"); return; }
 
     const items = data.items.map(i => ({
       id: i.snippet.resourceId.videoId,
@@ -411,7 +363,98 @@ async function loadPlaylist(){
     });
   }catch(e){
     console.error(e);
+    showFallback("No se pudo conectar con YouTube");
   }
+}
+
+/* =================== NOTICIAS (Blogger vía JSONP) =================== */
+const DEFAULT_NEWS_IMAGE = "mago.png"; // fallback si un post no trae imagen
+const NEWS_BRAND_NAME = "El Portal Gamer";
+const NEWS_SHOW_SOURCE = false;        // no mostrar fuente en la tarjeta
+
+function upsizeBloggerImage(url, size = 800){
+  if(!url) return "";
+  return url
+    .replace(/\/s\d+(-c)?\//, `/s${size}/`)
+    .replace(/=s\d+(-c)?/, `=s${size}`)
+    .replace(/\/w\d+-h\d+(-c)?\//, `/s${size}/`);
+}
+function extractImgFromHtml(html){
+  const m = (html||"").match(/<img[^>]+src=["']([^"']+)["']/i);
+  return m ? m[1] : "";
+}
+function timeAgo(iso){
+  const d = new Date(iso); const diff = (Date.now() - d.getTime())/1000;
+  const units = [[31536000,'a'],[2592000,'m'],[604800,'sem'],[86400,'d'],[3600,'h'],[60,'min']];
+  for(const [s,n] of units){ if(diff>=s) return `${Math.floor(diff/s)} ${n}`; }
+  return 'ahora';
+}
+function parseBloggerJson(data){
+  const entries = data?.feed?.entry || [];
+  return entries.slice(0,3).map(e => {
+    const rawHtml = e.summary?.$t || e.content?.$t || "";
+    const textOnly = rawHtml.replace(/<[^>]+>/g, " ").trim();
+    const titleRaw = (e.title?.$t || "").trim();
+    const title = titleRaw || (textOnly ? textOnly.split(/\s+/).slice(0,12).join(" ") + "…" : "Sin título");
+    const link  = (e.link || []).find(l=>l.rel==='alternate')?.href || '#';
+    const date  = e.published?.$t || e.updated?.$t || new Date().toISOString();
+
+    const thumbRaw =
+      e['media$thumbnail']?.url ||
+      extractImgFromHtml(rawHtml) ||
+      DEFAULT_NEWS_IMAGE;
+
+    const image = upsizeBloggerImage(thumbRaw, 800);
+    const source = NEWS_SHOW_SOURCE ? (data?.feed?.title?.$t || NEWS_BRAND_NAME) : "";
+    return { title, url: link, date, summary: textOnly, image, source };
+  });
+}
+function renderNews(items){
+  const grid = document.getElementById("news-grid");
+  grid.innerHTML = "";
+  items.forEach(n => {
+    const card = document.createElement('article');
+    card.className = "card pad filterable";
+    card.dataset.title = n.title; card.dataset.desc = n.summary + " " + (n.source||"");
+
+    const imgTag = n.image ? `
+      <img loading="lazy" src="${n.image}"
+           srcset="${upsizeBloggerImage(n.image,400)} 400w,
+                   ${upsizeBloggerImage(n.image,800)} 800w,
+                   ${upsizeBloggerImage(n.image,1200)} 1200w"
+           sizes="(min-width: 900px) 33vw, 90vw"
+           alt="">
+    ` : "";
+
+    card.innerHTML = `
+      <div class="news-thumb">${imgTag}</div>
+      <div class="news-meta">
+        <span class="badge">Noticia</span>
+        ${n.source ? `<span>${n.source}</span> • ` : ""}<span>${timeAgo(n.date)}</span>
+      </div>
+      <div class="title">${n.title}</div>
+      <p class="desc">${(n.summary||"").length ? n.summary.slice(0,220).replace(/\s+\S*$/,'') + '…' : ''}</p>
+      <a class="btn brand" href="${n.url}" target="_blank" rel="noopener">📰 Leer más</a>
+    `;
+    grid.appendChild(card);
+  });
+}
+/* Carga via JSONP para evitar CORS */
+function loadNews(){
+  const cbName = "renderBloggerFeed_" + Math.random().toString(36).slice(2);
+  window[cbName] = function(data){
+    try { renderNews(parseBloggerJson(data)); }
+    finally {
+      delete window[cbName];
+      s.remove();
+    }
+  };
+  const s = document.createElement('script');
+  s.src = "https://portalgamerok.blogspot.com/feeds/posts/summary?alt=json-in-script&orderby=published&max-results=3&callback=" + cbName;
+  s.onerror = () => {
+    document.getElementById("news-grid").innerHTML = '<div class="muted">No se pudieron cargar las noticias.</div>';
+  };
+  document.body.appendChild(s);
 }
 
 loadPlaylist();
@@ -445,6 +488,7 @@ loadNews();
     }
   });
 
+  // Mailto directo
   const mail = ['contacto','@','elportalgamer.com'].join('');
   const mailto = document.getElementById('mailto');
   if (mailto) mailto.href = `mailto:${mail}?subject=El%20Portal%20Gamer&body=Hola%20Paul,%0D%0A`;
