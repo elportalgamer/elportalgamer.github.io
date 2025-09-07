@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -9,7 +10,7 @@
   <link rel="icon" type="image/png" href="mago.png" />
 
   <!-- Open Graph / Twitter -->
-  <meta name="description" content="Reseñas sinceras, retro y rarezas: PS1, PS2, Dreamcast, JRPG y survival horror. Videos, noticias y reseñas en El Portal Gamer." />
+  <meta name="description" content="Reseñas sinceras, retro y rarezas: PS1, PS2, Dreamcast, JRPG y survival horror. Videos y reseñas en El Portal Gamer." />
   <meta property="og:title" content="El Portal Gamer — Reseñas y retro" />
   <meta property="og:description" content="Reseñas sinceras, retro y rarezas: PS1, PS2, Dreamcast, JRPG y survival horror." />
   <meta property="og:type" content="website" />
@@ -37,8 +38,10 @@
     .search{width:320px; max-width:55vw; padding:10px 12px; border-radius:10px; border:1px solid #2a2a2a; background:#0f0f0f; color:#fff}
 
     main{max-width:1100px; margin:20px auto; padding:0 16px}
-    section{margin:24px 0}
+    section{margin:24px 0; scroll-margin-top:80px;}
     h2{margin:0 0 12px; font-size:1.25rem}
+    .sub{color:var(--muted); font-size:.95rem; margin:4px 0 14px}
+
     .grid{display:grid; gap:16px}
     .grid.cols-3{grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}
     .grid.cols-2{grid-template-columns:repeat(auto-fill,minmax(360px,1fr))}
@@ -64,37 +67,36 @@
     .btn{ display:inline-flex; align-items:center; gap:8px; padding:10px 12px; border-radius:10px; border:1px solid #333; background:#151515; color:#fff; text-decoration:none; }
     .btn.brand{background:var(--brand); border-color:#ff5e1f; color:#111; font-weight:800}
 
+    /* Separadores (band) */
+    .band{ position:relative; padding-top:22px; margin-top:28px; }
+    .band::before{
+      content:""; position:absolute; left:0; right:0; top:0; height:10px; border-radius:999px;
+      background:linear-gradient(90deg,#ff4500 0%,#ff9a00 50%,#ff4500 100%);
+      filter:saturate(1.05);
+      box-shadow:0 0 0 1px #242424 inset, 0 3px 14px rgba(255,69,0,.18);
+    }
+
     /* Noticias (cuadrado HD) */
     .news-thumb{position:relative; width:100%; padding-top:100%; background:#0e0e0e; border-radius:10px; overflow:hidden; border:1px solid #262626}
     .news-thumb img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover}
     .news-meta{display:flex; gap:10px; align-items:center; color:#cfcfcf; font-size:.9rem; margin:6px 0 10px}
     .badge{font-size:.75rem; border:1px solid #333; padding:4px 8px; border-radius:999px; color:#ffcfbd; background:#1b0f0a}
 
-    /* Banda separadora para Noticias */
-    .band{ position:relative; padding-top:18px; margin-top:26px; }
-    .band::before{
-      content:""; position:absolute; left:0; right:0; top:0; height:10px; border-radius:10px;
-      background: linear-gradient(90deg, #ff4500 0%, #ff9a00 50%, #ff4500 100%); filter:saturate(1.1);
-    }
-
     /* Redes */
-    .socials-grid{ display:grid; gap:14px; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); }
-    .social-card{ display:flex; align-items:center; gap:12px; padding:14px; background:#151515; border:1px solid #2a2a2a; border-radius:var(--radius); text-decoration:none; color:var(--text); transition:transform .15s ease, border-color .15s ease; }
-    .social-card:hover{ transform:translateY(-2px); border-color:#3a3a3a; }
-    .social-card svg{ width:28px; height:28px; }
-    .social-name{ font-weight:800; }
-    .social-handle{ color:var(--muted); font-size:.9rem; }
+    .socials{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px}
+    .social-card{background:var(--surface); border:1px solid #262626; border-radius:var(--radius); padding:14px; display:flex; align-items:center; gap:12px}
+    .social-card img{width:28px; height:28px}
 
-    footer{margin:40px 0 20px; color:#9b9b9b; text-align:center}
-    @media (max-width:560px){ .search{width:100%} .nav{flex-wrap:wrap} }
-
-    /* ===== Contacto ===== */
+    /* Contacto */
     label { display:block; margin:8px 0 12px; font-size:.95rem; }
     input, textarea, select { width:100%; padding:10px 12px; border-radius:10px; border:1px solid #2a2a2a; background:#0f0f0f; color:#fff; }
     input:focus, textarea:focus, select:focus { outline:2px solid var(--brand); outline-offset:2px; }
     .form-grid { display:grid; gap:12px; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); }
     button.btn { cursor:pointer; }
     #form-result { margin-top:10px; }
+
+    footer{margin:40px 0 20px; color:#9b9b9b; text-align:center}
+    @media (max-width:560px){ .search{width:100%} .nav{flex-wrap:wrap} }
   </style>
 </head>
 <body>
@@ -125,26 +127,26 @@
         <p class="desc" id="ultimo-desc"></p>
         <div class="row">
           <a id="ultimo-ver" class="btn brand" target="_blank" rel="noopener">▶ Ver en YouTube</a>
-          <a class="btn" href="https://www.instant-gaming.com/es/?igr=portalgamerx" target="_blank" rel="noopener">🎮 Ver Juegos en Oferta</a>
+          <a id="ultimo-oferta" class="btn" target="_blank" rel="noopener">🎮 Ver Juegos en Oferta</a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Noticias (DESPUÉS del último video) -->
+  <!-- Noticias (separada con band) -->
   <section id="news" class="band">
     <h2>Noticias</h2>
     <div class="grid cols-3" id="news-grid"></div>
   </section>
 
   <!-- Reseñas -->
-  <section id="mini">
+  <section id="mini" class="band">
     <h2>Reseñas</h2>
     <div class="grid cols-3" id="mini-grid"></div>
   </section>
 
   <!-- Series -->
-  <section id="series">
+  <section id="series" class="band">
     <h2>Series</h2>
     <div class="grid cols-2" id="series-grid"></div>
   </section>
@@ -153,11 +155,39 @@
   <section id="apoya">
     <h2>Apoya el canal</h2>
     <div class="card pad">
-      <div class="row" style="flex-wrap:wrap">
+      <div class="row">
         <a class="btn brand" href="https://ko-fi.com/portalgamer" target="_blank" rel="noopener">☕ Invítame un café</a>
         <a class="btn" href="https://www.instant-gaming.com/es/?igr=portalgamerx" target="_blank" rel="noopener">🎮 Ver Juegos en Oferta</a>
-        <a class="btn" href="https://www.amazon.com/shop/viajealodesconocido" target="_blank" rel="noopener">🛒 Mi tienda Amazon</a>
+        <a class="btn" href="https://www.amazon.com/shop/viajealodesconocido" target="_blank" rel="noopener">🛒 Amazon</a>
       </div>
+    </div>
+  </section>
+
+  <!-- Redes -->
+  <section id="redes">
+    <h2>Redes</h2>
+    <div class="socials">
+      <a class="social-card" href="https://www.facebook.com/ElPortalGamerX" target="_blank" rel="noopener">
+        <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="" />
+        <div>
+          <div class="title" style="margin:0">Facebook</div>
+          <div class="muted">@ElPortalGamerX</div>
+        </div>
+      </a>
+      <a class="social-card" href="https://www.instagram.com/elportalgamerx" target="_blank" rel="noopener">
+        <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="" />
+        <div>
+          <div class="title" style="margin:0">Instagram</div>
+          <div class="muted">@elportalgamerx</div>
+        </div>
+      </a>
+      <a class="social-card" href="https://www.twitch.tv/soypaulangel" target="_blank" rel="noopener">
+        <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/twitch.svg" alt="" />
+        <div>
+          <div class="title" style="margin:0">Twitch</div>
+          <div class="muted">/soypaulangel</div>
+        </div>
+      </a>
     </div>
   </section>
 
@@ -171,7 +201,7 @@
             <input type="text" name="name" placeholder="Tu nombre" required>
           </label>
           <label>Email
-            <input type="email" name="_replyto" placeholder="tu@email.com" required>
+            <input type="email" name="email" placeholder="tu@email.com" required>
           </label>
         </div>
         <label>Asunto
@@ -180,45 +210,16 @@
         <label>Mensaje
           <textarea name="message" rows="6" placeholder="Contame en qué te puedo ayudar" required></textarea>
         </label>
+
+        <!-- Honeypot anti-spam -->
         <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+
         <div class="row">
           <button type="submit" class="btn brand">📨 Enviar</button>
         </div>
+
         <p id="form-result" class="muted" aria-live="polite"></p>
       </form>
-    </div>
-  </section>
-
-  <!-- Redes (abajo de todo) -->
-  <section id="redes" class="band">
-    <h2>Redes</h2>
-    <div class="socials-grid">
-      <a class="social-card" href="https://www.facebook.com/ElPortalGamerX" target="_blank" rel="noopener" aria-label="Facebook El Portal Gamer">
-        <!-- Facebook SVG -->
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#1877F2" d="M24 12.07C24 5.402 18.627 0 12 0S0 5.402 0 12.07C0 18.1 4.388 23.094 10.125 24v-8.43H7.078v-3.5h3.047v-2.67c0-3.017 1.792-4.685 4.533-4.685 1.313 0 2.686.235 2.686.235v2.97h-1.514c-1.492 0-1.956.93-1.956 1.884v2.266h3.328l-.532 3.5h-2.796V24C19.612 23.094 24 18.1 24 12.07z"/></svg>
-        <div>
-          <div class="social-name">Facebook</div>
-          <div class="social-handle">@ElPortalGamerX</div>
-        </div>
-      </a>
-
-      <a class="social-card" href="https://www.instagram.com/elportalgamerx" target="_blank" rel="noopener" aria-label="Instagram El Portal Gamer">
-        <!-- Instagram SVG -->
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#E1306C" d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.35 3.608 1.325.975.975 1.263 2.242 1.325 3.608.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.062 1.366-.35 2.633-1.325 3.608-.975.975-2.242 1.263-3.608 1.325-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.35-3.608-1.325-.975-.975-1.263-2.242-1.325-3.608C2.175 15.584 2.163 15.204 2.163 12s.012-3.584.07-4.85c.062-1.366.35-2.633 1.325-3.608S5.8 2.295 7.166 2.233C8.432 2.175 8.812 2.163 12 2.163zm0 1.8c-3.153 0-3.524.012-4.767.069-1.027.047-1.584.218-1.954.364-.492.19-.843.417-1.212.786-.369.369-.596.72-.786 1.212-.146.37-.317.927-.364 1.954-.057 1.243-.069 1.614-.069 4.767s.012 3.524.069 4.767c.047 1.027.218 1.584.364 1.954.19.492.417.843.786 1.212.369.369.72.596 1.212.786.37.146.927.317 1.954.364 1.243.057 1.614.069 4.767.069s3.524-.012 4.767-.069c1.027-.047 1.584-.218 1.954-.364.492-.19.843-.417 1.212-.786.369-.369.596-.72.786-1.212.146-.37.317-.927.364-1.954.057-1.243.069-1.614.069-4.767s-.012-3.524-.069-4.767c-.047-1.027-.218-1.584-.364-1.954-.19-.492-.417-.843-.786-1.212-.369-.369-.72-.596-1.212-.786-.37-.146-.927-.317-1.954-.364-1.243-.057-1.614-.069-4.767-.069zm0 3.274a5.763 5.763 0 1 1 0 11.526 5.763 5.763 0 0 1 0-11.526zm0 9.527a3.764 3.764 0 1 0 0-7.528 3.764 3.764 0 0 0 0 7.528zm6.406-10.93a1.348 1.348 0 1 1-2.696 0 1.348 1.348 0 0 1 2.696 0z"/></svg>
-        <div>
-          <div class="social-name">Instagram</div>
-          <div class="social-handle">@elportalgamerx</div>
-        </div>
-      </a>
-
-      <a class="social-card" href="https://www.twitch.tv/soypaulangel" target="_blank" rel="noopener" aria-label="Twitch SoyPaulAngel">
-        <!-- Twitch SVG -->
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#9146FF" d="M4 2h16v11.5l-4 4H12l-2 2H8v-2H4V2zm14 10V4H6v10h3v2h2l2-2h3l2-2z"/><path fill="#9146FF" d="M14 6h2v5h-2V6zm-4 0h2v5h-2V6z"/></svg>
-        <div>
-          <div class="social-name">Twitch</div>
-          <div class="social-handle">/soypaulangel</div>
-        </div>
-      </a>
     </div>
   </section>
 </main>
@@ -242,24 +243,17 @@
 
 <script defer>
 /** ================================
- *  CONFIG (tu data)
+ *  CONFIG
  *  ================================ */
 const API_KEY = "AIzaSyCqPlM0Ab3-_mtFHPmrrgJTS1S4dBCbbMA";
 const PLAYLIST_ID = "PLk3cei5OOiyvTQzg5FGgIRY3xs44F7Wzv";
 const MAX_RESULTS = 20;
 
-/** Blogger feed (3 noticias, JSONP) */
-const BLOG_JSONP = "https://portalgamerok.blogspot.com/feeds/posts/summary?alt=json-in-script&max-results=3&orderby=published&callback=handleBlogger";
+/** Blogger feed (JSONP 3 noticias) */
+const BLOGGER_JSONP = "https://portalgamerok.blogspot.com/feeds/posts/summary?alt=json-in-script&orderby=published&max-results=3&callback=handleBloggerFeed";
 
-/** Opcional: video de respaldo si la API falla */
-const FALLBACK_VIDEO_ID = ""; // ej. "dQw4w9WgXcQ"
-
-/** Series (palabras clave en título) */
-const SERIES_KEYWORDS = {
-  "Saga Parasite Eve": ["parasite eve","parasite-eve","koudelka"],
-  "Survival Horror PS1/PS2": ["resident evil","silent hill","dino crisis","fear effect","rule of rose","haunting ground"],
-  "JRPG & Square": ["final fantasy","chrono","xenogears","vagrant story","valkyrie profile"]
-};
+/** Afiliados */
+const INSTANT_GAMING = "https://www.instant-gaming.com/es/?igr=portalgamerx";
 
 /** Helpers */
 const $ = (s, p=document) => p.querySelector(s);
@@ -287,7 +281,9 @@ function renderUltimo(v){
   $("#ultimo-fecha").textContent = new Date(v.date).toLocaleDateString();
   $("#ultimo-desc").textContent = truncate(v.desc, 420);
   $("#ultimo-ver").href = `https://www.youtube.com/watch?v=${v.id}`;
+  $("#ultimo-oferta").href = INSTANT_GAMING;
 
+  // JSON-LD dinámico del último video
   const ld = {
     "@context":"https://schema.org","@type":"VideoObject",
     "name": v.title,"description": truncate(v.desc, 220),
@@ -322,9 +318,15 @@ function makeMiniCard(v){
   });
   return el;
 }
+
 function renderMini(arr){ const grid = $("#mini-grid"); grid.innerHTML = ""; arr.forEach(v => grid.appendChild(makeMiniCard(v))); }
 
 function renderSeries(items){
+  const SERIES_KEYWORDS = {
+    "Saga Parasite Eve": ["parasite eve","parasite-eve","koudelka"],
+    "Survival Horror PS1/PS2": ["resident evil","silent hill","dino crisis","fear effect","rule of rose","haunting ground"],
+    "JRPG & Square": ["final fantasy","chrono","xenogears","vagrant story","valkyrie profile"]
+  };
   const grid = $("#series-grid"); grid.innerHTML = "";
   for(const [name,keys] of Object.entries(SERIES_KEYWORDS)){
     const hits = items.filter(v => keys.some(k => words(v.title).includes(k))); if(!hits.length) continue;
@@ -333,6 +335,7 @@ function renderSeries(items){
     el.className = "card pad filterable";
     el.dataset.title = name; el.dataset.desc = top.map(x=>x.title).join(" ");
     el.innerHTML = `<div class="title">${name}</div>
+      <p class="muted" style="margin-top:-2px">${top.length} videos</p>
       <div class="grid cols-3" style="margin-top:8px">
         ${top.map(v=>`<a class="btn" href="https://www.youtube.com/watch?v=${v.id}" target="_blank" rel="noopener">▶ ${truncate(v.title,38)}</a>`).join("")}
       </div>`;
@@ -344,14 +347,7 @@ function showFallback(msg){
   $("#ultimo-titulo").textContent = msg || "No se pudo cargar la playlist";
   $("#ultimo-fecha").textContent = "";
   $("#ultimo-desc").textContent = "Tocá el botón para ver el canal, o probá más tarde.";
-  if (FALLBACK_VIDEO_ID){
-    const box = $("#ultimo-lite");
-    box.className = "videobox";
-    box.innerHTML = `<iframe src="https://www.youtube.com/embed/${FALLBACK_VIDEO_ID}" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
-    $("#ultimo-ver").href = `https://www.youtube.com/watch?v=${FALLBACK_VIDEO_ID}`;
-  } else {
-    $("#ultimo-ver").href = "https://www.youtube.com/@TuCanal/videos";
-  }
+  $("#ultimo-ver").href = "https://www.youtube.com/@TuCanal/videos";
 }
 
 /** Fetch YouTube */
@@ -390,6 +386,7 @@ async function loadPlaylist(){
 
 /** ===== NOTICIAS (Blogger JSONP) ===== */
 const DEFAULT_NEWS_IMAGE = "og.jpg";
+const NEWS_BRAND_NAME = "El Portal Gamer";
 const NEWS_SHOW_SOURCE = false;
 
 function upsizeBloggerImage(url, size = 800){
@@ -425,7 +422,7 @@ function parseBloggerJson(data){
       DEFAULT_NEWS_IMAGE;
 
     const image = upsizeBloggerImage(thumbRaw, 800);
-    const source = NEWS_SHOW_SOURCE ? (data?.feed?.title?.$t || "El Portal Gamer") : "";
+    const source = NEWS_SHOW_SOURCE ? (data?.feed?.title?.$t || NEWS_BRAND_NAME) : "";
 
     return { title, url: link, date, summary: textOnly, image, source };
   });
@@ -435,7 +432,7 @@ function renderNews(items){
   items.forEach(n => {
     const card = document.createElement('article');
     card.className = "card pad filterable";
-    card.dataset.title = n.title; card.dataset.desc = n.summary + " " + (n.source||"");
+    card.dataset.title = n.title; card.dataset.desc = n.summary + " " + n.source;
 
     const imgTag = n.image ? `
       <img loading="lazy" src="${n.image}"
@@ -459,29 +456,27 @@ function renderNews(items){
     grid.appendChild(card);
   });
 }
-function loadNewsJSONP(){
-  const failTimer = setTimeout(()=>{
-    if ($("#news-grid").children.length === 0){
-      $("#news-grid").innerHTML = `<div class="muted">No se pudieron cargar las noticias.</div>`;
-    }
-  }, 6000);
-
-  window.handleBlogger = (data)=>{
-    clearTimeout(failTimer);
+function handleBloggerFeed(data){
+  try{
     const items = parseBloggerJson(data);
     renderNews(items);
-  };
-  const s = document.createElement('script');
-  s.src = BLOG_JSONP;
-  s.async = true;
+  }catch(e){
+    console.error("Parse Blogger:", e);
+    $("#news-grid").innerHTML = `<div class="muted">No se pudieron cargar las noticias.</div>`;
+  }
+}
+function loadNews(){
+  const s = document.createElement("script");
+  s.src = BLOGGER_JSONP;
+  s.onerror = ()=> $("#news-grid").innerHTML = `<div class="muted">No se pudieron cargar las noticias.</div>`;
   document.body.appendChild(s);
 }
 
 loadPlaylist();
-loadNewsJSONP();
+loadNews();
 </script>
 
-<!-- Contacto: envío -->
+<!-- Contacto (Formspree) -->
 <script>
 (function(){
   const form = document.getElementById('contact-form');
@@ -501,13 +496,14 @@ loadNewsJSONP();
         result.textContent = '¡Mensaje enviado! Te respondo apenas pueda.';
         form.reset();
       }else{
-        result.textContent = 'Hubo un error al enviar. Probá más tarde.';
+        result.textContent = 'Hubo un error al enviar.';
       }
     }catch(err){
-      result.textContent = 'No se pudo enviar. Revisá tu conexión e intentá de nuevo.';
+      result.textContent = 'No se pudo enviar.';
     }
   });
 })();
 </script>
 </body>
 </html>
+```
