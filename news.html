@@ -5,337 +5,272 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Noticias — El Portal Gamer</title>
   <link rel="icon" type="image/png" href="mago.png" />
-  <meta name="description" content="Noticias y novedades de videojuegos en El Portal Gamer." />
+  <link rel="canonical" href="https://www.elportalgamer.com/news.html" />
+  <meta name="description" content="Noticias gamer, retro y curiosidades. Artículos publicados por El Portal Gamer." />
 
   <style>
-    :root{
-      --bg:#121212; --surface:#1f1f1f; --text:#f0f0f0; --muted:#b5b5b5; --brand:#ff4500; --card:#171717;
-      --radius:14px;
-    }
+    :root{ --bg:#121212; --surface:#1f1f1f; --text:#f0f0f0; --muted:#b5b5b5; --brand:#ff4500; --radius:14px; }
     *{box-sizing:border-box}
-    body{margin:0; font-family:system-ui,-apple-system,"Segoe UI",Roboto,Ubuntu,"Helvetica Neue",Arial; background:var(--bg); color:var(--text)}
-    header{position:sticky; top:0; z-index:10; background:#161616; border-bottom:1px solid #242424}
-    .nav{max-width:1100px; margin:0 auto; padding:12px 16px; display:flex; align-items:center; gap:14px}
-    .brand{display:flex; align-items:center; gap:10px; font-weight:800; color:var(--brand)}
-    .brand img{height:30px; border-radius:6px}
-    .nav a{color:#eaeaea; text-decoration:none; padding:6px 8px; border-radius:10px; opacity:.9}
+    body{ margin:0; font-family:system-ui,-apple-system,"Segoe UI",Roboto,Ubuntu,"Helvetica Neue",Arial; background:var(--bg); color:var(--text); }
+    header{ position:sticky; top:0; z-index:5; background:#161616; border-bottom:1px solid #242424; }
+    .nav{ max-width:1100px; margin:0 auto; display:flex; align-items:center; gap:16px; padding:12px 16px; }
+    .brand{ display:flex; align-items:center; gap:10px; font-weight:800; font-size:1.1rem; color:var(--brand)}
+    .brand img{height:28px;width:auto;border-radius:6px}
+    .nav a{color:#eaeaea;text-decoration:none;opacity:.9; padding:6px 8px; border-radius:10px}
     .nav a:hover{opacity:1; background:#1b1b1b}
     .spacer{flex:1}
-    .search{width:320px; max-width:55vw; padding:9px 11px; border-radius:10px; border:1px solid #2a2a2a; background:#0f0f0f; color:#fff}
+    .search{width:320px; max-width:55vw; padding:10px 12px; border-radius:10px; border:1px solid #2a2a2a; background:#0f0f0f; color:#fff}
+
     main{max-width:1100px; margin:20px auto; padding:0 16px}
-    h1{margin:0 0 10px}
-    .divider{height:8px; border-radius:999px; background:linear-gradient(90deg,#ff6a00,#ff3b00,#ff6a00); margin:12px 0 18px}
+    h1{margin:8px 0 10px}
+    .divider{height:8px; border-radius:999px; background:linear-gradient(90deg,#ff6a00,#ff3b00,#ff6a00); margin:18px 0}
 
     .grid{display:grid; gap:16px}
-    .grid.cols-3{grid-template-columns:repeat(auto-fill,minmax(280px,1fr))}
+    .grid.cols-3{grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}
     .card{background:var(--surface); border:1px solid #262626; border-radius:var(--radius); overflow:hidden}
     .card.pad{padding:14px}
-
-    .thumb{position:relative; width:100%; padding-top:56%; background:#0e0e0e; overflow:hidden}
-    .thumb img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover}
-    .meta{display:flex; gap:10px; align-items:center; color:#cfcfcf; font-size:.9rem; margin:6px 0 10px}
-    .badge{font-size:.75rem; border:1px solid #333; padding:3px 7px; border-radius:999px; color:#ffcfbd; background:#1b0f0a}
-    .title{font-weight:800; margin:6px 0}
-    .desc{color:#d2d2d2}
-    .btn{display:inline-flex; align-items:center; gap:8px; padding:9px 12px; border-radius:10px; border:1px solid #333; background:#151515; color:#fff; text-decoration:none}
+    .news-thumb{position:relative; width:100%; padding-top:100%; background:#0e0e0e; border-radius:10px; overflow:hidden; border:1px solid #262626}
+    .news-thumb img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover}
+    .news-meta{display:flex; gap:10px; align-items:center; color:#cfcfcf; font-size:.9rem; margin:6px 0 10px}
+    .badge{font-size:.75rem; border:1px solid #333; padding:4px 8px; border-radius:999px; color:#ffcfbd; background:#1b0f0a}
+    .title{font-weight:800; margin:8px 0 6px; font-size:1.05rem}
+    .desc{color:#cfcfcf; font-size:.95rem; line-height:1.5}
+    .btn{ display:inline-flex; align-items:center; gap:8px; padding:10px 12px; border-radius:10px; border:1px solid #333; background:#151515; color:#fff; text-decoration:none; }
     .btn.brand{background:var(--brand); border-color:#ff5e1f; color:#111; font-weight:800}
-    .muted{color:#bdbdbd}
+    .muted{color:#bdbdbd; font-size:.9rem}
+    .toolbar{display:flex; gap:12px; align-items:center; margin:8px 0 16px}
+    .pager{display:flex; gap:10px; align-items:center; margin:8px 0 20px}
+    .pager .btn{padding:8px 12px}
 
-    /* Vista artículo */
-    .hero{width:100%; border-radius:14px; border:1px solid #2a2a2a; overflow:hidden}
-    .hero img{width:100%; height:auto; display:block}
-    .article h1{margin:8px 0 4px}
-    .article .meta{margin:8px 0 14px}
-    .article .content{line-height:1.6}
-    .article .content img{max-width:100%; height:auto; border-radius:10px}
-    .article .content iframe{width:100%; aspect-ratio:16/9; border:0}
-
-    .topbar{display:flex; gap:10px; align-items:center; margin:8px 0 16px; flex-wrap:wrap}
-    .back{display:inline-flex; align-items:center; gap:8px; padding:8px 12px; background:#1a1a1a; color:#fff; border:1px solid #333; border-radius:10px; text-decoration:none}
-    footer{margin:36px 0 20px; color:#9b9b9b; text-align:center}
-    @media (max-width:560px){ .search{width:100%} .nav{flex-wrap:wrap} }
+    /* Detalle */
+    .article{max-width:900px; margin:0 auto}
+    .hero{width:100%; border-radius:14px; overflow:hidden; border:1px solid #262626; margin-bottom:14px;}
+    .hero img{display:block; width:100%; height:auto}
+    .content :is(p,li,blockquote){line-height:1.7; color:#e8e8e8}
+    .content img{max-width:100%; height:auto; border-radius:8px}
+    .content a{color:#ffd7c8}
   </style>
 </head>
 <body>
 <header>
   <div class="nav">
-    <div class="brand"><img src="mago.png" alt="Logo" />El Portal Gamer</div>
+    <div class="brand"><img src="mago.png" alt="">El Portal Gamer</div>
     <a href="index.html#ultimo">Inicio</a>
-    <a href="news.html" style="background:#1b1b1b">Noticias</a>
+    <a href="index.html#news">Noticias</a>
+    <a href="index.html#mini">Reseñas</a>
+    <a href="index.html#series">Series</a>
     <a href="videos.html">Videos</a>
     <div class="spacer"></div>
-    <input id="q" class="search" type="search" placeholder="Buscar noticia..." />
+    <input id="q" class="search" type="search" placeholder="Buscar noticia…" />
   </div>
 </header>
 
 <main>
   <h1>Noticias</h1>
-  <div class="divider"></div>
+  <div class="divider" aria-hidden="true"></div>
 
-  <!-- LISTA -->
-  <section id="list-view">
+  <!-- Detalle o listado -->
+  <div id="detail" class="article" style="display:none"></div>
+
+  <div id="list">
+    <div class="toolbar">
+      <input id="localFilter" class="search" style="max-width:420px" placeholder="Filtrar por título o resumen…">
+    </div>
     <div class="grid cols-3" id="news-grid"><div class="muted">Cargando…</div></div>
-    <div style="display:flex; gap:10px; justify-content:center; margin:14px 0">
-      <button id="prev" class="btn" disabled>◀ Anteriores</button>
-      <span id="page" class="muted">Página 1</span>
-      <button id="next" class="btn">Siguientes ▶</button>
+    <div class="pager">
+      <a id="prevPage" class="btn" href="#">⟵ Anteriores</a>
+      <span id="pageInfo" class="muted"></span>
+      <a id="nextPage" class="btn" href="#">Siguientes ⟶</a>
     </div>
-  </section>
-
-  <!-- ARTÍCULO -->
-  <section id="article-view" style="display:none">
-    <div class="topbar">
-      <a href="news.html" class="back">⟵ Volver a Noticias</a>
-      <button id="share" class="btn">🔗 Compartir</button>
-    </div>
-    <article class="card pad article" id="article">
-      <!-- Se completa por JS -->
-    </article>
-  </section>
+  </div>
 </main>
 
-<footer>© 2025 El Portal Gamer</footer>
-
 <script>
-/* ================================
-   Config + utilidades
-================================== */
-const BLOG = "portalgamerok.blogspot.com";
-const FEED_LIST  = `https://${BLOG}/feeds/posts/summary`;  // lista (summary)
-const FEED_ITEM  = `https://${BLOG}/feeds/posts/default`;   // artículo completo
-const JINA = "https://r.jina.ai";                 // proxy CORS #1
-const ALLO = "https://api.allorigins.win/raw";    // proxy CORS #2
+/* ====== Config ====== */
+const BLOG_BASE = "https://portalgamerok.blogspot.com";
+const PAGE_SIZE = 9; // 9 por página
+const JINA = "https://r.jina.ai";
+const ALLO = "https://api.allorigins.win/raw";
 
-const $ = (s,p=document)=>p.querySelector(s);
-const $$ = (s,p=document)=>[...p.querySelectorAll(s)];
-const truncate = (t,n)=> (t||"").length>n ? t.slice(0,n).replace(/\s+\S*$/,'')+"…" : t;
+/* ====== Helpers ====== */
+const $ = (s, p=document) => p.querySelector(s);
+const $$ = (s, p=document) => [...p.querySelectorAll(s)];
+const qs = new URLSearchParams(location.search);
+const truncate = (str, n) => (str||"").length>n ? str.slice(0,n).replace(/\s+\S*$/,'')+"…" : str;
 
-function upsizeBloggerImage(url, size=1200){
+function toHiRes(url, size=1200){
   if(!url) return "";
   return url
-    .replace(/\/s\d+(-c)?\//, `/s${size}/`)
-    .replace(/=s\d+(-c)?/, `=s${size}`)
-    .replace(/\/w\d+-h\d+(-c)?\//, `/s${size}/`);
+    .replace(/\/s\d+(-[a-z-]+)?\//i, `/s${size}/`)
+    .replace(/=s\d+(-[a-z-]+)?/i, `=s${size}`)
+    .replace(/\/w\d+-h\d+(-[a-z-]+)?\//i, `/s${size}/`)
+    .replace(/=w\d+-h\d+(-[a-z-]+)*/i, `=s${size}`);
 }
-function stripHtml(html){ return (html||"").replace(/<[^>]+>/g," ").replace(/\s+/g," ").trim(); }
+function pickImageFromHtml(html){
+  if(!html) return "";
+  const mSet = html.match(/srcset="([^"]+)"/i);
+  if(mSet){
+    let bestUrl = "", bestW = 0;
+    for (const chunk of mSet[1].split(',')){
+      const m = chunk.trim().match(/(\S+)\s+(\d+)w/);
+      if(m){
+        const w = +m[2]; if (w>bestW){bestW=w; bestUrl=m[1];}
+      }
+    }
+    if(bestUrl) return bestUrl;
+  }
+  const mSrc = html.match(/<img[^>]+src=["']([^"']+)["']/i);
+  return mSrc ? mSrc[1] : "";
+}
 function timeAgo(iso){
-  const d = new Date(iso); const diff=(Date.now()-d)/1000;
-  const u=[[31536000,'a'],[2592000,'m'],[604800,'sem'],[86400,'d'],[3600,'h'],[60,'min']];
-  for(const [s,n] of u){ if(diff>=s) return `${Math.floor(diff/s)} ${n}`; } return "ahora";
+  const d = new Date(iso); const diff = (Date.now() - d.getTime())/1000;
+  const units = [[31536000,'a'],[2592000,'m'],[604800,'sem'],[86400,'d'],[3600,'h'],[60,'min']];
+  for(const [s,n] of units){ if(diff>=s) return `${Math.floor(diff/s)} ${n}`; }
+  return 'ahora';
 }
-function getIdFromEntry(e){
-  // e.id.$t = "tag:blogger.com,1999:blog-XXXXX.post-POSTID"
-  return (e?.id?.$t||"").split("post-").pop();
-}
-
-// JSON seguro (aunque el server devuelva text/plain)
 async function fetchJson(url){
-  const r = await fetch(url, {cache:"no-store"});
+  const r = await fetch(url, {cache:'no-store'});
   const t = await r.text();
   try { return JSON.parse(t); } catch { return {}; }
 }
 
-async function fetchWithFallbacks(urls){
-  for(const u of urls){
-    try{
-      const data = await fetchJson(u);
-      if (data?.feed?.entry || data?.entry) return data;
-    }catch(_){}
-  }
-  throw new Error("Todas las rutas fallaron");
-}
-
-/* ================================
-   Lista de noticias
-================================== */
-let pageStart = 1; // Blogger index 1-based
-
+/* ====== Parse feed ====== */
 function parseList(data){
   const entries = data?.feed?.entry || [];
   return entries.map(e=>{
-    const raw = e.summary?.$t || e.content?.$t || "";
-    const title = (e.title?.$t || "").trim() || truncate(stripHtml(raw), 12);
+    const rawHtml = e.summary?.$t || e.content?.$t || "";
+    const textOnly = rawHtml.replace(/<[^>]+>/g, " ").replace(/\s+/g,' ').trim();
+    const title = (e.title?.$t || "").trim() || "Sin título";
+    const link  = (e.link||[]).find(l=>l.rel==='alternate')?.href || '#';
     const date  = e.published?.$t || e.updated?.$t || new Date().toISOString();
-    const imgRaw = e["media$thumbnail"]?.url || (raw.match(/<img[^>]+src=["']([^"']+)/i)?.[1]) || "og.jpg";
-    const image = upsizeBloggerImage(imgRaw, 800);
-    const id = getIdFromEntry(e);
-    return { id, title, date, image, summary: stripHtml(raw) };
+    const postId = (e.id?.$t || "").split("post-").pop() || "";
+    let img = pickImageFromHtml(rawHtml) || e['media$thumbnail']?.url || "";
+    img = toHiRes(img, 1200);
+    return { id:postId, title, url:link, date, summary:textOnly, image:img };
   });
 }
 
+/* ====== Listado ====== */
+let currentPage = 1;
+async function loadPage(page=1){
+  currentPage = page;
+  const start = (page-1)*PAGE_SIZE + 1;
+  const urls = [
+    `${JINA}/${BLOG_BASE.replace("https://","")}/feeds/posts/summary?alt=json&max-results=${PAGE_SIZE}&start-index=${start}&orderby=published`,
+    `${ALLO}?url=${encodeURIComponent(`${BLOG_BASE}/feeds/posts/summary?alt=json&max-results=${PAGE_SIZE}&start-index=${start}&orderby=published`)}`,
+    `${BLOG_BASE}/feeds/posts/summary?alt=json&max-results=${PAGE_SIZE}&start-index=${start}&orderby=published`
+  ];
+  let data = null;
+  for (const u of urls){
+    try{ const d = await fetchJson(u); if(d?.feed) { data = d; break; } }catch{}
+  }
+  if(!data){ $("#news-grid").innerHTML = `<div class="muted">No se pudieron cargar noticias.</div>`; return; }
+
+  const items = parseList(data);
+  renderList(items);
+  $("#pageInfo").textContent = `Página ${currentPage}`;
+}
 function renderList(items){
-  const grid = $("#news-grid"); grid.innerHTML="";
-  for(const n of items){
+  const grid = $("#news-grid"); grid.innerHTML = "";
+  items.forEach(n=>{
+    const img1200 = toHiRes(n.image,1200), img800 = toHiRes(n.image,800), img400=toHiRes(n.image,400);
     const card = document.createElement("article");
     card.className = "card pad";
     card.innerHTML = `
-      <div class="thumb">
-        <img src="${n.image}" alt="" loading="lazy">
+      <div class="news-thumb">
+        ${img800 ? `<img loading="lazy" decoding="async" src="${img800}"
+             srcset="${img400} 400w, ${img800} 800w, ${img1200} 1200w"
+             sizes="(min-width:900px) 33vw, 90vw" alt="">` : ``}
       </div>
-      <div class="meta"><span class="badge">Noticia</span><span>${new Date(n.date).toLocaleDateString()}</span> • <span>${timeAgo(n.date)}</span></div>
+      <div class="news-meta"><span class="badge">Noticia</span> <span>${timeAgo(n.date)}</span></div>
       <div class="title">${n.title}</div>
-      <p class="desc">${truncate(n.summary, 220)}</p>
-      <a class="btn brand" href="news.html?id=${encodeURIComponent(n.id)}">📰 Leer más</a>
+      <p class="desc">${truncate(n.summary, 240)}</p>
+      <a class="btn brand" href="news.html?id=${n.id}">📰 Leer más</a>
     `;
     grid.appendChild(card);
-  }
-}
-
-async function loadList(){
-  const startIndex = pageStart;
-  const maxResults = 9;
-  const qs = `?alt=json&orderby=published&start-index=${startIndex}&max-results=${maxResults}`;
-  const urls = [
-    `${JINA}/https://${BLOG}/feeds/posts/summary${qs}`,
-    `${JINA}/http://${BLOG}/feeds/posts/summary${qs}`,
-    `${ALLO}?url=${encodeURIComponent(FEED_LIST+qs)}`,
-    FEED_LIST+qs
-  ];
-  const data = await fetchWithFallbacks(urls);
-  renderList(parseList(data));
-  $("#page").textContent = `Página ${Math.ceil(startIndex/maxResults)}`;
-}
-
-/* ================================
-   Vista artículo
-================================== */
-function sanitizeAndUpgrade(html){
-  // Limpiar y mejorar contenido (sin scripts)
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(html || "", "text/html");
-
-  // eliminar scripts y estilos
-  doc.querySelectorAll("script,style,link").forEach(n=>n.remove());
-  // iframes: solo YouTube
-  doc.querySelectorAll("iframe").forEach(f=>{
-    const ok = /youtube\.com|youtu\.be/.test(f.src||"");
-    if(!ok) f.remove();
-    else { f.setAttribute("loading","lazy"); f.setAttribute("referrerpolicy","no-referrer"); f.removeAttribute("style"); }
-  });
-  // imágenes grandes + lazy
-  doc.querySelectorAll("img").forEach(img=>{
-    img.loading="lazy";
-    img.referrerPolicy="no-referrer";
-    if(img.src) img.src = upsizeBloggerImage(img.src, 1200);
-    img.removeAttribute("width"); img.removeAttribute("height");
-    img.style.maxWidth="100%"; img.style.height="auto";
-  });
-  // quitar on* handlers
-  doc.querySelectorAll("*").forEach(el=>{
-    [...el.attributes].forEach(a=>{
-      if(/^on/i.test(a.name)) el.removeAttribute(a.name);
-    });
   });
 
-  return doc.body.innerHTML;
-}
-
-function parseArticle(data){
-  const e = data?.entry;
-  const id = getIdFromEntry(e);
-  const title = e?.title?.$t || "Sin título";
-  const date = e?.published?.$t || e?.updated?.$t || new Date().toISOString();
-  const rawHtml = e?.content?.$t || e?.summary?.$t || "";
-  const content = sanitizeAndUpgrade(rawHtml);
-  // hero: primera imagen del contenido o thumbnail
-  const mHero = (content.match(/<img[^>]+src="([^"]+)"/i)?.[1]) || e?.["media$thumbnail"]?.url || "og.jpg";
-  const hero = upsizeBloggerImage(mHero, 1200);
-  const description = truncate(stripHtml(rawHtml), 160);
-  return { id, title, date, content, hero, description };
-}
-
-function renderArticle(post){
-  const el = $("#article");
-  document.title = `${post.title} — Noticias | El Portal Gamer`;
-  el.innerHTML = `
-    <div class="hero"><img src="${post.hero}" alt="" loading="eager"></div>
-    <h1>${post.title}</h1>
-    <div class="meta"><span class="badge">Noticia</span><span>${new Date(post.date).toLocaleDateString()}</span></div>
-    <div class="content">${post.content}</div>
-  `;
-
-  // JSON-LD
-  const ld = {
-    "@context":"https://schema.org","@type":"NewsArticle",
-    "headline":post.title,"datePublished":post.date,
-    "image":[post.hero],"author":{"@type":"Organization","name":"El Portal Gamer"},
-    "publisher":{"@type":"Organization","name":"El Portal Gamer"},
-    "description":post.description,
-    "mainEntityOfPage":location.href
+  // filtro local por texto
+  const filter = $("#localFilter");
+  filter.oninput = ()=>{
+    const q = filter.value.toLowerCase();
+    for (const card of $$(".card.pad", grid)){
+      const text = card.textContent.toLowerCase();
+      card.style.display = text.includes(q) ? "" : "none";
+    }
   };
-  let s=document.getElementById("ld-article"); if(s) s.remove();
-  s=document.createElement("script"); s.type="application/ld+json"; s.id="ld-article";
-  s.textContent=JSON.stringify(ld); document.head.appendChild(s);
 }
+$("#prevPage").addEventListener("click", e=>{e.preventDefault(); if(currentPage>1) loadPage(currentPage-1);});
+$("#nextPage").addEventListener("click", e=>{e.preventDefault(); loadPage(currentPage+1);});
 
-async function loadArticle(id){
-  const qs = `/${encodeURIComponent(id)}?alt=json`;
-  const urls = [
-    `${JINA}/https://${BLOG}/feeds/posts/default${qs}`,
-    `${JINA}/http://${BLOG}/feeds/posts/default${qs}`,
-    `${ALLO}?url=${encodeURIComponent(FEED_ITEM+qs)}`,
-    FEED_ITEM+qs
+/* ====== Detalle ====== */
+async function loadDetail(postId){
+  // Intento 1: traer un bloque grande de feed y buscar el ID
+  const searchUrls = [
+    `${JINA}/${BLOG_BASE.replace("https://","")}/feeds/posts/default?alt=json&max-results=150&orderby=published`,
+    `${ALLO}?url=${encodeURIComponent(`${BLOG_BASE}/feeds/posts/default?alt=json&max-results=150&orderby=published`)}`
   ];
-  const data = await fetchWithFallbacks(urls);
-  const post = parseArticle(data);
-  renderArticle(post);
-}
+  let entry = null, data = null;
 
-/* ================================
-   Router simple
-================================== */
-async function init(){
-  const p = new URLSearchParams(location.search);
-  const id = p.get("id");
-
-  if (id){
-    // ARTÍCULO
-    $("#list-view").style.display = "none";
-    $("#article-view").style.display = "";
-    try { await loadArticle(id); } 
-    catch { $("#article").innerHTML = `<p class="muted">No pudimos cargar esta nota.</p>`; }
-  }else{
-    // LISTA
-    $("#list-view").style.display = "";
-    $("#article-view").style.display = "none";
-    try { await loadList(); } 
-    catch { $("#news-grid").innerHTML = `<div class="muted">No pudimos cargar noticias.</div>`; }
-
-    // búsqueda local
-    const q = $("#q");
-    q.addEventListener("input", ()=>{
-      const term = q.value.trim().toLowerCase();
-      for(const card of $$("#news-grid .card")){
-        const txt = card.textContent.toLowerCase();
-        card.style.display = txt.includes(term) ? "" : "none";
-      }
-    });
-    // paginación simple (9 por página)
-    $("#prev").onclick = async ()=>{
-      if (pageStart<=1) return;
-      pageStart = Math.max(1, pageStart-9);
-      $("#prev").disabled = (pageStart<=1);
-      await loadList();
-    };
-    $("#next").onclick = async ()=>{
-      pageStart += 9;
-      $("#prev").disabled = false;
-      await loadList();
-    };
+  for (const u of searchUrls){
+    try{
+      data = await fetchJson(u);
+      const list = data?.feed?.entry || [];
+      entry = list.find(e => (e.id?.$t||"").includes(postId));
+      if(entry) break;
+    }catch{}
   }
 
-  // compartir
-  const shareBtn = $("#share");
-  if (shareBtn){
-    shareBtn.onclick = async ()=>{
-      try{
-        if(navigator.share) await navigator.share({title:document.title, url:location.href});
-        else { await navigator.clipboard.writeText(location.href); shareBtn.textContent="Copiado ✅"; setTimeout(()=>shareBtn.textContent="🔗 Compartir",1200); }
-      }catch(_){}
-    };
+  // Si no lo encontramos, mostramos error
+  if(!entry){
+    $("#detail").style.display = "block";
+    $("#detail").innerHTML = `<p class="muted">No se encontró la noticia.</p>`;
+    $("#list").style.display = "none";
+    return;
   }
+
+  // Campos
+  const title = entry.title?.$t || "Sin título";
+  const rawHtml = entry.content?.$t || entry.summary?.$t || "";
+  const link = (entry.link||[]).find(l=>l.rel==='alternate')?.href || `${BLOG_BASE}`;
+  let img = pickImageFromHtml(rawHtml) || entry['media$thumbnail']?.url || "";
+  img = toHiRes(img, 1200);
+
+  // Render detalle (HTML del post ya viene en el feed 'default' en la mayoría de plantillas)
+  const hero = img ? `
+    <div class="hero">
+      <img loading="eager" decoding="async"
+           src="${toHiRes(img,800)}"
+           srcset="${toHiRes(img,400)} 400w, ${toHiRes(img,800)} 800w, ${toHiRes(img,1200)} 1200w"
+           sizes="100vw" alt="">
+    </div>` : ``;
+
+  const detail = $("#detail");
+  detail.style.display = "block";
+  detail.innerHTML = `
+    <a class="btn" href="news.html">⟵ Volver a noticias</a>
+    <h1>${title}</h1>
+    ${hero}
+    <div class="content">${rawHtml}</div>
+  `;
+  $("#list").style.display = "none";
 }
-init();
+
+/* ===== Init: decide modo ===== */
+const id = qs.get("id");
+if (id){
+  loadDetail(id);
+} else {
+  loadPage(1);
+}
+
+// buscador top (simple redirect a filtro local)
+$("#q").addEventListener("keyup", (e)=>{
+  if(e.key==="Enter"){
+    const v = $("#q").value.trim();
+    if(v){ $("#localFilter").value = v; $("#localFilter").dispatchEvent(new Event("input")); }
+  }
+});
 </script>
 </body>
 </html>
