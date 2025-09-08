@@ -5,300 +5,197 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Noticias — El Portal Gamer</title>
   <link rel="icon" type="image/png" href="mago.png" />
-
-  <meta name="description" content="Noticias y novedades de videojuegos en El Portal Gamer." />
-  <meta property="og:title" content="Noticias — El Portal Gamer" />
-  <meta property="og:description" content="Novedades gamer, lanzamientos, actualizaciones y más." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://www.elportalgamer.com/news.html" />
-  <meta property="og:image" content="https://www.elportalgamer.com/og.jpg" />
-
   <style>
-    :root{
-      --bg:#121212; --surface:#1f1f1f; --text:#f0f0f0; --muted:#b5b5b5; --brand:#ff4500; --card:#171717;
-      --radius:14px;
-    }
+    :root{--bg:#121212; --surface:#1f1f1f; --text:#f0f0f0; --muted:#b5b5b5; --brand:#ff4500; --radius:14px;}
     *{box-sizing:border-box}
-    body{ margin:0; font-family:system-ui,-apple-system,"Segoe UI",Roboto,Ubuntu,"Helvetica Neue",Arial; background:var(--bg); color:var(--text); }
-    header{ position:sticky; top:0; z-index:5; background:#161616; border-bottom:1px solid #242424; }
-    .nav{ max-width:1100px; margin:0 auto; display:flex; align-items:center; gap:16px; padding:12px 16px; }
-    .brand{ display:flex; align-items:center; gap:10px; font-weight:800; font-size:1.25rem; color:var(--brand)}
-    .brand img{height:34px;width:auto;border-radius:6px}
-    .nav a{color:#eaeaea;text-decoration:none;opacity:.9; padding:6px 8px; border-radius:10px}
-    .nav a:hover{opacity:1; background:#1b1b1b}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Arial}
+    header{position:sticky;top:0;z-index:5;background:#161616;border-bottom:1px solid #242424}
+    .nav{max-width:1100px;margin:0 auto;padding:12px 16px;display:flex;gap:12px;align-items:center}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:800;color:#ff4500}
+    .brand img{height:30px}
     .spacer{flex:1}
-    .search{width:320px; max-width:55vw; padding:10px 12px; border-radius:10px; border:1px solid #2a2a2a; background:#0f0f0f; color:#fff}
+    input.search{width:300px;max-width:55vw;padding:10px 12px;border-radius:10px;border:1px solid #2a2a2a;background:#0f0f0f;color:#fff}
 
-    main{max-width:1100px; margin:20px auto; padding:0 16px}
-    section{margin:24px 0}
-    h1,h2{margin:0 0 12px}
-    .grid{display:grid; gap:16px}
-    .grid.cols-3{grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}
-    .card{background:var(--surface); border:1px solid #262626; border-radius:var(--radius); overflow:hidden}
-    .card.pad{padding:14px}
-    .row{display:flex; gap:12px; align-items:center; flex-wrap:wrap}
-    .muted{color:var(--muted)}
-    .btn{ display:inline-flex; align-items:center; gap:8px; padding:10px 12px; border-radius:10px; border:1px solid #333; background:#151515; color:#fff; text-decoration:none; }
-    .btn.brand{background:var(--brand); border-color:#ff5e1f; color:#111; font-weight:800}
+    main{max-width:1100px;margin:20px auto;padding:0 16px}
+    h1{margin:0 0 10px}
+    .divider{height:8px;border-radius:999px;background:linear-gradient(90deg,#ff6a00,#ff3b00,#ff6a00);margin:12px 0 18px}
 
-    /* Noticias */
-    a.news-thumb{ display:block; }
-    .news-thumb{position:relative; width:100%; padding-top:100%; background:#0e0e0e; border-radius:10px; overflow:hidden; border:1px solid #262626}
-    .news-thumb img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover}
-    .news-meta{display:flex; gap:10px; align-items:center; color:#cfcfcf; font-size:.9rem; margin:6px 0 10px}
-    .badge{font-size:.75rem; border:1px solid #333; padding:4px 8px; border-radius:999px; color:#ffcfbd; background:#1b0f0a}
-    .title{font-weight:800; font-size:1.2rem}
-    .title a{ color:inherit; text-decoration:none; }
-    .title a:hover{ text-decoration:underline; }
+    .grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}
+    .card{background:#1f1f1f;border:1px solid #262626;border-radius:var(--radius);overflow:hidden}
+    .pad{padding:14px}
+    .badge{font-size:.75rem;border:1px solid #333;padding:4px 8px;border-radius:999px;color:#ffcfbd;background:#1b0f0a}
+    .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 12px;border-radius:10px;border:1px solid #333;background:#151515;color:#fff;text-decoration:none}
+    .btn.brand{background:var(--brand);border-color:#ff5e1f;color:#111;font-weight:800}
+    .btn.min{padding:8px 10px}
 
-    /* Artículo */
-    .hero{ width:100%; aspect-ratio: 16/9; background:#0d0d0d; border:1px solid #262626; border-radius:14px; overflow:hidden; }
-    .hero img{ width:100%; height:100%; object-fit:cover; display:block; }
-    .article h1{ margin:10px 0 8px }
-    .article .meta{ color:#cfcfcf; font-size:.95rem; margin-bottom:8px }
-    .article .content{ line-height:1.6 }
-    .article .content img{ max-width:100%; height:auto; border-radius:10px; }
-    .article .content a{ color:#ffd1bf }
-    .back{ margin:10px 0 20px }
+    .thumb{position:relative;width:100%;padding-top:60%;background:#0e0e0e;overflow:hidden;border-bottom:1px solid #262626}
+    .thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 
-    .pager{ display:flex; gap:10px; justify-content:center; margin:16px 0 }
+    article.read .hero{position:relative;width:100%;padding-top:42%;background:#0e0e0e;border-radius:14px;overflow:hidden;border:1px solid #262626;margin-bottom:12px}
+    article.read .hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+    article.read .content{line-height:1.65}
+    article.read .content img{max-width:100%;height:auto;border-radius:10px}
+
+    .muted{color:#b5b5b5}
   </style>
 </head>
 <body>
 <header>
   <div class="nav">
-    <div class="brand"><img src="mago.png" alt="Logo" />El Portal Gamer</div>
-    <a href="index.html#ultimo">Inicio</a>
-    <a href="index.html#news">Noticias</a>
-    <a href="index.html#mini">Reseñas</a>
-    <a href="index.html#series">Series</a>
-    <a href="videos.html">Videos</a>
+    <div class="brand"><img src="mago.png" alt=""><strong>El Portal Gamer</strong></div>
+    <a href="index.html" style="color:#eaeaea;text-decoration:none">Inicio</a>
     <div class="spacer"></div>
-    <input id="q" class="search" type="search" placeholder="Buscar noticia…" />
+    <input id="q" class="search" placeholder="Buscar noticia…">
   </div>
 </header>
 
 <main>
-  <section id="list-view">
-    <h1>Noticias</h1>
-    <div class="grid cols-3" id="news-grid"></div>
-    <div class="pager" id="pager"></div>
-  </section>
+  <h1>Noticias</h1>
+  <div class="divider"></div>
 
-  <section id="detail-view" style="display:none">
-    <a class="btn back" href="news.html">← Volver a noticias</a>
-    <article class="article card pad" id="post">
-      <div class="hero" id="post-hero"></div>
-      <h1 id="post-title"></h1>
-      <div class="meta" id="post-date"></div>
-      <div class="content" id="post-content"></div>
-    </article>
-  </section>
+  <div id="list-view">
+    <div class="grid" id="news-list"><div class="muted">Cargando…</div></div>
+    <div class="row" style="margin-top:14px">
+      <button id="more" class="btn">Más</button>
+    </div>
+  </div>
+
+  <article id="read-view" class="read" style="display:none">
+    <div class="hero"><img id="read-img" alt="" referrerpolicy="no-referrer"></div>
+    <h2 id="read-title"></h2>
+    <p class="muted" id="read-meta"></p>
+    <div class="row" style="margin:10px 0 14px">
+      <a id="read-open" class="btn brand min" target="_blank" rel="noopener">📰 Abrir en pestaña</a>
+      <button id="read-share" class="btn min">🔗 Compartir</button>
+      <a class="btn min" href="news.html">⬅ Volver</a>
+    </div>
+    <div id="read-content" class="content"></div>
+  </article>
 </main>
 
-<footer style="text-align:center;color:#9b9b9b;margin:40px 0 20px">© 2025 El Portal Gamer</footer>
-
 <script>
-/* ===== Config y helpers ===== */
-const BLOGGER = "https://portalgamerok.blogspot.com";
-const FEED_BASE = `${BLOGGER}/feeds/posts`;
-const JINA = "https://r.jina.ai";
-const ALLO = "https://api.allorigins.win/raw";
-const PAGE_SIZE = 9;
-const FORCE_HD_IMAGES = true;
+/* Utils */
+const $ = (s,p=document)=>p.querySelector(s);
+const $$= (s,p=document)=>[...p.querySelectorAll(s)];
+const truncate=(t,n)=> (t||"").length>n ? t.slice(0,n).replace(/\s+\S*$/,'')+"…" : t;
 
-const $ = (s, p=document)=>p.querySelector(s);
-const $$ = (s, p=document)=>[...p.querySelectorAll(s)];
-const qs = new URLSearchParams(location.search);
-const escapeHtml = s => (s||'').replace(/[&<>"']/g,m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[m]));
-const truncate  = (str,n)=> (str||"").length>n ? str.slice(0,n).replace(/\s+\S*$/,'')+"…" : str;
-
-/* Blogger imagen HD */
-function upsizeBloggerImage(url, size=1600){
+function hq(url, size=1600){
   if(!url) return "";
-  let u = url;
-  u = u.replace(/\/s\d+(-[a-z])?\//, `/s${size}/`)
-       .replace(/=s\d+(-[a-z])?/, `=s${size}`)
-       .replace(/\/w\d+-h\d+(-[a-z])?\//, `/s${size}/`)
-       .replace(/-c(?=[^\/]*$)/, "");
-  if (/googleusercontent\.com/.test(u) && !/\/s\d+\//.test(u) && !/=s\d+/.test(u)){
-    u += (u.includes("?") ? "&" : "?") + "s=" + size;
+  let u = url
+    .replace(/\/s\d+(-c)?\//, `/s${size}/`)
+    .replace(/=s\d+(-c)?/, `=s${size}`)
+    .replace(/\/w\d+-h\d+(-c)?\//, `/s${size}/`);
+  if (/blogger\.googleusercontent\.com/.test(u) && !/[?&]imgmax=/.test(u)) {
+    u += (u.includes("?")?"&":"?")+`imgmax=${size}`;
   }
   return u;
 }
-function extractFirstImg(html){
-  const m = (html||"").match(/<img[^>]+src=["']([^"']+)["']/i);
-  return m ? m[1] : "";
-}
-async function fetchJson(url){
-  const r = await fetch(url, {cache:'no-store'});
-  const t = await r.text();
-  try { return JSON.parse(t); } catch { return {}; }
-}
-
-/* ===== Lista ===== */
-function mapSummaryEntry(e, feedTitle){
-  const rawHtml  = e.summary?.$t || e.content?.$t || "";
-  const textOnly = rawHtml.replace(/<[^>]+>/g," ").replace(/\s+/g," ").trim();
-  const title    = (e.title?.$t || "").trim() || textOnly.split(/\s+/).slice(0,12).join(" ")+"…";
-  const link     = (e.link||[]).find(l=>l.rel==='alternate')?.href || "#";
-  const id       = (e.id?.$t || "").split("post-").pop() || "";
-  const date     = e.published?.$t || e.updated?.$t || new Date().toISOString();
-  const thumbRaw = e["media$thumbnail"]?.url || extractFirstImg(rawHtml) || "og.jpg";
-  return {
-    id, title, url:link, date,
-    summary: textOnly,
-    image: upsizeBloggerImage(thumbRaw, 1200),
-    source: feedTitle || "El Portal Gamer"
-  };
-}
-function renderList(items, page, hasMore){
-  const grid = $("#news-grid"); grid.innerHTML = "";
-  items.forEach(n=>{
-    const target = n.id ? `news.html?id=${encodeURIComponent(n.id)}` :
-                    (n.url ? `news.html?url=${encodeURIComponent(n.url)}` : `news.html`);
-    const img = FORCE_HD_IMAGES
-      ? `<img loading="lazy" decoding="async" src="${upsizeBloggerImage(n.image,1200)}" alt="">`
-      : `<img loading="lazy" decoding="async" src="${upsizeBloggerImage(n.image,900)}"
-           srcset="${upsizeBloggerImage(n.image,600)} 600w, ${upsizeBloggerImage(n.image,900)} 900w, ${upsizeBloggerImage(n.image,1200)} 1200w"
-           sizes="(min-width:1024px) 340px, (min-width:640px) 45vw, 90vw" alt="">`;
-
-    const card = document.createElement("article");
-    card.className = "card pad";
-    card.innerHTML = `
-      <a class="news-thumb" href="${target}" title="${escapeHtml(n.title)}">${img}</a>
-      <div class="news-meta"><span class="badge">Noticia</span> <span>${new Date(n.date).toLocaleDateString()}</span></div>
-      <div class="title"><a href="${target}">${n.title}</a></div>
-      <p class="muted">${truncate(n.summary, 240)}</p>
-      <a class="btn brand" href="${target}">📰 Leer más</a>
-    `;
-    grid.appendChild(card);
-  });
-
-  const pager = $("#pager");
-  pager.innerHTML = "";
-  const prev = page>1 ? `<a class="btn" href="news.html?page=${page-1}">← Anteriores</a>` : "";
-  const next = hasMore ? `<a class="btn" href="news.html?page=${page+1}">Siguientes →</a>` : "";
-  pager.innerHTML = prev + next;
-}
-async function loadList(){
-  const page = Math.max(1, parseInt(qs.get("page")||"1",10));
-  const start = (page-1)*PAGE_SIZE + 1;
-  const urls = [
-    `${JINA}/https://portalgamerok.blogspot.com/feeds/posts/summary?alt=json&orderby=published&max-results=${PAGE_SIZE}&start-index=${start}`,
-    `${ALLO}?url=${encodeURIComponent(`https://portalgamerok.blogspot.com/feeds/posts/summary?alt=json&orderby=published&max-results=${PAGE_SIZE}&start-index=${start}`)}`
-  ];
-  let data=null;
-  for(const u of urls){ try{ const d=await fetchJson(u); if(d?.feed){ data=d; break;} }catch{} }
-
-  // fallback a /news.json
-  if(!data){
-    try{
-      const local = await (await fetch("news.json",{cache:"no-store"})).json();
-      const slice = local.slice(start-1, start-1+PAGE_SIZE);
-      renderList(slice.map(x=>({
-        id:x.id||"", title:x.title, url:x.url, date:x.date,
-        summary:x.summary||"", image:upsizeBloggerImage(x.image,1200)
-      })), page, (start-1+PAGE_SIZE)<local.length);
-      return;
-    }catch{
-      $("#news-grid").innerHTML = `<div class="muted">No se pudieron cargar las noticias.</div>`;
-      return;
+function ensureHiRes(img, original){
+  if (img.naturalWidth && img.naturalWidth < 600) {
+    const better = hq(original || img.currentSrc || img.src, 1600);
+    if (better !== img.src) {
+      img.src = better;
+      img.srcset = `${hq(original,400)} 400w, ${hq(original,800)} 800w, ${hq(original,1200)} 1200w, ${hq(original,1600)} 1600w`;
     }
   }
-
-  const feedTitle = data?.feed?.title?.$t || "El Portal Gamer";
-  const items = (data.feed.entry||[]).map(e=>mapSummaryEntry(e, feedTitle));
-  const hasMore = (data.feed.entry||[]).length === PAGE_SIZE;
-  renderList(items, page, hasMore);
-
-  // buscador local
-  const q = $("#q");
-  q.oninput = ()=>{
-    const needle = (q.value||"").toLowerCase();
-    $$("#news-grid .card").forEach(card=>{
-      const txt = card.textContent.toLowerCase();
-      card.style.display = (!needle || txt.includes(needle)) ? "" : "none";
-    });
-  };
+}
+function timeAgo(iso){
+  const d = new Date(iso); const diff = (Date.now() - d.getTime())/1000;
+  const units = [[31536000,'a'],[2592000,'m'],[604800,'sem'],[86400,'d'],[3600,'h'],[60,'min']];
+  for(const [s,n] of units){ if(diff>=s) return `${Math.floor(diff/s)} ${n}`; }
+  return 'ahora';
+}
+function shareIt(url, title){
+  const absolute = new URL(url, location.href).toString();
+  if (navigator.share) navigator.share({title, url:absolute}).catch(()=>{});
+  else { navigator.clipboard?.writeText(absolute); alert("Enlace copiado"); }
 }
 
-/* ===== Artículo ===== */
-function rewriteImages(html){
-  return (html||"").replace(/(<img[^>]+src=["'])([^"']+)(["'][^>]*>)/gi, (_,a,src,c)=>{
-    return a + upsizeBloggerImage(src, 1600) + c;
-  });
-}
-async function loadDetailById(id){
-  const urls = [
-    `${JINA}/https://portalgamerok.blogspot.com/feeds/posts/default/${id}?alt=json`,
-    `${ALLO}?url=${encodeURIComponent(`https://portalgamerok.blogspot.com/feeds/posts/default/${id}?alt=json`)}`
-  ];
-  for (const u of urls){
-    try{
-      const data = await fetchJson(u);
-      const e = data?.entry;
-      if (!e) continue;
+/* Data */
+const PAGE_SIZE = 9;
+let page = 0, cache = [];
 
-      const title = e.title?.$t || "";
-      const html  = e.content?.$t || e.summary?.$t || "";
-      const date  = e.published?.$t || e.updated?.$t || new Date().toISOString();
-      const hero  = upsizeBloggerImage(extractFirstImg(html), 1600) || "og.jpg";
+async function fetchJson(u){ const r=await fetch(u,{cache:'no-store'}); const t=await r.text(); try{return JSON.parse(t);}catch{return{}}; }
 
-      $("#post-hero").innerHTML = `<img src="${hero}" alt="">`;
-      $("#post-title").textContent = title;
-      $("#post-date").textContent  = new Date(date).toLocaleString();
-      $("#post-content").innerHTML = rewriteImages(html).replace(/href="/g,'target="_blank" rel="noopener" href="');
-
-      // JSON-LD de la nota
-      const ld = {
-        "@context":"https://schema.org",
-        "@type":"NewsArticle",
-        "headline": title,
-        "datePublished": date,
-        "image": [hero],
-        "mainEntityOfPage": location.href,
-        "author":{"@type":"Organization","name":"El Portal Gamer"},
-        "publisher":{"@type":"Organization","name":"El Portal Gamer"}
-      };
-      let s = document.getElementById("ld-article"); if (s) s.remove();
-      s = document.createElement("script"); s.id="ld-article"; s.type="application/ld+json"; s.textContent = JSON.stringify(ld);
-      document.head.appendChild(s);
-
-      $("#list-view").style.display = "none";
-      $("#detail-view").style.display = "";
-      return;
-    }catch(e){ /* try next */ }
+function renderList(items, append=false){
+  const grid = $("#news-list");
+  if (!append) grid.innerHTML = "";
+  for (const n of items){
+    const card = document.createElement('article');
+    card.className = "card";
+    const hi = hq(n.image, 1600);
+    card.innerHTML = `
+      <a class="thumb" href="news.html?id=${encodeURIComponent(n.id)}">
+        <img loading="lazy" decoding="async" referrerpolicy="no-referrer"
+             src="${hi}"
+             srcset="${hq(n.image,400)} 400w, ${hq(n.image,800)} 800w, ${hq(n.image,1200)} 1200w, ${hq(n.image,1600)} 1600w"
+             sizes="(min-width: 900px) 33vw, 90vw" alt="">
+      </a>
+      <div class="pad">
+        <div class="row" style="margin-bottom:8px"><span class="badge">Noticia</span><span class="muted">${new Date(n.date).toLocaleDateString()}</span><span class="muted">• ${timeAgo(n.date)}</span></div>
+        <h3 style="margin:6px 0 8px">${n.title}</h3>
+        <p class="muted" style="margin:0 0 10px">${truncate(n.summary||"", 220)}</p>
+        <div class="row">
+          <a class="btn brand min" href="news.html?id=${encodeURIComponent(n.id)}">📰 Leer</a>
+          <button class="btn min" onclick="shareIt('news.html?id=${encodeURIComponent(n.id)}','${n.title.replace(/"/g,'&quot;')}')">🔗 Compartir</button>
+        </div>
+      </div>`;
+    const img = card.querySelector('img');
+    img.addEventListener('load', ()=>ensureHiRes(img, n.image));
+    img.addEventListener('error', ()=>{ img.src = hq(n.image,1600); });
+    grid.appendChild(card);
   }
-  // fallback si no se pudo
-  $("#post-title").textContent = "No se pudo cargar la noticia";
-  $("#post-content").innerHTML = `<p class="muted">Intentá nuevamente más tarde.</p>`;
+}
+
+async function loadPage(){
+  if (!cache.length){
+    // Cargamos news.json (ya curado) como fuente principal
+    const data = await fetchJson('news.json');
+    cache = Array.isArray(data) ? data : [];
+  }
+  const slice = cache.slice(page*PAGE_SIZE, (page+1)*PAGE_SIZE);
+  renderList(slice, page>0);
+  page++;
+  $("#more").style.display = (page*PAGE_SIZE < cache.length) ? "" : "none";
+}
+
+function showRead(id){
+  const item = cache.find(x=> String(x.id)===String(id));
+  if (!item){ location.href = 'news.html'; return; }
   $("#list-view").style.display = "none";
-  $("#detail-view").style.display = "";
+  $("#read-view").style.display = "";
+  $("#read-title").textContent = item.title;
+  $("#read-meta").textContent  = new Date(item.date).toLocaleString();
+  $("#read-open").href = new URL(`news.html?id=${encodeURIComponent(item.id)}`, location.href);
+  $("#read-share").onclick = ()=>shareIt(`news.html?id=${encodeURIComponent(item.id)}`, item.title);
+  const img = $("#read-img");
+  img.src = hq(item.image, 1600);
+  img.srcset = `${hq(item.image,400)} 400w, ${hq(item.image,800)} 800w, ${hq(item.image,1200)} 1200w, ${hq(item.image,1600)} 1600w`;
+  img.addEventListener('load', ()=>ensureHiRes(img, item.image));
+  img.addEventListener('error', ()=>{ img.src = hq(item.image,1600); });
+
+  // cuerpo
+  $("#read-content").innerHTML = item.contentHtml || `<p>${item.summary||""}</p><p><a href="${item.url}" target="_blank" rel="noopener">Abrir en Blogger</a></p>`;
 }
 
-async function init(){
-  const id  = qs.get("id");
-  const url = qs.get("url");
+(async function init(){
+  const params = new URLSearchParams(location.search);
+  const id = params.get('id');
+  await loadPage();
+  if (id) showRead(id);
 
-  if (id){ await loadDetailById(id); return; }
-
-  // si nos pasaron url (fallback), mostramos iframe seguro
-  if (url){
-    $("#list-view").style.display = "none";
-    $("#detail-view").style.display = "";
-    $("#post-hero").remove();
-    $("#post-title").textContent = "Noticia";
-    $("#post-date").textContent = "";
-    $("#post-content").innerHTML = `
-      <p class="muted">No pudimos renderizar el contenido directamente. Abrí la noticia aquí:</p>
-      <p><a class="btn brand" href="${url}" target="_blank" rel="noopener">🔗 Ver noticia</a></p>`;
-    return;
-  }
-
-  await loadList();
-}
-init();
+  // buscador simple
+  $("#q").addEventListener('input', e=>{
+    const q = e.target.value.toLowerCase();
+    const filtered = cache.filter(n => (n.title+" "+(n.summary||"")).toLowerCase().includes(q));
+    page=0;
+    $("#news-list").innerHTML="";
+    renderList(filtered.slice(0,PAGE_SIZE));
+    $("#more").style.display = (filtered.length > PAGE_SIZE) ? "" : "none";
+  });
+  $("#more").addEventListener('click', loadPage);
+})();
 </script>
 </body>
 </html>
