@@ -88,8 +88,8 @@
 <script defer>
 const JINA = "https://r.jina.ai";
 const ALLO = "https://api.allorigins.win/raw";
-const BLOGGER_BASE = "https://portalgamerok.blogspot.com";
-const FEED_BASE = `${BLOGGER_BASE}/feeds/posts/summary?alt=json`;
+const FEED_SUMMARY = "https://portalgamerok.blogspot.com/feeds/posts/summary?alt=json";
+const FEED_DEFAULT = "https://portalgamerok.blogspot.com/feeds/posts/default?alt=json"; // trae contenido completo
 
 const $ = (s, p=document)=>p.querySelector(s);
 const $$ = (s, p=document)=>[...p.querySelectorAll(s)];
@@ -97,10 +97,16 @@ const truncate = (t,n)=> (t||"").length>n ? t.slice(0,n).replace(/\s+\S*$/,'')+"
 
 function upsizeBloggerImage(url, size=1200){
   if(!url) return "";
+  if(!/googleusercontent\.com|blogspot\.com|ggpht\.com|lh\d+\.googleusercontent\.com/i.test(url)) return url;
   return url
-    .replace(/\/s\d+(-[cw])?\//, `/s${size}/`)
-    .replace(/=s\d+(-[cw])?/, `=s${size}`)
-    .replace(/\/w\d+-h\d+(-c)?\//, `/s${size}/`);
+    .replace(/\/s\d+(?:-[a-z]){0,3}\//i, `/s${size}/`)
+    .replace(/=s\d+(?:-[a-z]){0,3}/i, `=s${size}`)
+    .replace(/\/w\d+-h\d+(?:-c)?\//i, `/s${size}/`)
+    .replace(/=w\d+-h\d+(?:-c)?/i, `=s${size}`);
+}
+function upsizeAllImagesInHtml(html){
+  return (html||"").replace(/https?:\/\/[^"']+(?:googleusercontent|blogspot|ggpht)\.com[^"']+/gi,
+    m => upsizeBloggerImage(m, 1200));
 }
 
 function timeAgo(iso){
@@ -110,7 +116,7 @@ function timeAgo(iso){
   return 'ahora';
 }
 
-function parseFeed(data){
+function parseSummary(data){
   const e = data?.feed?.entry || [];
   return e.map(x=>{
     const rawHtml = x.summary?.$t || x.content?.$t || "";
@@ -125,54 +131,72 @@ function parseFeed(data){
   });
 }
 
-async function fetchJson(url){
+function parseDefaultFull(data){
+  const e = data?.feed?.entry || [];
+  return e.map(x=>{
+    const rawHtml = x.content?.$t || x.summary?.$t || "";
+    return {
+      title: (x.title?.$t||"").trim(),
+      url: (x.link||[]).find(l=>l.rel==='alternate')?.href || "#",
+      date: x.published?.$t || x.updated?.$t || new Date().toISOString(),
+      id: (x.id?.$t||"").split("post-").pop() || "",
+      image: upsizeBloggerImage(
+        x['media$thumbnail']?.url || (rawHtml.match(/<img[^>]+src=["']([^"']+)["']/i)?.[1]) || "",
+        1200
+      ),
+      html: upsizeAllImagesInHtml(rawHtml)
+    };
+  });
+}
+
+async function fetchTextAsJson(url){
   const r = await fetch(url, {cache:'no-store'});
   const t = await r.text();
   try{ return JSON.parse(t); }catch{ return {}; }
 }
 
-/* ======= DETALLE ======= */
-async function loadDetailByUrl(url){
-  // usa proxy Jina para traer HTML renderizado
-  const res = await fetch(`${JINA}/${url}`);
-  const html = await res.text();
-
-  const title = (html.match(/<meta[^>]+property=["']og:title["'][^>]+content=["']([^"']+)["']/i)?.[1])
-             || (html.match(/<title>(.*?)<\/title>/i)?.[1])
-             || "Noticia";
-  const ogImg = (html.match(/<meta[^>]+property=["']og:image["'][^>]+content=["']([^"']+)["']/i)?.[1]) || "";
-  const body  = (html.match(/<div[^>]+class=["'][^"']*post-body[^"']*["'][^>]*>([\s\S]*?)<\/div>/i)?.[1]) || "";
-
-  $("#post-title").textContent = title;
-  $("#post-meta").textContent = "";
-  $("#hero").innerHTML = ogImg ? `<img src="${upsizeBloggerImage(ogImg, 1200)}" alt="">` : "";
-  $("#post-content").innerHTML = body || `<p class="muted">No pudimos incrustar el contenido completo. Abrilo acá:
-    <a href="${url}" target="_blank" rel="noopener">${url}</a></p>`;
-}
-
-async function loadDetailById(id){
-  // buscamos el link alternativo en el feed (30 últimos)
-  const sources = [
-    `${JINA}/${FEED_BASE}&max-results=30&orderby=published`,
-    `${ALLO}?url=${encodeURIComponent(FEED_BASE + "&max-results=30&orderby=published")}`
+/* ======= DETALLE (sin salir del sitio) ======= */
+async function loadDetailByIdOrUrl({id,url}){
+  const candidates = [
+    `${JINA}/${FEED_DEFAULT}&max-results=200`,
+    `${ALLO}?url=${encodeURIComponent(FEED_DEFAULT + "&max-results=200")}`,
+    `${FEED_DEFAULT}&max-results=200`
   ];
-  for (const u of sources){
+  for (const u of candidates){
     try{
-      const data = await fetchJson(u);
-      const items = parseFeed(data);
-      const hit = items.find(x => x.id === id);
-      if (hit?.url){
-        await loadDetailByUrl(hit.url);
-        return;
+      const data = await fetchTextAsJson(u);
+      const items = parseDefaultFull(data);
+      const hit = id ? items.find(x=>x.id===id) : items.find(x=>x.url===url);
+      if (hit){
+        $("#post-title").textContent = hit.title || "Noticia";
+        $("#post-meta").textContent = `${new Date(hit.date).toLocaleDateString()} • ${timeAgo(hit.date)}`;
+        $("#hero").innerHTML = hit.image ? `<img src="${hit.image}" alt="">` : "";
+        $("#post-content").innerHTML = hit.html || "<p class='muted'>No hay contenido.</p>";
+        return true;
       }
     }catch(e){}
   }
-  $("#post-title").textContent = "No encontrado";
-  $("#post-content").innerHTML = `<p class="muted">No pudimos localizar la nota. Probá con el listado.</p>`;
+  // fallback muy básico a /news.json (si vino con url)
+  try{
+    const r = await fetch("news.json",{cache:"no-store"});
+    const arr = await r.json();
+    const hit = arr.find(n => n.url === url);
+    if (hit){
+      $("#post-title").textContent = hit.title || "Noticia";
+      $("#post-meta").textContent = new Date(hit.date).toLocaleDateString();
+      $("#hero").innerHTML = hit.image ? `<img src="${upsizeBloggerImage(hit.image,1200)}" alt="">` : "";
+      $("#post-content").innerHTML = `<p>${(hit.summary||"").replace(/&nbsp;/g," ")}</p>`;
+      return true;
+    }
+  }catch(e){}
+  // si no, mostramos mensaje (sin link al blog)
+  $("#post-title").textContent = "No pudimos cargar esta nota";
+  $("#post-content").innerHTML = `<p class="muted">Intenta desde el listado de noticias.</p>`;
+  return false;
 }
 
 /* ======= LISTADO ======= */
-let startIndex = 1; // Blogger empieza en 1
+let startIndex = 1;
 const pageSize = 9;
 let loading = false;
 
@@ -182,7 +206,7 @@ function renderCards(items, clear=false){
   items.forEach(n=>{
     const a = document.createElement("article");
     a.className = "card pad";
-    const href = n.url ? `news.html?url=${encodeURIComponent(n.url)}` : (n.id ? `news.html?id=${n.id}` : "#");
+    const href = n.id ? `news.html?id=${encodeURIComponent(n.id)}` : `news.html?url=${encodeURIComponent(n.url)}`;
     a.innerHTML = `
       <div class="news-thumb">
         <img loading="lazy" src="${n.image}"
@@ -204,14 +228,14 @@ function renderCards(items, clear=false){
 async function loadList(clear=false){
   if (loading) return; loading = true;
   const urls = [
-    `${JINA}/${FEED_BASE}&max-results=${pageSize}&start-index=${startIndex}&orderby=published`,
-    `${ALLO}?url=${encodeURIComponent(FEED_BASE + `&max-results=${pageSize}&start-index=${startIndex}&orderby=published`)}`,
-    `${FEED_BASE}&max-results=${pageSize}&start-index=${startIndex}&orderby=published`
+    `${JINA}/${FEED_SUMMARY}&max-results=${pageSize}&start-index=${startIndex}&orderby=published`,
+    `${ALLO}?url=${encodeURIComponent(FEED_SUMMARY + `&max-results=${pageSize}&start-index=${startIndex}&orderby=published`)}`,
+    `${FEED_SUMMARY}&max-results=${pageSize}&start-index=${startIndex}&orderby=published`
   ];
   for (const u of urls){
     try{
-      const data = await fetchJson(u);
-      const items = parseFeed(data);
+      const data = await fetchTextAsJson(u);
+      const items = parseSummary(data);
       if (items.length){
         renderCards(items, clear);
         startIndex += pageSize;
@@ -247,10 +271,8 @@ document.getElementById('load-more').addEventListener('click', ()=>loadList(fals
   if (id || url){
     document.getElementById('list').style.display = 'none';
     document.getElementById('detail').style.display = '';
-    if (url) await loadDetailByUrl(url);
-    else await loadDetailById(id);
+    await loadDetailByIdOrUrl({id, url});
 
-    // JSON-LD mínimo (mejor para SEO de detalle)
     const title = document.getElementById('post-title').textContent.trim();
     const ld = {
       "@context":"https://schema.org",
@@ -265,7 +287,6 @@ document.getElementById('load-more').addEventListener('click', ()=>loadList(fals
     s.textContent = JSON.stringify(ld);
     document.head.appendChild(s);
   } else {
-    // listado
     await loadList(true);
   }
 })();
