@@ -48,10 +48,8 @@
     .card.pad{padding:14px}
     .row{display:flex; gap:12px; align-items:center; flex-wrap:wrap}
 
-    /* Separadores */
     .divider{height:8px; border-radius:999px; background:linear-gradient(90deg,#ff6a00,#ff3b00,#ff6a00); margin:18px 0}
 
-    /* Lite YouTube */
     .videobox{position:relative; width:100%; padding-top:56.25%; overflow:hidden; background:#000; border-bottom:1px solid #262626}
     .lite-yt{ position:absolute; inset:0; background-position:center; background-size:cover; cursor:pointer; }
     .lite-yt::before{ content:""; position:absolute; inset:0; background:linear-gradient(0deg, rgba(0,0,0,.35), rgba(0,0,0,.05)); }
@@ -64,12 +62,11 @@
     .title{font-weight:700; margin:8px 0 6px; font-size:1.05rem}
     .desc{color:#cfcfcf; font-size:.95rem; line-height:1.45; max-height:4.5em; overflow:hidden}
     .muted{color:#bdbdbd; font-size:.9rem}
+
     .btn{ display:inline-flex; align-items:center; gap:8px; padding:10px 12px; border-radius:10px; border:1px solid #333; background:#151515; color:#fff; text-decoration:none; }
     .btn.brand{background:var(--brand); border-color:#ff5e1f; color:#111; font-weight:800}
     .btn.min{padding:8px 10px}
-    .pill{display:none}
 
-    /* Noticias (thumb cuadrado HD) */
     .news-thumb{position:relative; width:100%; padding-top:100%; background:#0e0e0e; border-radius:10px; overflow:hidden; border:1px solid #262626}
     .news-thumb img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover}
     .thumb-link{display:block; line-height:0}
@@ -77,7 +74,6 @@
     .news-meta{display:flex; gap:10px; align-items:center; color:#cfcfcf; font-size:.9rem; margin:6px 0 10px}
     .badge{font-size:.75rem; border:1px solid #333; padding:4px 8px; border-radius:999px; color:#ffcfbd; background:#1b0f0a}
 
-    /* Redes / Contacto (sin cambios) */
     label { display:block; margin:8px 0 12px; font-size:.95rem; }
     input, textarea { width:100%; padding:10px 12px; border-radius:10px; border:1px solid #2a2a2a; background:#0f0f0f; color:#fff; }
     input:focus, textarea:focus { outline:2px solid var(--brand); outline-offset:2px; }
@@ -98,7 +94,7 @@
     <a href="#mini">Reseñas</a>
     <a href="#series">Series</a>
     <a href="videos.html">Videos</a>
-    <a href="#apoya">Apoyanos</a><!-- ← pedido -->
+    <a href="#apoya">Apoyanos</a>
     <a href="#contacto">Contacto</a>
     <div class="spacer"></div>
     <input id="buscador" class="search" type="search" placeholder="Buscar video, reseña o noticia…" />
@@ -151,7 +147,7 @@
 
   <div class="divider" aria-hidden="true"></div>
 
-  <!-- Apoya el canal -->
+  <!-- Apoyanos -->
   <section id="apoya">
     <h2>Apoyanos</h2>
     <div class="card pad">
@@ -164,8 +160,6 @@
   </section>
 
   <div class="divider" aria-hidden="true"></div>
-
-  <!-- Redes (igual que antes)…  -->
 
   <!-- Contacto -->
   <section id="contacto">
@@ -198,18 +192,16 @@
 
 <footer>© 2025 El Portal Gamer</footer>
 
-<!-- JSON-LD del sitio -->
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebSite","name":"El Portal Gamer","url":"https://www.elportalgamer.com/","potentialAction":{"@type":"SearchAction","target":"https://www.elportalgamer.com/?q={search_term_string}","query-input":"required name=search_term_string"}}
 </script>
 
 <script defer>
-/* ========== CONFIG BÁSICA ========== */
+/* ===== CONFIG ===== */
 const API_KEY = "AIzaSyCqPlM0Ab3-_mtFHPmrrgJTS1S4dBCbbMA";
 const PLAYLIST_ID = "PLk3cei5OOiyvTQzg5FGgIRY3xs44F7Wzv";
 const MAX_RESULTS = 20;
 
-/* Noticias: 6 ítems + rutas robustas */
 const FEED_COUNT = 6;
 const BLOGGER_FEED_HTTPS = `https://portalgamerok.blogspot.com/feeds/posts/summary?alt=json&max-results=${FEED_COUNT}&orderby=published`;
 const JINA = "https://r.jina.ai";
@@ -219,7 +211,7 @@ const $  = (s, p=document)=> p.querySelector(s);
 const $$ = (s, p=document)=> [...p.querySelectorAll(s)];
 const truncate=(t,n)=> (t||"").length>n ? t.slice(0,n).replace(/\s+\S*$/,'')+"…" : t;
 
-/* ====== FORZADOR HD ====== */
+/* --- imágenes HD forzadas --- */
 function hq(url, size=1600){
   if(!url) return "";
   let u = url
@@ -232,7 +224,6 @@ function hq(url, size=1600){
   return u;
 }
 function ensureHiRes(img, original){
-  // Si el servidor devolvió miniatura, reintenta con versión forzada
   if (img.naturalWidth && img.naturalWidth < 600) {
     const better = hq(original || img.currentSrc || img.src, 1600);
     if (better !== img.src) {
@@ -242,18 +233,14 @@ function ensureHiRes(img, original){
   }
 }
 
-/* ====== COMPARTIR ====== */
+/* --- compartir --- */
 function shareIt(url, title){
   const absolute = new URL(url, location.href).toString();
-  if (navigator.share){
-    navigator.share({title, url:absolute}).catch(()=>{});
-  } else {
-    navigator.clipboard?.writeText(absolute);
-    alert("Enlace copiado");
-  }
+  if (navigator.share) navigator.share({title, url:absolute}).catch(()=>{});
+  else { navigator.clipboard?.writeText(absolute); alert("Enlace copiado"); }
 }
 
-/* ====== YOUTUBE (igual que tenías) ====== */
+/* ===== YouTube (igual) ===== */
 function renderUltimo(v){
   const box = $("#ultimo-lite");
   box.className = "videobox";
@@ -272,17 +259,6 @@ function renderUltimo(v){
   $("#ultimo-fecha").textContent = new Date(v.date).toLocaleDateString();
   $("#ultimo-desc").textContent = truncate(v.desc, 420);
   $("#ultimo-ver").href = `https://www.youtube.com/watch?v=${v.id}`;
-
-  const ld = {
-    "@context":"https://schema.org","@type":"VideoObject",
-    "name": v.title,"description": truncate(v.desc, 220),
-    "thumbnailUrl":[v.thumb],"uploadDate": v.date,
-    "embedUrl": `https://www.youtube.com/embed/${v.id}`,
-    "publisher":{"@type":"Organization","name":"El Portal Gamer"}
-  };
-  let s = document.getElementById("ld-video"); if (s) s.remove();
-  s = document.createElement("script"); s.type="application/ld+json"; s.id="ld-video";
-  s.textContent = JSON.stringify(ld); document.head.appendChild(s);
 }
 
 function makeMiniCard(v){
@@ -300,7 +276,7 @@ function makeMiniCard(v){
     <div class="title">${v.title}</div>
     <p class="desc">${truncate(v.desc, 360)}</p>
     <div class="row">
-      <a class="btn brand" href="https://www.youtube.com/watch?v=${v.id}" target="_blank" rel="noopener">▶ Ver video</a>
+      <a class="btn min" href="https://www.youtube.com/watch?v=${v.id}" target="_blank" rel="noopener">▶ Ver video</a>
     </div>`;
   const thumb = el.querySelector(".videobox");
   thumb.addEventListener("click", ()=>{
@@ -364,7 +340,7 @@ async function loadPlaylist(){
   }
 }
 
-/* ====== NOTICIAS ====== */
+/* ===== Noticias ===== */
 function timeAgo(iso){
   const d = new Date(iso); const diff = (Date.now() - d.getTime())/1000;
   const units = [[31536000,'a'],[2592000,'m'],[604800,'sem'],[86400,'d'],[3600,'h'],[60,'min']];
@@ -414,7 +390,7 @@ function renderNews(items){
       <div class="title">${n.title}</div>
       <p class="desc">${truncate(n.summary, 220)}</p>
       <div class="row">
-        <a class="btn brand min" href="news.html?id=${encodeURIComponent(n.id)}">📰 Leer</a>
+        <a class="btn min" href="news.html?id=${encodeURIComponent(n.id)}">📰 Leer</a>
         <button class="btn min" onclick="shareIt('news.html?id=${encodeURIComponent(n.id)}','${n.title.replace(/"/g,'&quot;')}')">🔗 Compartir</button>
       </div>
     `;
