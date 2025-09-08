@@ -248,7 +248,7 @@ const API_KEY = "AIzaSyCqPlM0Ab3-_mtFHPmrrgJTS1S4dBCbbMA";
 const PLAYLIST_ID = "PLk3cei5OOiyvTQzg5FGgIRY3xs44F7Wzv";
 const MAX_RESULTS = 20;
 
-/** Blogger feed (3 noticias) con múltiples rutas + fallback a /news.json */
+/** Blogger feed (3 noticias) con rutas alternativas + fallback a /news.json */
 const BLOGGER_FEED_HTTPS = "https://portalgamerok.blogspot.com/feeds/posts/summary?alt=json&max-results=3&orderby=published";
 const JINA = "https://r.jina.ai";
 const ALLO = "https://api.allorigins.win/raw";
@@ -258,6 +258,32 @@ const $ = (s, p=document) => p.querySelector(s);
 const $$ = (s, p=document) => [...p.querySelectorAll(s)];
 const truncate = (str, n) => (str||"").length>n ? str.slice(0,n).replace(/\s+\S*$/,'')+"…" : str;
 const words = (x)=> (x||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
+
+/* ====== Imagen en alta (Blogger) ====== */
+function toHiRes(url, size = 1200){
+  if(!url) return "";
+  return url
+    .replace(/\/s\d+(-[a-z-]+)?\//i, `/s${size}/`)
+    .replace(/=s\d+(-[a-z-]+)?/i, `=s${size}`)
+    .replace(/\/w\d+-h\d+(-[a-z-]+)?\//i, `/s${size}/`)
+    .replace(/=w\d+-h\d+(-[a-z-]+)*/i, `=s${size}`);
+}
+function pickImageFromHtml(html){
+  if(!html) return "";
+  const mSet = html.match(/srcset="([^"]+)"/i);
+  if(mSet){
+    let bestUrl = "", bestW = 0;
+    for (const chunk of mSet[1].split(',')){
+      const m = chunk.trim().match(/(\S+)\s+(\d+)w/);
+      if(m){
+        const w = +m[2]; if (w>bestW){bestW=w; bestUrl=m[1];}
+      }
+    }
+    if(bestUrl) return bestUrl;
+  }
+  const mSrc = html.match(/<img[^>]+src=["']([^"']+)["']/i);
+  return mSrc ? mSrc[1] : "";
+}
 
 /** ====== YOUTUBE ====== */
 function renderUltimo(v){
@@ -280,7 +306,6 @@ function renderUltimo(v){
   $("#ultimo-desc").textContent = truncate(v.desc, 420);
   $("#ultimo-ver").href = `https://www.youtube.com/watch?v=${v.id}`;
 
-  // JSON-LD del último video
   const ld = {
     "@context":"https://schema.org","@type":"VideoObject",
     "name": v.title,"description": truncate(v.desc, 220),
@@ -293,7 +318,6 @@ function renderUltimo(v){
   s = document.createElement("script"); s.type="application/ld+json"; s.id="ld-video";
   s.textContent = JSON.stringify(ld); document.head.appendChild(s);
 }
-
 function makeMiniCard(v){
   const el = document.createElement("article");
   el.className = "card pad filterable";
@@ -315,9 +339,7 @@ function makeMiniCard(v){
   });
   return el;
 }
-
 function renderMini(arr){ const grid = $("#mini-grid"); grid.innerHTML = ""; arr.forEach(v => grid.appendChild(makeMiniCard(v))); }
-
 function renderSeries(items){
   const SERIES_KEYWORDS = {
     "Saga Parasite Eve": ["parasite eve","parasite-eve","koudelka"],
@@ -339,7 +361,6 @@ function renderSeries(items){
     grid.appendChild(el);
   }
 }
-
 async function loadPlaylist(){
   try{
     const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${PLAYLIST_ID}&maxResults=${MAX_RESULTS}&key=${API_KEY}`;
@@ -353,11 +374,9 @@ async function loadPlaylist(){
       date: i.snippet.publishedAt,
       thumb: (i.snippet.thumbnails?.maxres?.url || i.snippet.thumbnails?.high?.url || i.snippet.thumbnails?.medium?.url || "")
     }));
-
     renderUltimo(items[0]);
     renderMini(items.slice(1, 10));
     renderSeries(items);
-
     const inp = $("#buscador");
     inp.addEventListener("input", ()=>{
       const q = words(inp.value);
@@ -376,20 +395,6 @@ async function loadPlaylist(){
 }
 
 /** ====== NOTICIAS (Blogger robusto) ====== */
-const DEFAULT_NEWS_IMAGE = "og.jpg";
-const NEWS_SHOW_SOURCE = false;
-
-function upsizeBloggerImage(url, size = 800){
-  if(!url) return "";
-  return url
-    .replace(/\/s\d+(-c)?\//, `/s${size}/`)
-    .replace(/=s\d+(-c)?/, `=s${size}`)
-    .replace(/\/w\d+-h\d+(-c)?\//, `/s${size}/`);
-}
-function extractImgFromHtml(html){
-  const m = (html||"").match(/<img[^>]+src=["']([^"']+)["']/i);
-  return m ? m[1] : "";
-}
 function timeAgo(iso){
   const d = new Date(iso); const diff = (Date.now() - d.getTime())/1000;
   const units = [[31536000,'a'],[2592000,'m'],[604800,'sem'],[86400,'d'],[3600,'h'],[60,'min']];
@@ -401,47 +406,43 @@ function parseBloggerJson(data){
   return entries.map(e => {
     const rawHtml = e.summary?.$t || e.content?.$t || "";
     const textOnly = rawHtml.replace(/<[^>]+>/g, " ").replace(/\s+/g,' ').trim();
+
     const titleRaw = (e.title?.$t || "").trim();
     const title = titleRaw || (textOnly ? textOnly.split(/\s+/).slice(0,12).join(" ") + "…" : "Sin título");
     const link  = (e.link || []).find(l=>l.rel==='alternate')?.href || '#';
     const date  = e.published?.$t || e.updated?.$t || new Date().toISOString();
+    const postId = (e.id?.$t || "").split("post-").pop() || "";
 
-    const thumbRaw =
-      e['media$thumbnail']?.url ||
-      extractImgFromHtml(rawHtml) ||
-      DEFAULT_NEWS_IMAGE;
+    let img = pickImageFromHtml(rawHtml);
+    if(!img) img = e['media$thumbnail']?.url || "";
+    const image = toHiRes(img, 1200);
 
-    const image = upsizeBloggerImage(thumbRaw, 800);
-    const source = NEWS_SHOW_SOURCE ? (data?.feed?.title?.$t || "El Portal Gamer") : "";
-
-    /* >>> CAMBIO 1: obtener ID del post y devolverlo <<< */
-    const postId = (e.id?.$t || "").split("post-").pop();
-
-    return { title, url: link, date, summary: textOnly, image, source, id: postId };
+    return { title, url: link, date, summary: textOnly, image, id: postId };
   });
 }
 function renderNews(items){
   const grid = $("#news-grid"); grid.innerHTML = "";
   items.forEach(n => {
+    const img1200 = toHiRes(n.image, 1200);
+    const img800  = toHiRes(n.image, 800);
+    const img400  = toHiRes(n.image, 400);
     const card = document.createElement('article');
     card.className = "card pad filterable";
-    card.dataset.title = n.title; card.dataset.desc = n.summary + " " + n.source;
+    card.dataset.title = n.title; card.dataset.desc = n.summary;
 
-    const imgTag = n.image ? `
-      <img loading="lazy" src="${n.image}"
-           srcset="${upsizeBloggerImage(n.image,400)} 400w,
-                   ${upsizeBloggerImage(n.image,800)} 800w,
-                   ${upsizeBloggerImage(n.image,1200)} 1200w"
-           sizes="(min-width: 900px) 33vw, 90vw"
-           alt="">
-    ` : "";
-
-    /* >>> CAMBIO 2: botón va a news.html?id=... (interna) <<< */
     card.innerHTML = `
-      <div class="news-thumb">${imgTag}</div>
+      <div class="news-thumb">
+        ${img800 ? `
+          <img loading="lazy" decoding="async"
+               src="${img800}"
+               srcset="${img400} 400w, ${img800} 800w, ${img1200} 1200w"
+               sizes="(min-width: 900px) 33vw, 90vw"
+               alt="">
+        ` : ``}
+      </div>
       <div class="news-meta">
         <span class="badge">Noticia</span>
-        ${n.source ? `<span>${n.source}</span> • ` : ""}<span>${timeAgo(n.date)}</span>
+        <span>${timeAgo(n.date)}</span>
       </div>
       <div class="title">${n.title}</div>
       <p class="desc">${truncate(n.summary, 220)}</p>
@@ -450,14 +451,11 @@ function renderNews(items){
     grid.appendChild(card);
   });
 }
-
-// Lee JSON válido aunque el servidor ponga text/plain
-async function fetchJson(url){
+async function fetchTextAsJson(url){
   const r = await fetch(url, {cache:'no-store'});
-  const txt = await r.text();
-  try { return JSON.parse(txt); } catch { return {}; }
+  const t = await r.text();
+  try { return JSON.parse(t); } catch { return {}; }
 }
-
 async function getBloggerData(){
   const urls = [
     `${JINA}/http://portalgamerok.blogspot.com/feeds/posts/summary?alt=json&max-results=3&orderby=published`,
@@ -467,13 +465,12 @@ async function getBloggerData(){
   ];
   for (const u of urls){
     try{
-      const data = await fetchJson(u);
+      const data = await fetchTextAsJson(u);
       if (data?.feed?.entry?.length) return data;
-    }catch(e){ console.debug("Feed fail:", u, e); }
+    }catch(e){ /* ignore */ }
   }
   throw new Error("No se pudo obtener el feed");
 }
-
 async function loadNews(){
   try{
     const data = await getBloggerData();
@@ -485,8 +482,13 @@ async function loadNews(){
     try{
       const res = await fetch('/news.json', {cache:'no-store'});
       const items = await res.json();
-      if (items?.length) renderNews(items);
-      else throw new Error('news.json vacío');
+      if (items?.length) {
+        // normalizamos imágenes también aquí
+        renderNews(items.map(n => ({
+          ...n,
+          image: toHiRes(n.image || "", 1200)
+        })));
+      } else throw new Error('news.json vacío');
     }catch{
       $("#news-grid").innerHTML = `<div class="muted">No se pudieron cargar las noticias.</div>`;
     }
