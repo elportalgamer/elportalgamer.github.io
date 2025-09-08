@@ -64,12 +64,17 @@
     iframe{position:absolute; inset:0; width:100%; height:100%; border:0}
 
     .title{font-weight:700; margin:8px 0 6px; font-size:1.05rem}
+    .title a{ color:inherit; text-decoration:none; }
+    .title a:hover{ text-decoration:underline; }
     .desc{color:#cfcfcf; font-size:.95rem; line-height:1.45; max-height:4.5em; overflow:hidden}
+    .desc.expanded{max-height:600px}
     .muted{color:#bdbdbd; font-size:.9rem}
     .btn{ display:inline-flex; align-items:center; gap:8px; padding:10px 12px; border-radius:10px; border:1px solid #333; background:#151515; color:#fff; text-decoration:none; }
     .btn.brand{background:var(--brand); border-color:#ff5e1f; color:#111; font-weight:800}
+    .pill{display:none}
 
-    /* Noticias cuadradas */
+    /* Noticias (thumb cuadrado HD) */
+    a.news-thumb{ display:block; }
     .news-thumb{position:relative; width:100%; padding-top:100%; background:#0e0e0e; border-radius:10px; overflow:hidden; border:1px solid #262626}
     .news-thumb img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover}
     .news-meta{display:flex; gap:10px; align-items:center; color:#cfcfcf; font-size:.9rem; margin:6px 0 10px}
@@ -177,7 +182,7 @@
         <span>Facebook</span>
       </a>
       <a class="soc-card" href="https://www.instagram.com/elportalgamerx" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M12 2.2c3.2 0 3.58.01 4.85.07 1.17.05 1.95.24 2.4.4.6.23 1.03.5 1.48.95.45.45.72.88.95 1.48.16.45.35 1.23.4 2.4.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.24 1.95-.4 2.4-.23.6-.5 1.03-.95 1.48-.45.45-.88.72-1.48.95-.45.16-1.23.35-2.4.4-1.27.06-1.62.07-4.85.07s-3.53-.01-4.85-.07c-.96-.04-1.48-.2-1.82-.33-.46-.18-.8-.39-1.15-.74-.35-.35-.56-.69-.74-1.15-.13-.34-.29-.86-.33-1.82-.06-1.25-.07-1.62-.07-4.78s.01-3.53.07-4.78c.04-.96.2-1.48.33-1.82a3.26 3.26 0 0 0-.74-1.15 3.26 3.26 0 0 0-1.15-.74c-.34-.13-.86-.29-1.82-.33-1.25-.06-1.62-.07-4.78-.07Zm0 3.2a6.8 6.8 0 1 1 0 13.6 6.8 6.8 0 0 1 0-13.6Zm0 1.8a5 5 0 1 0 0 10 5 5 0 0 0 0-10Zm6.9-2.02a1.6 1.6 0 1 1-3.2 0 1.6 1.6 0 0 1 3.2 0Z"/></svg>
+        <svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M12 2.2c3.2 0 3.58.01 4.85.07 1.17.05 1.95.24 2.4.4.6.23 1.03.5 1.48.95.45.45.72.88.95 1.48.16.45.35 1.23.4 2.4.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.24 1.95-.4 2.4-.23.6-.5 1.03-.95 1.48-.45.45-.88.72-1.48.95-.45.16-1.23.35-2.4.4-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.95-.24-2.4-.4a4.05 4.05 0 0 1-1.48-.95 4.05 4.05 0 0 1-.95-1.48c-.16-.45-.35-1.23-.4-2.4C2.21 15.58 2.2 15.2 2.2 12s.01-3.58.07-4.85c.05-1.17.24-1.95.4-2.4.23-.6.5-1.03.95-1.48.45-.45.88-.72 1.48-.95.45-.16 1.23-.35 2.4-.4C8.42 2.21 8.8 2.2 12 2.2Zm0 1.8c-3.16 0-3.53.01-4.78.07-.96.04-1.48.2-1.82.33-.46.18-.8.39-1.15.74-.35.35-.56.69-.74 1.15-.13.34-.29.86-.33 1.82-.06 1.25-.07 1.62-.07 4.78s.01 3.53.07 4.78c.04.96.2 1.48.33 1.82.18.46.39.8.74 1.15.35.35.69.56 1.15.74.34.13.86.29 1.82.33 1.25.06 1.62.07 4.78.07s3.53-.01 4.78-.07c.96-.04 1.48-.2 1.82-.33.46-.18.8-.39 1.15-.74.35-.35.56-.69.74-1.15.13-.34.29-.86.33-1.82.06-1.25.07-1.62.07-4.78s-.01-3.53-.07-4.78c-.04-.96-.2-1.48-.33-1.82a3.26 3.26 0 0 0-.74-1.15 3.26 3.26 0 0 0-1.15-.74c-.34-.13-.86-.29-1.82-.33-1.25-.06-1.62-.07-4.78-.07Zm0 3.2a6.8 6.8 0 1 1 0 13.6 6.8 6.8 0 0 1 0-13.6Zm0 1.8a5 5 0 1 0 0 10 5 5 0 0 0 0-10Zm6.9-2.02a1.6 1.6 0 1 1-3.2 0 1.6 1.6 0 0 1 3.2 0Z"/></svg>
         <span>Instagram</span>
       </a>
       <a class="soc-card" href="https://www.twitch.tv/soypaulangel" target="_blank" rel="noopener">
@@ -246,12 +251,10 @@ const API_KEY = "AIzaSyCqPlM0Ab3-_mtFHPmrrgJTS1S4dBCbbMA";
 const PLAYLIST_ID = "PLk3cei5OOiyvTQzg5FGgIRY3xs44F7Wzv";
 const MAX_RESULTS = 20;
 
-/** Blogger (6 noticias) + proxys + fallback a /news.json */
-const BLOGGER_FEED = "https://portalgamerok.blogspot.com/feeds/posts/summary?alt=json&max-results=6&orderby=published";
+/** Blogger feed (6 noticias) con múltiples rutas + fallback a /news.json */
+const BLOGGER_FEED_HTTPS = "https://portalgamerok.blogspot.com/feeds/posts/summary?alt=json&max-results=6&orderby=published";
 const JINA = "https://r.jina.ai";
 const ALLO = "https://api.allorigins.win/raw";
-
-/** Fuerza HD para evitar que el navegador elija miniaturas del srcset */
 const FORCE_HD_IMAGES = true;
 
 /** Helpers */
@@ -259,32 +262,9 @@ const $ = (s, p=document) => p.querySelector(s);
 const $$ = (s, p=document) => [...p.querySelectorAll(s)];
 const truncate = (str, n) => (str||"").length>n ? str.slice(0,n).replace(/\s+\S*$/,'')+"…" : str;
 const words = (x)=> (x||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
+const escapeHtml = s => (s||'').replace(/[&<>"']/g,m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[m]));
 
-/* ========== Upsize anti-pixelado (ultra robusto) ========== */
-function upsizeBloggerImage(url, size = 1200){
-  if(!url) return "";
-  if(!/googleusercontent\.com|blogspot\.com|ggpht\.com/i.test(url)) return url;
-  url = url.replace(/^http:\/\//i,'https://');
-
-  // Path-style
-  url = url.replace(/\/s\d+[^/]*(?=\/)/ig, `/s${size}`)
-           .replace(/\/w\d+-h\d+[^/]*(?=\/)/ig, `/s${size}`);
-
-  // Query-style
-  url = url.replace(/=s\d+[^&]*/ig, `=s${size}`)
-           .replace(/=w\d+-h\d+[^&]*/ig, `=s${size}`);
-
-  if(!/\/s\d+|=s\d+|\/w\d+-h\d+|=w\d+-h\d+/i.test(url)){
-    url += (url.includes('=')) ? `-s${size}` : `=s${size}`;
-  }
-  return url;
-}
-function extractImgFromHtml(html){
-  const m = (html||"").match(/<img[^>]+src=["']([^"']+)["']/i);
-  return m ? m[1] : "";
-}
-
-/** ====== YOUTUBE ====== */
+/** ===== YOUTUBE ===== */
 function renderUltimo(v){
   const box = $("#ultimo-lite");
   box.className = "videobox";
@@ -292,11 +272,11 @@ function renderUltimo(v){
   lite.className = "lite-yt";
   lite.style.backgroundImage = `url(${v.thumb})`;
   lite.innerHTML = `
-    <button class="lty-playbtn" aria-label="Reproducir ${v.title}">
+    <button class="lty-playbtn" aria-label="Reproducir ${escapeHtml(v.title)}">
       <svg viewBox="0 0 68 48"><path d="M66.52 7.02a8 8 0 0 0-5.64-5.66C56.8 0 34 0 34 0S11.2 0 7.12 1.36A8 8 0 0 0 1.48 7.02 83.3 83.3 0 0 0 0 24a83.3 83.3 0 0 0 1.48 16.98 8 8 0 0 0 5.64 5.66C11.2 48 34 48 34 48s22.8 0 26.88-1.36a8 8 0 0 0 5.64-5.66A83.3 83.3 0 0 0 68 24a83.3 83.3 0 0 0-1.48-16.98zM27 34V14l18 10-18 10z"/></svg>
     </button>`;
   lite.addEventListener("click", ()=>{
-    box.innerHTML = `<iframe src="https://www.youtube.com/embed/${v.id}?autoplay=1" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="${v.title}"></iframe>`;
+    box.innerHTML = `<iframe src="https://www.youtube.com/embed/${v.id}?autoplay=1" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="${escapeHtml(v.title)}"></iframe>`;
   });
   box.appendChild(lite);
 
@@ -305,7 +285,15 @@ function renderUltimo(v){
   $("#ultimo-desc").textContent = truncate(v.desc, 420);
   $("#ultimo-ver").href = `https://www.youtube.com/watch?v=${v.id}`;
 
-  const ld = {"@context":"https://schema.org","@type":"VideoObject","name":v.title,"description":truncate(v.desc,220),"thumbnailUrl":[v.thumb],"uploadDate":v.date,"embedUrl":`https://www.youtube.com/embed/${v.id}`,"publisher":{"@type":"Organization","name":"El Portal Gamer"},"potentialAction":{"@type":"WatchAction","target":[`https://www.youtube.com/watch?v=${v.id}`]}};
+  // JSON-LD del último video
+  const ld = {
+    "@context":"https://schema.org","@type":"VideoObject",
+    "name": v.title,"description": truncate(v.desc, 220),
+    "thumbnailUrl":[v.thumb],"uploadDate": v.date,
+    "embedUrl": `https://www.youtube.com/embed/${v.id}`,
+    "publisher":{"@type":"Organization","name":"El Portal Gamer"},
+    "potentialAction":{"@type":"WatchAction","target":[`https://www.youtube.com/watch?v=${v.id}`]}
+  };
   let s = document.getElementById("ld-video"); if (s) s.remove();
   s = document.createElement("script"); s.type="application/ld+json"; s.id="ld-video";
   s.textContent = JSON.stringify(ld); document.head.appendChild(s);
@@ -318,7 +306,7 @@ function makeMiniCard(v){
   el.innerHTML = `
     <div class="videobox">
       <div class="lite-yt" style="background-image:url(${v.thumb})">
-        <button class="lty-playbtn" aria-label="Reproducir ${v.title}">
+        <button class="lty-playbtn" aria-label="Reproducir ${escapeHtml(v.title)}">
           <svg viewBox="0 0 68 48"><path d="M66.52 7.02a8 8 0 0 0-5.64-5.66C56.8 0 34 0 34 0S11.2 0 7.12 1.36A8 8 0 0 0 1.48 7.02 83.3 83.3 0 0 0 0 24a83.3 83.3 0 0 0 1.48 16.98 8 8 0 0 0 5.64 5.66C11.2 48 34 48 34 48s22.8 0 26.88-1.36a8 8 0 0 0 5.64-5.66A83.3 83.3 0 0 0 68 24a83.3 83.3 0 0 0-1.48-16.98zM27 34V14l18 10-18 10z"/></svg>
         </button>
       </div>
@@ -328,7 +316,7 @@ function makeMiniCard(v){
     <a class="btn brand" href="https://www.youtube.com/watch?v=${v.id}" target="_blank" rel="noopener">▶ Ver video</a>`;
   const thumb = el.querySelector(".videobox");
   thumb.addEventListener("click", ()=>{
-    thumb.innerHTML = `<iframe src="https://www.youtube.com/embed/${v.id}?autoplay=1" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="${v.title}"></iframe>`;
+    thumb.innerHTML = `<iframe src="https://www.youtube.com/embed/${v.id}?autoplay=1" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="${escapeHtml(v.title)}"></iframe>`;
   });
   return el;
 }
@@ -392,27 +380,50 @@ async function loadPlaylist(){
   }
 }
 
-/** ====== NOTICIAS ====== */
+/** ====== NOTICIAS (Blogger robusto) ====== */
 const DEFAULT_NEWS_IMAGE = "og.jpg";
 const NEWS_SHOW_SOURCE = false;
 
-function parseSummaryFeed(data){
+function upsizeBloggerImage(url, size = 1200){
+  if(!url) return "";
+  let u = url;
+
+  // normalizar variantes
+  u = u.replace(/\/s\d+(-[a-z])?\//, `/s${size}/`)
+       .replace(/=s\d+(-[a-z])?/, `=s${size}`)
+       .replace(/\/w\d+-h\d+(-[a-z])?\//, `/s${size}/`)
+       .replace(/-c(?=[^\/]*$)/, ""); // quitar recorte
+
+  // si no trae tamaño, añadimos =s{size}
+  if (/googleusercontent\.com/.test(u) && !/\/s\d+\//.test(u) && !/=s\d+/.test(u)){
+    u += (u.includes("?") ? "&" : "?") + "s=" + size;
+  }
+  return u;
+}
+function extractImgFromHtml(html){
+  const m = (html||"").match(/<img[^>]+src=["']([^"']+)["']/i);
+  return m ? m[1] : "";
+}
+function parseBloggerJson(data){
   const entries = data?.feed?.entry || [];
   return entries.map(e => {
-    const rawHtml = e.summary?.$t || e.content?.$t || "";
+    const rawHtml  = e.summary?.$t || e.content?.$t || "";
     const textOnly = rawHtml.replace(/<[^>]+>/g, " ").replace(/\s+/g,' ').trim();
     const titleRaw = (e.title?.$t || "").trim();
-    const title = titleRaw || (textOnly ? textOnly.split(/\s+/).slice(0,12).join(" ") + "…" : "Sin título");
-    const link  = (e.link || []).find(l=>l.rel==='alternate')?.href || '#';
-    const date  = e.published?.$t || e.updated?.$t || new Date().toISOString();
-    const id    = (e.id?.$t || "").split("post-").pop() || "";
+    const title    = titleRaw || (textOnly ? textOnly.split(/\s+/).slice(0,12).join(" ") + "…" : "Sin título");
+    const link     = (e.link || []).find(l=>l.rel==='alternate')?.href || '#';
+    const date     = e.published?.$t || e.updated?.$t || new Date().toISOString();
+    const postId   = (e.id?.$t || "").split("post-").pop() || ""; // <- ID para abrir dentro del sitio
+
     const thumbRaw =
       e['media$thumbnail']?.url ||
       extractImgFromHtml(rawHtml) ||
       DEFAULT_NEWS_IMAGE;
+
     const image = upsizeBloggerImage(thumbRaw, 1200);
     const source = NEWS_SHOW_SOURCE ? (data?.feed?.title?.$t || "El Portal Gamer") : "";
-    return { title, url: link, date, summary: textOnly, image, source, id };
+
+    return { id: postId, title, url: link, date, summary: textOnly, image, source };
   });
 }
 
@@ -423,26 +434,25 @@ function renderNews(items){
     card.className = "card pad filterable";
     card.dataset.title = n.title; card.dataset.desc = n.summary + " " + (n.source||"");
 
-    const target = n.id
-      ? `news.html?id=${encodeURIComponent(n.id)}`
-      : (n.url ? `news.html?url=${encodeURIComponent(n.url)}` : `news.html`);
+    const target = n.id ? `news.html?id=${encodeURIComponent(n.id)}` :
+                  (n.url ? `news.html?url=${encodeURIComponent(n.url)}` : `news.html`);
 
     const img1200 = upsizeBloggerImage(n.image, 1200);
-    const img = FORCE_HD_IMAGES
+    const imgTag = FORCE_HD_IMAGES
       ? `<img loading="lazy" decoding="async" src="${img1200}" alt="">`
       : `<img loading="lazy" decoding="async" src="${img1200}"
-             srcset="${upsizeBloggerImage(img1200,600)} 600w,
-                     ${upsizeBloggerImage(img1200,900)} 900w,
-                     ${upsizeBloggerImage(img1200,1200)} 1200w"
-             sizes="(min-width:1024px) 340px, (min-width:640px) 45vw, 90vw" alt="">`;
+           srcset="${upsizeBloggerImage(img1200,600)} 600w,
+                   ${upsizeBloggerImage(img1200,900)} 900w,
+                   ${upsizeBloggerImage(img1200,1200)} 1200w"
+           sizes="(min-width:1024px) 340px, (min-width:640px) 45vw, 90vw" alt="">`;
 
     card.innerHTML = `
-      <div class="news-thumb">${img}</div>
+      <a class="news-thumb" href="${target}" title="${escapeHtml(n.title)}">${imgTag}</a>
       <div class="news-meta">
         <span class="badge">Noticia</span>
         ${n.source ? `<span>${n.source}</span> • ` : ""}<span>${new Date(n.date).toLocaleDateString()}</span>
       </div>
-      <div class="title">${n.title}</div>
+      <div class="title"><a href="${target}">${n.title}</a></div>
       <p class="desc">${truncate(n.summary, 220)}</p>
       <a class="btn brand" href="${target}">📰 Leer más</a>
     `;
@@ -455,36 +465,39 @@ async function fetchJson(url){
   const txt = await r.text();
   try { return JSON.parse(txt); } catch { return {}; }
 }
-async function getSummaryData(){
+async function getBloggerData(){
   const urls = [
+    `${JINA}/http://portalgamerok.blogspot.com/feeds/posts/summary?alt=json&max-results=6&orderby=published`,
     `${JINA}/https://portalgamerok.blogspot.com/feeds/posts/summary?alt=json&max-results=6&orderby=published`,
-    `${ALLO}?url=${encodeURIComponent(BLOGGER_FEED)}`,
-    BLOGGER_FEED
+    `${ALLO}?url=${encodeURIComponent(BLOGGER_FEED_HTTPS)}`,
+    BLOGGER_FEED_HTTPS
   ];
   for (const u of urls){
     try{
-      const d = await fetchJson(u);
-      if (d?.feed?.entry?.length) return d;
-    }catch(e){}
+      const data = await fetchJson(u);
+      if (data?.feed?.entry?.length) return data;
+    }catch(e){ console.debug("Feed fail:", u, e); }
   }
-  throw new Error("no summary");
+  throw new Error("No se pudo obtener el feed");
 }
-
 async function loadNews(){
   try{
-    const data = await getSummaryData();
-    const items = parseSummaryFeed(data);
+    const data = await getBloggerData();
+    const items = parseBloggerJson(data);
     if (!items.length) throw new Error("Sin entradas");
     renderNews(items);
   }catch(e){
-    // fallback a /news.json
+    console.warn("Blogger feed falló, usando /news.json:", e);
     try{
-      const res = await fetch('news.json', {cache:'no-store'});
+      const res = await fetch('/news.json', {cache:'no-store'});
       const items = await res.json();
-      if (items?.length) {
-        items.forEach(n => n.image = upsizeBloggerImage(n.image, 1200));
-        // tomar solo 6 si hay más
-        renderNews(items.slice(0,6));
+      if (items?.length){
+        // mapear a formato interno (por si news.json no trae id)
+        const mapped = items.map(x => ({
+          id: x.id || "", title: x.title, url: x.url, date: x.date,
+          summary: x.summary || "", image: upsizeBloggerImage(x.image, 1200), source: ""
+        }));
+        renderNews(mapped);
       } else throw new Error('news.json vacío');
     }catch{
       $("#news-grid").innerHTML = `<div class="muted">No se pudieron cargar las noticias.</div>`;
