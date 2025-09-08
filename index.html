@@ -65,9 +65,11 @@
 
     .title{font-weight:700; margin:8px 0 6px; font-size:1.05rem}
     .desc{color:#cfcfcf; font-size:.95rem; line-height:1.45; max-height:4.5em; overflow:hidden}
+    .desc.expanded{max-height:600px}
     .muted{color:#bdbdbd; font-size:.9rem}
     .btn{ display:inline-flex; align-items:center; gap:8px; padding:10px 12px; border-radius:10px; border:1px solid #333; background:#151515; color:#fff; text-decoration:none; }
     .btn.brand{background:var(--brand); border-color:#ff5e1f; color:#111; font-weight:800}
+    .pill{display:none}
 
     /* Noticias (thumb cuadrado HD) */
     .news-thumb{position:relative; width:100%; padding-top:100%; background:#0e0e0e; border-radius:10px; overflow:hidden; border:1px solid #262626}
@@ -177,7 +179,7 @@
         <span>Facebook</span>
       </a>
       <a class="soc-card" href="https://www.instagram.com/elportalgamerx" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M12 2.2c3.2 0 3.58.01 4.85.07 1.17.05 1.95.24 2.4.4.6.23 1.03.5 1.48.95.45.45.72.88.95 1.48.16.45.35 1.23.4 2.4.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.24 1.95-.4 2.4-.23.6-.5 1.03-.95 1.48-.45.45-.88.72-1.48.95-.45.16-1.23.35-2.4.4-1.27.06-1.65.07-4.85.07s-3.53-.01-4.85-.07c-.96-.04-1.48-.2-1.82-.33-.46-.18-.8-.39-1.15-.74-.35-.35-.56-.69-.74-1.15-.13-.34-.29-.86-.33-1.82-.06-1.25-.07-1.62-.07-4.78s.01-3.53.07-4.78c.04-.96.2-1.48.33-1.82a3.26 3.26 0 0 1 .74-1.15 3.26 3.26 0 0 1 1.15-.74c.34-.13.86-.29 1.82-.33 1.25-.06 1.62-.07 4.78-.07Zm0 3.2a6.8 6.8 0 1 1 0 13.6 6.8 6.8 0 0 1 0-13.6Zm0 1.8a5 5 0 1 0 0 10 5 5 0 0 0 0-10Zm6.9-2.02a1.6 1.6 0 1 1-3.2 0 1.6 1.6 0 0 1 3.2 0Z"/></svg>
+        <svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M12 2.2c3.2 0 3.58.01 4.85.07 1.17.05 1.95.24 2.4.4.6.23 1.03.5 1.48.95.45.45.72.88.95 1.48.16.45.35 1.23.4 2.4.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.24 1.95-.4 2.4-.23.6-.5 1.03-.95 1.48-.45.45-.88.72-1.48.95-.45.16-1.23.35-2.4.4-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.95-.24-2.4-.4a4.05 4.05 0 0 1-1.48-.95 4.05 4.05 0 0 1-.95-1.48c-.16-.45-.35-1.23-.4-2.4C2.21 15.58 2.2 15.2 2.2 12s.01-3.58.07-4.85c.05-1.17.24-1.95.4-2.4.23-.6.5-1.03.95-1.48.45-.45.88-.72 1.48-.95.45-.16 1.23-.35 2.4-.4C8.42 2.21 8.8 2.2 12 2.2Zm0 1.8c-3.16 0-3.53.01-4.78.07-.96.04-1.48.2-1.82.33-.46.18-.8.39-1.15.74-.35.35-.56.69-.74 1.15-.13.34-.29.86-.33 1.82-.06 1.25-.07 1.62-.07 4.78s.01 3.53.07 4.78c.04.96.2 1.48.33 1.82.18.46.39.8.74 1.15.35.35.69.56 1.15.74.34.13.86.29 1.82.33 1.25.06 1.62.07 4.78.07s3.53-.01 4.78-.07c.96-.04 1.48-.2 1.82-.33.46-.18.8-.39 1.15-.74.35-.35.56-.69.74-1.15.13-.34.29-.86.33-1.82.06-1.25.07-1.62.07-4.78s-.01-3.53-.07-4.78c-.04-.96-.2-1.48-.33-1.82a3.26 3.26 0 0 0-.74-1.15 3.26 3.26 0 0 0-1.15-.74c-.34-.13-.86-.29-1.82-.33-1.25-.06-1.62-.07-4.78-.07Zm0 3.2a6.8 6.8 0 1 1 0 13.6 6.8 6.8 0 0 1 0-13.6Zm0 1.8a5 5 0 1 0 0 10 5 5 0 0 0 0-10Zm6.9-2.02a1.6 1.6 0 1 1-3.2 0 1.6 1.6 0 0 1 3.2 0Z"/></svg>
         <span>Instagram</span>
       </a>
       <a class="soc-card" href="https://www.twitch.tv/soypaulangel" target="_blank" rel="noopener">
@@ -246,8 +248,8 @@ const API_KEY = "AIzaSyCqPlM0Ab3-_mtFHPmrrgJTS1S4dBCbbMA";
 const PLAYLIST_ID = "PLk3cei5OOiyvTQzg5FGgIRY3xs44F7Wzv";
 const MAX_RESULTS = 20;
 
-/** Blogger feed (3 noticias) + proxys + fallback a /news.json */
-const BLOGGER_FEED = "https://portalgamerok.blogspot.com/feeds/posts/summary?alt=json&max-results=3&orderby=published";
+/** Blogger feed (3 noticias) con múltiples rutas + fallback a /news.json */
+const BLOGGER_FEED_HTTPS = "https://portalgamerok.blogspot.com/feeds/posts/summary?alt=json&max-results=3&orderby=published";
 const JINA = "https://r.jina.ai";
 const ALLO = "https://api.allorigins.win/raw";
 
@@ -377,11 +379,11 @@ async function loadPlaylist(){
 const DEFAULT_NEWS_IMAGE = "og.jpg";
 const NEWS_SHOW_SOURCE = false;
 
-function upsizeBloggerImage(url, size = 1200){
+function upsizeBloggerImage(url, size = 800){
   if(!url) return "";
   return url
-    .replace(/\/s\d+(-[cw])?\//, `/s${size}/`)
-    .replace(/=s\d+(-[cw])?/, `=s${size}`)
+    .replace(/\/s\d+(-c)?\//, `/s${size}/`)
+    .replace(/=s\d+(-c)?/, `=s${size}`)
     .replace(/\/w\d+-h\d+(-c)?\//, `/s${size}/`);
 }
 function extractImgFromHtml(html){
@@ -403,17 +405,19 @@ function parseBloggerJson(data){
     const title = titleRaw || (textOnly ? textOnly.split(/\s+/).slice(0,12).join(" ") + "…" : "Sin título");
     const link  = (e.link || []).find(l=>l.rel==='alternate')?.href || '#';
     const date  = e.published?.$t || e.updated?.$t || new Date().toISOString();
-    const id    = (e.id?.$t || "").split("post-").pop() || "";
 
     const thumbRaw =
       e['media$thumbnail']?.url ||
       extractImgFromHtml(rawHtml) ||
       DEFAULT_NEWS_IMAGE;
 
-    const image = upsizeBloggerImage(thumbRaw, 1200);
+    const image = upsizeBloggerImage(thumbRaw, 800);
     const source = NEWS_SHOW_SOURCE ? (data?.feed?.title?.$t || "El Portal Gamer") : "";
 
-    return { title, url: link, date, summary: textOnly, image, source, id };
+    /* >>> CAMBIO 1: obtener ID del post y devolverlo <<< */
+    const postId = (e.id?.$t || "").split("post-").pop();
+
+    return { title, url: link, date, summary: textOnly, image, source, id: postId };
   });
 }
 function renderNews(items){
@@ -423,19 +427,16 @@ function renderNews(items){
     card.className = "card pad filterable";
     card.dataset.title = n.title; card.dataset.desc = n.summary + " " + n.source;
 
-    const target = n.url
-      ? `news.html?url=${encodeURIComponent(n.url)}`
-      : (n.id ? `news.html?id=${n.id}` : `news.html`);
-
     const imgTag = n.image ? `
       <img loading="lazy" src="${n.image}"
-           srcset="${upsizeBloggerImage(n.image,600)} 600w,
-                   ${upsizeBloggerImage(n.image,900)} 900w,
+           srcset="${upsizeBloggerImage(n.image,400)} 400w,
+                   ${upsizeBloggerImage(n.image,800)} 800w,
                    ${upsizeBloggerImage(n.image,1200)} 1200w"
            sizes="(min-width: 900px) 33vw, 90vw"
            alt="">
     ` : "";
 
+    /* >>> CAMBIO 2: botón va a news.html?id=... (interna) <<< */
     card.innerHTML = `
       <div class="news-thumb">${imgTag}</div>
       <div class="news-meta">
@@ -444,7 +445,7 @@ function renderNews(items){
       </div>
       <div class="title">${n.title}</div>
       <p class="desc">${truncate(n.summary, 220)}</p>
-      <a class="btn brand" href="${target}">📰 Leer más</a>
+      <a class="btn brand" href="news.html?id=${n.id}">📰 Leer más</a>
     `;
     grid.appendChild(card);
   });
@@ -459,9 +460,10 @@ async function fetchJson(url){
 
 async function getBloggerData(){
   const urls = [
+    `${JINA}/http://portalgamerok.blogspot.com/feeds/posts/summary?alt=json&max-results=3&orderby=published`,
     `${JINA}/https://portalgamerok.blogspot.com/feeds/posts/summary?alt=json&max-results=3&orderby=published`,
-    `${ALLO}?url=${encodeURIComponent(BLOGGER_FEED)}`,
-    BLOGGER_FEED,
+    `${ALLO}?url=${encodeURIComponent(BLOGGER_FEED_HTTPS)}`,
+    BLOGGER_FEED_HTTPS
   ];
   for (const u of urls){
     try{
@@ -479,17 +481,12 @@ async function loadNews(){
     if (!items.length) throw new Error("Sin entradas");
     renderNews(items);
   }catch(e){
-    console.warn("Feed falló, usando /news.json:", e);
+    console.warn("Blogger feed falló, usando /news.json:", e);
     try{
-      const res = await fetch('news.json', {cache:'no-store'});
+      const res = await fetch('/news.json', {cache:'no-store'});
       const items = await res.json();
-      if (items?.length) {
-        // normaliza imágenes por si quedaron chicas
-        items.forEach(n => n.image = upsizeBloggerImage(n.image, 1200));
-        // genera target interno
-        items.forEach(n => n.id = n.id || "");
-        renderNews(items);
-      } else throw new Error('news.json vacío');
+      if (items?.length) renderNews(items);
+      else throw new Error('news.json vacío');
     }catch{
       $("#news-grid").innerHTML = `<div class="muted">No se pudieron cargar las noticias.</div>`;
     }
