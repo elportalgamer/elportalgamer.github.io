@@ -246,8 +246,8 @@ const API_KEY = "AIzaSyCqPlM0Ab3-_mtFHPmrrgJTS1S4dBCbbMA";
 const PLAYLIST_ID = "PLk3cei5OOiyvTQzg5FGgIRY3xs44F7Wzv";
 const MAX_RESULTS = 20;
 
-/** Blogger (3 noticias) + proxys + fallback a /news.json */
-const BLOGGER_FEED = "https://portalgamerok.blogspot.com/feeds/posts/summary?alt=json&max-results=3&orderby=published";
+/** Blogger (6 noticias) + proxys + fallback a /news.json */
+const BLOGGER_FEED = "https://portalgamerok.blogspot.com/feeds/posts/summary?alt=json&max-results=6&orderby=published";
 const JINA = "https://r.jina.ai";
 const ALLO = "https://api.allorigins.win/raw";
 
@@ -266,15 +266,14 @@ function upsizeBloggerImage(url, size = 1200){
   if(!/googleusercontent\.com|blogspot\.com|ggpht\.com/i.test(url)) return url;
   url = url.replace(/^http:\/\//i,'https://');
 
-  // Path-style: /s72..., /s72-w462-h260-c..., /w400-h225...
+  // Path-style
   url = url.replace(/\/s\d+[^/]*(?=\/)/ig, `/s${size}`)
            .replace(/\/w\d+-h\d+[^/]*(?=\/)/ig, `/s${size}`);
 
-  // Query-style: =s72..., =w400-h225...
+  // Query-style
   url = url.replace(/=s\d+[^&]*/ig, `=s${size}`)
            .replace(/=w\d+-h\d+[^&]*/ig, `=s${size}`);
 
-  // Si no hay ningún spec de tamaño, añadimos =s<size>
   if(!/\/s\d+|=s\d+|\/w\d+-h\d+|=w\d+-h\d+/i.test(url)){
     url += (url.includes('=')) ? `-s${size}` : `=s${size}`;
   }
@@ -428,7 +427,6 @@ function renderNews(items){
       ? `news.html?id=${encodeURIComponent(n.id)}`
       : (n.url ? `news.html?url=${encodeURIComponent(n.url)}` : `news.html`);
 
-    // Imagen (opción: forzar HD)
     const img1200 = upsizeBloggerImage(n.image, 1200);
     const img = FORCE_HD_IMAGES
       ? `<img loading="lazy" decoding="async" src="${img1200}" alt="">`
@@ -459,7 +457,7 @@ async function fetchJson(url){
 }
 async function getSummaryData(){
   const urls = [
-    `${JINA}/https://portalgamerok.blogspot.com/feeds/posts/summary?alt=json&max-results=3&orderby=published`,
+    `${JINA}/https://portalgamerok.blogspot.com/feeds/posts/summary?alt=json&max-results=6&orderby=published`,
     `${ALLO}?url=${encodeURIComponent(BLOGGER_FEED)}`,
     BLOGGER_FEED
   ];
@@ -485,7 +483,8 @@ async function loadNews(){
       const items = await res.json();
       if (items?.length) {
         items.forEach(n => n.image = upsizeBloggerImage(n.image, 1200));
-        renderNews(items);
+        // tomar solo 6 si hay más
+        renderNews(items.slice(0,6));
       } else throw new Error('news.json vacío');
     }catch{
       $("#news-grid").innerHTML = `<div class="muted">No se pudieron cargar las noticias.</div>`;
