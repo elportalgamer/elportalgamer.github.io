@@ -1,23 +1,274 @@
-[
-  {
-    "title": "¿Lo esperabas con ansias? El lanzamiento de Hollow Knight: Silksong fue tan masivo que colapsó las tiendas digitales en todo el mundo.",
-    "url": "https://portalgamerok.blogspot.com/2025/09/lo-esperabas-con-ansias-el-lanzamiento.html",
-    "date": "2025-09-07T19:43:00.000-07:00",
-    "summary": "Tras años de desarrollo y un hype por las nubes, la secuela del aclamado metroidvania por fin está en manos de los jugadores. Sin embargo, la demanda fue tan brutal que servidores de Steam, PlayStation y Nintendo sufrieron caídas intermitentes, impidiendo que miles de usuarios pudieran comprarlo en las primeras horas. Team Cherry, el estudio desarrollador, se vio obligado a emitir un comunicado",
-    "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEitzcHY-wpvBPmGeKRK5PRXksnrJ4qWKk3brSeJaLBXGEhTBlfExl4uOld0mFRm3u-gp880LaRqWS-BGSJzIIGxT3P8U6rPSZxovAPSZae_aPqs5BBJfJXBz9bUnPVt0NbpNxUIZ1pPAalNGj3nFBvNn5RI4rFVh0I5hLr0JnwCnGWcWJ38ErEmAh18b5g/s1200/hollow-knight-silksong-hornet-holding-up-her-needle-weapon-1_kua3.jpg"
-  },
-  {
-    "title": "Silent Hill F te hará temer a la luz del día: el terror ahora es japonés",
-    "url": "https://portalgamerok.blogspot.com/2025/09/silent-hill-f-te-hara-temer-la-luz-del.html",
-    "date": "2025-09-07T19:41:00.000-07:00",
-    "summary": "Olvida la niebla de siempre, el verdadero horror florece bajo el sol naciente. Konami reinventa su icónica saga de terror con Silent Hill F, una entrega que abandona los pueblos estadounidenses para sumergirnos en un escalofriante Japón rural de los años 60...",
-    "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjTZVaxa3QO-F3bUJ2sl4S_kZOMx9l37A-JqwiBBr0YdYutwpme-Ms7s26IOY2ilrzIi1aLObkjOPiJUQzcgddRPQhcQRLhUpW7ig2lLCQfHmMEnp7KbDbxj2RDHaSBMRK4Mweb-mImaVq4UfD9mh03F1-OUXudy4YuNdIfuu6zl6M-P6z4_lk9LOuYyMs/s1200/silent-hill-f-the-first-in-konamis-horror-series-to-get-an-1_q1mh.1280.png"
-  },
-  {
-    "title": "¿Cansado de secuelas que no entienden a sus fans? Gearbox escuchó y Borderlands 4 es la prueba.",
-    "url": "https://portalgamerok.blogspot.com/2025/09/cansado-de-secuelas-que-no-entienden.html",
-    "date": "2025-09-07T19:39:00.000-07:00",
-    "summary": "Dejando atrás las críticas de su predecesor, la nueva entrega promete un retorno a la fórmula que enamoró a millones: humor irreverente, un arsenal de armas totalmente desquiciado y una jugabilidad enfocada en el looteo y la acción sin descanso...",
-    "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjvYecRqBMeaKIgedWLIrJZn3momleU5AtkCvEZjmjk3RoBVcCRS-nQymJ9N9Nt9q6OeETYV7_96NFD1BBRoo_e0QwVohPfecosiZAqotIxqrgjUoZAZFI-LiYtsaHd2pz8ct8B34XLC6Rw4Cf3g76PJdzXUK60ey5_u3xs8ww2FOLdlf60MQo73klqdY8/s1200/csm_Notebookcheck110_e8ba21ceeb.jpg"
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Noticias — El Portal Gamer</title>
+  <link rel="canonical" href="https://www.elportalgamer.com/news.html" />
+  <link rel="icon" type="image/png" href="mago.png" />
+
+  <meta name="description" content="Noticias gamer, retro y curiosidades de El Portal Gamer." />
+  <meta property="og:title" content="Noticias — El Portal Gamer" />
+  <meta property="og:description" content="Actualidad gamer, retro y curiosidades." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://www.elportalgamer.com/og.jpg" />
+
+  <style>
+    :root{ --bg:#121212; --surface:#1f1f1f; --text:#f0f0f0; --muted:#b5b5b5; --brand:#ff4500; --radius:14px; }
+    *{box-sizing:border-box}
+    body{ margin:0; font-family:system-ui,-apple-system,"Segoe UI",Roboto,Ubuntu,"Helvetica Neue",Arial; background:var(--bg); color:var(--text); }
+    header{ position:sticky; top:0; z-index:5; background:#161616; border-bottom:1px solid #242424; }
+    .nav{ max-width:1100px; margin:0 auto; display:flex; align-items:center; gap:16px; padding:12px 16px; }
+    .nav a{color:#eaeaea;text-decoration:none;opacity:.9; padding:6px 8px; border-radius:10px}
+    .nav a:hover{opacity:1; background:#1b1b1b}
+    .brand{ font-weight:800; color:var(--brand) }
+    .spacer{flex:1}
+
+    main{max-width:1100px; margin:20px auto; padding:0 16px}
+    .grid{display:grid; gap:16px}
+    .cols-3{grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}
+    .card{background:var(--surface); border:1px solid #262626; border-radius:var(--radius); overflow:hidden}
+    .card.pad{padding:14px}
+    .title{font-weight:800; font-size:1.4rem; margin:8px 0}
+    .muted{color:#bdbdbd}
+    .btn{ display:inline-flex; align-items:center; gap:8px; padding:10px 12px; border-radius:10px; border:1px solid #333; background:#151515; color:#fff; text-decoration:none; }
+    .btn.brand{background:var(--brand); border-color:#ff5e1f; color:#111; font-weight:800}
+    .news-thumb{position:relative; width:100%; padding-top:56.25%; background:#0e0e0e; border-radius:10px; overflow:hidden; border:1px solid #262626}
+    .news-thumb img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover}
+
+    /* detalle */
+    #hero img{width:100%; height:auto; border-radius:14px; border:1px solid #262626}
+    article.post{background:var(--surface); border:1px solid #262626; border-radius:14px; padding:16px}
+    article.post h1{margin:6px 0 10px; font-size:1.6rem}
+    article.post .meta{color:#bdbdbd; margin-bottom:14px}
+    article.post .content img{max-width:100%; height:auto; border-radius:8px}
+    article.post .content iframe{max-width:100%}
+    .divider{height:8px; border-radius:999px; background:linear-gradient(90deg,#ff6a00,#ff3b00,#ff6a00); margin:18px 0}
+
+    @media (max-width:560px){ .nav{flex-wrap:wrap} }
+  </style>
+</head>
+<body>
+<header>
+  <div class="nav">
+    <div class="brand">El Portal Gamer</div>
+    <a href="index.html#ultimo">Inicio</a>
+    <a href="index.html#news">Noticias</a>
+    <a href="index.html#mini">Reseñas</a>
+    <a href="index.html#series">Series</a>
+    <a href="videos.html">Videos</a>
+    <div class="spacer"></div>
+    <a class="btn" href="index.html">Volver</a>
+  </div>
+</header>
+
+<main>
+  <!-- Detalle -->
+  <section id="detail" style="display:none">
+    <div id="hero" style="margin-bottom:14px"></div>
+    <article class="post">
+      <h1 id="post-title">Cargando…</h1>
+      <div class="meta" id="post-meta"></div>
+      <div class="content" id="post-content"></div>
+    </article>
+  </section>
+
+  <!-- Listado -->
+  <section id="list">
+    <h2>Noticias</h2>
+    <div class="grid cols-3" id="news-list"><div class="muted">Cargando…</div></div>
+    <div style="margin-top:12px">
+      <button id="load-more" class="btn brand">Cargar más</button>
+    </div>
+  </section>
+</main>
+
+<footer style="text-align:center; color:#9b9b9b; margin:32px 0">© 2025 El Portal Gamer</footer>
+
+<script defer>
+const JINA = "https://r.jina.ai";
+const ALLO = "https://api.allorigins.win/raw";
+const BLOGGER_BASE = "https://portalgamerok.blogspot.com";
+const FEED_BASE = `${BLOGGER_BASE}/feeds/posts/summary?alt=json`;
+
+const $ = (s, p=document)=>p.querySelector(s);
+const $$ = (s, p=document)=>[...p.querySelectorAll(s)];
+const truncate = (t,n)=> (t||"").length>n ? t.slice(0,n).replace(/\s+\S*$/,'')+"…" : t;
+
+function upsizeBloggerImage(url, size=1200){
+  if(!url) return "";
+  return url
+    .replace(/\/s\d+(-[cw])?\//, `/s${size}/`)
+    .replace(/=s\d+(-[cw])?/, `=s${size}`)
+    .replace(/\/w\d+-h\d+(-c)?\//, `/s${size}/`);
+}
+
+function timeAgo(iso){
+  const d = new Date(iso); const diff = (Date.now()-d.getTime())/1000;
+  const units = [[31536000,'a'],[2592000,'m'],[604800,'sem'],[86400,'d'],[3600,'h'],[60,'min']];
+  for(const [s,n] of units){ if(diff>=s) return `${Math.floor(diff/s)} ${n}`; }
+  return 'ahora';
+}
+
+function parseFeed(data){
+  const e = data?.feed?.entry || [];
+  return e.map(x=>{
+    const rawHtml = x.summary?.$t || x.content?.$t || "";
+    const textOnly = rawHtml.replace(/<[^>]+>/g," ").replace(/\s+/g,' ').trim();
+    const title = (x.title?.$t||"").trim() || truncate(textOnly,70);
+    const url = (x.link||[]).find(l=>l.rel==='alternate')?.href || "#";
+    const date = x.published?.$t || x.updated?.$t || new Date().toISOString();
+    const id = (x.id?.$t||"").split("post-").pop() || "";
+    const thumbRaw = x['media$thumbnail']?.url || (rawHtml.match(/<img[^>]+src=["']([^"']+)["']/i)?.[1]) || "";
+    const image = upsizeBloggerImage(thumbRaw, 1200) || "og.jpg";
+    return {title,url,date,id,image,summary:textOnly};
+  });
+}
+
+async function fetchJson(url){
+  const r = await fetch(url, {cache:'no-store'});
+  const t = await r.text();
+  try{ return JSON.parse(t); }catch{ return {}; }
+}
+
+/* ======= DETALLE ======= */
+async function loadDetailByUrl(url){
+  // usa proxy Jina para traer HTML renderizado
+  const res = await fetch(`${JINA}/${url}`);
+  const html = await res.text();
+
+  const title = (html.match(/<meta[^>]+property=["']og:title["'][^>]+content=["']([^"']+)["']/i)?.[1])
+             || (html.match(/<title>(.*?)<\/title>/i)?.[1])
+             || "Noticia";
+  const ogImg = (html.match(/<meta[^>]+property=["']og:image["'][^>]+content=["']([^"']+)["']/i)?.[1]) || "";
+  const body  = (html.match(/<div[^>]+class=["'][^"']*post-body[^"']*["'][^>]*>([\s\S]*?)<\/div>/i)?.[1]) || "";
+
+  $("#post-title").textContent = title;
+  $("#post-meta").textContent = "";
+  $("#hero").innerHTML = ogImg ? `<img src="${upsizeBloggerImage(ogImg, 1200)}" alt="">` : "";
+  $("#post-content").innerHTML = body || `<p class="muted">No pudimos incrustar el contenido completo. Abrilo acá:
+    <a href="${url}" target="_blank" rel="noopener">${url}</a></p>`;
+}
+
+async function loadDetailById(id){
+  // buscamos el link alternativo en el feed (30 últimos)
+  const sources = [
+    `${JINA}/${FEED_BASE}&max-results=30&orderby=published`,
+    `${ALLO}?url=${encodeURIComponent(FEED_BASE + "&max-results=30&orderby=published")}`
+  ];
+  for (const u of sources){
+    try{
+      const data = await fetchJson(u);
+      const items = parseFeed(data);
+      const hit = items.find(x => x.id === id);
+      if (hit?.url){
+        await loadDetailByUrl(hit.url);
+        return;
+      }
+    }catch(e){}
   }
-]
+  $("#post-title").textContent = "No encontrado";
+  $("#post-content").innerHTML = `<p class="muted">No pudimos localizar la nota. Probá con el listado.</p>`;
+}
+
+/* ======= LISTADO ======= */
+let startIndex = 1; // Blogger empieza en 1
+const pageSize = 9;
+let loading = false;
+
+function renderCards(items, clear=false){
+  const grid = $("#news-list");
+  if (clear) grid.innerHTML = "";
+  items.forEach(n=>{
+    const a = document.createElement("article");
+    a.className = "card pad";
+    const href = n.url ? `news.html?url=${encodeURIComponent(n.url)}` : (n.id ? `news.html?id=${n.id}` : "#");
+    a.innerHTML = `
+      <div class="news-thumb">
+        <img loading="lazy" src="${n.image}"
+             srcset="${upsizeBloggerImage(n.image,600)} 600w,
+                     ${upsizeBloggerImage(n.image,900)} 900w,
+                     ${upsizeBloggerImage(n.image,1200)} 1200w"
+             sizes="(min-width: 900px) 33vw, 90vw"
+             alt="">
+      </div>
+      <div class="title">${n.title}</div>
+      <div class="muted" style="margin:6px 0">${new Date(n.date).toLocaleDateString()} • ${timeAgo(n.date)}</div>
+      <p class="muted">${truncate(n.summary, 200)}</p>
+      <a class="btn brand" href="${href}">📰 Leer más</a>
+    `;
+    grid.appendChild(a);
+  });
+}
+
+async function loadList(clear=false){
+  if (loading) return; loading = true;
+  const urls = [
+    `${JINA}/${FEED_BASE}&max-results=${pageSize}&start-index=${startIndex}&orderby=published`,
+    `${ALLO}?url=${encodeURIComponent(FEED_BASE + `&max-results=${pageSize}&start-index=${startIndex}&orderby=published`)}`,
+    `${FEED_BASE}&max-results=${pageSize}&start-index=${startIndex}&orderby=published`
+  ];
+  for (const u of urls){
+    try{
+      const data = await fetchJson(u);
+      const items = parseFeed(data);
+      if (items.length){
+        renderCards(items, clear);
+        startIndex += pageSize;
+        loading = false;
+        return;
+      }
+    }catch(e){}
+  }
+  // fallback a /news.json
+  try{
+    const r = await fetch('news.json',{cache:'no-store'});
+    const arr = await r.json();
+    if (arr?.length){
+      arr.forEach(n=> n.image = upsizeBloggerImage(n.image, 1200));
+      renderCards(arr, clear);
+    } else {
+      $("#news-list").innerHTML = `<div class="muted">No hay noticias.</div>`;
+    }
+  }catch{
+    $("#news-list").innerHTML = `<div class="muted">No hay noticias.</div>`;
+  }
+  loading = false;
+}
+
+document.getElementById('load-more').addEventListener('click', ()=>loadList(false));
+
+/* ======= Init ======= */
+(async function init(){
+  const params = new URLSearchParams(location.search);
+  const id = params.get("id");
+  const url = params.get("url");
+
+  if (id || url){
+    document.getElementById('list').style.display = 'none';
+    document.getElementById('detail').style.display = '';
+    if (url) await loadDetailByUrl(url);
+    else await loadDetailById(id);
+
+    // JSON-LD mínimo (mejor para SEO de detalle)
+    const title = document.getElementById('post-title').textContent.trim();
+    const ld = {
+      "@context":"https://schema.org",
+      "@type":"NewsArticle",
+      "headline": title || "Noticia",
+      "mainEntityOfPage": location.href,
+      "author": {"@type":"Organization","name":"El Portal Gamer"},
+      "publisher":{"@type":"Organization","name":"El Portal Gamer"}
+    };
+    const s = document.createElement('script');
+    s.type="application/ld+json";
+    s.textContent = JSON.stringify(ld);
+    document.head.appendChild(s);
+  } else {
+    // listado
+    await loadList(true);
+  }
+})();
+</script>
+</body>
+</html>
