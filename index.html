@@ -262,22 +262,34 @@ const $$ = (s, p=document) => [...p.querySelectorAll(s)];
 const truncate = (str, n) => (str||"").length>n ? str.slice(0,n).replace(/\s+\S*$/,'')+"…" : str;
 const words = (x)=> (x||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
 
-// ===== Limpiador robusto de descripciones de YouTube =====
-// Corta donde detecta "líneas" (▬, ─, —, ━, etc. repetidas) y elimina el footer (Apoya/Redes/links)
+/* ===== Limpiador ROBUSTO de descripciones de YouTube (se aplica ANTES de renderizar) ===== */
 function cleanYtDesc(s){
   if (!s) return '';
-  let t = s.normalize('NFKC')
-           .replace(/\r/g, '')
-           .replace(/[\u200B-\u200D\uFEFF]/g, ''); // zero-width
-  const sep = /([▬─—━═\-_=*#]|[\u2500-\u259F])\1{2,}/; // 3+ repes
-  let i = t.search(sep);
-  if (i === -1) i = t.indexOf('▬▬');
-  if (i > -1) t = t.slice(0, i);
-  const footer = /(apoya(nos)?|sígueme|redes|contacto|patreon|ko-?fi|discord|instagram|twitter|twitch|facebook|insta-?gaming|instant-?gaming|amazon)/i;
-  const j = t.search(footer);
-  if (j > -1) t = t.slice(0, j);
-  t = t.split('\n').map(x=>x.trim()).filter(x=>x && !/^https?:\/\//i.test(x)).join('\n');
-  return t.replace(/\n{2,}/g, '\n').trim();
+  let t = s
+    .replace(/\r/g, '')
+    .replace(/\u00A0/g, ' ')
+    .replace(/[\u200B-\u200D\uFEFF]/g, '')
+    .normalize('NFKC');
+
+  // Corte duro si aparece una secuencia repetida de "líneas" (incluye ▬, ─, —, ━, =, -, _, *, #, y bloques/box-drawing)
+  const hard = /(▬{2,}|─{3,}|—{3,}|━{3,}|═{3,}|_{3,}|-{3,}|=+|\*{3,}|#{3,}|[■□▪▫◆◇●○◼◻◾◽]{3,}|[\u2500-\u259F]{3,})/u;
+  const m = t.match(hard);
+  if (m) t = t.slice(0, m.index);
+
+  // Recorremos por líneas y cortamos si detectamos separadores o palabras típicas de pie de descripción
+  const sepLine = /^([^\p{L}\p{N}]{4,}|[-=_*#~•·\u25A0-\u25FF\u2500-\u259F\s]+)$/u;
+  const footerWords = /(apoya(nos)?|apoyá(nos)?|sígueme|sigueme|redes|contacto|patreon|ko-?fi|discord|instagram|twitter|twitch|facebook|insta-?gaming|instant-?gaming|amazon|suscríbete|suscribite|subscribe)/i;
+
+  const out = [];
+  for (const raw of t.split('\n')){
+    const line = raw.trim();
+    if (!line) continue;
+    if (sepLine.test(line) || footerWords.test(line)) break;
+    if (/^https?:\/\//i.test(line)) continue; // volamos URLs
+    out.push(line);
+    if (out.join(' ').length > 1200) break; // límite de seguridad
+  }
+  return out.join('\n').trim();
 }
 
 /** ====== YOUTUBE ====== */
@@ -298,13 +310,13 @@ function renderUltimo(v){
 
   $("#ultimo-titulo").textContent = v.title;
   $("#ultimo-fecha").textContent = new Date(v.date).toLocaleDateString();
-  $("#ultimo-desc").textContent = truncate(cleanYtDesc(v.desc), 420);
+  $("#ultimo-desc").textContent = truncate(v.desc, 420); // ya viene limpio del mapeo
   $("#ultimo-ver").href = `https://www.youtube.com/watch?v=${v.id}`;
 
-  // JSON-LD del último video
+  // JSON-LD del último video (usa ya-limpio)
   const ld = {
     "@context":"https://schema.org","@type":"VideoObject",
-    "name": v.title,"description": truncate(cleanYtDesc(v.desc), 220),
+    "name": v.title,"description": truncate(v.desc, 220),
     "thumbnailUrl":[v.thumb],"uploadDate": v.date,
     "embedUrl": `https://www.youtube.com/embed/${v.id}`,
     "publisher":{"@type":"Organization","name":"El Portal Gamer"},
@@ -328,7 +340,7 @@ function makeMiniCard(v){
       </div>
     </div>
     <div class="title">${v.title}</div>
-    <p class="desc">${truncate(cleanYtDesc(v.desc), 360)}</p>
+    <p class="desc">${truncate(v.desc, 360)}</p>
     <a class="btn brand" href="https://www.youtube.com/watch?v=${v.id}" target="_blank" rel="noopener">▶ Ver video</a>`;
   const thumb = el.querySelector(".videobox");
   thumb.addEventListener("click", ()=>{
@@ -337,7 +349,10 @@ function makeMiniCard(v){
   return el;
 }
 
-function renderMini(arr){ const grid = $("#mini-grid"); grid.innerHTML = ""; arr.forEach(v => grid.appendChild(makeMiniCard(v))); }
+function renderMini(arr){
+  const grid = $("#mini-grid"); grid.innerHTML = "";
+  arr.forEach(v => grid.appendChild(makeMiniCard(v)));
+}
 
 function renderSeries(items){
   const SERIES_KEYWORDS = {
@@ -367,13 +382,17 @@ async function loadPlaylist(){
     const r = await fetch(url);
     const data = await r.json();
     if(!data.items){ throw new Error("YouTube sin items"); }
-    const items = data.items.map(i => ({
-      id: i.snippet.resourceId.videoId,
-      title: i.snippet.title,
-      desc: i.snippet.description,
-      date: i.snippet.publishedAt,
-      thumb: (i.snippet.thumbnails?.maxres?.url || i.snippet.thumbnails?.high?.url || i.snippet.thumbnails?.medium?.url || "")
-    }));
+
+    const items = data.items.map(i => {
+      const descClean = cleanYtDesc(i.snippet.description || ""); // << LIMPIAMOS AQUÍ
+      return {
+        id: i.snippet.resourceId.videoId,
+        title: i.snippet.title,
+        desc: descClean,                 // << guardamos ya limpio
+        date: i.snippet.publishedAt,
+        thumb: (i.snippet.thumbnails?.maxres?.url || i.snippet.thumbnails?.high?.url || i.snippet.thumbnails?.medium?.url || "")
+      };
+    });
 
     renderUltimo(items[0]);
     renderMini(items.slice(1, 10));
@@ -402,7 +421,6 @@ const NEWS_SHOW_SOURCE = false;
 
 function upsizeBloggerImage(url, size = 1200){
   if(!url) return "";
-  // limpia variantes s72, wXhY-c y fuerza tamaño alto
   return url
     .replace(/\/s\d+(-[cw])?\//, `/s${size}/`)
     .replace(/=s\d+(-[cw])?/, `=s${size}`)
@@ -431,7 +449,7 @@ function parseBloggerJson(data){
     const thumbRaw = e['media$thumbnail']?.url || extractImgFromHtml(rawHtml) || DEFAULT_NEWS_IMAGE;
     const image = upsizeBloggerImage(thumbRaw, 1200);
     const source = NEWS_SHOW_SOURCE ? (data?.feed?.title?.$t || "El Portal Gamer") : "";
-    const postId = (e.id?.$t || "").split("post-").pop(); // <- ID para news.html
+    const postId = (e.id?.$t || "").split("post-").pop();
     return { title, url: link, date, summary: textOnly, image, source, id: postId };
   });
 }
@@ -522,7 +540,6 @@ async function loadNews(){
     try{
       const res = await fetch('/news.json', {cache:'no-store'});
       const items = await res.json();
-      // Si tu news.json no trae id, igual linkeamos con ?u=URL
       const norm = (items||[]).map(n => ({...n, image: upsizeBloggerImage(n.image, 1200)}));
       if (norm.length) renderNews(norm);
       else throw new Error('news.json vacío');
