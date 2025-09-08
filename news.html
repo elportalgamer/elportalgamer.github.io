@@ -6,13 +6,11 @@
   <title>Noticias — El Portal Gamer</title>
   <link rel="canonical" href="https://www.elportalgamer.com/news.html" />
   <link rel="icon" type="image/png" href="mago.png" />
-
   <meta name="description" content="Noticias gamer, retro y curiosidades de El Portal Gamer." />
   <meta property="og:title" content="Noticias — El Portal Gamer" />
   <meta property="og:description" content="Actualidad gamer, retro y curiosidades." />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="https://www.elportalgamer.com/og.jpg" />
-
   <style>
     :root{ --bg:#121212; --surface:#1f1f1f; --text:#f0f0f0; --muted:#b5b5b5; --brand:#ff4500; --radius:14px; }
     *{box-sizing:border-box}
@@ -23,7 +21,6 @@
     .nav a:hover{opacity:1; background:#1b1b1b}
     .brand{ font-weight:800; color:var(--brand) }
     .spacer{flex:1}
-
     main{max-width:1100px; margin:20px auto; padding:0 16px}
     .grid{display:grid; gap:16px}
     .cols-3{grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}
@@ -35,8 +32,6 @@
     .btn.brand{background:var(--brand); border-color:#ff5e1f; color:#111; font-weight:800}
     .news-thumb{position:relative; width:100%; padding-top:56.25%; background:#0e0e0e; border-radius:10px; overflow:hidden; border:1px solid #262626}
     .news-thumb img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover}
-
-    /* detalle */
     #hero img{width:100%; height:auto; border-radius:14px; border:1px solid #262626}
     article.post{background:var(--surface); border:1px solid #262626; border-radius:14px; padding:16px}
     article.post h1{margin:6px 0 10px; font-size:1.6rem}
@@ -44,7 +39,6 @@
     article.post .content img{max-width:100%; height:auto; border-radius:8px}
     article.post .content iframe{max-width:100%}
     .divider{height:8px; border-radius:999px; background:linear-gradient(90deg,#ff6a00,#ff3b00,#ff6a00); margin:18px 0}
-
     @media (max-width:560px){ .nav{flex-wrap:wrap} }
   </style>
 </head>
@@ -89,7 +83,8 @@
 const JINA = "https://r.jina.ai";
 const ALLO = "https://api.allorigins.win/raw";
 const FEED_SUMMARY = "https://portalgamerok.blogspot.com/feeds/posts/summary?alt=json";
-const FEED_DEFAULT = "https://portalgamerok.blogspot.com/feeds/posts/default?alt=json"; // trae contenido completo
+const FEED_DEFAULT = "https://portalgamerok.blogspot.com/feeds/posts/default?alt=json";
+const FORCE_HD_IMAGES = true;
 
 const $ = (s, p=document)=>p.querySelector(s);
 const $$ = (s, p=document)=>[...p.querySelectorAll(s)];
@@ -97,18 +92,21 @@ const truncate = (t,n)=> (t||"").length>n ? t.slice(0,n).replace(/\s+\S*$/,'')+"
 
 function upsizeBloggerImage(url, size=1200){
   if(!url) return "";
-  if(!/googleusercontent\.com|blogspot\.com|ggpht\.com|lh\d+\.googleusercontent\.com/i.test(url)) return url;
-  return url
-    .replace(/\/s\d+(?:-[a-z]){0,3}\//i, `/s${size}/`)
-    .replace(/=s\d+(?:-[a-z]){0,3}/i, `=s${size}`)
-    .replace(/\/w\d+-h\d+(?:-c)?\//i, `/s${size}/`)
-    .replace(/=w\d+-h\d+(?:-c)?/i, `=s${size}`);
+  if(!/googleusercontent\.com|blogspot\.com|ggpht\.com/i.test(url)) return url;
+  url = url.replace(/^http:\/\//i,'https://');
+  url = url.replace(/\/s\d+[^/]*(?=\/)/ig, `/s${size}`)
+           .replace(/\/w\d+-h\d+[^/]*(?=\/)/ig, `/s${size}`)
+           .replace(/=s\d+[^&]*/ig, `=s${size}`)
+           .replace(/=w\d+-h\d+[^&]*/ig, `=s${size}`);
+  if(!/\/s\d+|=s\d+|\/w\d+-h\d+|=w\d+-h\d+/i.test(url)){
+    url += (url.includes('=')) ? `-s${size}` : `=s${size}`;
+  }
+  return url;
 }
 function upsizeAllImagesInHtml(html){
   return (html||"").replace(/https?:\/\/[^"']+(?:googleusercontent|blogspot|ggpht)\.com[^"']+/gi,
     m => upsizeBloggerImage(m, 1200));
 }
-
 function timeAgo(iso){
   const d = new Date(iso); const diff = (Date.now()-d.getTime())/1000;
   const units = [[31536000,'a'],[2592000,'m'],[604800,'sem'],[86400,'d'],[3600,'h'],[60,'min']];
@@ -155,7 +153,7 @@ async function fetchTextAsJson(url){
   try{ return JSON.parse(t); }catch{ return {}; }
 }
 
-/* ======= DETALLE (sin salir del sitio) ======= */
+/* ======= DETALLE ======= */
 async function loadDetailByIdOrUrl({id,url}){
   const candidates = [
     `${JINA}/${FEED_DEFAULT}&max-results=200`,
@@ -176,11 +174,11 @@ async function loadDetailByIdOrUrl({id,url}){
       }
     }catch(e){}
   }
-  // fallback muy básico a /news.json (si vino con url)
+  // fallback a /news.json
   try{
     const r = await fetch("news.json",{cache:"no-store"});
     const arr = await r.json();
-    const hit = arr.find(n => n.url === url);
+    const hit = arr.find(n => (id && n.url.includes(id)) || (url && n.url===url));
     if (hit){
       $("#post-title").textContent = hit.title || "Noticia";
       $("#post-meta").textContent = new Date(hit.date).toLocaleDateString();
@@ -189,9 +187,8 @@ async function loadDetailByIdOrUrl({id,url}){
       return true;
     }
   }catch(e){}
-  // si no, mostramos mensaje (sin link al blog)
   $("#post-title").textContent = "No pudimos cargar esta nota";
-  $("#post-content").innerHTML = `<p class="muted">Intenta desde el listado de noticias.</p>`;
+  $("#post-content").innerHTML = `<p class="muted">Intentá desde el listado.</p>`;
   return false;
 }
 
@@ -207,15 +204,18 @@ function renderCards(items, clear=false){
     const a = document.createElement("article");
     a.className = "card pad";
     const href = n.id ? `news.html?id=${encodeURIComponent(n.id)}` : `news.html?url=${encodeURIComponent(n.url)}`;
+
+    const img1200 = upsizeBloggerImage(n.image,1200);
+    const img = FORCE_HD_IMAGES
+      ? `<img loading="lazy" decoding="async" src="${img1200}" alt="">`
+      : `<img loading="lazy" decoding="async" src="${img1200}"
+               srcset="${upsizeBloggerImage(img1200,600)} 600w,
+                       ${upsizeBloggerImage(img1200,900)} 900w,
+                       ${upsizeBloggerImage(img1200,1200)} 1200w"
+               sizes="(min-width:1024px) 340px, (min-width:640px) 45vw, 90vw" alt="">`;
+
     a.innerHTML = `
-      <div class="news-thumb">
-        <img loading="lazy" src="${n.image}"
-             srcset="${upsizeBloggerImage(n.image,600)} 600w,
-                     ${upsizeBloggerImage(n.image,900)} 900w,
-                     ${upsizeBloggerImage(n.image,1200)} 1200w"
-             sizes="(min-width: 900px) 33vw, 90vw"
-             alt="">
-      </div>
+      <div class="news-thumb">${img}</div>
       <div class="title">${n.title}</div>
       <div class="muted" style="margin:6px 0">${new Date(n.date).toLocaleDateString()} • ${timeAgo(n.date)}</div>
       <p class="muted">${truncate(n.summary, 200)}</p>
@@ -262,7 +262,6 @@ async function loadList(clear=false){
 
 document.getElementById('load-more').addEventListener('click', ()=>loadList(false));
 
-/* ======= Init ======= */
 (async function init(){
   const params = new URLSearchParams(location.search);
   const id = params.get("id");
@@ -274,18 +273,8 @@ document.getElementById('load-more').addEventListener('click', ()=>loadList(fals
     await loadDetailByIdOrUrl({id, url});
 
     const title = document.getElementById('post-title').textContent.trim();
-    const ld = {
-      "@context":"https://schema.org",
-      "@type":"NewsArticle",
-      "headline": title || "Noticia",
-      "mainEntityOfPage": location.href,
-      "author": {"@type":"Organization","name":"El Portal Gamer"},
-      "publisher":{"@type":"Organization","name":"El Portal Gamer"}
-    };
-    const s = document.createElement('script');
-    s.type="application/ld+json";
-    s.textContent = JSON.stringify(ld);
-    document.head.appendChild(s);
+    const ld = {"@context":"https://schema.org","@type":"NewsArticle","headline": title || "Noticia","mainEntityOfPage": location.href,"author":{"@type":"Organization","name":"El Portal Gamer"},"publisher":{"@type":"Organization","name":"El Portal Gamer"}};
+    const s = document.createElement('script'); s.type="application/ld+json"; s.textContent = JSON.stringify(ld); document.head.appendChild(s);
   } else {
     await loadList(true);
   }
