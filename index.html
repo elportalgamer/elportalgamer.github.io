@@ -69,7 +69,7 @@
     .btn{ display:inline-flex; align-items:center; gap:8px; padding:10px 12px; border-radius:10px; border:1px solid #333; background:#151515; color:#fff; text-decoration:none; }
     .btn.brand{background:var(--brand); border-color:#ff5e1f; color:#111; font-weight:800}
 
-    /* Noticias (thumb cuadrado HD) */
+    /* Noticias cuadradas */
     .news-thumb{position:relative; width:100%; padding-top:100%; background:#0e0e0e; border-radius:10px; overflow:hidden; border:1px solid #262626}
     .news-thumb img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover}
     .news-meta{display:flex; gap:10px; align-items:center; color:#cfcfcf; font-size:.9rem; margin:6px 0 10px}
@@ -246,17 +246,44 @@ const API_KEY = "AIzaSyCqPlM0Ab3-_mtFHPmrrgJTS1S4dBCbbMA";
 const PLAYLIST_ID = "PLk3cei5OOiyvTQzg5FGgIRY3xs44F7Wzv";
 const MAX_RESULTS = 20;
 
-/** Blogger feed (3 noticias) + proxys + fallback a /news.json */
+/** Blogger (3 noticias) + proxys + fallback a /news.json */
 const BLOGGER_FEED = "https://portalgamerok.blogspot.com/feeds/posts/summary?alt=json&max-results=3&orderby=published";
-const FEED_DEFAULT = "https://portalgamerok.blogspot.com/feeds/posts/default?alt=json&max-results=50";
 const JINA = "https://r.jina.ai";
 const ALLO = "https://api.allorigins.win/raw";
+
+/** Fuerza HD para evitar que el navegador elija miniaturas del srcset */
+const FORCE_HD_IMAGES = true;
 
 /** Helpers */
 const $ = (s, p=document) => p.querySelector(s);
 const $$ = (s, p=document) => [...p.querySelectorAll(s)];
 const truncate = (str, n) => (str||"").length>n ? str.slice(0,n).replace(/\s+\S*$/,'')+"…" : str;
 const words = (x)=> (x||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
+
+/* ========== Upsize anti-pixelado (ultra robusto) ========== */
+function upsizeBloggerImage(url, size = 1200){
+  if(!url) return "";
+  if(!/googleusercontent\.com|blogspot\.com|ggpht\.com/i.test(url)) return url;
+  url = url.replace(/^http:\/\//i,'https://');
+
+  // Path-style: /s72..., /s72-w462-h260-c..., /w400-h225...
+  url = url.replace(/\/s\d+[^/]*(?=\/)/ig, `/s${size}`)
+           .replace(/\/w\d+-h\d+[^/]*(?=\/)/ig, `/s${size}`);
+
+  // Query-style: =s72..., =w400-h225...
+  url = url.replace(/=s\d+[^&]*/ig, `=s${size}`)
+           .replace(/=w\d+-h\d+[^&]*/ig, `=s${size}`);
+
+  // Si no hay ningún spec de tamaño, añadimos =s<size>
+  if(!/\/s\d+|=s\d+|\/w\d+-h\d+|=w\d+-h\d+/i.test(url)){
+    url += (url.includes('=')) ? `-s${size}` : `=s${size}`;
+  }
+  return url;
+}
+function extractImgFromHtml(html){
+  const m = (html||"").match(/<img[^>]+src=["']([^"']+)["']/i);
+  return m ? m[1] : "";
+}
 
 /** ====== YOUTUBE ====== */
 function renderUltimo(v){
@@ -279,14 +306,7 @@ function renderUltimo(v){
   $("#ultimo-desc").textContent = truncate(v.desc, 420);
   $("#ultimo-ver").href = `https://www.youtube.com/watch?v=${v.id}`;
 
-  const ld = {
-    "@context":"https://schema.org","@type":"VideoObject",
-    "name": v.title,"description": truncate(v.desc, 220),
-    "thumbnailUrl":[v.thumb],"uploadDate": v.date,
-    "embedUrl": `https://www.youtube.com/embed/${v.id}`,
-    "publisher":{"@type":"Organization","name":"El Portal Gamer"},
-    "potentialAction":{"@type":"WatchAction","target":[`https://www.youtube.com/watch?v=${v.id}`]}
-  };
+  const ld = {"@context":"https://schema.org","@type":"VideoObject","name":v.title,"description":truncate(v.desc,220),"thumbnailUrl":[v.thumb],"uploadDate":v.date,"embedUrl":`https://www.youtube.com/embed/${v.id}`,"publisher":{"@type":"Organization","name":"El Portal Gamer"},"potentialAction":{"@type":"WatchAction","target":[`https://www.youtube.com/watch?v=${v.id}`]}};
   let s = document.getElementById("ld-video"); if (s) s.remove();
   s = document.createElement("script"); s.type="application/ld+json"; s.id="ld-video";
   s.textContent = JSON.stringify(ld); document.head.appendChild(s);
@@ -377,25 +397,6 @@ async function loadPlaylist(){
 const DEFAULT_NEWS_IMAGE = "og.jpg";
 const NEWS_SHOW_SOURCE = false;
 
-function upsizeBloggerImage(url, size = 1200){
-  if(!url) return "";
-  if(!/googleusercontent\.com|blogspot\.com|ggpht\.com|lh\d+\.googleusercontent\.com/i.test(url)) return url;
-  return url
-    .replace(/\/s\d+(?:-[a-z]){0,3}\//i, `/s${size}/`)
-    .replace(/=s\d+(?:-[a-z]){0,3}/i, `=s${size}`)
-    .replace(/\/w\d+-h\d+(?:-c)?\//i, `/s${size}/`)
-    .replace(/=w\d+-h\d+(?:-c)?/i, `=s${size}`);
-}
-function extractImgFromHtml(html){
-  const m = (html||"").match(/<img[^>]+src=["']([^"']+)["']/i);
-  return m ? m[1] : "";
-}
-function timeAgo(iso){
-  const d = new Date(iso); const diff = (Date.now() - d.getTime())/1000;
-  const units = [[31536000,'a'],[2592000,'m'],[604800,'sem'],[86400,'d'],[3600,'h'],[60,'min']];
-  for(const [s,n] of units){ if(diff>=s) return `${Math.floor(diff/s)} ${n}`; }
-  return 'ahora';
-}
 function parseSummaryFeed(data){
   const entries = data?.feed?.entry || [];
   return entries.map(e => {
@@ -415,6 +416,7 @@ function parseSummaryFeed(data){
     return { title, url: link, date, summary: textOnly, image, source, id };
   });
 }
+
 function renderNews(items){
   const grid = $("#news-grid"); grid.innerHTML = "";
   items.forEach(n => {
@@ -426,20 +428,21 @@ function renderNews(items){
       ? `news.html?id=${encodeURIComponent(n.id)}`
       : (n.url ? `news.html?url=${encodeURIComponent(n.url)}` : `news.html`);
 
-    const imgTag = n.image ? `
-      <img loading="lazy" src="${n.image}"
-           srcset="${upsizeBloggerImage(n.image,600)} 600w,
-                   ${upsizeBloggerImage(n.image,900)} 900w,
-                   ${upsizeBloggerImage(n.image,1200)} 1200w"
-           sizes="(min-width: 900px) 33vw, 90vw"
-           alt="">
-    ` : "";
+    // Imagen (opción: forzar HD)
+    const img1200 = upsizeBloggerImage(n.image, 1200);
+    const img = FORCE_HD_IMAGES
+      ? `<img loading="lazy" decoding="async" src="${img1200}" alt="">`
+      : `<img loading="lazy" decoding="async" src="${img1200}"
+             srcset="${upsizeBloggerImage(img1200,600)} 600w,
+                     ${upsizeBloggerImage(img1200,900)} 900w,
+                     ${upsizeBloggerImage(img1200,1200)} 1200w"
+             sizes="(min-width:1024px) 340px, (min-width:640px) 45vw, 90vw" alt="">`;
 
     card.innerHTML = `
-      <div class="news-thumb">${imgTag}</div>
+      <div class="news-thumb">${img}</div>
       <div class="news-meta">
         <span class="badge">Noticia</span>
-        ${n.source ? `<span>${n.source}</span> • ` : ""}<span>${timeAgo(n.date)}</span>
+        ${n.source ? `<span>${n.source}</span> • ` : ""}<span>${new Date(n.date).toLocaleDateString()}</span>
       </div>
       <div class="title">${n.title}</div>
       <p class="desc">${truncate(n.summary, 220)}</p>
@@ -476,6 +479,7 @@ async function loadNews(){
     if (!items.length) throw new Error("Sin entradas");
     renderNews(items);
   }catch(e){
+    // fallback a /news.json
     try{
       const res = await fetch('news.json', {cache:'no-store'});
       const items = await res.json();
