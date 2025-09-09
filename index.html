@@ -5,9 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>El Portal Gamer — Reseñas y retro</title>
 
+  <!-- Canonical + Favicon -->
   <link rel="canonical" href="https://www.elportalgamer.com/" />
   <link rel="icon" type="image/png" href="mago.png" />
 
+  <!-- Open Graph / Twitter -->
   <meta name="description" content="Reseñas sinceras, retro y rarezas: PS1, PS2, Dreamcast, JRPG y survival horror. Videos y reseñas en El Portal Gamer." />
   <meta property="og:title" content="El Portal Gamer — Reseñas y retro" />
   <meta property="og:description" content="Reseñas sinceras, retro y rarezas: PS1, PS2, Dreamcast, JRPG y survival horror." />
@@ -20,73 +22,86 @@
   <meta name="twitter:image" content="https://www.elportalgamer.com/og.jpg" />
 
   <style>
-    :root{ --bg:#121212; --surface:#1f1f1f; --text:#f0f0f0; --muted:#b5b5b5; --brand:#ff4500; --card:#171717; --radius:14px;}
+    :root{
+      --bg:#121212; --surface:#1f1f1f; --text:#f0f0f0; --muted:#b5b5b5; --brand:#ff4500; --card:#171717;
+      --radius:14px;
+    }
     *{box-sizing:border-box}
-    body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Ubuntu,"Helvetica Neue",Arial;background:var(--bg);color:var(--text)}
-    header{position:sticky;top:0;z-index:5;background:#161616;border-bottom:1px solid #242424}
-    .nav{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:16px;padding:12px 16px}
-    .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.25rem;color:var(--brand)}
-    .brand img{height:34px;border-radius:6px}
-    .nav a{color:#eaeaea;text-decoration:none;opacity:.9;padding:6px 8px;border-radius:10px}
-    .nav a:hover{opacity:1;background:#1b1b1b}
+    body{ margin:0; font-family:system-ui,-apple-system,"Segoe UI",Roboto,Ubuntu,"Helvetica Neue",Arial; background:var(--bg); color:var(--text); }
+    header{ position:sticky; top:0; z-index:5; background:#161616; border-bottom:1px solid #242424; }
+    .nav{ max-width:1100px; margin:0 auto; display:flex; align-items:center; gap:16px; padding:12px 16px; }
+    .brand{ display:flex; align-items:center; gap:10px; font-weight:800; font-size:1.25rem; color:var(--brand)}
+    .brand img{height:34px;width:auto;border-radius:6px}
+    .nav a{color:#eaeaea;text-decoration:none;opacity:.9; padding:6px 8px; border-radius:10px}
+    .nav a:hover{opacity:1; background:#1b1b1b}
     .spacer{flex:1}
-    .search{width:320px;max-width:55vw;padding:10px 12px;border-radius:10px;border:1px solid #2a2a2a;background:#0f0f0f;color:#fff}
+    .search{width:320px; max-width:55vw; padding:10px 12px; border-radius:10px; border:1px solid #2a2a2a; background:#0f0f0f; color:#fff}
 
-    main{max-width:1100px;margin:20px auto;padding:0 16px}
+    main{max-width:1100px; margin:20px auto; padding:0 16px}
     section{margin:24px 0}
-    h2{margin:0 0 12px;font-size:1.25rem}
-    .grid{display:grid;gap:16px}
+    h2{margin:0 0 12px; font-size:1.25rem}
+    .sub{color:var(--muted); font-size:.95rem; margin:4px 0 14px}
+
+    .divider{height:8px; border-radius:999px; background:linear-gradient(90deg,#ff6a00,#ff3b00,#ff6a00); margin:18px 0}
+
+    .grid{display:grid; gap:16px}
     .grid.cols-3{grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}
     .grid.cols-2{grid-template-columns:repeat(auto-fill,minmax(360px,1fr))}
 
-    .card{background:var(--surface);border:1px solid #262626;border-radius:var(--radius);overflow:hidden}
+    .card{background:var(--surface); border:1px solid #262626; border-radius:var(--radius); overflow:hidden}
     .card.pad{padding:14px}
-    .row{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
-    .divider{height:8px;border-radius:999px;background:linear-gradient(90deg,#ff6a00,#ff3b00,#ff6a00);margin:18px 0}
+    .row{display:flex; gap:16px; align-items:center; flex-wrap:wrap}
 
-    .videobox{position:relative;width:100%;padding-top:56.25%;overflow:hidden;background:#000;border-bottom:1px solid #262626}
-    .lite-yt{position:absolute;inset:0;background-position:center;background-size:cover;cursor:pointer}
-    .lite-yt::before{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.35),rgba(0,0,0,.05))}
-    .lty-playbtn{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:72px;height:52px;border:0;border-radius:10px;background:rgba(0,0,0,.6);display:grid;place-items:center;box-shadow:0 8px 20px rgba(0,0,0,.45)}
+    /* Lite YouTube */
+    .videobox{position:relative; width:100%; padding-top:56.25%; overflow:hidden; background:#000; border-bottom:1px solid #262626}
+    .lite-yt{ position:absolute; inset:0; background-position:center; background-size:cover; cursor:pointer; }
+    .lite-yt::before{ content:""; position:absolute; inset:0; background:linear-gradient(0deg, rgba(0,0,0,.35), rgba(0,0,0,.05)); }
+    .lty-playbtn{ position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+      width:72px; height:52px; border:0; border-radius:10px; background:rgba(0,0,0,.6);
+      display:grid; place-items:center; box-shadow:0 8px 20px rgba(0,0,0,.45); }
     .lty-playbtn svg{width:28px;height:28px;fill:#fff}
-    iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+    iframe{position:absolute; inset:0; width:100%; height:100%; border:0}
 
-    .title{font-weight:700;margin:8px 0 6px;font-size:1.05rem}
-    .desc{color:#cfcfcf;font-size:.95rem;line-height:1.45;max-height:4.5em;overflow:hidden}
-    .muted{color:#bdbdbd;font-size:.9rem}
-    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 12px;border-radius:10px;border:1px solid #333;background:#151515;color:#fff;text-decoration:none}
-    .btn.brand{background:var(--brand);border-color:#ff5e1f;color:#111;font-weight:800}
-    .btn.black{background:#0e0e0e;border-color:#242424;color:#fff}
+    .title{font-weight:700; margin:8px 0 6px; font-size:1.05rem}
+    .desc{color:#cfcfcf; font-size:.95rem; line-height:1.45; max-height:4.5em; overflow:hidden}
+    .desc.expanded{max-height:600px}
+    .muted{color:#bdbdbd; font-size:.9rem}
+    .btn{ display:inline-flex; align-items:center; gap:8px; padding:10px 12px; border-radius:10px; border:1px solid #333; background:#151515; color:#fff; text-decoration:none; }
+    .btn.brand{background:var(--brand); border-color:#ff5e1f; color:#111; font-weight:800}
+    .pill{display:none}
 
     /* Noticias */
-    .n-card{background:var(--surface);border:1px solid #262626;border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;height:100%}
-    .news-thumb{position:relative;width:100%;padding-top:100%;background:#0e0e0e;overflow:hidden;border-bottom:1px solid #262626}
-    .news-thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-    .n-content{display:flex;flex-direction:column;gap:8px;padding:14px;flex:1}
-    .news-meta{display:flex;gap:10px;align-items:center;color:#cfcfcf;font-size:.9rem}
-    .badge{font-size:.75rem;border:1px solid #333;padding:4px 8px;border-radius:999px;color:#ffcfbd;background:#1b0f0a}
-    .n-actions{margin-top:auto;display:flex;gap:10px;justify-content:center}
+    .news-card{display:flex; flex-direction:column; background:var(--surface); border:1px solid #262626; border-radius:var(--radius); overflow:hidden}
+    .news-thumb{position:relative; width:100%; aspect-ratio:1/1; background:#0e0e0e; overflow:hidden; border-bottom:1px solid #262626}
+    .news-thumb img{width:100%; height:100%; object-fit:cover; display:block; image-rendering:auto}
+    .news-body{padding:14px; display:flex; flex-direction:column; gap:8px; flex:1}
+    .news-meta{display:flex; gap:10px; align-items:center; color:#cfcfcf; font-size:.9rem}
+    .badge{font-size:.75rem; border:1px solid #333; padding:4px 8px; border-radius:999px; color:#ffcfbd; background:#1b0f0a}
+    .news-actions{display:flex; gap:10px; justify-content:center; margin-top:auto}
+    .btn-share{background:#151515; border:1px solid #333; color:#fff}
 
     /* Redes */
-    .socials{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
-    .soc-card{background:#1a1a1a;border:1px solid #2a2a2a;padding:14px;border-radius:14px;display:flex;align-items:center;gap:12px}
+    .socials{display:grid; gap:16px; grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+    .soc-card{background:#1a1a1a; border:1px solid #2a2a2a; padding:14px; border-radius:14px; display:flex; align-items:center; gap:12px}
     .soc-card svg{width:22px;height:22px;flex:0 0 auto}
 
     /* Contacto */
-    label{display:block;margin:8px 0 12px;font-size:.95rem}
-    input,textarea{width:100%;padding:10px 12px;border-radius:10px;border:1px solid #2a2a2a;background:#0f0f0f;color:#fff}
-    input:focus,textarea:focus{outline:2px solid var(--brand);outline-offset:2px}
-    .form-grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
-    button.btn{cursor:pointer}
-    #form-result{margin-top:10px}
+    label { display:block; margin:8px 0 12px; font-size:.95rem; }
+    input, textarea { width:100%; padding:10px 12px; border-radius:10px; border:1px solid #2a2a2a; background:#0f0f0f; color:#fff; }
+    input:focus, textarea:focus { outline:2px solid var(--brand); outline-offset:2px; }
+    .form-grid { display:grid; gap:12px; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); }
+    button.btn { cursor:pointer; }
+    #form-result { margin-top:10px; }
 
-    footer{margin:40px 0 20px;color:#9b9b9b;text-align:center}
-    @media (max-width:560px){.search{width:100%}.nav{flex-wrap:wrap}}
+    /* ==== Apóyanos (explicación) ==== */
+    .support-note{ margin-top:12px; background:#141414; border:1px solid #2a2a2a; border-radius:12px; padding:12px; }
+    .support-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin-top:10px; }
+    .support-item{ display:flex; gap:10px; align-items:flex-start; background:#111; border:1px solid #262626; border-radius:10px; padding:10px 12px; }
+    .support-item .emoji{ font-size:20px; line-height:1; }
+    .support-note .small{ font-size:.9rem; color:#b5b5b5; }
 
-    /* Popover compartir */
-    .share-pop{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:#1a1a1a;border:1px solid #333;padding:10px 12px;border-radius:12px;display:none;gap:8px;z-index:50;box-shadow:0 10px 24px rgba(0,0,0,.35)}
-    .share-pop.show{display:flex;flex-wrap:wrap;justify-content:center}
-    .share-pop a,.share-pop button{border:1px solid #333;background:#0e0e0e;color:#fff;border-radius:10px;padding:8px 10px;text-decoration:none}
+    footer{margin:40px 0 20px; color:#9b9b9b; text-align:center}
+    @media (max-width:560px){ .search{width:100%} .nav{flex-wrap:wrap} }
   </style>
 </head>
 <body>
@@ -106,7 +121,7 @@
 </header>
 
 <main>
-  <!-- Último video -->
+  <!-- Último Video -->
   <section id="ultimo">
     <h2>Último video</h2>
     <div class="card">
@@ -128,7 +143,9 @@
   <!-- Noticias -->
   <section id="news">
     <h2>Noticias</h2>
-    <div class="grid cols-3" id="news-grid"><div class="muted">Cargando noticias…</div></div>
+    <div class="grid cols-3" id="news-grid">
+      <div class="muted">Cargando noticias…</div>
+    </div>
   </section>
 
   <div class="divider" aria-hidden="true"></div>
@@ -149,19 +166,61 @@
 
   <div class="divider" aria-hidden="true"></div>
 
-  <!-- Apóyanos -->
+  <!-- Apóyanos (con explicación) -->
   <section id="apoya">
     <h2>Apóyanos</h2>
     <div class="card pad">
       <div class="row">
-        <a class="btn brand" href="https://ko-fi.com/portalgamer" target="_blank" rel="noopener">☕ Invítame un café</a>
-        <a class="btn" href="https://www.instant-gaming.com/es/?igr=portalgamerx" target="_blank" rel="noopener">🎮 Ver Juegos en Oferta</a>
-        <a class="btn" href="https://www.amazon.com/shop/viajealodesconocido" target="_blank" rel="noopener">🛒 Amazon</a>
+        <a class="btn brand" href="https://ko-fi.com/portalgamer" target="_blank" rel="noopener" title="Ko-fi: donación directa">
+          ☕ Invítame un café
+        </a>
+        <a class="btn" href="https://www.instant-gaming.com/es/?igr=portalgamerx" target="_blank" rel="noopener" title="Enlace afiliado: ofertas de juegos">
+          🎮 Ver Juegos en Oferta
+        </a>
+        <a class="btn" href="https://www.amazon.com/shop/viajealodesconocido" target="_blank" rel="noopener" title="Enlace afiliado de Amazon">
+          🛒 Amazon
+        </a>
+      </div>
+
+      <div class="support-note">
+        <p><strong>¿Por qué es importante tu apoyo?</strong> Ayuda a sostener el canal y el sitio:
+          tiempo de investigación y edición, compra de juegos para reseñar, herramientas, música/licencias y equipamiento.
+          <br>Tu aporte mantiene vivo el proyecto y permite subir contenido con más frecuencia y calidad.
+        </p>
+
+        <div class="support-grid">
+          <div class="support-item">
+            <span class="emoji">☕</span>
+            <div>
+              <strong>Ko-fi (donación directa)</strong><br>
+              Nos invitás un café y va 100% a producción. Ideal si querés apoyar una vez o de forma puntual.
+            </div>
+          </div>
+
+          <div class="support-item">
+            <span class="emoji">🎮</span>
+            <div>
+              <strong>Juegos en Oferta (afiliado)</strong><br>
+              Si comprás desde ese enlace recibimos una comisión <em>sin costo extra para vos</em>. Es una forma genial de apoyar mientras conseguís descuentos.
+            </div>
+          </div>
+
+          <div class="support-item">
+            <span class="emoji">🛒</span>
+            <div>
+              <strong>Amazon (afiliado)</strong><br>
+              Igual que arriba: si terminás comprando algo, Amazon comparte una pequeña comisión con el canal.
+            </div>
+          </div>
+        </div>
+
+        <p class="small">
+          <strong>Transparencia:</strong> marcamos los enlaces de afiliado y nunca pagás de más. ¡Gracias por bancar el contenido! 💙
+        </p>
       </div>
     </div>
+    <div class="divider" aria-hidden="true"></div>
   </section>
-
-  <div class="divider" aria-hidden="true"></div>
 
   <!-- Redes -->
   <section id="redes">
@@ -172,7 +231,7 @@
         <span>Facebook</span>
       </a>
       <a class="soc-card" href="https://www.instagram.com/elportalgamerx" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M12 2.2c3.2 0 3.58.01 4.85.07 1.17.05 1.95.24 2.4.4.6.23 1.03.5 1.48.95.45.45.72.88.95 1.48.16.45.35 1.23.4 2.4.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.24 1.95-.4 2.4-.23.6-.5 1.03-.95 1.48-.45.45-.88.72-1.48.95-.45.16-1.23.35-2.4.4-1.27.06-1.65.07-4.85.07s-3.53-.01-4.85-.07Zm0 3.2a6.8 6.8 0 1 1 0 13.6 6.8 6.8 0 0 1 0-13.6Zm6.9-2.02a1.6 1.6 0 1 1-3.2 0 1.6 1.6 0 0 1 3.2 0Z"/></svg>
+        <svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M12 2.2c3.2 0 3.58.01 4.85.07 1.17.05 1.95.24 2.4.4.6.23 1.03.5 1.48.95.45.45.72.88.95 1.48.16.45.35 1.23.4 2.4.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.24 1.95-.4 2.4-.23.6-.5 1.03-.95 1.48-.45.45-.88.72-1.48.95-.45.16-1.23.35-2.4.4-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-.96-.05-1.48-.24-2.4-.4-.46-.18-.8-.39-1.15-.74-.35-.35-.56-.69-.74-1.15-.13-.34-.29-.86-.33-1.82-.06-1.25-.07-1.62-.07-4.78s.01-3.53.07-4.78c.04-.96.2-1.48.33-1.82.18-.46.39-.8.74-1.15.35-.35.69-.56 1.15-.74.34-.13.86-.29 1.82-.33 1.25-.06 1.62-.07 4.78-.07Zm0 5a5 5 0 1 0 0 10 5 5 0 0 0 0-10Zm6.9-2.02a1.6 1.6 0 1 1-3.2 0 1.6 1.6 0 0 1 3.2 0Z"/></svg>
         <span>Instagram</span>
       </a>
       <a class="soc-card" href="https://www.twitch.tv/soypaulangel" target="_blank" rel="noopener">
@@ -190,13 +249,26 @@
     <div class="card pad">
       <form id="contact-form" action="https://formspree.io/f/mjkejwvg" method="POST" novalidate>
         <div class="form-grid">
-          <label>Nombre <input type="text" name="name" placeholder="Tu nombre" required></label>
-          <label>Email <input type="email" name="_replyto" placeholder="tu@email.com" required></label>
+          <label>Nombre
+            <input type="text" name="name" placeholder="Tu nombre" required>
+          </label>
+          <label>Email
+            <input type="email" name="_replyto" placeholder="tu@email.com" required>
+          </label>
         </div>
-        <label>Asunto <input type="text" name="subject" placeholder="Propuesta, sugerencia, colaboración…"></label>
-        <label>Mensaje <textarea name="message" rows="6" placeholder="Contame en qué te puedo ayudar" required></textarea></label>
+        <label>Asunto
+          <input type="text" name="subject" placeholder="Propuesta, sugerencia, colaboración…">
+        </label>
+        <label>Mensaje
+          <textarea name="message" rows="6" placeholder="Contame en qué te puedo ayudar" required></textarea>
+        </label>
+
         <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
-        <div class="row"><button type="submit" class="btn brand">📨 Enviar</button></div>
+
+        <div class="row">
+          <button type="submit" class="btn brand">📨 Enviar</button>
+        </div>
+
         <p id="form-result" class="muted" aria-live="polite"></p>
       </form>
     </div>
@@ -205,231 +277,351 @@
 
 <footer>© 2025 El Portal Gamer</footer>
 
-<!-- Popover compartir -->
-<div id="share-pop" class="share-pop" role="dialog" aria-modal="true" aria-hidden="true"></div>
+<!-- JSON-LD del sitio -->
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"WebSite",
+  "name":"El Portal Gamer",
+  "url":"https://www.elportalgamer.com/",
+  "potentialAction":{
+    "@type":"SearchAction",
+    "target":"https://www.elportalgamer.com/?q={search_term_string}",
+    "query-input":"required name=search_term_string"
+  }
+}
+</script>
 
 <script defer>
-/* ====== Config ====== */
-const API_KEY="AIzaSyCqPlM0Ab3-_mtFHPmrrgJTS1S4dBCbbMA";
-const PLAYLIST_ID="PLk3cei5OOiyvTQzg5FGgIRY3xs44F7Wzv";
-const MAX_RESULTS=20;
+/** ================================
+ *  CONFIG
+ *  ================================ */
+const API_KEY = "AIzaSyCqPlM0Ab3-_mtFHPmrrgJTS1S4dBCbbMA";
+const PLAYLIST_ID = "PLk3cei5OOiyvTQzg5FGgIRY3xs44F7Wzv";
+const MAX_RESULTS = 20;
 
-const BLOGGER_FEED_HTTPS="https://portalgamerok.blogspot.com/feeds/posts/summary?alt=json&max-results=6&orderby=published";
-const JINA="https://r.jina.ai";
-const ALLO="https://api.allorigins.win/raw";
+/** Blogger feed (6 noticias) con múltiples rutas + fallback a /news.json */
+const BLOGGER_FEED_HTTPS = "https://portalgamerok.blogspot.com/feeds/posts/summary?alt=json&max-results=6&orderby=published";
+const JINA = "https://r.jina.ai";
+const ALLO = "https://api.allorigins.win/raw";
 
-const $=(s,p=document)=>p.querySelector(s);
-const $$=(s,p=document)=>[...p.querySelectorAll(s)];
-const truncate=(str,n)=> (str||"").length>n ? str.slice(0,n).replace(/\s+\S*$/,'')+"…" : str;
-const words=(x)=>(x||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
+/** Helpers */
+const $ = (s, p=document) => p.querySelector(s);
+const $$ = (s, p=document) => [...p.querySelectorAll(s)];
+const truncate = (str, n) => (str||"").length>n ? str.slice(0,n).replace(/\s+\S*$/,'')+"…" : str;
+const words = (x)=> (x||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
 
-/* ===== Limpiador YT ===== */
+/* ===== Limpiador de descripción YouTube ===== */
 function cleanYtDesc(s){
-  if(!s) return '';
-  let t=s.replace(/\r/g,'').replace(/\u00A0/g,' ').replace(/[\u200B-\u200D\uFEFF]/g,'').normalize('NFKC');
-  const hard=/(▬{2,}|─{3,}|—{3,}|━{3,}|═{3,}|_{3,}|-{3,}|=+|\*{3,}|#{3,}|[■□▪▫◆◇●○◼◻◾◽]{3,}|[\u2500-\u259F]{3,})/u;
-  const m=t.match(hard); if(m) t=t.slice(0,m.index);
-  const sep=/^([^\p{L}\p{N}]{4,}|[-=_*#~•·\u25A0-\u25FF\u2500-\u259F\s]+)$/u;
-  const footer=/(apoya(nos)?|apoyá|sígueme|redes|contacto|patreon|ko-?fi|discord|instagram|twitter|twitch|facebook|instant-?gaming|amazon|suscríbete|subscribe)/i;
-  const out=[];
-  for(const raw of t.split('\n')){
-    const line=raw.trim(); if(!line) continue;
-    if(sep.test(line)||footer.test(line)) break;
-    if(/^https?:\/\//i.test(line)) continue;
-    out.push(line); if(out.join(' ').length>1200) break;
-  }
-  return out.join('\n').trim();
+  if (!s) return '';
+  let t = s.normalize('NFKC').replace(/\r/g,'').replace(/[\u200B-\u200D\uFEFF]/g,'');
+  const sep = /([▬─—━═\-_=*#]|[\u2500-\u259F])\1{2,}/;
+  let i = t.search(sep);
+  if (i === -1) i = t.indexOf('▬▬');
+  if (i > -1) t = t.slice(0, i);
+  const footer = /(apoya(nos)?|sígueme|redes|contacto|patreon|ko-?fi|discord|instagram|twitter|twitch|facebook|insta-?gaming|instant-?gaming|amazon)/i;
+  const j = t.search(footer);
+  if (j > -1) t = t.slice(0, j);
+  t = t.split('\n').map(x=>x.trim()).filter(x=>x && !/^https?:\/\//i.test(x)).join('\n');
+  return t.replace(/\n{2,}/g,'\n').trim();
 }
 
-/* ===== Anti-pixelado Blogger ===== */
-function bloggerToOriginal(u){ if(!u) return ''; return u.replace(/\/s\d+[^/]*\//,'/s0/').replace(/=s\d+[^&?]*/,'=s0');}
-function bloggerFromOriginalSet(u,size){ if(!u) return ''; return u.replace('/s0/','/s'+size+'/').replace('=s0','=s'+size);}
-
-/* ===== YouTube ===== */
+/** ====== YOUTUBE ====== */
 function renderUltimo(v){
-  const box=$("#ultimo-lite"); box.className="videobox";
-  const lite=document.createElement("div");
-  lite.className="lite-yt"; lite.style.backgroundImage=`url(${v.thumb})`;
-  lite.innerHTML=`<button class="lty-playbtn" aria-label="Reproducir ${v.title}">
-    <svg viewBox="0 0 68 48"><path d="M66.52 7.02a8 8 0 0 0-5.64-5.66C56.8 0 34 0 34 0S11.2 0 7.12 1.36A8 8 0 0 0 1.48 7.02 83.3 83.3 0 0 0 0 24a83.3 83.3 0 0 0 1.48 16.98 8 8 0 0 0 5.64 5.66C11.2 48 34 48 34 48s22.8 0 26.88-1.36a8 8 0 0 0 5.64-5.66A83.3 83.3 0 0 0 68 24a83.3 83.3 0 0 0-1.48-16.98zM27 34V14l18 10-18 10z"/></svg>
-  </button>`;
-  lite.addEventListener("click",()=>{ box.innerHTML=`<iframe src="https://www.youtube.com/embed/${v.id}?autoplay=1" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="${v.title}"></iframe>`;});
+  const box = $("#ultimo-lite");
+  box.className = "videobox";
+  const lite = document.createElement("div");
+  lite.className = "lite-yt";
+  lite.style.backgroundImage = `url(${v.thumb})`;
+  lite.innerHTML = `
+    <button class="lty-playbtn" aria-label="Reproducir ${v.title}">
+      <svg viewBox="0 0 68 48"><path d="M66.52 7.02a8 8 0 0 0-5.64-5.66C56.8 0 34 0 34 0S11.2 0 7.12 1.36A8 8 0 0 0 1.48 7.02 83.3 83.3 0 0 0 0 24a83.3 83.3 0 0 0 1.48 16.98 8 8 0 0 0 5.64 5.66C11.2 48 34 48 34 48s22.8 0 26.88-1.36a8 8 0 0 0 5.64-5.66A83.3 83.3 0 0 0 68 24a83.3 83.3 0 0 0-1.48-16.98zM27 34V14l18 10-18 10z"/></svg>
+    </button>`;
+  lite.addEventListener("click", ()=>{
+    box.innerHTML = `<iframe src="https://www.youtube.com/embed/${v.id}?autoplay=1" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="${v.title}"></iframe>`;
+  });
   box.appendChild(lite);
-  $("#ultimo-titulo").textContent=v.title;
-  $("#ultimo-fecha").textContent=new Date(v.date).toLocaleDateString();
-  $("#ultimo-desc").textContent=truncate(v.desc,420);
-  $("#ultimo-ver").href=`https://www.youtube.com/watch?v=${v.id}`;
+
+  $("#ultimo-titulo").textContent = v.title;
+  $("#ultimo-fecha").textContent = new Date(v.date).toLocaleDateString();
+  $("#ultimo-desc").textContent = truncate(cleanYtDesc(v.desc), 420);
+  $("#ultimo-ver").href = `https://www.youtube.com/watch?v=${v.id}`;
+
+  // JSON-LD del último video
+  const ld = {
+    "@context":"https://schema.org","@type":"VideoObject",
+    "name": v.title,"description": truncate(cleanYtDesc(v.desc), 220),
+    "thumbnailUrl":[v.thumb],"uploadDate": v.date,
+    "embedUrl": `https://www.youtube.com/embed/${v.id}`,
+    "publisher":{"@type":"Organization","name":"El Portal Gamer"},
+    "potentialAction":{"@type":"WatchAction","target":[`https://www.youtube.com/watch?v=${v.id}`]}
+  };
+  let s = document.getElementById("ld-video"); if (s) s.remove();
+  s = document.createElement("script"); s.type="application/ld+json"; s.id="ld-video";
+  s.textContent = JSON.stringify(ld); document.head.appendChild(s);
 }
+
 function makeMiniCard(v){
-  const el=document.createElement("article");
-  el.className="card pad filterable"; el.dataset.title=v.title; el.dataset.desc=v.desc;
-  el.innerHTML=`<div class="videobox"><div class="lite-yt" style="background-image:url(${v.thumb})">
-      <button class="lty-playbtn" aria-label="Reproducir ${v.title}">
-      <svg viewBox="0 0 68 48"><path d="M66.52 7.02a8 8 0 0 0-5.64-5.66C56.8 0 34 0 34 0S11.2 0 7.12 1.36A8 8 0 0 0 1.48 7.02 83.3 83.3 0 0 0 0 24a83.3 83.3 0 0 0 1.48 16.98 8 8 0 0 0 5.64 5.66C11.2 48 34 48 34 48s22.8 0 26.88-1.36a8 8 0 0 0 5.64-5.66A83.3 83.3 0 0 0 68 24a83.3 83.3 0 0 0-1.48-16.98zM27 34V14l18 10-18 10z"/></svg></button></div></div>
+  const el = document.createElement("article");
+  el.className = "card pad filterable";
+  el.dataset.title = v.title; el.dataset.desc = v.desc;
+  el.innerHTML = `
+    <div class="videobox">
+      <div class="lite-yt" style="background-image:url(${v.thumb})">
+        <button class="lty-playbtn" aria-label="Reproducir ${v.title}">
+          <svg viewBox="0 0 68 48"><path d="M66.52 7.02a8 8 0 0 0-5.64-5.66C56.8 0 34 0 34 0S11.2 0 7.12 1.36A8 8 0 0 0 1.48 7.02 83.3 83.3 0 0 0 0 24a83.3 83.3 0 0 0 1.48 16.98 8 8 0 0 0 5.64 5.66C11.2 48 34 48 34 48s22.8 0 26.88-1.36a8 8 0 0 0 5.64-5.66A83.3 83.3 0 0 0 68 24a83.3 83.3 0 0 0-1.48-16.98z"/></svg>
+        </button>
+      </div>
+    </div>
     <div class="title">${v.title}</div>
-    <p class="desc">${truncate(v.desc,360)}</p>
+    <p class="desc">${truncate(cleanYtDesc(v.desc), 360)}</p>
     <a class="btn brand" href="https://www.youtube.com/watch?v=${v.id}" target="_blank" rel="noopener">▶ Ver video</a>`;
-  const thumb=el.querySelector(".videobox");
-  thumb.addEventListener("click",()=>{ thumb.innerHTML=`<iframe src="https://www.youtube.com/embed/${v.id}?autoplay=1" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="${v.title}"></iframe>`;});
+  const thumb = el.querySelector(".videobox");
+  thumb.addEventListener("click", ()=>{
+    thumb.innerHTML = `<iframe src="https://www.youtube.com/embed/${v.id}?autoplay=1" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="${v.title}"></iframe>`;
+  });
   return el;
 }
-function renderMini(arr){ const grid=$("#mini-grid"); grid.innerHTML=""; arr.forEach(v=>grid.appendChild(makeMiniCard(v))); }
+
+function renderMini(arr){ const grid = $("#mini-grid"); grid.innerHTML = ""; arr.forEach(v => grid.appendChild(makeMiniCard(v))); }
+
 function renderSeries(items){
-  const SERIES={ "Saga Parasite Eve":["parasite eve","koudelka"], "Survival Horror PS1/PS2":["resident evil","silent hill","dino crisis","fear effect","rule of rose","haunting ground"], "JRPG & Square":["final fantasy","chrono","xenogears","vagrant story","valkyrie profile"] };
-  const grid=$("#series-grid"); grid.innerHTML="";
-  for(const [name,keys] of Object.entries(SERIES)){
-    const hits=items.filter(v=>keys.some(k=>words(v.title).includes(k))); if(!hits.length) continue;
-    const top=hits.slice(0,3);
-    const el=document.createElement("article");
-    el.className="card pad filterable"; el.dataset.title=name; el.dataset.desc=top.map(x=>x.title).join(" ");
-    el.innerHTML=`<div class="title">${name}</div><p class="muted" style="margin-top:-2px">${top.length} videos</p>
+  const SERIES_KEYWORDS = {
+    "Saga Parasite Eve": ["parasite eve","parasite-eve","koudelka"],
+    "Survival Horror PS1/PS2": ["resident evil","silent hill","dino crisis","fear effect","rule of rose","haunting ground"],
+    "JRPG & Square": ["final fantasy","chrono","xenogears","vagrant story","valkyrie profile"]
+  };
+  const grid = $("#series-grid"); grid.innerHTML = "";
+  for(const [name,keys] of Object.entries(SERIES_KEYWORDS)){
+    const hits = items.filter(v => keys.some(k => words(v.title).includes(k))); if(!hits.length) continue;
+    const top = hits.slice(0,3);
+    const el = document.createElement("article");
+    el.className = "card pad filterable";
+    el.dataset.title = name; el.dataset.desc = top.map(x=>x.title).join(" ");
+    el.innerHTML = `<div class="title">${name}</div>
+      <p class="muted" style="margin-top:-2px">${top.length} videos</p>
       <div class="grid cols-3" style="margin-top:8px">
         ${top.map(v=>`<a class="btn" href="https://www.youtube.com/watch?v=${v.id}" target="_blank" rel="noopener">▶ ${truncate(v.title,38)}</a>`).join("")}
       </div>`;
     grid.appendChild(el);
   }
 }
+
 async function loadPlaylist(){
   try{
-    const url=`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${PLAYLIST_ID}&maxResults=${MAX_RESULTS}&key=${API_KEY}`;
-    const r=await fetch(url); const data=await r.json(); if(!data.items) throw new Error("YouTube sin items");
-    const items=data.items.map(i=>({ id:i.snippet.resourceId.videoId, title:i.snippet.title, desc:cleanYtDesc(i.snippet.description||""), date:i.snippet.publishedAt, thumb:(i.snippet.thumbnails?.maxres?.url||i.snippet.thumbnails?.high?.url||i.snippet.thumbnails?.medium?.url||"") }));
-    renderUltimo(items[0]); renderMini(items.slice(1,10)); renderSeries(items);
-    const inp=$("#buscador"); inp.addEventListener("input",()=>{ const q=words(inp.value); for(const card of $$(".filterable")){ const hay=words(card.dataset.title+" "+(card.dataset.desc||"")).includes(q); card.style.display=(!q||hay)?"":"none"; }});
-  }catch(e){ console.error("YouTube:",e); $("#ultimo-titulo").textContent="No se pudo cargar la playlist"; $("#ultimo-fecha").textContent=""; $("#ultimo-desc").textContent="Probá más tarde o visitá el canal."; $("#ultimo-ver").href="https://www.youtube.com/@TuCanal/videos"; }
+    const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${PLAYLIST_ID}&maxResults=${MAX_RESULTS}&key=${API_KEY}`;
+    const r = await fetch(url);
+    const data = await r.json();
+    if(!data.items){ throw new Error("YouTube sin items"); }
+    const items = data.items.map(i => ({
+      id: i.snippet.resourceId.videoId,
+      title: i.snippet.title,
+      desc: i.snippet.description,
+      date: i.snippet.publishedAt,
+      thumb: (i.snippet.thumbnails?.maxres?.url || i.snippet.thumbnails?.high?.url || i.snippet.thumbnails?.medium?.url || "")
+    }));
+
+    renderUltimo(items[0]);
+    renderMini(items.slice(1, 10));
+    renderSeries(items);
+
+    const inp = $("#buscador");
+    inp.addEventListener("input", ()=>{
+      const q = words(inp.value);
+      for(const card of $$(".filterable")){
+        const hay = words(card.dataset.title + " " + (card.dataset.desc||"")).includes(q);
+        card.style.display = (!q || hay) ? "" : "none";
+      }
+    });
+  }catch(e){
+    console.error("YouTube:", e);
+    $("#ultimo-titulo").textContent = "No se pudo cargar la playlist";
+    $("#ultimo-fecha").textContent = "";
+    $("#ultimo-desc").textContent = "Probá más tarde o visitá el canal.";
+    $("#ultimo-ver").href = "https://www.youtube.com/@TuCanal/videos";
+  }
 }
 
-/* ===== Noticias ===== */
-function timeAgo(iso){ const d=new Date(iso); const diff=(Date.now()-d.getTime())/1000; const u=[[31536000,'a'],[2592000,'m'],[604800,'sem'],[86400,'d'],[3600,'h'],[60,'min']]; for(const [s,n] of u){ if(diff>=s) return `${Math.floor(diff/s)} ${n}`;} return 'ahora'; }
-function extractImgFromHtml(html){ const m=(html||"").match(/<img[^>]+src=["']([^"']+)["']/i); return m?m[1]:""; }
-function newsHref(n){
-  const base=new URL('news.html', location.origin);
-  if(n.id) base.searchParams.set('id', n.id);
-  else if(n.url) base.searchParams.set('u', n.url);
-  return base.toString();
+/** ====== NOTICIAS (Blogger robusto) ====== */
+const DEFAULT_NEWS_IMAGE = "og.jpg";
+const NEWS_SHOW_SOURCE = false;
+
+/* Forzar alta resolución para URLs de Blogger */
+function upsizeBloggerImage(url, size = 1200){
+  if(!url) return "";
+  let u = url;
+  u = u.replace(/\/s\d+(-c)?\//, `/s${size}/`)
+       .replace(/=s\d+(-c)?/, `=s${size}`)
+       .replace(/\/w\d+-h\d+(-c)?\//, `/w${size}-h${size}-c/`)
+       .replace(/\/s72(-c)?\//, `/s${size}/`);
+  return u;
 }
+
+function extractImgFromHtml(html){
+  const m = (html||"").match(/<img[^>]+src=["']([^"']+)["']/i);
+  return m ? m[1] : "";
+}
+
+function timeAgo(iso){
+  const d = new Date(iso); const diff = (Date.now() - d.getTime())/1000;
+  const units = [[31536000,'a'],[2592000,'m'],[604800,'sem'],[86400,'d'],[3600,'h'],[60,'min']];
+  for(const [s,n] of units){ if(diff>=s) return `${Math.floor(diff/s)} ${n}`; }
+  return 'ahora';
+}
+
 function parseBloggerJson(data){
-  const entries=data?.feed?.entry||[];
-  return entries.map(e=>{
-    const raw=e.summary?.$t||e.content?.$t||"";
-    const text=raw.replace(/<[^>]+>/g," ").replace(/\s+/g,' ').trim();
-    const title=(e.title?.$t||"").trim() || (text?text.split(/\s+/).slice(0,12).join(" ")+"…":"Sin título");
-    const link=(e.link||[]).find(l=>l.rel==='alternate')?.href || '';
-    const date=e.published?.$t || e.updated?.$t || new Date().toISOString();
-    const tRaw=e['media$thumbnail']?.url || extractImgFromHtml(raw) || "";
-    const s0=bloggerToOriginal(tRaw);
-    const id=(e.id?.$t||"").split("post-").pop();
-    return { title, url:link, date, summary:text, image0:s0, id };
+  const entries = data?.feed?.entry || [];
+  return entries.map(e => {
+    const rawHtml = e.summary?.$t || e.content?.$t || "";
+    const textOnly = rawHtml.replace(/<[^>]+>/g, " ").replace(/\s+/g,' ').trim();
+    const titleRaw = (e.title?.$t || "").trim();
+    const title = titleRaw || (textOnly ? textOnly.split(/\s+/).slice(0,12).join(" ") + "…" : "Sin título");
+    const link  = (e.link || []).find(l=>l.rel==='alternate')?.href || '#';
+    const date  = e.published?.$t || e.updated?.$t || new Date().toISOString();
+    const postId = (e.id?.$t || "").split("post-").pop() || "";
+
+    const thumbRaw =
+      e['media$thumbnail']?.url ||
+      extractImgFromHtml(rawHtml) ||
+      DEFAULT_NEWS_IMAGE;
+
+    const image = upsizeBloggerImage(thumbRaw, 1200);
+    const source = NEWS_SHOW_SOURCE ? (data?.feed?.title?.$t || "El Portal Gamer") : "";
+
+    return { title, url: link, date, summary: textOnly, image, source, id: postId };
   });
 }
+
+function imgTagHD(src, alt=""){
+  const s400 = upsizeBloggerImage(src, 400);
+  const s800 = upsizeBloggerImage(src, 800);
+  const s1200 = upsizeBloggerImage(src, 1200);
+  return `
+    <img loading="lazy" decoding="async"
+         src="${s800}"
+         srcset="${s400} 400w, ${s800} 800w, ${s1200} 1200w"
+         sizes="(min-width: 900px) 33vw, 90vw"
+         alt="${alt.replace(/"/g,'&quot;')}">`;
+}
+
 function renderNews(items){
-  const grid=$("#news-grid"); grid.innerHTML="";
-  items.forEach(n=>{
-    const href=newsHref(n);
-    const src600 = bloggerFromOriginalSet(n.image0,600);
-    const src800 = bloggerFromOriginalSet(n.image0,800);
-    const src1200= bloggerFromOriginalSet(n.image0,1200);
-    const src1600= bloggerFromOriginalSet(n.image0,1600);
-    const srcBase= src1200 || src800 || src600 || n.image0 || 'og.jpg';
+  const grid = $("#news-grid"); grid.innerHTML = "";
+  items.forEach(n => {
+    const card = document.createElement('article');
+    card.className = "news-card filterable";
+    card.dataset.title = n.title; card.dataset.desc = n.summary + " " + n.source;
 
-    const card=document.createElement('article');
-    card.className="n-card filterable"; card.dataset.title=n.title; card.dataset.desc=n.summary;
-
-    const imgTag = srcBase ? `
-      <img loading="lazy" decoding="async"
-           src="${srcBase}"
-           srcset="${src600?src600:''} 600w, ${src800?src800:''} 800w, ${src1200?src1200:''} 1200w, ${src1600?src1600:''} 1600w"
-           sizes="(min-width:1200px) 30vw, (min-width:900px) 45vw, 92vw"
-           alt="">
-    ` : "";
-
-    card.innerHTML=`
-      <a class="news-thumb" data-nav="news" href="${href}" aria-label="${n.title}">${imgTag}</a>
-      <div class="n-content">
-        <div class="news-meta"><span class="badge">Noticia</span><span>${timeAgo(n.date)}</span></div>
-        <div class="title">${n.title}</div>
-        <p class="desc">${truncate(n.summary,220)}</p>
-        <div class="n-actions">
-          <a class="btn brand" data-nav="news" href="${href}">Leer</a>
-          <button class="btn black share-btn" type="button" data-url="${href}" data-title="${n.title}">Compartir</button>
+    card.innerHTML = `
+      <a class="news-thumb" href="news.html?id=${encodeURIComponent(n.id)}" aria-label="Abrir: ${n.title}">
+        ${imgTagHD(n.image, n.title)}
+      </a>
+      <div class="news-body">
+        <div class="news-meta">
+          <span class="badge">Noticia</span>
+          <span>${new Date(n.date).toLocaleDateString()}</span> • <span>${timeAgo(n.date)}</span>
         </div>
-      </div>`;
+        <div class="title">${n.title}</div>
+        <p class="desc">${truncate(n.summary, 260)}</p>
+        <div class="news-actions">
+          <a class="btn brand" href="news.html?id=${encodeURIComponent(n.id)}">📰 Leer</a>
+          <button class="btn btn-share" data-id="${n.id}" data-title="${n.title}">🔗 Compartir</button>
+        </div>
+      </div>
+    `;
     grid.appendChild(card);
   });
 
-  // Forzamos navegación segura para los links de noticia
-  document.addEventListener('click', (e)=>{
-    const a = e.target.closest('a[data-nav="news"]');
-    if(a){
-      e.preventDefault();
-      window.location.href = a.href; // navegación segura
-    }
-  }, {passive:false});
-
-  // Compartir (sheet nativo o popover)
-  const pop=$("#share-pop");
-  function showPop(url,title){
-    const u=encodeURIComponent(url), t=encodeURIComponent(title);
-    pop.innerHTML = `
-      <a target="_blank" rel="noopener" href="https://wa.me/?text=${t}%20${u}">WhatsApp</a>
-      <a target="_blank" rel="noopener" href="https://t.me/share/url?url=${u}&text=${t}">Telegram</a>
-      <a target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?url=${u}&text=${t}">X/Twitter</a>
-      <a target="_blank" rel="noopener" href="https://www.facebook.com/sharer/sharer.php?u=${u}">Facebook</a>
-      <button id="copyLink" class="btn">Copiar enlace</button>
-      <button id="closeShare" class="btn">Cerrar</button>
-    `;
-    pop.classList.add('show');
-    $("#copyLink",pop).onclick=async()=>{ await navigator.clipboard.writeText(url); $("#copyLink",pop).textContent="Copiado ✅"; };
-    $("#closeShare",pop).onclick=()=>pop.classList.remove('show');
-  }
-  document.addEventListener('click',e=>{
-    const btn=e.target.closest('.share-btn');
-    if(btn){
-      const url=btn.dataset.url, title=btn.dataset.title||'Noticia';
-      if(navigator.share){ navigator.share({title,url}).catch(()=>showPop(url,title)); }
-      else { showPop(url,title); }
-    }else if(!e.target.closest('#share-pop')){ pop.classList.remove('show'); }
+  // Share
+  grid.addEventListener('click', async (e)=>{
+    const btn = e.target.closest('.btn-share'); if(!btn) return;
+    const id = btn.dataset.id, title = btn.dataset.title;
+    const url = new URL('news.html', location.origin);
+    url.searchParams.set('id', id);
+    try{
+      if (navigator.share){
+        await navigator.share({title, url: url.toString()});
+      } else {
+        await navigator.clipboard.writeText(url.toString());
+        btn.textContent = '✅ Copiado';
+        setTimeout(()=> btn.textContent = '🔗 Compartir', 1500);
+      }
+    }catch{}
   });
 }
 
-async function fetchJson(url){ const r=await fetch(url,{cache:'no-store'}); const txt=await r.text(); try{ return JSON.parse(txt);}catch{return {};} }
+// Lee JSON aunque el servidor ponga text/plain
+async function fetchJson(url){
+  const r = await fetch(url, {cache:'no-store'});
+  const txt = await r.text();
+  try { return JSON.parse(txt); } catch { return {}; }
+}
+
 async function getBloggerData(){
-  const urls=[ `${JINA}/http://portalgamerok.blogspot.com/feeds/posts/summary?alt=json&max-results=6&orderby=published`,
-               `${JINA}/https://portalgamerok.blogspot.com/feeds/posts/summary?alt=json&max-results=6&orderby=published`,
-               `${ALLO}?url=${encodeURIComponent(BLOGGER_FEED_HTTPS)}`, BLOGGER_FEED_HTTPS ];
-  for(const u of urls){ try{ const d=await fetchJson(u); if(d?.feed?.entry?.length) return d; }catch{} }
+  const urls = [
+    `${JINA}/http://portalgamerok.blogspot.com/feeds/posts/summary?alt=json&max-results=6&orderby=published`,
+    `${JINA}/https://portalgamerok.blogspot.com/feeds/posts/summary?alt=json&max-results=6&orderby=published`,
+    `${ALLO}?url=${encodeURIComponent(BLOGGER_FEED_HTTPS)}`,
+    BLOGGER_FEED_HTTPS
+  ];
+  for (const u of urls){
+    try{
+      const data = await fetchJson(u);
+      if (data?.feed?.entry?.length) return data;
+    }catch(e){ console.debug("Feed fail:", u, e); }
+  }
   throw new Error("No se pudo obtener el feed");
 }
+
 async function loadNews(){
   try{
-    const data=await getBloggerData();
-    const items=parseBloggerJson(data);
-    if(!items.length) throw new Error("Sin entradas");
+    const data = await getBloggerData();
+    const items = parseBloggerJson(data);
+    if (!items.length) throw new Error("Sin entradas");
     renderNews(items);
   }catch(e){
+    console.warn("Blogger feed falló, usando /news.json:", e);
     try{
-      const res=await fetch('/news.json',{cache:'no-store'}); const items=await res.json();
-      const norm=(items||[]).map(n=>({ ...n, image0:bloggerToOriginal(n.image), id:n.id }));
-      if(norm.length) renderNews(norm); else throw new Error('news.json vacío');
-    }catch{ $("#news-grid").innerHTML=`<div class="muted">No se pudieron cargar las noticias.</div>`; }
+      const res = await fetch('/news.json', {cache:'no-store'});
+      const items = await res.json();
+      const fixed = (items||[]).map(n => ({
+        ...n, id: (n.url||"").split('/').pop().replace(/\.html.*$/,'')
+      }));
+      if (fixed?.length) renderNews(fixed);
+      else throw new Error('news.json vacío');
+    }catch{
+      $("#news-grid").innerHTML = `<div class="muted">No se pudieron cargar las noticias.</div>`;
+    }
   }
 }
 
-/* ===== Contacto ===== */
+/** ===== Contacto (Formspree) ===== */
 (function(){
-  const form=$("#contact-form"); if(!form) return;
-  const result=$("#form-result");
-  form.addEventListener('submit',async e=>{
-    e.preventDefault(); result.textContent='Enviando…';
+  const form = document.getElementById('contact-form');
+  if (!form) return;
+  const result = document.getElementById('form-result');
+
+  form.addEventListener('submit', async (e)=>{
+    e.preventDefault();
+    result.textContent = 'Enviando…';
     try{
-      const r=await fetch(form.action,{method:'POST',body:new FormData(form),headers:{'Accept':'application/json'}});
-      if(r.ok){ result.textContent='¡Mensaje enviado!'; form.reset();}
-      else{ result.textContent='Hubo un error al enviar.';}
-    }catch{ result.textContent='No se pudo enviar. Probá más tarde.';}
+      const r = await fetch(form.action, {
+        method:'POST',
+        body: new FormData(form),
+        headers: { 'Accept':'application/json' }
+      });
+      if(r.ok){
+        result.textContent = '¡Mensaje enviado! Te respondo apenas pueda.';
+        form.reset();
+      }else{
+        result.textContent = 'Hubo un error al enviar. Probá más tarde.';
+      }
+    }catch(err){
+      result.textContent = 'No se pudo enviar. Probá más tarde.';
+    }
   });
 })();
 
-/* ===== Init ===== */
+/** Init */
 loadPlaylist();
 loadNews();
 </script>
