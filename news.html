@@ -71,7 +71,7 @@ const $ = (s, p=document) => p.querySelector(s);
 const $$ = (s, p=document) => [...p.querySelectorAll(s)];
 const truncate = (str, n) => (str||"").length>n ? str.slice(0,n).replace(/\s+\S*$/,'')+"…" : str;
 
-/* Anti-pixelado ROBUSTO (igual que en index) */
+/* Reparador Blogger */
 function upsizeBloggerImage(url, size = 1200){
   if(!url) return "";
   let u = url;
@@ -82,80 +82,77 @@ function upsizeBloggerImage(url, size = 1200){
   u = u.replace(/\/([^\/?#]+)(\?|#|$)/, `/s${size}/$1$2`);
   return u;
 }
+
+/* ⬇️ ORIGINAL en src + HD en srcset */
 function imgTagHD(src, alt=""){
-  const s400  = upsizeBloggerImage(src, 400);
-  const s800  = upsizeBloggerImage(src, 800);
-  const s1200 = upsizeBloggerImage(src, 1200);
-  return `
-    <img loading="lazy" decoding="async"
-         src="${s800}"
-         srcset="${s400} 400w, ${s800} 800w, ${s1200} 1200w"
-         sizes="(min-width: 1200px) 340px, (min-width: 900px) 33vw, 90vw"
-         alt="${(alt||'').replace(/"/g,'&quot;')}">`;
+  const orig = src || "";
+  const s400  = upsizeBloggerImage(orig, 400);
+  const s800  = upsizeBloggerImage(orig, 800);
+  const s1200 = upsizeBloggerImage(orig,1200);
+
+  const parts = [];
+  const push=(u,w)=>{ if(u && !parts.find(p=>p.startsWith(u))) parts.push(`${u} ${w}w`); };
+  push(orig, 600);
+  push(s400, 400);
+  push(s800, 800);
+  push(s1200,1200);
+
+  return `<img loading="lazy" decoding="async"
+           src="${orig}"
+           srcset="${parts.join(', ')}"
+           sizes="(min-width:1200px) 340px, (min-width:900px) 33vw, 90vw"
+           alt="${(alt||'').replace(/"/g,'&quot;')}">`;
 }
 
-function extractImgFromHtml(html){
-  const m = (html||"").match(/<img[^>]+src=["']([^"']+)["']/i);
-  return m ? m[1] : "";
-}
-function timeAgo(iso){
-  const d = new Date(iso); const diff = (Date.now() - d.getTime())/1000;
-  const units = [[31536000,'a'],[2592000,'m'],[604800,'sem'],[86400,'d'],[3600,'h'],[60,'min']];
-  for(const [s,n] of units){ if(diff>=s) return `${Math.floor(diff/s)} ${n}`; }
-  return 'ahora';
-}
+function extractImgFromHtml(html){ const m=(html||"").match(/<img[^>]+src=["']([^"']+)["']/i); return m?m[1]:""; }
+function timeAgo(iso){ const d=new Date(iso); const diff=(Date.now()-d.getTime())/1000; const u=[[31536000,'a'],[2592000,'m'],[604800,'sem'],[86400,'d'],[3600,'h'],[60,'min']]; for(const [s,n] of u){ if(diff>=s) return `${Math.floor(diff/s)} ${n}`;} return 'ahora'; }
+
 function parseBloggerJson(data){
   const entries = data?.feed?.entry || [];
-  return entries.map(e => {
-    const rawHtml = e.summary?.$t || e.content?.$t || "";
-    const textOnly = rawHtml.replace(/<[^>]+>/g, " ").replace(/\s+/g,' ').trim();
-    const titleRaw = (e.title?.$t || "").trim();
-    const title = titleRaw || (textOnly ? textOnly.split(/\s+/).slice(0,12).join(" ") + "…" : "Sin título");
+  return entries.map(e=>{
+    const raw = e.summary?.$t || e.content?.$t || "";
+    const text = raw.replace(/<[^>]+>/g," ").replace(/\s+/g,' ').trim();
+    const title = (e.title?.$t || "").trim() || (text? text.split(/\s+/).slice(0,12).join(" ")+"…":"Sin título");
     const link  = (e.link || []).find(l=>l.rel==='alternate')?.href || '#';
     const date  = e.published?.$t || e.updated?.$t || new Date().toISOString();
     const idStr = (e.id?.$t || "").split("post-").pop() || "";
-    const thumbRaw = e['media$thumbnail']?.url || extractImgFromHtml(rawHtml) || DEFAULT_NEWS_IMAGE;
+    const thumbRaw = e['media$thumbnail']?.url || extractImgFromHtml(raw) || DEFAULT_NEWS_IMAGE;
     const image = upsizeBloggerImage(thumbRaw, 1200);
-    return { id:idStr, title, url: link, date, summary: textOnly, image };
+    return { id:idStr, title, url:link, date, summary:text, image };
   });
 }
 
 function shareNews(n){
   const url = `${location.origin}/news.html?id=${encodeURIComponent(n.id)}`;
   const text = `${n.title} — El Portal Gamer`;
-  if (navigator.share){
-    navigator.share({title:n.title, text, url}).catch(()=>{});
-  } else {
-    navigator.clipboard.writeText(url).then(()=>alert("Enlace copiado ✔"));
-  }
+  if (navigator.share){ navigator.share({title:n.title,text,url}).catch(()=>{}); }
+  else { navigator.clipboard.writeText(url).then(()=>alert("Enlace copiado ✔")); }
 }
 
 function renderList(items){
-  $("#detail").style.display = "none";
-  const list = $("#list"); list.style.display="grid"; list.innerHTML = "";
+  $("#detail").style.display="none";
+  const list=$("#list"); list.style.display="grid"; list.innerHTML="";
   items.forEach(n=>{
-    const card = document.createElement('article');
-    card.className = "card pad news-card";
-    const img = imgTagHD(n.image||DEFAULT_NEWS_IMAGE, n.title);
-    card.innerHTML = `
+    const card=document.createElement('article'); card.className="card pad news-card";
+    const img=imgTagHD(n.image||DEFAULT_NEWS_IMAGE, n.title);
+    card.innerHTML=`
       <a class="news-thumb" href="news.html?id=${encodeURIComponent(n.id)}">${img}</a>
       <div class="muted">${new Date(n.date).toLocaleDateString()} • ${timeAgo(n.date)}</div>
       <div class="title">${n.title}</div>
-      <p class="desc">${truncate(n.summary, 240)}</p>
+      <p class="desc">${truncate(n.summary,240)}</p>
       <div class="news-footer">
         <a class="btn brand" href="news.html?id=${encodeURIComponent(n.id)}">📰 Leer</a>
         <button class="btn" onclick='shareNews(${JSON.stringify(n)})'>🔗 Compartir</button>
-      </div>
-    `;
+      </div>`;
     list.appendChild(card);
   });
 }
 
 function renderDetail(n){
-  $("#list").style.display = "none";
-  const box = $("#detail"); box.style.display = "block";
-  const img = imgTagHD(n.image||DEFAULT_NEWS_IMAGE, n.title);
-  box.innerHTML = `
+  $("#list").style.display="none";
+  const box=$("#detail"); box.style.display="block";
+  const img=imgTagHD(n.image||DEFAULT_NEWS_IMAGE,n.title);
+  box.innerHTML=`
     <div class="muted">${new Date(n.date).toLocaleDateString()} • ${timeAgo(n.date)}</div>
     <h2 style="margin:.2rem 0 0">${n.title}</h2>
     <div class="news-thumb" style="margin-top:10px">${img}</div>
@@ -164,68 +161,30 @@ function renderDetail(n){
       <button class="btn" onclick='shareNews(${JSON.stringify(n)})'>🔗 Compartir</button>
       <a class="btn" href="index.html#news">⟵ Volver</a>
       <a class="btn brand" href="${n.url}" target="_blank" rel="noopener">Abrir en Blogger</a>
-    </div>
-  `;
+    </div>`;
 }
 
-// JSON con fallback local
-async function fetchJson(url){
-  const r = await fetch(url, {cache:'no-store'});
-  const txt = await r.text();
-  try{ return JSON.parse(txt); }catch{ return {}; }
-}
+async function fetchJson(u){ const r=await fetch(u,{cache:'no-store'}); const t=await r.text(); try{return JSON.parse(t);}catch{return {};} }
 async function getBloggerData(){
-  const urls = [
-    `${JINA}/http://portalgamerok.blogspot.com/feeds/posts/summary?alt=json&max-results=30&orderby=published`,
-    `${JINA}/https://portalgamerok.blogspot.com/feeds/posts/summary?alt=json&max-results=30&orderby=published`,
-    `${ALLO}?url=${encodeURIComponent(BLOGGER_FEED_HTTPS)}`,
-    BLOGGER_FEED_HTTPS
-  ];
-  for (const u of urls){
-    try{
-      const data = await fetchJson(u);
-      if (data?.feed?.entry?.length) return data;
-    }catch{}
-  }
+  const urls=[`${JINA}/http://portalgamerok.blogspot.com/feeds/posts/summary?alt=json&max-results=30&orderby=published`, `${JINA}/https://portalgamerok.blogspot.com/feeds/posts/summary?alt=json&max-results=30&orderby=published`, `${ALLO}?url=${encodeURIComponent(BLOGGER_FEED_HTTPS)}`, BLOGGER_FEED_HTTPS];
+  for (const u of urls){ try{ const d=await fetchJson(u); if(d?.feed?.entry?.length) return d; }catch{} }
   throw new Error("No feed");
 }
 
 async function init(){
-  const params = new URLSearchParams(location.search);
-  const wantId = params.get("id");
-  let items = [];
-  try{
-    const data = await getBloggerData();
-    items = parseBloggerJson(data);
-  }catch(e){
-    try{
-      const local = await (await fetch('/news.json', {cache:'no-store'})).json();
-      items = (local||[]).map(n=>({
-        ...n,
-        id: n.id || (n.url?.split("post-").pop() || n.url || Math.random().toString(36).slice(2)),
-        image: upsizeBloggerImage(n.image, 1200)
-      }));
-    }catch{}
-  }
+  const params=new URLSearchParams(location.search); const wantId=params.get("id"); let items=[];
+  try{ const data=await getBloggerData(); items=parseBloggerJson(data); }
+  catch{ try{ const local=await (await fetch('/news.json',{cache:'no-store'})).json(); items=(local||[]).map(n=>({ ...n, id:n.id || (n.url?.split("post-").pop() || n.url || Math.random().toString(36).slice(2)), image:upsizeBloggerImage(n.image,1200) })); }catch{} }
 
-  if (!items.length){
-    $("#list").innerHTML = `<div class="muted">No hay noticias para mostrar.</div>`;
-    return;
-  }
+  if(!items.length){ $("#list").innerHTML=`<div class="muted">No hay noticias para mostrar.</div>`; return; }
+  if(wantId){ const hit=items.find(x=>String(x.id)===String(wantId)); if(hit) renderDetail(hit); else renderList(items); }
+  else{ renderList(items); }
 
-  if (wantId){
-    const hit = items.find(x=> String(x.id) === String(wantId));
-    if (hit) renderDetail(hit); else renderList(items);
-  } else {
-    renderList(items);
-  }
-
-  // Buscador
   $("#q").addEventListener("input", e=>{
-    const q = e.target.value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
-    for (const card of $$(".news-card")){
-      const hay = (card.textContent||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").includes(q);
-      card.style.display = (!q || hay) ? "" : "none";
+    const q=e.target.value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+    for(const card of $$(".news-card")){
+      const hay=(card.textContent||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").includes(q);
+      card.style.display=(!q||hay)?"":"none";
     }
   });
 }
