@@ -344,20 +344,29 @@ function renderNews(items){
     ` : "";
 
     card.innerHTML=`
-      <a class="news-thumb" href="${href}" aria-label="${n.title}">${imgTag}</a>
+      <a class="news-thumb" data-nav="news" href="${href}" aria-label="${n.title}">${imgTag}</a>
       <div class="n-content">
         <div class="news-meta"><span class="badge">Noticia</span><span>${timeAgo(n.date)}</span></div>
         <div class="title">${n.title}</div>
         <p class="desc">${truncate(n.summary,220)}</p>
         <div class="n-actions">
-          <a class="btn brand" href="${href}">Leer</a>
+          <a class="btn brand" data-nav="news" href="${href}">Leer</a>
           <button class="btn black share-btn" type="button" data-url="${href}" data-title="${n.title}">Compartir</button>
         </div>
       </div>`;
     grid.appendChild(card);
   });
 
-  // Compartir: hoja del sistema si existe; si no, popover con opciones
+  // Forzamos navegación segura para los links de noticia
+  document.addEventListener('click', (e)=>{
+    const a = e.target.closest('a[data-nav="news"]');
+    if(a){
+      e.preventDefault();
+      window.location.href = a.href; // navegación segura
+    }
+  }, {passive:false});
+
+  // Compartir (sheet nativo o popover)
   const pop=$("#share-pop");
   function showPop(url,title){
     const u=encodeURIComponent(url), t=encodeURIComponent(title);
@@ -370,14 +379,17 @@ function renderNews(items){
       <button id="closeShare" class="btn">Cerrar</button>
     `;
     pop.classList.add('show');
-    pop.dataset.url=url;
     $("#copyLink",pop).onclick=async()=>{ await navigator.clipboard.writeText(url); $("#copyLink",pop).textContent="Copiado ✅"; };
     $("#closeShare",pop).onclick=()=>pop.classList.remove('show');
   }
-  document.addEventListener('click',e=>{ if(e.target.closest('.share-btn')){ const b=e.target.closest('.share-btn'); const url=b.dataset.url, title=b.dataset.title||'Noticia';
-      if(navigator.share){ navigator.share({title, url}).catch(()=>showPop(url,title)); }
+  document.addEventListener('click',e=>{
+    const btn=e.target.closest('.share-btn');
+    if(btn){
+      const url=btn.dataset.url, title=btn.dataset.title||'Noticia';
+      if(navigator.share){ navigator.share({title,url}).catch(()=>showPop(url,title)); }
       else { showPop(url,title); }
-    } else if(!e.target.closest('#share-pop')){ $("#share-pop").classList.remove('show'); }});
+    }else if(!e.target.closest('#share-pop')){ pop.classList.remove('show'); }
+  });
 }
 
 async function fetchJson(url){ const r=await fetch(url,{cache:'no-store'}); const txt=await r.text(); try{ return JSON.parse(txt);}catch{return {};} }
