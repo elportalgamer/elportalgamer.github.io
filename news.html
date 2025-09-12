@@ -1,248 +1,338 @@
+NUEVA
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Noticias — El Portal Gamer</title>
-  <link rel="canonical" href="https://www.elportalgamer.com/news.html" />
-  <meta name="description" content="Noticias y novedades de El Portal Gamer: reseñas, retro y rarezas." />
+  <meta name="description" content="Noticias de videojuegos de El Portal Gamer." />
+  <link rel="icon" href="mago.png" />
 
   <style>
-    :root{ --bg:#121212; --surface:#1f1f1f; --text:#f0f0f0; --muted:#b5b5b5; --brand:#ff4500; --radius:14px; }
-    *{ box-sizing:border-box }
-    body{ margin:0; font-family:system-ui,-apple-system,"Segoe UI",Roboto,Ubuntu,"Helvetica Neue",Arial; background:var(--bg); color:var(--text); }
-    header{ position:sticky; top:0; z-index:5; background:#161616; border-bottom:1px solid #242424; }
-    .nav{ max-width:1100px; margin:0 auto; display:flex; align-items:center; gap:16px; padding:12px 16px }
-    .brand{ display:flex; align-items:center; gap:10px; font-weight:800; font-size:1.25rem; color:var(--brand) }
-    .brand img{ height:34px; border-radius:6px }
-    .nav a{ color:#eaeaea; text-decoration:none; opacity:.9; padding:6px 8px; border-radius:10px }
-    .nav a:hover{ opacity:1; background:#1b1b1b }
-    .spacer{ flex:1 }
+    :root{
+      --bg:#121212; --surface:#1f1f1f; --text:#f0f0f0; --muted:#bbb; --brand:#ff4500;
+      --card:#171717; --radius:14px;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Roboto,Ubuntu,Arial}
+    header{position:sticky;top:0;z-index:10;background:#161616;border-bottom:1px solid #242424}
+    .nav{max-width:1100px;margin:0 auto;padding:12px 16px;display:flex;align-items:center;gap:16px}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:800;color:var(--brand)}
+    .brand img{height:34px;border-radius:6px}
+    .nav a{color:#eaeaea;text-decoration:none;opacity:.9;padding:6px 8px;border-radius:10px}
+    .nav a:hover{opacity:1;background:#1b1b1b}
+    .spacer{flex:1}
+    .search{width:320px;max-width:55vw;padding:10px 12px;border-radius:10px;border:1px solid #2a2a2a;background:#0f0f0f;color:#fff}
 
-    main{ max-width:1100px; margin:20px auto; padding:0 16px }
-    h1{ margin:0 0 12px; font-size:1.4rem }
-    .layout{ display:grid; grid-template-columns:360px 1fr; gap:20px }
-    @media (max-width: 980px){ .layout{ grid-template-columns:1fr } }
+    main{max-width:1100px;margin:20px auto;padding:0 16px}
+    h1,h2{margin:10px 0 12px}
+    .divider{height:8px;border-radius:999px;background:linear-gradient(90deg,#ff6a00,#ff3b00,#ff6a00);margin:18px 0}
 
-    .list{ display:flex; flex-direction:column; gap:12px }
-    .item{ display:flex; gap:10px; border:1px solid #262626; border-radius:var(--radius); padding:8px; background:var(--surface); text-decoration:none; color:inherit }
-    .item:hover{ background:#222 }
-    .item img{ width:84px; height:84px; object-fit:cover; border-radius:10px; background:#0f0f0f }
-    .item h4{ margin:0 0 4px; font-size:.98rem; line-height:1.2 }
-    .item time{ color:var(--muted); font-size:.85rem; }
-    .item p{ margin:4px 0 0; color:#cfcfcf; font-size:.9rem; line-height:1.35; max-height:2.6em; overflow:hidden }
+    .grid{display:grid;gap:16px}
+    .grid.cols-3{grid-template-columns:repeat(auto-fill,minmax(280px,1fr))}
+    .card{background:var(--surface);border:1px solid #262626;border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column}
+    .pad{padding:14px}
+    .news-thumb{position:relative;width:100%;padding-top:100%;background:#0e0e0e;overflow:hidden}
+    .news-thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;image-rendering:auto}
+    .news-meta{display:flex;gap:10px;align-items:center;color:#cfcfcf;font-size:.9rem;margin:6px 0 10px}
+    .badge{font-size:.75rem;border:1px solid #333;padding:4px 8px;border-radius:999px;color:#ffcfbd;background:#1b0f0a}
+    .title{font-weight:800;font-size:1.05rem;margin:6px 0}
+    .desc{color:#cfcfcf;line-height:1.45}
 
-    .viewer{ border:1px solid #262626; border-radius:var(--radius); overflow:hidden; background:#000; min-height:60vh }
-    .viewer header{ display:flex; align-items:center; gap:10px; padding:10px 12px; background:#151515; border-bottom:1px solid #262626; position:sticky; top:0; z-index:2 }
-    .viewer header .title{ font-weight:700; font-size:1rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis }
-    .viewer header .actions{ margin-left:auto; display:flex; gap:8px }
-    .viewer header .btn{ border:1px solid #333; background:#0e0e0e; color:#fff; border-radius:10px; padding:8px 10px; text-decoration:none; font-size:.9rem }
-    iframe{ width:100%; height:80vh; border:0; display:block; }
-    .muted{ color:var(--muted) }
+    .actions{margin-top:auto;padding:12px 14px;display:flex;gap:10px;justify-content:center;border-top:1px solid #2a2a2a}
+    .btn{display:inline-flex;gap:8px;align-items:center;padding:10px 14px;border-radius:10px;border:1px solid #333;background:#151515;color:#fff;text-decoration:none}
+    .btn.brand{background:var(--brand);border-color:#ff5e1f;color:#111;font-weight:800}
+    .btn.ghost{background:#0f0f0f}
+    .muted{color:var(--muted)}
+
+    /* Vista artículo */
+    .hero{border-radius:16px;overflow:hidden;border:1px solid #262626;background:#0e0e0e}
+    .hero img{width:100%;height:auto;display:block}
+    .article{background:var(--surface);border:1px solid #262626;border-radius:var(--radius);padding:16px}
+    .article h1{margin:6px 0 12px}
+    .article .meta{color:#cfcfcf;margin:0 0 12px}
+    .article .body{line-height:1.6}
+    .article .body img{max-width:100%;height:auto;border-radius:12px;display:block;margin:10px auto}
+    .article .actions{justify-content:flex-start}
   </style>
 </head>
 <body>
 <header>
   <div class="nav">
-    <div class="brand"><img src="mago.png" alt="Logo" />El Portal Gamer</div>
-    <a href="/">Inicio</a>
-    <a href="/#news">Noticias</a>
+    <div class="brand"><img src="mago.png" alt="Logo"/>El Portal Gamer</div>
+    <a href="index.html#ultimo">Inicio</a>
+    <a href="index.html#news" aria-current="page">Noticias</a>
+    <a href="index.html#mini">Reseñas</a>
+    <a href="index.html#series">Series</a>
+    <a href="videos.html">Videos</a>
+    <a href="index.html#apoya">Apóyanos</a>
+    <a href="index.html#contacto">Contacto</a>
     <div class="spacer"></div>
+    <input class="search" type="search" placeholder="Buscar noticia…" id="q"/>
   </div>
 </header>
 
 <main>
   <h1>Noticias</h1>
-  <div class="layout">
-    <!-- LISTA -->
-    <section aria-label="Listado de noticias">
-      <div id="news-list" class="list">
-        <div class="muted">Cargando noticias…</div>
-      </div>
-    </section>
+  <div class="divider" aria-hidden="true"></div>
 
-    <!-- DETALLE -->
-    <section class="viewer" aria-label="Detalle de noticia">
-      <header>
-        <div id="viewer-title" class="title">Seleccioná una noticia…</div>
-        <div class="actions">
-          <a id="open-external" class="btn" target="_blank" rel="noopener">Abrir en Blogger</a>
-          <a id="copy-link" class="btn" href="#">Copiar enlace</a>
-        </div>
-      </header>
-      <iframe id="news-frame" title="Detalle de noticia" loading="lazy"></iframe>
-    </section>
-  </div>
+  <!-- Vista LISTA -->
+  <section id="list-view">
+    <div class="grid cols-3" id="news-grid">
+      <div class="muted">Cargando noticias…</div>
+    </div>
+    <div class="actions">
+      <button id="prev" class="btn ghost">◀ Anteriores</button>
+      <span id="pageInfo" class="muted"></span>
+      <button id="next" class="btn ghost">Siguientes ▶</button>
+    </div>
+  </section>
+
+  <!-- Vista ARTÍCULO -->
+  <section id="article-view" style="display:none">
+    <div id="article-hero" class="hero" aria-hidden="true"></div>
+    <article class="article">
+      <h1 id="a-title">Título</h1>
+      <p class="meta" id="a-meta"></p>
+      <div id="a-body" class="body"></div>
+      <div class="actions">
+        <a class="btn brand" href="news.html">⬅ Volver</a>
+        <button id="share-article" class="btn ghost">🔗 Compartir</button>
+      </div>
+    </article>
+  </section>
 </main>
 
+<footer class="muted" style="text-align:center;margin:40px 0">© 2025 El Portal Gamer</footer>
+
 <script>
-/* ====== Config ====== */
-/* Dos blogs (no se borra el que ya funcionaba) */
-const FEEDS = [
-  "https://portalgamerok.blogspot.com/feeds/posts/summary?alt=json&max-results=20&orderby=published",
-  "https://elblogdelportalgamer.blogspot.com/feeds/posts/summary?alt=json&max-results=20&orderby=published"
-];
-const FALLBACK_JSON = "/news.json";
-const JINA="https://r.jina.ai";
-const ALLO="https://api.allorigins.win/raw";
+/* ========= Config ========= */
+const BLOG = 'https://portalgamerok.blogspot.com';
+const FEED_SUMMARY = `${BLOG}/feeds/posts/summary`;
+const FEED_DEFAULT = `${BLOG}/feeds/posts/default`;
+const JINA = 'https://r.jina.ai';
+const ALLO = 'https://api.allorigins.win/raw';
 
-/* ====== Utils ====== */
-const $ = (s,p=document)=>p.querySelector(s);
-function fmtDate(iso){
-  try{ return new Date(iso).toLocaleDateString('es-PE',{ year:'numeric', month:'short', day:'2-digit' }); }
-  catch{ return ""; }
-}
-function truncate(str,n){ return (str||"").length>n ? (str.slice(0,n).replace(/\s+\S*$/,'')+"…") : (str||""); }
-function stripHtml(html){ return (html||"").replace(/<[^>]+>/g," ").replace(/\s+/g,' ').trim(); }
-function firstImg(html){
-  const m = /<img[^>]+src=["']([^"']+)["']/i.exec(html || "");
-  return m ? m[1] : "";
-}
-function bloggerToOriginal(u){ if(!u) return ''; return u.replace(/\/s\d+[^/]*\//,'/s0/').replace(/=s\d+[^&?]*/,'=s0');}
+/* ========= Utilidades ========= */
+const $  = (s,p=document)=>p.querySelector(s);
+const $$ = (s,p=document)=>[...p.querySelectorAll(s)];
+const fmtDate = iso => new Date(iso).toLocaleDateString();
 
-/* ====== Fetch feeds con proxies ====== */
+function upsizeBlogger(url, size=1200){
+  if(!url) return '';
+  return url
+    .replace(/\/s\d+(-c)?\//g, `/s${size}/`)
+    .replace(/=s\d+(-c)?/g, `=s${size}`)
+    .replace(/\/w\d+-h\d+(-c)?\//g, `/s${size}/`)
+    .replace(/\/s\d+(-c)?$/g, `/s${size}`);
+}
+function srcsetFor(url){
+  const u400 = upsizeBlogger(url, 400);
+  const u800 = upsizeBlogger(url, 800);
+  const u1200= upsizeBlogger(url,1200);
+  return `${u400} 400w, ${u800} 800w, ${u1200} 1200w`;
+}
+function rewriteImgsInHtml(html){
+  return (html||'')
+    .replace(/\/s\d+(-c)?\//g,'/s1600/')
+    .replace(/=s\d+(-c)?/g,'=s1600')
+    .replace(/\/w\d+-h\d+(-c)?\//g,'/s1600/');
+}
+function stripHtml(x){ const d=document.createElement('div'); d.innerHTML=x||''; return d.textContent||d.innerText||''; }
+
+/* ========= Parsers ========= */
+function parseEntrySummary(e){
+  const rawHtml = e.summary?.$t || e.content?.$t || '';
+  const textOnly = stripHtml(rawHtml).replace(/\s+/g,' ').trim();
+  const title = (e.title?.$t||'Sin título').trim();
+  const link  = (e.link||[]).find(l=>l.rel==='alternate')?.href || '#';
+  const date  = e.published?.$t || e.updated?.$t || new Date().toISOString();
+  const thumbRaw = e['media$thumbnail']?.url || (/src=['"]([^'"]+)['"]/i.exec(rawHtml)?.[1]) || '';
+  const image = upsizeBlogger(thumbRaw, 1200);
+  const id = (e.id?.$t||'').split('post-').pop() || '';
+  return { id, title, url: link, date, summary: textOnly, image };
+}
+function parseEntryFull(e){
+  const title = (e.title?.$t||'Sin título').trim();
+  const link  = (e.link||[]).find(l=>l.rel==='alternate')?.href || '#';
+  const date  = e.published?.$t || e.updated?.$t || new Date().toISOString();
+  const contentHtml = rewriteImgsInHtml(e.content?.$t || e.summary?.$t || '');
+  // Héroe: primera imagen del contenido o miniatura
+  const firstImg = (/src=['"]([^'"]+)['"]/i.exec(contentHtml)?.[1]) || e['media$thumbnail']?.url || '';
+  const hero = upsizeBlogger(firstImg, 1600);
+  const id = (e.id?.$t||'').split('post-').pop() || '';
+  return { id, title, url: link, date, hero, html: contentHtml };
+}
+
+/* ========= Fetch helpers ========= */
 async function fetchJson(url){
-  const r = await fetch(url,{cache:'no-store'});
+  const r = await fetch(url, {cache:'no-store'});
   const t = await r.text();
-  try { return JSON.parse(t); } catch { return {}; }
+  try{ return JSON.parse(t); }catch{ return {}; }
 }
-async function fetchFeedViaProxies(feedUrl){
-  const httpUrl = feedUrl.replace("https://","http://");
-  const tries = [
-    `${JINA}/${httpUrl}`,
-    `${JINA}/${feedUrl}`,
-    `${ALLO}?url=${encodeURIComponent(feedUrl)}`,
-    feedUrl
+async function fetchFeedList(startIndex=1, max=9){
+  const qs = `?alt=json&orderby=published&start-index=${startIndex}&max-results=${max}`;
+  const urls = [
+    `${JINA}/${FEED_SUMMARY}${qs}`,
+    `${ALLO}?url=${encodeURIComponent(FEED_SUMMARY+qs)}`,
+    `${FEED_SUMMARY}${qs}`
   ];
-  for(const u of tries){
+  for(const u of urls){
     try{
       const d = await fetchJson(u);
-      if(d?.feed?.entry?.length) return d;
+      if(d?.feed?.entry?.length) return d.feed.entry.map(parseEntrySummary);
     }catch{}
   }
-  return null;
-}
-
-/* ====== Parse Blogger ====== */
-function parseBlogger(data){
-  const entries = data?.feed?.entry || [];
-  return entries.map(e=>{
-    const raw = e.summary?.$t || e.content?.$t || "";
-    const text = stripHtml(raw);
-    const title = (e.title?.$t || "").trim() || (text ? text.split(/\s+/).slice(0,12).join(" ")+"…" : "Sin título");
-    const link = (e.link||[]).find(l=>l.rel==='alternate')?.href || '';
-    const date = e.published?.$t || e.updated?.$t || new Date().toISOString();
-    const id = (e.id?.$t||"").split("post-").pop();
-    const thumb0 = e['media$thumbnail']?.url || firstImg(raw) || "";
-    return { id, title, url: link, date, excerpt: text, thumb: bloggerToOriginal(thumb0) };
-  });
-}
-
-/* ====== Merge, dedupe, sort ====== */
-function dedupeSort(items){
-  const seen=new Set(), out=[];
-  for(const it of items){
-    const key = it.url || it.id || (it.title+"|"+it.date);
-    if(seen.has(key)) continue;
-    seen.add(key); out.push(it);
-  }
-  out.sort((a,b)=> new Date(b.date) - new Date(a.date));
-  return out;
-}
-
-/* ====== Render ====== */
-function renderList(items){
-  const list = $("#news-list");
-  list.innerHTML = "";
-  items.forEach(n=>{
-    const a = document.createElement("a");
-    a.className = "item";
-    a.href = makeHref(n);
-    a.dataset.url = n.url;
-    a.dataset.title = n.title;
-    a.innerHTML = `
-      <img loading="lazy" decoding="async" src="${n.thumb || 'og.jpg'}" alt="">
-      <div>
-        <h4>${n.title}</h4>
-        <time datetime="${n.date}">${fmtDate(n.date)}</time>
-        <p>${truncate(n.excerpt, 120)}</p>
-      </div>
-    `;
-    a.addEventListener("click", (e)=>{ e.preventDefault(); openInViewer(n); history.replaceState(null,"",a.href); });
-    list.appendChild(a);
-  });
-}
-
-function makeHref(n){
-  const base = new URL(location.origin + location.pathname);
-  if(n.id) base.searchParams.set('id', n.id);
-  if(n.url) base.searchParams.set('u', n.url);
-  return base.toString();
-}
-
-function openInViewer(n){
-  $("#viewer-title").textContent = n.title || "Noticia";
-  $("#open-external").href = n.url || "#";
-  $("#news-frame").src = n.url || "";
-}
-
-/* ====== Init ====== */
-async function loadAll(){
+  // Fallback local
   try{
-    const datas = (await Promise.all(FEEDS.map(f=>fetchFeedViaProxies(f)))).filter(Boolean);
-    if(!datas.length) throw new Error("sin feeds");
-    const merged = dedupeSort(datas.flatMap(parseBlogger));
-    renderList(merged);
+    const local = await fetch('news.json',{cache:'no-store'}).then(r=>r.json());
+    return (local||[]).map(x=>({id:x.id||'', title:x.title, url:x.url, date:x.date, summary:x.summary, image:x.image}));
+  }catch{ return []; }
+}
+async function fetchPostById(id){
+  const qs = `/${id}?alt=json`;
+  const urls = [
+    `${JINA}/${FEED_DEFAULT}${qs}`,
+    `${ALLO}?url=${encodeURIComponent(FEED_DEFAULT+qs)}`,
+    `${FEED_DEFAULT}${qs}`
+  ];
+  for(const u of urls){
+    try{
+      const data = await fetchJson(u);
+      const entry = data?.entry; 
+      if(entry) return parseEntryFull(entry);
+    }catch{}
+  }
+  // fallback: buscar en listado grande y luego abrir por url
+  const list = await fetchFeedList(1, 30);
+  const hit = list.find(x=>x.id===id);
+  if(hit){
+    // intentamos traer el HTML de la nota por su URL (a través de Jina) y armar un artículo básico
+    const prox = `${JINA}/${hit.url}`;
+    try{
+      const html = await fetch(prox).then(r=>r.text());
+      const body = /<article[\s\S]*?>([\s\S]*?)<\/article>/i.exec(html)?.[1] 
+                || /<div class=['"]post-body[\s\S]*?>([\s\S]*?)<\/div>/i.exec(html)?.[1]
+                || '';
+      return {
+        id: hit.id,
+        title: hit.title,
+        url: hit.url,
+        date: hit.date,
+        hero: hit.image,
+        html: rewriteImgsInHtml(body)
+      };
+    }catch{}
+  }
+  throw new Error('No se pudo obtener el post');
+}
 
-    // Cargar por URL (?u=... | ?id=...)
-    const params = new URLSearchParams(location.search);
-    const u = params.get("u");
-    let current = null;
-
-    if(u){
-      current = merged.find(x=>x.url===u) || { title:"Noticia", url:u, date:new Date().toISOString() };
-    }else if(params.get("id")){
-      const id = params.get("id");
-      current = merged.find(x=>x.id===id) || merged[0];
-    }else{
-      current = merged[0];
-    }
-    if(current) openInViewer(current);
-
-    // Copiar enlace
-    $("#copy-link").addEventListener("click", async (e)=>{
-      e.preventDefault();
+/* ========= Render ========= */
+function cardHTML(n){
+  const img = n.image ? `
+    <img loading="lazy" decoding="async"
+         src="${upsizeBlogger(n.image, 800)}"
+         srcset="${srcsetFor(n.image)}"
+         sizes="(min-width:1100px) 30vw, (min-width:700px) 45vw, 92vw"
+         alt="">
+  ` : '';
+  return `
+  <article class="card">
+    <a class="news-thumb" href="news.html?id=${n.id}">${img}</a>
+    <div class="pad">
+      <div class="news-meta"><span class="badge">Noticia</span><span>${fmtDate(n.date)}</span></div>
+      <div class="title"><a href="news.html?id=${n.id}" style="color:inherit;text-decoration:none">${n.title}</a></div>
+      <p class="desc">${(n.summary||'').slice(0,260)}${(n.summary||'').length>260?'…':''}</p>
+    </div>
+    <div class="actions">
+      <a class="btn brand" href="news.html?id=${n.id}">📰 Leer</a>
+      <button class="btn ghost" data-share="${location.origin}/news.html?id=${n.id}">🔗 Compartir</button>
+    </div>
+  </article>`;
+}
+async function renderList(){
+  const grid = $('#news-grid'); grid.innerHTML = '<div class="muted">Cargando…</div>';
+  const items = await fetchFeedList(window._startIndex||1, 9);
+  grid.innerHTML = items.map(cardHTML).join('') || '<div class="muted">Sin noticias.</div>';
+  // compartir
+  $$('button[data-share]').forEach(b=>{
+    b.addEventListener('click', async ()=>{
+      const url = b.getAttribute('data-share');
+      const title='El Portal Gamer — Noticias';
       try{
-        await navigator.clipboard.writeText(location.href);
-        $("#copy-link").textContent = "Enlace copiado ✅";
-        setTimeout(()=> $("#copy-link").textContent = "Copiar enlace", 1500);
+        if(navigator.share){ await navigator.share({title,url}); }
+        else{
+          await navigator.clipboard.writeText(url);
+          b.textContent='✅ Copiado';
+          setTimeout(()=>b.textContent='🔗 Compartir',1200);
+        }
       }catch{}
     });
-
-  }catch(e){
-    // Fallback a /news.json
+  });
+}
+function renderArticle(a){
+  $('#list-view').style.display='none';
+  $('#article-view').style.display='';
+  const hero = a.hero || '';
+  $('#article-hero').innerHTML = hero ? `<img src="${upsizeBlogger(hero,1600)}" alt="">` : '';
+  $('#a-title').textContent = a.title;
+  $('#a-meta').textContent  = fmtDate(a.date);
+  $('#a-body').innerHTML    = a.html || '<p class="muted">Sin contenido.</p>';
+  // compartir
+  $('#share-article').onclick = async ()=>{
+    const url = location.href;
     try{
-      const r = await fetch(FALLBACK_JSON, {cache:"no-store"});
-      const items = await r.json();
-      const norm = (Array.isArray(items)?items:items.items||[]).map(n=>({
-        id: n.id || "",
-        title: n.title || "Sin título",
-        url: n.url || "#",
-        date: n.date || new Date().toISOString(),
-        excerpt: n.excerpt || n.summary || "",
-        thumb: n.thumb || n.image || ""
-      }));
-      const merged = dedupeSort(norm);
-      if(!merged.length) throw new Error("fallback vacío");
-      renderList(merged);
-      openInViewer(merged[0]);
-    }catch{
-      $("#news-list").innerHTML = `<div class="muted">No se pudieron cargar las noticias.</div>`;
-    }
-  }
+      if(navigator.share){ await navigator.share({title:a.title,url}); }
+      else{
+        await navigator.clipboard.writeText(url);
+        $('#share-article').textContent='✅ Copiado';
+        setTimeout(()=>$('#share-article').textContent='🔗 Compartir',1200);
+      }
+    }catch{}
+  };
 }
 
-loadAll();
+/* ========= Router ========= */
+(async function init(){
+  const params = new URLSearchParams(location.search);
+  const id = params.get('id');
+
+  if(id){ // vista artículo
+    try{
+      const post = await fetchPostById(id);
+      renderArticle(post);
+    }catch(e){
+      console.warn(e);
+      $('#article-view').style.display='';
+      $('#list-view').style.display='none';
+      $('#article-hero').innerHTML='';
+      $('#a-title').textContent = 'No se pudo cargar la noticia';
+      $('#a-meta').textContent  = '';
+      $('#a-body').innerHTML    = `<p class="muted">Probá volver a la <a href="news.html">lista de noticias</a>.</p>`;
+    }
+    return;
+  }
+
+  // vista listado
+  window._startIndex = 1;
+  await renderList();
+  const pageInfo = $('#pageInfo');
+  const updateInfo = ()=> pageInfo.textContent = `Página ${(window._startIndex-1)/9+1}`;
+  updateInfo();
+
+  $('#next').onclick = async()=>{ window._startIndex+=9; await renderList(); updateInfo(); window.scrollTo({top:0,behavior:'smooth'}); };
+  $('#prev').onclick = async()=>{ window._startIndex=Math.max(1, window._startIndex-9); await renderList(); updateInfo(); window.scrollTo({top:0,behavior:'smooth'}); };
+
+  // filtro simple
+  $('#q').addEventListener('input', e=>{
+    const q = e.target.value.trim().toLowerCase();
+    for(const card of $$('.card')){
+      const txt = card.textContent.toLowerCase();
+      card.style.display = (!q || txt.includes(q)) ? '' : 'none';
+    }
+  });
+})();
 </script>
 </body>
 </html>
