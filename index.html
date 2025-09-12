@@ -1,248 +1,439 @@
+PAGINA POSTA
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Noticias — El Portal Gamer</title>
-  <link rel="canonical" href="https://www.elportalgamer.com/news.html" />
-  <meta name="description" content="Noticias y novedades de El Portal Gamer: reseñas, retro y rarezas." />
+  <title>El Portal Gamer — Reseñas y retro</title>
+
+  <link rel="canonical" href="https://www.elportalgamer.com/" />
+  <link rel="icon" type="image/png" href="mago.png" />
+
+  <meta name="description" content="Reseñas sinceras, retro y rarezas: PS1, PS2, Dreamcast, JRPG y survival horror. Videos y reseñas en El Portal Gamer." />
+  <meta property="og:title" content="El Portal Gamer — Reseñas y retro" />
+  <meta property="og:description" content="Reseñas sinceras, retro y rarezas: PS1, PS2, Dreamcast, JRPG y survival horror." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.elportalgamer.com/" />
+  <meta property="og:image" content="https://www.elportalgamer.com/og.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="El Portal Gamer — Reseñas y retro" />
+  <meta name="twitter:description" content="Reseñas sinceras, retro y rarezas: PS1, PS2, Dreamcast, JRPG y survival horror." />
+  <meta name="twitter:image" content="https://www.elportalgamer.com/og.jpg" />
 
   <style>
-    :root{ --bg:#121212; --surface:#1f1f1f; --text:#f0f0f0; --muted:#b5b5b5; --brand:#ff4500; --radius:14px; }
-    *{ box-sizing:border-box }
-    body{ margin:0; font-family:system-ui,-apple-system,"Segoe UI",Roboto,Ubuntu,"Helvetica Neue",Arial; background:var(--bg); color:var(--text); }
-    header{ position:sticky; top:0; z-index:5; background:#161616; border-bottom:1px solid #242424; }
-    .nav{ max-width:1100px; margin:0 auto; display:flex; align-items:center; gap:16px; padding:12px 16px }
-    .brand{ display:flex; align-items:center; gap:10px; font-weight:800; font-size:1.25rem; color:var(--brand) }
-    .brand img{ height:34px; border-radius:6px }
-    .nav a{ color:#eaeaea; text-decoration:none; opacity:.9; padding:6px 8px; border-radius:10px }
-    .nav a:hover{ opacity:1; background:#1b1b1b }
-    .spacer{ flex:1 }
+    :root{ --bg:#121212; --surface:#1f1f1f; --text:#f0f0f0; --muted:#b5b5b5; --brand:#ff4500; --card:#171717; --radius:14px;}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Ubuntu,"Helvetica Neue",Arial;background:var(--bg);color:var(--text)}
+    header{position:sticky;top:0;z-index:5;background:#161616;border-bottom:1px solid #242424}
+    .nav{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:16px;padding:12px 16px}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.25rem;color:var(--brand)}
+    .brand img{height:34px;border-radius:6px}
+    .nav a{color:#eaeaea;text-decoration:none;opacity:.9;padding:6px 8px;border-radius:10px}
+    .nav a:hover{opacity:1;background:#1b1b1b}
+    .spacer{flex:1}
+    .search{width:320px;max-width:55vw;padding:10px 12px;border-radius:10px;border:1px solid #2a2a2a;background:#0f0f0f;color:#fff}
 
-    main{ max-width:1100px; margin:20px auto; padding:0 16px }
-    h1{ margin:0 0 12px; font-size:1.4rem }
-    .layout{ display:grid; grid-template-columns:360px 1fr; gap:20px }
-    @media (max-width: 980px){ .layout{ grid-template-columns:1fr } }
+    main{max-width:1100px;margin:20px auto;padding:0 16px}
+    section{margin:24px 0}
+    h2{margin:0 0 12px;font-size:1.25rem}
+    .grid{display:grid;gap:16px}
+    .grid.cols-3{grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}
+    .grid.cols-2{grid-template-columns:repeat(auto-fill,minmax(360px,1fr))}
 
-    .list{ display:flex; flex-direction:column; gap:12px }
-    .item{ display:flex; gap:10px; border:1px solid #262626; border-radius:var(--radius); padding:8px; background:var(--surface); text-decoration:none; color:inherit }
-    .item:hover{ background:#222 }
-    .item img{ width:84px; height:84px; object-fit:cover; border-radius:10px; background:#0f0f0f }
-    .item h4{ margin:0 0 4px; font-size:.98rem; line-height:1.2 }
-    .item time{ color:var(--muted); font-size:.85rem; }
-    .item p{ margin:4px 0 0; color:#cfcfcf; font-size:.9rem; line-height:1.35; max-height:2.6em; overflow:hidden }
+    .card{background:var(--surface);border:1px solid #262626;border-radius:var(--radius);overflow:hidden}
+    .card.pad{padding:14px}
+    .row{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+    .divider{height:8px;border-radius:999px;background:linear-gradient(90deg,#ff6a00,#ff3b00,#ff6a00);margin:18px 0}
 
-    .viewer{ border:1px solid #262626; border-radius:var(--radius); overflow:hidden; background:#000; min-height:60vh }
-    .viewer header{ display:flex; align-items:center; gap:10px; padding:10px 12px; background:#151515; border-bottom:1px solid #262626; position:sticky; top:0; z-index:2 }
-    .viewer header .title{ font-weight:700; font-size:1rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis }
-    .viewer header .actions{ margin-left:auto; display:flex; gap:8px }
-    .viewer header .btn{ border:1px solid #333; background:#0e0e0e; color:#fff; border-radius:10px; padding:8px 10px; text-decoration:none; font-size:.9rem }
-    iframe{ width:100%; height:80vh; border:0; display:block; }
-    .muted{ color:var(--muted) }
+    .videobox{position:relative;width:100%;padding-top:56.25%;overflow:hidden;background:#000;border-bottom:1px solid #262626}
+    .lite-yt{position:absolute;inset:0;background-position:center;background-size:cover;cursor:pointer}
+    .lite-yt::before{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.35),rgba(0,0,0,.05))}
+    .lty-playbtn{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:72px;height:52px;border:0;border-radius:10px;background:rgba(0,0,0,.6);display:grid;place-items:center;box-shadow:0 8px 20px rgba(0,0,0,.45)}
+    .lty-playbtn svg{width:28px;height:28px;fill:#fff}
+    iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+
+    .title{font-weight:700;margin:8px 0 6px;font-size:1.05rem}
+    .desc{color:#cfcfcf;font-size:.95rem;line-height:1.45;max-height:4.5em;overflow:hidden}
+    .muted{color:#bdbdbd;font-size:.9rem}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 12px;border-radius:10px;border:1px solid #333;background:#151515;color:#fff;text-decoration:none}
+    .btn.brand{background:var(--brand);border-color:#ff5e1f;color:#111;font-weight:800}
+    .btn.black{background:#0e0e0e;border-color:#242424;color:#fff}
+
+    /* Noticias */
+    .n-card{background:var(--surface);border:1px solid #262626;border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;height:100%}
+    .news-thumb{position:relative;width:100%;padding-top:100%;background:#0e0e0e;overflow:hidden;border-bottom:1px solid #262626}
+    .news-thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+    .n-content{display:flex;flex-direction:column;gap:8px;padding:14px;flex:1}
+    .news-meta{display:flex;gap:10px;align-items:center;color:#cfcfcf;font-size:.9rem}
+    .badge{font-size:.75rem;border:1px solid #333;padding:4px 8px;border-radius:999px;color:#ffcfbd;background:#1b0f0a}
+    .n-actions{margin-top:auto;display:flex;gap:10px;justify-content:center}
+
+    /* Redes */
+    .socials{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+    .soc-card{background:#1a1a1a;border:1px solid #2a2a2a;padding:14px;border-radius:14px;display:flex;align-items:center;gap:12px}
+    .soc-card svg{width:22px;height:22px;flex:0 0 auto}
+
+    /* Contacto */
+    label{display:block;margin:8px 0 12px;font-size:.95rem}
+    input,textarea{width:100%;padding:10px 12px;border-radius:10px;border:1px solid #2a2a2a;background:#0f0f0f;color:#fff}
+    input:focus,textarea:focus{outline:2px solid var(--brand);outline-offset:2px}
+    .form-grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+    button.btn{cursor:pointer}
+    #form-result{margin-top:10px}
+
+    footer{margin:40px 0 20px;color:#9b9b9b;text-align:center}
+    @media (max-width:560px){.search{width:100%}.nav{flex-wrap:wrap}}
+
+    /* Popover compartir */
+    .share-pop{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:#1a1a1a;border:1px solid #333;padding:10px 12px;border-radius:12px;display:none;gap:8px;z-index:50;box-shadow:0 10px 24px rgba(0,0,0,.35)}
+    .share-pop.show{display:flex;flex-wrap:wrap;justify-content:center}
+    .share-pop a,.share-pop button{border:1px solid #333;background:#0e0e0e;color:#fff;border-radius:10px;padding:8px 10px;text-decoration:none}
   </style>
 </head>
 <body>
 <header>
   <div class="nav">
     <div class="brand"><img src="mago.png" alt="Logo" />El Portal Gamer</div>
-    <a href="/">Inicio</a>
-    <a href="/#news">Noticias</a>
+    <a href="#ultimo">Inicio</a>
+    <a href="#news">Noticias</a>
+    <a href="#mini">Reseñas</a>
+    <a href="#series">Series</a>
+    <a href="videos.html">Videos</a>
+    <a href="#apoya">Apóyanos</a>
+    <a href="#contacto">Contacto</a>
     <div class="spacer"></div>
+    <input id="buscador" class="search" type="search" placeholder="Buscar video, reseña o noticia…" />
   </div>
 </header>
 
 <main>
-  <h1>Noticias</h1>
-  <div class="layout">
-    <!-- LISTA -->
-    <section aria-label="Listado de noticias">
-      <div id="news-list" class="list">
-        <div class="muted">Cargando noticias…</div>
-      </div>
-    </section>
-
-    <!-- DETALLE -->
-    <section class="viewer" aria-label="Detalle de noticia">
-      <header>
-        <div id="viewer-title" class="title">Seleccioná una noticia…</div>
-        <div class="actions">
-          <a id="open-external" class="btn" target="_blank" rel="noopener">Abrir en Blogger</a>
-          <a id="copy-link" class="btn" href="#">Copiar enlace</a>
+  <!-- Último video -->
+  <section id="ultimo">
+    <h2>Último video</h2>
+    <div class="card">
+      <div class="videobox" id="ultimo-lite"></div>
+      <div class="pad">
+        <div class="title" id="ultimo-titulo">Cargando…</div>
+        <div class="muted" id="ultimo-fecha"></div>
+        <p class="desc" id="ultimo-desc"></p>
+        <div class="row">
+          <a id="ultimo-ver" class="btn brand" target="_blank" rel="noopener">▶ Ver en YouTube</a>
+          <a class="btn" href="https://www.instant-gaming.com/es/?igr=portalgamerx" target="_blank" rel="noopener">🎮 Ver Juegos en Oferta</a>
         </div>
-      </header>
-      <iframe id="news-frame" title="Detalle de noticia" loading="lazy"></iframe>
-    </section>
-  </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider" aria-hidden="true"></div>
+
+  <!-- Noticias -->
+  <section id="news">
+    <h2>Noticias</h2>
+    <div class="grid cols-3" id="news-grid"><div class="muted">Cargando noticias…</div></div>
+  </section>
+
+  <div class="divider" aria-hidden="true"></div>
+
+  <!-- Reseñas -->
+  <section id="mini">
+    <h2>Reseñas</h2>
+    <div class="grid cols-3" id="mini-grid"></div>
+  </section>
+
+  <div class="divider" aria-hidden="true"></div>
+
+  <!-- Series -->
+  <section id="series">
+    <h2>Series</h2>
+    <div class="grid cols-2" id="series-grid"></div>
+  </section>
+
+  <div class="divider" aria-hidden="true"></div>
+
+  <!-- Apóyanos -->
+  <section id="apoya">
+    <h2>Apóyanos</h2>
+    <div class="card pad">
+      <div class="row">
+        <a class="btn brand" href="https://ko-fi.com/portalgamer" target="_blank" rel="noopener">☕ Invítame un café</a>
+        <a class="btn" href="https://www.instant-gaming.com/es/?igr=portalgamerx" target="_blank" rel="noopener">🎮 Ver Juegos en Oferta</a>
+        <a class="btn" href="https://www.amazon.com/shop/viajealodesconocido" target="_blank" rel="noopener">🛒 Amazon</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider" aria-hidden="true"></div>
+
+  <!-- Redes -->
+  <section id="redes">
+    <h2>Redes</h2>
+    <div class="socials">
+      <a class="soc-card" href="https://www.facebook.com/ElPortalGamerX" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M22 12.07C22 6.48 17.52 2 11.93 2S2 6.48 2 12.07c0 5.01 3.66 9.16 8.44 9.93v-7.02H7.9v-2.91h2.54V9.41c0-2.5 1.49-3.88 3.77-3.88 1.09 0 2.23.2 2.23.2v2.45h-1.25c-1.23 0-1.61.76-1.61 1.54v1.85h2.74l-.44 2.91h-2.3V22c4.78-.77 8.44-4.92 8.44-9.93z"/></svg>
+        <span>Facebook</span>
+      </a>
+      <a class="soc-card" href="https://www.instagram.com/elportalgamerx" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M12 2.2c3.2 0 3.58.01 4.85.07 1.17.05 1.95.24 2.4.4.6.23 1.03.5 1.48.95.45.45.72.88.95 1.48.16.45.35 1.23.4 2.4.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.24 1.95-.4 2.4-.23.6-.5 1.03-.95 1.48-.45.45-.88.72-1.48.95-.45.16-1.23.35-2.4.4-1.27.06-1.65.07-4.85.07s-3.53-.01-4.85-.07Zm0 3.2a6.8 6.8 0 1 1 0 13.6 6.8 6.8 0 0 1 0-13.6Zm6.9-2.02a1.6 1.6 0 1 1-3.2 0 1.6 1.6 0 0 1 3.2 0Z"/></svg>
+        <span>Instagram</span>
+      </a>
+      <a class="soc-card" href="https://www.twitch.tv/soypaulangel" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M4 3h16v10.5l-4 4H12l-2 2H8v-2H4V3Zm2 2v10h4v2h1.5l2-2H16l2-2V5H6Zm8.5 2.5h-2v4h2v-4Zm-5 0h-2v4h2v-4Z"/></svg>
+        <span>Twitch</span>
+      </a>
+    </div>
+  </section>
+
+  <div class="divider" aria-hidden="true"></div>
+
+  <!-- Contacto -->
+  <section id="contacto">
+    <h2>Contacto</h2>
+    <div class="card pad">
+      <form id="contact-form" action="https://formspree.io/f/mjkejwvg" method="POST" novalidate>
+        <div class="form-grid">
+          <label>Nombre <input type="text" name="name" placeholder="Tu nombre" required></label>
+          <label>Email <input type="email" name="_replyto" placeholder="tu@email.com" required></label>
+        </div>
+        <label>Asunto <input type="text" name="subject" placeholder="Propuesta, sugerencia, colaboración…"></label>
+        <label>Mensaje <textarea name="message" rows="6" placeholder="Contame en qué te puedo ayudar" required></textarea></label>
+        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+        <div class="row"><button type="submit" class="btn brand">📨 Enviar</button></div>
+        <p id="form-result" class="muted" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
 </main>
 
-<script>
+<footer>© 2025 El Portal Gamer</footer>
+
+<!-- Popover compartir -->
+<div id="share-pop" class="share-pop" role="dialog" aria-modal="true" aria-hidden="true"></div>
+
+<script defer>
 /* ====== Config ====== */
-/* Dos blogs (no se borra el que ya funcionaba) */
-const FEEDS = [
-  "https://portalgamerok.blogspot.com/feeds/posts/summary?alt=json&max-results=20&orderby=published",
-  "https://elblogdelportalgamer.blogspot.com/feeds/posts/summary?alt=json&max-results=20&orderby=published"
-];
-const FALLBACK_JSON = "/news.json";
+const API_KEY="AIzaSyCqPlM0Ab3-_mtFHPmrrgJTS1S4dBCbbMA";
+const PLAYLIST_ID="PLk3cei5OOiyvTQzg5FGgIRY3xs44F7Wzv";
+const MAX_RESULTS=20;
+
+const BLOGGER_FEED_HTTPS="https://portalgamerok.blogspot.com/feeds/posts/summary?alt=json&max-results=6&orderby=published";
 const JINA="https://r.jina.ai";
 const ALLO="https://api.allorigins.win/raw";
 
-/* ====== Utils ====== */
-const $ = (s,p=document)=>p.querySelector(s);
-function fmtDate(iso){
-  try{ return new Date(iso).toLocaleDateString('es-PE',{ year:'numeric', month:'short', day:'2-digit' }); }
-  catch{ return ""; }
+const $=(s,p=document)=>p.querySelector(s);
+const $$=(s,p=document)=>[...p.querySelectorAll(s)];
+const truncate=(str,n)=> (str||"").length>n ? str.slice(0,n).replace(/\s+\S*$/,'')+"…" : str;
+const words=(x)=>(x||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
+
+/* ===== Limpiador YT ===== */
+function cleanYtDesc(s){
+  if(!s) return '';
+  let t=s.replace(/\r/g,'').replace(/\u00A0/g,' ').replace(/[\u200B-\u200D\uFEFF]/g,'').normalize('NFKC');
+  const hard=/(▬{2,}|─{3,}|—{3,}|━{3,}|═{3,}|_{3,}|-{3,}|=+|\*{3,}|#{3,}|[■□▪▫◆◇●○◼◻◾◽]{3,}|[\u2500-\u259F]{3,})/u;
+  const m=t.match(hard); if(m) t=t.slice(0,m.index);
+  const sep=/^([^\p{L}\p{N}]{4,}|[-=_*#~•·\u25A0-\u25FF\u2500-\u259F\s]+)$/u;
+  const footer=/(apoya(nos)?|apoyá|sígueme|redes|contacto|patreon|ko-?fi|discord|instagram|twitter|twitch|facebook|instant-?gaming|amazon|suscríbete|subscribe)/i;
+  const out=[];
+  for(const raw of t.split('\n')){
+    const line=raw.trim(); if(!line) continue;
+    if(sep.test(line)||footer.test(line)) break;
+    if(/^https?:\/\//i.test(line)) continue;
+    out.push(line); if(out.join(' ').length>1200) break;
+  }
+  return out.join('\n').trim();
 }
-function truncate(str,n){ return (str||"").length>n ? (str.slice(0,n).replace(/\s+\S*$/,'')+"…") : (str||""); }
-function stripHtml(html){ return (html||"").replace(/<[^>]+>/g," ").replace(/\s+/g,' ').trim(); }
-function firstImg(html){
-  const m = /<img[^>]+src=["']([^"']+)["']/i.exec(html || "");
-  return m ? m[1] : "";
-}
+
+/* ===== Anti-pixelado Blogger ===== */
 function bloggerToOriginal(u){ if(!u) return ''; return u.replace(/\/s\d+[^/]*\//,'/s0/').replace(/=s\d+[^&?]*/,'=s0');}
+function bloggerFromOriginalSet(u,size){ if(!u) return ''; return u.replace('/s0/','/s'+size+'/').replace('=s0','=s'+size);}
 
-/* ====== Fetch feeds con proxies ====== */
-async function fetchJson(url){
-  const r = await fetch(url,{cache:'no-store'});
-  const t = await r.text();
-  try { return JSON.parse(t); } catch { return {}; }
+/* ===== YouTube ===== */
+function renderUltimo(v){
+  const box=$("#ultimo-lite"); box.className="videobox";
+  const lite=document.createElement("div");
+  lite.className="lite-yt"; lite.style.backgroundImage=`url(${v.thumb})`;
+  lite.innerHTML=`<button class="lty-playbtn" aria-label="Reproducir ${v.title}">
+    <svg viewBox="0 0 68 48"><path d="M66.52 7.02a8 8 0 0 0-5.64-5.66C56.8 0 34 0 34 0S11.2 0 7.12 1.36A8 8 0 0 0 1.48 7.02 83.3 83.3 0 0 0 0 24a83.3 83.3 0 0 0 1.48 16.98 8 8 0 0 0 5.64 5.66C11.2 48 34 48 34 48s22.8 0 26.88-1.36a8 8 0 0 0 5.64-5.66A83.3 83.3 0 0 0 68 24a83.3 83.3 0 0 0-1.48-16.98zM27 34V14l18 10-18 10z"/></svg>
+  </button>`;
+  lite.addEventListener("click",()=>{ box.innerHTML=`<iframe src="https://www.youtube.com/embed/${v.id}?autoplay=1" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="${v.title}"></iframe>`;});
+  box.appendChild(lite);
+  $("#ultimo-titulo").textContent=v.title;
+  $("#ultimo-fecha").textContent=new Date(v.date).toLocaleDateString();
+  $("#ultimo-desc").textContent=truncate(v.desc,420);
+  $("#ultimo-ver").href=`https://www.youtube.com/watch?v=${v.id}`;
 }
-async function fetchFeedViaProxies(feedUrl){
-  const httpUrl = feedUrl.replace("https://","http://");
-  const tries = [
-    `${JINA}/${httpUrl}`,
-    `${JINA}/${feedUrl}`,
-    `${ALLO}?url=${encodeURIComponent(feedUrl)}`,
-    feedUrl
-  ];
-  for(const u of tries){
-    try{
-      const d = await fetchJson(u);
-      if(d?.feed?.entry?.length) return d;
-    }catch{}
+function makeMiniCard(v){
+  const el=document.createElement("article");
+  el.className="card pad filterable"; el.dataset.title=v.title; el.dataset.desc=v.desc;
+  el.innerHTML=`<div class="videobox"><div class="lite-yt" style="background-image:url(${v.thumb})">
+      <button class="lty-playbtn" aria-label="Reproducir ${v.title}">
+      <svg viewBox="0 0 68 48"><path d="M66.52 7.02a8 8 0 0 0-5.64-5.66C56.8 0 34 0 34 0S11.2 0 7.12 1.36A8 8 0 0 0 1.48 7.02 83.3 83.3 0 0 0 0 24a83.3 83.3 0 0 0 1.48 16.98 8 8 0 0 0 5.64 5.66C11.2 48 34 48 34 48s22.8 0 26.88-1.36a8 8 0 0 0 5.64-5.66A83.3 83.3 0 0 0 68 24a83.3 83.3 0 0 0-1.48-16.98zM27 34V14l18 10-18 10z"/></svg></button></div></div>
+    <div class="title">${v.title}</div>
+    <p class="desc">${truncate(v.desc,360)}</p>
+    <a class="btn brand" href="https://www.youtube.com/watch?v=${v.id}" target="_blank" rel="noopener">▶ Ver video</a>`;
+  const thumb=el.querySelector(".videobox");
+  thumb.addEventListener("click",()=>{ thumb.innerHTML=`<iframe src="https://www.youtube.com/embed/${v.id}?autoplay=1" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="${v.title}"></iframe>`;});
+  return el;
+}
+function renderMini(arr){ const grid=$("#mini-grid"); grid.innerHTML=""; arr.forEach(v=>grid.appendChild(makeMiniCard(v))); }
+function renderSeries(items){
+  const SERIES={ "Saga Parasite Eve":["parasite eve","koudelka"], "Survival Horror PS1/PS2":["resident evil","silent hill","dino crisis","fear effect","rule of rose","haunting ground"], "JRPG & Square":["final fantasy","chrono","xenogears","vagrant story","valkyrie profile"] };
+  const grid=$("#series-grid"); grid.innerHTML="";
+  for(const [name,keys] of Object.entries(SERIES)){
+    const hits=items.filter(v=>keys.some(k=>words(v.title).includes(k))); if(!hits.length) continue;
+    const top=hits.slice(0,3);
+    const el=document.createElement("article");
+    el.className="card pad filterable"; el.dataset.title=name; el.dataset.desc=top.map(x=>x.title).join(" ");
+    el.innerHTML=`<div class="title">${name}</div><p class="muted" style="margin-top:-2px">${top.length} videos</p>
+      <div class="grid cols-3" style="margin-top:8px">
+        ${top.map(v=>`<a class="btn" href="https://www.youtube.com/watch?v=${v.id}" target="_blank" rel="noopener">▶ ${truncate(v.title,38)}</a>`).join("")}
+      </div>`;
+    grid.appendChild(el);
   }
-  return null;
+}
+async function loadPlaylist(){
+  try{
+    const url=`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${PLAYLIST_ID}&maxResults=${MAX_RESULTS}&key=${API_KEY}`;
+    const r=await fetch(url); const data=await r.json(); if(!data.items) throw new Error("YouTube sin items");
+    const items=data.items.map(i=>({ id:i.snippet.resourceId.videoId, title:i.snippet.title, desc:cleanYtDesc(i.snippet.description||""), date:i.snippet.publishedAt, thumb:(i.snippet.thumbnails?.maxres?.url||i.snippet.thumbnails?.high?.url||i.snippet.thumbnails?.medium?.url||"") }));
+    renderUltimo(items[0]); renderMini(items.slice(1,10)); renderSeries(items);
+    const inp=$("#buscador"); inp.addEventListener("input",()=>{ const q=words(inp.value); for(const card of $$(".filterable")){ const hay=words(card.dataset.title+" "+(card.dataset.desc||"")).includes(q); card.style.display=(!q||hay)?"":"none"; }});
+  }catch(e){ console.error("YouTube:",e); $("#ultimo-titulo").textContent="No se pudo cargar la playlist"; $("#ultimo-fecha").textContent=""; $("#ultimo-desc").textContent="Probá más tarde o visitá el canal."; $("#ultimo-ver").href="https://www.youtube.com/@TuCanal/videos"; }
 }
 
-/* ====== Parse Blogger ====== */
-function parseBlogger(data){
-  const entries = data?.feed?.entry || [];
-  return entries.map(e=>{
-    const raw = e.summary?.$t || e.content?.$t || "";
-    const text = stripHtml(raw);
-    const title = (e.title?.$t || "").trim() || (text ? text.split(/\s+/).slice(0,12).join(" ")+"…" : "Sin título");
-    const link = (e.link||[]).find(l=>l.rel==='alternate')?.href || '';
-    const date = e.published?.$t || e.updated?.$t || new Date().toISOString();
-    const id = (e.id?.$t||"").split("post-").pop();
-    const thumb0 = e['media$thumbnail']?.url || firstImg(raw) || "";
-    return { id, title, url: link, date, excerpt: text, thumb: bloggerToOriginal(thumb0) };
-  });
-}
-
-/* ====== Merge, dedupe, sort ====== */
-function dedupeSort(items){
-  const seen=new Set(), out=[];
-  for(const it of items){
-    const key = it.url || it.id || (it.title+"|"+it.date);
-    if(seen.has(key)) continue;
-    seen.add(key); out.push(it);
-  }
-  out.sort((a,b)=> new Date(b.date) - new Date(a.date));
-  return out;
-}
-
-/* ====== Render ====== */
-function renderList(items){
-  const list = $("#news-list");
-  list.innerHTML = "";
-  items.forEach(n=>{
-    const a = document.createElement("a");
-    a.className = "item";
-    a.href = makeHref(n);
-    a.dataset.url = n.url;
-    a.dataset.title = n.title;
-    a.innerHTML = `
-      <img loading="lazy" decoding="async" src="${n.thumb || 'og.jpg'}" alt="">
-      <div>
-        <h4>${n.title}</h4>
-        <time datetime="${n.date}">${fmtDate(n.date)}</time>
-        <p>${truncate(n.excerpt, 120)}</p>
-      </div>
-    `;
-    a.addEventListener("click", (e)=>{ e.preventDefault(); openInViewer(n); history.replaceState(null,"",a.href); });
-    list.appendChild(a);
-  });
-}
-
-function makeHref(n){
-  const base = new URL(location.origin + location.pathname);
+/* ===== Noticias ===== */
+function timeAgo(iso){ const d=new Date(iso); const diff=(Date.now()-d.getTime())/1000; const u=[[31536000,'a'],[2592000,'m'],[604800,'sem'],[86400,'d'],[3600,'h'],[60,'min']]; for(const [s,n] of u){ if(diff>=s) return `${Math.floor(diff/s)} ${n}`;} return 'ahora'; }
+function extractImgFromHtml(html){ const m=(html||"").match(/<img[^>]+src=["']([^"']+)["']/i); return m?m[1]:""; }
+function newsHref(n){
+  const base=new URL('news.html', location.origin);
   if(n.id) base.searchParams.set('id', n.id);
-  if(n.url) base.searchParams.set('u', n.url);
+  else if(n.url) base.searchParams.set('u', n.url);
   return base.toString();
 }
+function parseBloggerJson(data){
+  const entries=data?.feed?.entry||[];
+  return entries.map(e=>{
+    const raw=e.summary?.$t||e.content?.$t||"";
+    const text=raw.replace(/<[^>]+>/g," ").replace(/\s+/g,' ').trim();
+    const title=(e.title?.$t||"").trim() || (text?text.split(/\s+/).slice(0,12).join(" ")+"…":"Sin título");
+    const link=(e.link||[]).find(l=>l.rel==='alternate')?.href || '';
+    const date=e.published?.$t || e.updated?.$t || new Date().toISOString();
+    const tRaw=e['media$thumbnail']?.url || extractImgFromHtml(raw) || "";
+    const s0=bloggerToOriginal(tRaw);
+    const id=(e.id?.$t||"").split("post-").pop();
+    return { title, url:link, date, summary:text, image0:s0, id };
+  });
+}
+function renderNews(items){
+  const grid=$("#news-grid"); grid.innerHTML="";
+  items.forEach(n=>{
+    const href=newsHref(n);
+    const src600 = bloggerFromOriginalSet(n.image0,600);
+    const src800 = bloggerFromOriginalSet(n.image0,800);
+    const src1200= bloggerFromOriginalSet(n.image0,1200);
+    const src1600= bloggerFromOriginalSet(n.image0,1600);
+    const srcBase= src1200 || src800 || src600 || n.image0 || 'og.jpg';
 
-function openInViewer(n){
-  $("#viewer-title").textContent = n.title || "Noticia";
-  $("#open-external").href = n.url || "#";
-  $("#news-frame").src = n.url || "";
+    const card=document.createElement('article');
+    card.className="n-card filterable"; card.dataset.title=n.title; card.dataset.desc=n.summary;
+
+    const imgTag = srcBase ? `
+      <img loading="lazy" decoding="async"
+           src="${srcBase}"
+           srcset="${src600?src600:''} 600w, ${src800?src800:''} 800w, ${src1200?src1200:''} 1200w, ${src1600?src1600:''} 1600w"
+           sizes="(min-width:1200px) 30vw, (min-width:900px) 45vw, 92vw"
+           alt="">
+    ` : "";
+
+    card.innerHTML=`
+      <a class="news-thumb" data-nav="news" href="${href}" aria-label="${n.title}">${imgTag}</a>
+      <div class="n-content">
+        <div class="news-meta"><span class="badge">Noticia</span><span>${timeAgo(n.date)}</span></div>
+        <div class="title">${n.title}</div>
+        <p class="desc">${truncate(n.summary,220)}</p>
+        <div class="n-actions">
+          <a class="btn brand" data-nav="news" href="${href}">Leer</a>
+          <button class="btn black share-btn" type="button" data-url="${href}" data-title="${n.title}">Compartir</button>
+        </div>
+      </div>`;
+    grid.appendChild(card);
+  });
+
+  // Forzamos navegación segura para los links de noticia
+  document.addEventListener('click', (e)=>{
+    const a = e.target.closest('a[data-nav="news"]');
+    if(a){
+      e.preventDefault();
+      window.location.href = a.href; // navegación segura
+    }
+  }, {passive:false});
+
+  // Compartir (sheet nativo o popover)
+  const pop=$("#share-pop");
+  function showPop(url,title){
+    const u=encodeURIComponent(url), t=encodeURIComponent(title);
+    pop.innerHTML = `
+      <a target="_blank" rel="noopener" href="https://wa.me/?text=${t}%20${u}">WhatsApp</a>
+      <a target="_blank" rel="noopener" href="https://t.me/share/url?url=${u}&text=${t}">Telegram</a>
+      <a target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?url=${u}&text=${t}">X/Twitter</a>
+      <a target="_blank" rel="noopener" href="https://www.facebook.com/sharer/sharer.php?u=${u}">Facebook</a>
+      <button id="copyLink" class="btn">Copiar enlace</button>
+      <button id="closeShare" class="btn">Cerrar</button>
+    `;
+    pop.classList.add('show');
+    $("#copyLink",pop).onclick=async()=>{ await navigator.clipboard.writeText(url); $("#copyLink",pop).textContent="Copiado ✅"; };
+    $("#closeShare",pop).onclick=()=>pop.classList.remove('show');
+  }
+  document.addEventListener('click',e=>{
+    const btn=e.target.closest('.share-btn');
+    if(btn){
+      const url=btn.dataset.url, title=btn.dataset.title||'Noticia';
+      if(navigator.share){ navigator.share({title,url}).catch(()=>showPop(url,title)); }
+      else { showPop(url,title); }
+    }else if(!e.target.closest('#share-pop')){ pop.classList.remove('show'); }
+  });
 }
 
-/* ====== Init ====== */
-async function loadAll(){
+async function fetchJson(url){ const r=await fetch(url,{cache:'no-store'}); const txt=await r.text(); try{ return JSON.parse(txt);}catch{return {};} }
+async function getBloggerData(){
+  const urls=[ `${JINA}/http://portalgamerok.blogspot.com/feeds/posts/summary?alt=json&max-results=6&orderby=published`,
+               `${JINA}/https://portalgamerok.blogspot.com/feeds/posts/summary?alt=json&max-results=6&orderby=published`,
+               `${ALLO}?url=${encodeURIComponent(BLOGGER_FEED_HTTPS)}`, BLOGGER_FEED_HTTPS ];
+  for(const u of urls){ try{ const d=await fetchJson(u); if(d?.feed?.entry?.length) return d; }catch{} }
+  throw new Error("No se pudo obtener el feed");
+}
+async function loadNews(){
   try{
-    const datas = (await Promise.all(FEEDS.map(f=>fetchFeedViaProxies(f)))).filter(Boolean);
-    if(!datas.length) throw new Error("sin feeds");
-    const merged = dedupeSort(datas.flatMap(parseBlogger));
-    renderList(merged);
-
-    // Cargar por URL (?u=... | ?id=...)
-    const params = new URLSearchParams(location.search);
-    const u = params.get("u");
-    let current = null;
-
-    if(u){
-      current = merged.find(x=>x.url===u) || { title:"Noticia", url:u, date:new Date().toISOString() };
-    }else if(params.get("id")){
-      const id = params.get("id");
-      current = merged.find(x=>x.id===id) || merged[0];
-    }else{
-      current = merged[0];
-    }
-    if(current) openInViewer(current);
-
-    // Copiar enlace
-    $("#copy-link").addEventListener("click", async (e)=>{
-      e.preventDefault();
-      try{
-        await navigator.clipboard.writeText(location.href);
-        $("#copy-link").textContent = "Enlace copiado ✅";
-        setTimeout(()=> $("#copy-link").textContent = "Copiar enlace", 1500);
-      }catch{}
-    });
-
+    const data=await getBloggerData();
+    const items=parseBloggerJson(data);
+    if(!items.length) throw new Error("Sin entradas");
+    renderNews(items);
   }catch(e){
-    // Fallback a /news.json
     try{
-      const r = await fetch(FALLBACK_JSON, {cache:"no-store"});
-      const items = await r.json();
-      const norm = (Array.isArray(items)?items:items.items||[]).map(n=>({
-        id: n.id || "",
-        title: n.title || "Sin título",
-        url: n.url || "#",
-        date: n.date || new Date().toISOString(),
-        excerpt: n.excerpt || n.summary || "",
-        thumb: n.thumb || n.image || ""
-      }));
-      const merged = dedupeSort(norm);
-      if(!merged.length) throw new Error("fallback vacío");
-      renderList(merged);
-      openInViewer(merged[0]);
-    }catch{
-      $("#news-list").innerHTML = `<div class="muted">No se pudieron cargar las noticias.</div>`;
-    }
+      const res=await fetch('/news.json',{cache:'no-store'}); const items=await res.json();
+      const norm=(items||[]).map(n=>({ ...n, image0:bloggerToOriginal(n.image), id:n.id }));
+      if(norm.length) renderNews(norm); else throw new Error('news.json vacío');
+    }catch{ $("#news-grid").innerHTML=`<div class="muted">No se pudieron cargar las noticias.</div>`; }
   }
 }
 
-loadAll();
+/* ===== Contacto ===== */
+(function(){
+  const form=$("#contact-form"); if(!form) return;
+  const result=$("#form-result");
+  form.addEventListener('submit',async e=>{
+    e.preventDefault(); result.textContent='Enviando…';
+    try{
+      const r=await fetch(form.action,{method:'POST',body:new FormData(form),headers:{'Accept':'application/json'}});
+      if(r.ok){ result.textContent='¡Mensaje enviado!'; form.reset();}
+      else{ result.textContent='Hubo un error al enviar.';}
+    }catch{ result.textContent='No se pudo enviar. Probá más tarde.';}
+  });
+})();
+
+/* ===== Init ===== */
+loadPlaylist();
+loadNews();
 </script>
 </body>
 </html>
