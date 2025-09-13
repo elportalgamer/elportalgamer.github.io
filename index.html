@@ -293,37 +293,37 @@ function renderSeries(items){
 }
 async function loadPlaylist(){
   try{
-    // Cambia playlistItems por search para obtener los últimos videos del canal
-    const CHANNEL_ID = "UCsGQTEtsMT4Aqnpyv0uyNxA"; // Reemplaza por tu canal real
-    const url = `https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&channelId=${CHANNEL_ID}&part=snippet,id&order=date&maxResults=${MAX_RESULTS}&type=video`;
-    const r = await fetch(url);
-    const data = await r.json();
+    const url=`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${PLAYLIST_ID}&maxResults=${MAX_RESULTS}&key=${API_KEY}`;
+    const r=await fetch(url); 
+    const data=await r.json(); 
     console.log(data);
     if(!data.items) throw new Error("YouTube sin items");
-    const items = data.items.map(i => ({
-      id: i.id.videoId,
-      title: i.snippet.title,
-      desc: cleanYtDesc(i.snippet.description || ""),
-      date: i.snippet.publishedAt,
-      thumb: (i.snippet.thumbnails?.maxres?.url || i.snippet.thumbnails?.high?.url || i.snippet.thumbnails?.medium?.url || "")
+    const items=data.items.map(i=>({ 
+      id:i.snippet.resourceId.videoId, 
+      title:i.snippet.title, 
+      desc:cleanYtDesc(i.snippet.description||""), 
+      date:i.snippet.publishedAt, 
+      thumb:(i.snippet.thumbnails?.maxres?.url||i.snippet.thumbnails?.high?.url||i.snippet.thumbnails?.medium?.url||"") 
     }));
-    renderUltimo(items[0]);
-    renderMini(items.slice(1,10));
+    // Ordenar por fecha de publicación descendente
+    items.sort((a,b)=>new Date(b.date)-new Date(a.date));
+    renderUltimo(items[0]); 
+    renderMini(items.slice(1,10)); 
     renderSeries(items);
-    const inp = $("#buscador");
-    inp.addEventListener("input", () => {
-      const q = words(inp.value);
+    const inp=$("#buscador"); 
+    inp.addEventListener("input",()=>{ 
+      const q=words(inp.value); 
       for(const card of $$(".filterable")){
-        const hay = words(card.dataset.title + " " + (card.dataset.desc || "")).includes(q);
-        card.style.display = (!q || hay) ? "" : "none";
+        const hay=words(card.dataset.title+" "+(card.dataset.desc||"")).includes(q); 
+        card.style.display=(!q||hay)?"":"none"; 
       }
     });
-  }catch(e){
-    console.error("YouTube:",e);
-    $("#ultimo-titulo").textContent="No se pudo cargar el canal";
-    $("#ultimo-fecha").textContent="";
-    $("#ultimo-desc").textContent="Probá más tarde o visitá el canal.";
-    $("#ultimo-ver").href="https://www.youtube.com/@TuCanal/videos";
+  }catch(e){ 
+    console.error("YouTube:",e); 
+    $("#ultimo-titulo").textContent="No se pudo cargar la playlist"; 
+    $("#ultimo-fecha").textContent=""; 
+    $("#ultimo-desc").textContent="Probá más tarde o visitá el canal."; 
+    $("#ultimo-ver").href="https://www.youtube.com/@TuCanal/videos"; 
   }
 }
 /* ===== Noticias ===== */
