@@ -245,6 +245,71 @@ function cleanYtDesc(s){
 function bloggerToOriginal(u){ if(!u) return ''; return u.replace(/\/s\d+[^/]*\//,'/s0/').replace(/=s\d+[^&?]*/,'=s0');}
 function bloggerFromOriginalSet(u,size){ if(!u) return ''; return u.replace('/s0/','/s'+size+'/').replace('=s0','=s'+size);}
 
+/* ---------- Imagen desde HTML (mejorada) ---------- */
+function pickFromSrcset(srcset){
+  if(!srcset) return "";
+  // toma el candidato de mayor ancho
+  const parts = srcset.split(',').map(s=>s.trim());
+  let best = "", w = 0;
+  for(const p of parts){
+    const [url, desc] = p.split(/\s+/);
+    const m = /(\d+)w/.exec(desc||"");
+    const val = m ? parseInt(m[1],10) : 0;
+    if(val >= w){ w = val; best = url; }
+  }
+  return best || parts[parts.length-1].split(/\s+/)[0];
+}
+function extractImgFromHtml(html){
+  try{
+    const doc = new DOMParser().parseFromString(html||"", "text/html");
+
+    // og/twitter
+    const og = doc.querySelector('meta[property="og:image"],meta[name="og:image"],meta[property="og:image:url"],meta[name="twitter:image"],meta[name="twitter:image:src"]');
+    if(og?.content) return og.content;
+
+    // picture/srcset
+    const srcsetEl = doc.querySelector('source[srcset], img[srcset]');
+    if(srcsetEl){
+      const best = pickFromSrcset(srcsetEl.getAttribute('srcset')||"");
+      if(best) return best;
+    }
+
+    // <img> con data-src etc
+    const img = doc.querySelector('img');
+    if(img){
+      return img.getAttribute('src') ||
+             img.getAttribute('data-src') ||
+             img.getAttribute('data-original') ||
+             img.getAttribute('data-lazy-src') || "";
+    }
+  }catch{}
+
+  // fallback regex
+  const m = (html||"").match(/<img[^>]+(?:src|data-src|data-original|data-lazy-src)=["']([^"']+)["']/i);
+  return m ? m[1] : "";
+}
+
+/* Filtro de placeholders */
+function isPlaceholder(u){
+  if(!u) return true;
+  if(u.startsWith('data:')) return true;
+  if(/blank\.gif|transparent|spacer/i.test(u)) return true;
+  return false;
+}
+
+/* ---------- OG image real desde la página del post ---------- */
+async function fetchOgImageViaProxy(url){
+  try{
+    const prox = `${JINA}/${url}`;
+    const html = await (await fetch(prox, {cache:'no-store'})).text();
+    const doc  = new DOMParser().parseFromString(html, "text/html");
+    const og = doc.querySelector('meta[property="og:image"],meta[name="og:image"],meta[property="og:image:url"],meta[name="twitter:image"],meta[name="twitter:image:src"]');
+    return og?.content || "";
+  }catch{
+    return "";
+  }
+}
+
 /* ===== YouTube ===== */
 function renderUltimo(v){
   const box=$("#ultimo-lite"); box.className="videobox";
@@ -290,22 +355,25 @@ function renderSeries(items){
   }
 }
 
-/* 🔥 NUEVO: siempre muestra el video más reciente del playlist */
+/* ===== Playlist: siempre el más reciente ===== */
 async function loadPlaylist(){
   try{
-    const url=`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${PLAYLIST_ID}&maxResults=${MAX_RESULTS}&key=${API_KEY}&_=${Date.now()}`;
-    const r=await fetch(url,{cache:'no-store'});
-    const data=await r.json();
+    const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${PLAYLIST_ID}&maxResults=${MAX_RESULTS}&key=${API_KEY}&_=${Date.now()}`;
+    const r   = await fetch(url, { cache: 'no-store' });
+    const data= await r.json();
     if(!Array.isArray(data.items) || !data.items.length) throw new Error("YouTube sin items");
 
-    const items=data.items.map(i=>({
-      id:i.snippet.resourceId.videoId,
-      title:i.snippet.title,
-      desc:cleanYtDesc(i.snippet.description||""),
-      date:i.snippet.publishedAt,
-      thumb:(i.snippet.thumbnails?.maxres?.url||i.snippet.thumbnails?.high?.url||i.snippet.thumbnails?.medium?.url||"")
-    }))
-    .sort((a,b)=>new Date(b.date)-new Date(a.date)); // más nuevo primero
+    const items = data.items
+      .map(i => ({
+        id:    i.snippet.resourceId.videoId,
+        title: i.snippet.title,
+        desc:  cleanYtDesc(i.snippet.description || ""),
+        date:  i.snippet.publishedAt,
+        thumb: (i.snippet.thumbnails?.maxres?.url ||
+                i.snippet.thumbnails?.high?.url   ||
+                i.snippet.thumbnails?.medium?.url || "")
+      }))
+      .sort((a,b) => new Date(b.date) - new Date(a.date));
 
     renderUltimo(items[0]);
     renderMini(items.slice(1,10));
@@ -313,10 +381,10 @@ async function loadPlaylist(){
 
     const inp=$("#buscador");
     inp.addEventListener("input",()=>{
-      const q=words(inp.value);
+      const q = words(inp.value);
       for(const card of $$(".filterable")){
-        const hay=words(card.dataset.title+" "+(card.dataset.desc||"")).includes(q);
-        card.style.display=(!q||hay)?"":"none";
+        const hay = words(card.dataset.title+" "+(card.dataset.desc||"")).includes(q);
+        card.style.display = (!q || hay) ? "" : "none";
       }
     });
   }catch(e){
@@ -330,7 +398,10 @@ async function loadPlaylist(){
 
 /* ===== Noticias ===== */
 function timeAgo(iso){ const d=new Date(iso); const diff=(Date.now()-d.getTime())/1000; const u=[[31536000,'a'],[2592000,'m'],[604800,'sem'],[86400,'d'],[3600,'h'],[60,'min']]; for(const [s,n] of u){ if(diff>=s) return `${Math.floor(diff/s)} ${n}`;} return 'ahora'; }
-function extractImgFromHtml(html){ const m=(html||"").match(/<img[^>]+src=["']([^"']+)["']/i); return m?m[1]:""; }
+function extractFirstImgOrFallback(rawHtml){
+  const u = extractImgFromHtml(rawHtml);
+  return isPlaceholder(u) ? "" : u;
+}
 function newsHref(n){
   const base=new URL('news.html', location.origin);
   if(n.id) base.searchParams.set('id', n.id);
@@ -345,12 +416,26 @@ function parseBloggerJson(data){
     const title=(e.title?.$t||"").trim() || (text?text.split(/\s+/).slice(0,12).join(" ")+"…":"Sin título");
     const link=(e.link||[]).find(l=>l.rel==='alternate')?.href || '';
     const date=e.published?.$t || e.updated?.$t || new Date().toISOString();
-    const tRaw=e['media$thumbnail']?.url || extractImgFromHtml(raw) || "";
+    const tRaw=e['media$thumbnail']?.url || extractFirstImgOrFallback(raw) || "";
     const s0=bloggerToOriginal(tRaw);
     const id=(e.id?.$t||"").split("post-").pop();
     return { title, url:link, date, summary:text, image0:s0, id };
   });
 }
+
+/* Completa imágenes faltantes usando OG de la página real */
+async function resolveMissingImages(items){
+  for(const it of items){
+    if(!it.image0 || isPlaceholder(it.image0)){
+      const og = await fetchOgImageViaProxy(it.url);
+      if(og){
+        it.image0 = bloggerToOriginal(og) || og;
+      }
+    }
+  }
+  return items;
+}
+
 function renderNews(items){
   const grid=$("#news-grid"); grid.innerHTML="";
   items.forEach(n=>{
@@ -394,7 +479,6 @@ function renderNews(items){
     }
   }, {passive:false});
 
-  // Compartir (sheet nativo o popover)
   const pop=$("#share-pop");
   function showPop(url,title){
     const u=encodeURIComponent(url), t=encodeURIComponent(title);
@@ -431,14 +515,16 @@ async function getBloggerData(){
 async function loadNews(){
   try{
     const data=await getBloggerData();
-    const items=parseBloggerJson(data);
+    let items=parseBloggerJson(data);
+    items = await resolveMissingImages(items);        // 👈 completa imágenes que falten (cualquier autor)
     if(!items.length) throw new Error("Sin entradas");
     renderNews(items);
   }catch(e){
     try{
-      const res=await fetch('/news.json',{cache:'no-store'}); const items=await res.json();
-      const norm=(items||[]).map(n=>({ ...n, image0:bloggerToOriginal(n.image), id:n.id }));
-      if(norm.length) renderNews(norm); else throw new Error('news.json vacío');
+      const res=await fetch('/news.json',{cache:'no-store'}); let items=await res.json();
+      items=(items||[]).map(n=>({ ...n, image0:bloggerToOriginal(n.image), id:n.id }));
+      items = await resolveMissingImages(items);      // 👈 también en fallback
+      if(items.length) renderNews(items); else throw new Error('news.json vacío');
     }catch{ $("#news-grid").innerHTML=`<div class="muted">No se pudieron cargar las noticias.</div>`; }
   }
 }
