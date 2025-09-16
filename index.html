@@ -1,5 +1,3 @@
-PAGINA POSTA
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -8,8 +6,7 @@ PAGINA POSTA
   <title>El Portal Gamer — Reseñas y retro</title>
 
   <link rel="canonical" href="https://www.elportalgamer.com/" />
-  <link rel="icon" href="mago.png" />
-  <link rel="icon" type="image/x-icon" href="mago.ico" />
+  <link rel="icon" type="image/png" href="mago.png" />
 
   <meta name="description" content="Reseñas sinceras, retro y rarezas: PS1, PS2, Dreamcast, JRPG y survival horror. Videos y reseñas en El Portal Gamer." />
   <meta property="og:title" content="El Portal Gamer — Reseñas y retro" />
@@ -292,41 +289,45 @@ function renderSeries(items){
     grid.appendChild(el);
   }
 }
+
+/* 🔥 NUEVO: siempre muestra el video más reciente del playlist */
 async function loadPlaylist(){
   try{
-    const url=`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${PLAYLIST_ID}&maxResults=${MAX_RESULTS}&key=${API_KEY}`;
-    const r=await fetch(url); 
-    const data=await r.json(); 
-    console.log(data);
-    if(!data.items) throw new Error("YouTube sin items");
-    const items=data.items.map(i=>({ 
-      id:i.snippet.resourceId.videoId, 
-      title:i.snippet.title, 
-      desc:cleanYtDesc(i.snippet.description||""), 
-      date:i.snippet.publishedAt, 
-      thumb:(i.snippet.thumbnails?.maxres?.url||i.snippet.thumbnails?.high?.url||i.snippet.thumbnails?.medium?.url||"") 
-    }));
-    // Ordenar por fecha de publicación descendente
-    items.sort((a,b)=>new Date(b.date)-new Date(a.date));
-    renderUltimo(items[0]); 
-    renderMini(items.slice(1,10)); 
+    const url=`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${PLAYLIST_ID}&maxResults=${MAX_RESULTS}&key=${API_KEY}&_=${Date.now()}`;
+    const r=await fetch(url,{cache:'no-store'});
+    const data=await r.json();
+    if(!Array.isArray(data.items) || !data.items.length) throw new Error("YouTube sin items");
+
+    const items=data.items.map(i=>({
+      id:i.snippet.resourceId.videoId,
+      title:i.snippet.title,
+      desc:cleanYtDesc(i.snippet.description||""),
+      date:i.snippet.publishedAt,
+      thumb:(i.snippet.thumbnails?.maxres?.url||i.snippet.thumbnails?.high?.url||i.snippet.thumbnails?.medium?.url||"")
+    }))
+    .sort((a,b)=>new Date(b.date)-new Date(a.date)); // más nuevo primero
+
+    renderUltimo(items[0]);
+    renderMini(items.slice(1,10));
     renderSeries(items);
-    const inp=$("#buscador"); 
-    inp.addEventListener("input",()=>{ 
-      const q=words(inp.value); 
+
+    const inp=$("#buscador");
+    inp.addEventListener("input",()=>{
+      const q=words(inp.value);
       for(const card of $$(".filterable")){
-        const hay=words(card.dataset.title+" "+(card.dataset.desc||"")).includes(q); 
-        card.style.display=(!q||hay)?"":"none"; 
+        const hay=words(card.dataset.title+" "+(card.dataset.desc||"")).includes(q);
+        card.style.display=(!q||hay)?"":"none";
       }
     });
-  }catch(e){ 
-    console.error("YouTube:",e); 
-    $("#ultimo-titulo").textContent="No se pudo cargar la playlist"; 
-    $("#ultimo-fecha").textContent=""; 
-    $("#ultimo-desc").textContent="Probá más tarde o visitá el canal."; 
-    $("#ultimo-ver").href="https://www.youtube.com/@TuCanal/videos"; 
+  }catch(e){
+    console.error("YouTube:",e);
+    $("#ultimo-titulo").textContent="No se pudo cargar la playlist";
+    $("#ultimo-fecha").textContent="";
+    $("#ultimo-desc").textContent="Probá más tarde o visitá el canal.";
+    $("#ultimo-ver").href="https://www.youtube.com/@TuCanal/videos";
   }
 }
+
 /* ===== Noticias ===== */
 function timeAgo(iso){ const d=new Date(iso); const diff=(Date.now()-d.getTime())/1000; const u=[[31536000,'a'],[2592000,'m'],[604800,'sem'],[86400,'d'],[3600,'h'],[60,'min']]; for(const [s,n] of u){ if(diff>=s) return `${Math.floor(diff/s)} ${n}`;} return 'ahora'; }
 function extractImgFromHtml(html){ const m=(html||"").match(/<img[^>]+src=["']([^"']+)["']/i); return m?m[1]:""; }
@@ -385,12 +386,11 @@ function renderNews(items){
     grid.appendChild(card);
   });
 
-  // Forzamos navegación segura para los links de noticia
   document.addEventListener('click', (e)=>{
     const a = e.target.closest('a[data-nav="news"]');
     if(a){
       e.preventDefault();
-      window.location.href = a.href; // navegación segura
+      window.location.href = a.href;
     }
   }, {passive:false});
 
