@@ -1,29 +1,24 @@
 <!DOCTYPE html>
+
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>El Portal Gamer — Reseñas y retro</title>
-
-  <link rel="canonical" href="https://www.elportalgamer.com/" />
-  <link rel="icon" type="image/png" href="mago.png" />
-
-  <meta name="description" content="Reseñas sinceras, retro y rarezas: PS1, PS2, Dreamcast, JRPG y survival horror. Videos y reseñas en El Portal Gamer." />
-  <meta property="og:title" content="El Portal Gamer — Reseñas y retro" />
-  <meta property="og:description" content="Reseñas sinceras, retro y rarezas: PS1, PS2, Dreamcast, JRPG y survival horror." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://www.elportalgamer.com/" />
-  <meta property="og:image" content="https://www.elportalgamer.com/og.jpg" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="El Portal Gamer — Reseñas y retro" />
-  <meta name="twitter:description" content="Reseñas sinceras, retro y rarezas: PS1, PS2, Dreamcast, JRPG y survival horror." />
-  <meta name="twitter:image" content="https://www.elportalgamer.com/og.jpg" />
-
-  <style>
-    :root{
-      --bg:#121212; --surface:#1f1f1f; --text:#f0f0f0; --muted:#b5b5b5;
-      --brand:#ff4500; --card:#171717; --radius:14px;
-    }
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>El Portal Gamer — Reseñas y retro</title>
+<link href="https://www.elportalgamer.com/" rel="canonical"/>
+<link href="mago.png" rel="icon" type="image/png"/>
+<meta content="Reseñas sinceras, retro y rarezas: PS1, PS2, Dreamcast, JRPG y survival horror. Videos y reseñas en El Portal Gamer." name="description"/>
+<meta content="El Portal Gamer — Reseñas y retro" property="og:title"/>
+<meta content="Reseñas sinceras, retro y rarezas: PS1, PS2, Dreamcast, JRPG y survival horror." property="og:description"/>
+<meta content="website" property="og:type"/>
+<meta content="https://www.elportalgamer.com/" property="og:url"/>
+<meta content="https://www.elportalgamer.com/og.jpg" property="og:image"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="El Portal Gamer — Reseñas y retro" name="twitter:title"/>
+<meta content="Reseñas sinceras, retro y rarezas: PS1, PS2, Dreamcast, JRPG y survival horror." name="twitter:description"/>
+<meta content="https://www.elportalgamer.com/og.jpg" name="twitter:image"/>
+<style>
+    :root{ --bg:#121212; --surface:#1f1f1f; --text:#f0f0f0; --muted:#b5b5b5; --brand:#ff4500; --card:#171717; --radius:14px;}
     *{box-sizing:border-box}
     body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Ubuntu,"Helvetica Neue",Arial;background:var(--bg);color:var(--text)}
     header{position:sticky;top:0;z-index:5;background:#161616;border-bottom:1px solid #242424}
@@ -48,9 +43,8 @@
     .divider{height:8px;border-radius:999px;background:linear-gradient(90deg,#ff6a00,#ff3b00,#ff6a00);margin:18px 0}
 
     .videobox{position:relative;width:100%;padding-top:56.25%;overflow:hidden;background:#000;border-bottom:1px solid #262626}
-    .lite-yt{position:absolute;inset:0;background-position:center;background-size:cover}
+    .lite-yt{position:absolute;inset:0;background-position:center;background-size:cover;cursor:pointer}
     .lite-yt::before{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.35),rgba(0,0,0,.05))}
-    .lite-yt-link{position:absolute;inset:0;display:block;text-indent:-9999px}
     .lty-playbtn{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:72px;height:52px;border:0;border-radius:10px;background:rgba(0,0,0,.6);display:grid;place-items:center;box-shadow:0 8px 20px rgba(0,0,0,.45)}
     .lty-playbtn svg{width:28px;height:28px;fill:#fff}
     iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
@@ -61,20 +55,6 @@
     .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 12px;border-radius:10px;border:1px solid #333;background:#151515;color:#fff;text-decoration:none}
     .btn.brand{background:var(--brand);border-color:#ff5e1f;color:#111;font-weight:800}
     .btn.black{background:#0e0e0e;border-color:#242424;color:#fff}
-
-    /* Slider (rotador con efecto slide) */
-    .slider{position:relative;overflow:hidden;background:#000;border-bottom:1px solid #262626}
-    .slider-track{display:flex;transition:transform .5s ease;will-change:transform}
-    .slide{min-width:100%;position:relative;padding-top:56.25%;background:#000}
-    .slide .lite-yt{position:absolute;inset:0;background-position:center;background-size:cover}
-    .slide iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
-    .slider-btn{position:absolute;top:50%;transform:translateY(-50%);width:42px;height:42px;border-radius:50%;border:1px solid #333;background:rgba(0,0,0,.55);color:#fff;display:grid;place-items:center;z-index:4;cursor:pointer}
-    .slider-btn:hover{background:rgba(0,0,0,.75)}
-    .slider-btn.prev{left:10px}
-    .slider-btn.next{right:10px}
-    .slider-bars{position:absolute;top:10px;left:12px;right:12px;display:flex;gap:6px;z-index:3;pointer-events:auto}
-    .slider-bars .bar{flex:1;height:6px;border-radius:999px;background:rgba(255,255,255,.35);border:1px solid rgba(255,255,255,.5);cursor:pointer}
-    .slider-bars .bar.active{background:var(--brand);border-color:#ff6a2d}
 
     /* Noticias */
     .n-card{background:var(--surface);border:1px solid #262626;border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;height:100%}
@@ -105,198 +85,236 @@
     .share-pop{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:#1a1a1a;border:1px solid #333;padding:10px 12px;border-radius:12px;display:none;gap:8px;z-index:50;box-shadow:0 10px 24px rgba(0,0,0,.35)}
     .share-pop.show{display:flex;flex-wrap:wrap;justify-content:center}
     .share-pop a,.share-pop button{border:1px solid #333;background:#0e0e0e;color:#fff;border-radius:10px;padding:8px 10px;text-decoration:none}
-  </style>
+  
+
+/* --- Slider últimos 4 (patch minimal) --- */
+.pg-slider{position:relative;overflow:hidden;background:#000;border-bottom:1px solid #262626}
+.pg-track{display:flex;transition:transform .5s ease;will-change:transform}
+.pg-slide{min-width:100%;position:relative;padding-top:56.25%;background:#000}
+.pg-lite{position:absolute;inset:0;background-position:center;background-size:cover}
+.pg-link{position:absolute;inset:0;display:block;text-indent:-9999px}
+.pg-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:72px;height:52px;border:0;border-radius:10px;background:rgba(0,0,0,.6);display:grid;place-items:center;box-shadow:0 8px 20px rgba(0,0,0,.45)}
+.pg-play svg{width:28px;height:28px;fill:#fff}
+.pg-btn{position:absolute;top:50%;transform:translateY(-50%);width:42px;height:42px;border-radius:50%;border:1px solid #333;background:rgba(0,0,0,.55);color:#fff;display:grid;place-items:center;cursor:pointer;z-index:4}
+.pg-btn:hover{background:rgba(0,0,0,.75)}
+.pg-btn.prev{left:10px}
+.pg-btn.next{right:10px}
+.pg-bars{position:absolute;top:10px;left:12px;right:12px;display:flex;gap:6px;z-index:3;pointer-events:auto}
+.pg-bars .bar{flex:1;height:6px;border-radius:999px;background:rgba(255,255,255,.35);border:1px solid rgba(255,255,255,.5)}
+.pg-bars .bar.active{background:var(--brand);border-color:#ff6a2d}
+</style>
 </head>
 <body>
 <header>
-  <div class="nav">
-    <div class="brand"><img src="mago.png" alt="Logo" />El Portal Gamer</div>
-    <a href="#ultimas">Inicio</a>
-    <a href="#news">Noticias</a>
-    <a href="#mini">Reseñas</a>
-    <a href="#series">Series</a>
-    <a href="videos.html">Videos</a>
-    <a href="#apoya">Apóyanos</a>
-    <a href="#contacto">Contacto</a>
-    <div class="spacer"></div>
-    <input id="buscador" class="search" type="search" placeholder="Buscar video, reseña o noticia…" />
-  </div>
+<div class="nav">
+<div class="brand"><img alt="Logo" src="mago.png"/>El Portal Gamer</div>
+<a href="#ultimo">Inicio</a>
+<a href="#news">Noticias</a>
+<a href="#mini">Reseñas</a>
+<a href="#series">Series</a>
+<a href="videos.html">Videos</a>
+<a href="#apoya">Apóyanos</a>
+<a href="#contacto">Contacto</a>
+<div class="spacer"></div>
+<input class="search" id="buscador" placeholder="Buscar video, reseña o noticia…" type="search"/>
+</div>
 </header>
-
 <main>
-  <!-- Rotador últimos 4 -->
-  <section id="ultimas" style="margin-top:24px">
-    <h2>Últimas Reseñas</h2>
-    <div class="card">
-      <div id="rotador4" class="slider" aria-roledescription="carrusel">
-        <div class="slider-bars" id="rot-bars" aria-hidden="false"></div>
-        <div class="slider-track" id="rot-track"></div>
-        <button class="slider-btn prev" type="button" aria-label="Anterior">‹</button>
-        <button class="slider-btn next" type="button" aria-label="Siguiente">›</button>
-      </div>
-      <div class="pad">
-        <div class="title" id="rot-titulo">Cargando…</div>
-        <div class="muted" id="rot-fecha"></div>
-        <a id="rot-ver" class="btn brand" target="_blank" rel="noopener">▶ Ver en YouTube</a>
-      </div>
-    </div>
-  </section>
+<!-- Último video -->
 
-  <div class="divider" aria-hidden="true"></div>
+<section id="ultimo">
+<h2>Últimas Reseñas</h2>
+<div class="card">
+<div aria-roledescription="carrusel" class="pg-slider" id="rotador4">
+<div class="pg-bars" id="rot-bars"></div>
+<div class="pg-track" id="rot-track"></div>
+<button aria-label="Anterior" class="pg-btn prev" type="button">‹</button>
+<button aria-label="Siguiente" class="pg-btn next" type="button">›</button>
+</div>
+<div class="pad">
+<div class="title" id="rot-titulo">Cargando…</div>
+<div class="muted" id="rot-fecha"></div>
+<a class="btn brand" id="rot-ver" rel="noopener" target="_blank">▶ Ver en YouTube</a>
+</div>
+</div>
+</section>
 
-  <!-- Noticias -->
-  <section id="news">
-    <h2>Noticias</h2>
-    <div class="grid cols-3" id="news-grid"><div class="muted">Cargando noticias…</div></div>
-  </section>
-
-  <div class="divider" aria-hidden="true"></div>
-
-  <!-- Reseñas -->
-  <section id="mini">
-    <h2>Reseñas</h2>
-    <div class="grid cols-3" id="mini-grid"></div>
-  </section>
-
-  <div class="divider" aria-hidden="true"></div>
-
-  <!-- Series -->
-  <section id="series">
-    <h2>Series</h2>
-    <div class="grid cols-2" id="series-grid"></div>
-  </section>
-
-  <div class="divider" aria-hidden="true"></div>
-
-  <!-- Apóyanos -->
-  <section id="apoya">
-    <h2>Apóyanos</h2>
-    <div class="card pad">
-      <div class="row">
-        <a class="btn brand" href="https://ko-fi.com/portalgamer" target="_blank" rel="noopener">☕ Invítame un café</a>
-        <a class="btn" href="https://www.instant-gaming.com/es/?igr=portalgamerx" target="_blank" rel="noopener">🎮 Ver Juegos en Oferta</a>
-        <a class="btn" href="https://www.amazon.com/shop/viajealodesconocido" target="_blank" rel="noopener">🛒 Amazon</a>
-      </div>
-    </div>
-  </section>
-
-  <div class="divider" aria-hidden="true"></div>
-
-  <!-- Redes -->
-  <section id="redes">
-    <h2>Redes</h2>
-    <div class="socials">
-      <a class="soc-card" href="https://www.facebook.com/ElPortalGamerX" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M22 12.07C22 6.48 17.52 2 11.93 2S2 6.48 2 12.07c0 5.01 3.66 9.16 8.44 9.93v-7.02H7.9v-2.91h2.54V9.41c0-2.5 1.49-3.88 3.77-3.88 1.09 0 2.23.2 2.23.2v2.45h-1.25c-1.23 0-1.61.76-1.61 1.54v1.85h2.74l-.44 2.91h-2.3V22c4.78-.77 8.44-4.92 8.44-9.93z"/></svg>
-        <span>Facebook</span>
-      </a>
-      <a class="soc-card" href="https://www.instagram.com/elportalgamerx" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M12 2.2c3.2 0 3.58.01 4.85.07 1.17.05 1.95.24 2.4.4.6.23 1.03.5 1.48.95.45.45.72.88.95 1.48.16.45.35 1.23.4 2.4.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.24 1.95-.4 2.4-.23.6-.5 1.03-.95 1.48-.45.45-.88.72-1.48.95-.45.16-1.23.35-2.4.4-1.27.06-1.65.07-4.85.07s-3.53-.01-4.85-.07Zm0 3.2a6.8 6.8 0 1 1 0 13.6 6.8 6.8 0 0 1 0-13.6Zm6.9-2.02a1.6 1.6 0 1 1-3.2 0 1.6 1.6 0 0 1 3.2 0Z"/></svg>
-        <span>Instagram</span>
-      </a>
-      <a class="soc-card" href="https://www.twitch.tv/soypaulangel" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M4 3h16v10.5l-4 4H12l-2 2H8v-2H4V3Zm2 2v10h4v2h1.5l2-2H16l2-2V5H6Zm8.5 2.5h-2v4h2v-4Zm-5 0h-2v4h2v-4Z"/></svg>
-        <span>Twitch</span>
-      </a>
-    </div>
-  </section>
-
-  <div class="divider" aria-hidden="true"></div>
-
-  <!-- Contacto -->
-  <section id="contacto">
-    <h2>Contacto</h2>
-    <div class="card pad">
-      <form id="contact-form" action="https://formspree.io/f/mjkejwvg" method="POST" novalidate>
-        <div class="form-grid">
-          <label>Nombre <input type="text" name="name" placeholder="Tu nombre" required></label>
-          <label>Email <input type="email" name="_replyto" placeholder="tu@email.com" required></label>
-        </div>
-        <label>Asunto <input type="text" name="subject" placeholder="Propuesta, sugerencia, colaboración…"></label>
-        <label>Mensaje <textarea name="message" rows="6" placeholder="Contame en qué te puedo ayudar" required></textarea></label>
-        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
-        <div class="row"><button type="submit" class="btn brand">📨 Enviar</button></div>
-        <p id="form-result" class="muted" aria-live="polite"></p>
-      </form>
-    </div>
-  </section>
+<div aria-hidden="true" class="divider"></div>
+<!-- Noticias -->
+<section id="news">
+<h2>Noticias</h2>
+<div class="grid cols-3" id="news-grid"><div class="muted">Cargando noticias…</div></div>
+</section>
+<div aria-hidden="true" class="divider"></div>
+<!-- Reseñas -->
+<section id="mini">
+<h2>Reseñas</h2>
+<div class="grid cols-3" id="mini-grid"></div>
+</section>
+<div aria-hidden="true" class="divider"></div>
+<!-- Series -->
+<section id="series">
+<h2>Series</h2>
+<div class="grid cols-2" id="series-grid"></div>
+</section>
+<div aria-hidden="true" class="divider"></div>
+<!-- Apóyanos -->
+<section id="apoya">
+<h2>Apóyanos</h2>
+<div class="card pad">
+<div class="row">
+<a class="btn brand" href="https://ko-fi.com/portalgamer" rel="noopener" target="_blank">☕ Invítame un café</a>
+<a class="btn" href="https://www.instant-gaming.com/es/?igr=portalgamerx" rel="noopener" target="_blank">🎮 Ver Juegos en Oferta</a>
+<a class="btn" href="https://www.amazon.com/shop/viajealodesconocido" rel="noopener" target="_blank">🛒 Amazon</a>
+</div>
+</div>
+</section>
+<div aria-hidden="true" class="divider"></div>
+<!-- Redes -->
+<section id="redes">
+<h2>Redes</h2>
+<div class="socials">
+<a class="soc-card" href="https://www.facebook.com/ElPortalGamerX" rel="noopener" target="_blank">
+<svg aria-hidden="true" fill="#fff" viewbox="0 0 24 24"><path d="M22 12.07C22 6.48 17.52 2 11.93 2S2 6.48 2 12.07c0 5.01 3.66 9.16 8.44 9.93v-7.02H7.9v-2.91h2.54V9.41c0-2.5 1.49-3.88 3.77-3.88 1.09 0 2.23.2 2.23.2v2.45h-1.25c-1.23 0-1.61.76-1.61 1.54v1.85h2.74l-.44 2.91h-2.3V22c4.78-.77 8.44-4.92 8.44-9.93z"></path></svg>
+<span>Facebook</span>
+</a>
+<a class="soc-card" href="https://www.instagram.com/elportalgamerx" rel="noopener" target="_blank">
+<svg aria-hidden="true" fill="#fff" viewbox="0 0 24 24"><path d="M12 2.2c3.2 0 3.58.01 4.85.07 1.17.05 1.95.24 2.4.4.6.23 1.03.5 1.48.95.45.45.72.88.95 1.48.16.45.35 1.23.4 2.4.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.24 1.95-.4 2.4-.23.6-.5 1.03-.95 1.48-.45.45-.88.72-1.48.95-.45.16-1.23.35-2.4.4-1.27.06-1.65.07-4.85.07s-3.53-.01-4.85-.07Zm0 3.2a6.8 6.8 0 1 1 0 13.6 6.8 6.8 0 0 1 0-13.6Zm6.9-2.02a1.6 1.6 0 1 1-3.2 0 1.6 1.6 0 0 1 3.2 0Z"></path></svg>
+<span>Instagram</span>
+</a>
+<a class="soc-card" href="https://www.twitch.tv/soypaulangel" rel="noopener" target="_blank">
+<svg aria-hidden="true" fill="#fff" viewbox="0 0 24 24"><path d="M4 3h16v10.5l-4 4H12l-2 2H8v-2H4V3Zm2 2v10h4v2h1.5l2-2H16l2-2V5H6Zm8.5 2.5h-2v4h2v-4Zm-5 0h-2v4h2v-4Z"></path></svg>
+<span>Twitch</span>
+</a>
+</div>
+</section>
+<div aria-hidden="true" class="divider"></div>
+<!-- Contacto -->
+<section id="contacto">
+<h2>Contacto</h2>
+<div class="card pad">
+<form action="https://formspree.io/f/mjkejwvg" id="contact-form" method="POST" novalidate="">
+<div class="form-grid">
+<label>Nombre <input name="name" placeholder="Tu nombre" required="" type="text"/></label>
+<label>Email <input name="_replyto" placeholder="tu@email.com" required="" type="email"/></label>
+</div>
+<label>Asunto <input name="subject" placeholder="Propuesta, sugerencia, colaboración…" type="text"/></label>
+<label>Mensaje <textarea name="message" placeholder="Contame en qué te puedo ayudar" required="" rows="6"></textarea></label>
+<input autocomplete="off" name="_gotcha" style="display:none" tabindex="-1" type="text"/>
+<div class="row"><button class="btn brand" type="submit">📨 Enviar</button></div>
+<p aria-live="polite" class="muted" id="form-result"></p>
+</form>
+</div>
+</section>
 </main>
-
 <footer>© 2025 El Portal Gamer</footer>
-
 <!-- Popover compartir -->
-<div id="share-pop" class="share-pop" role="dialog" aria-modal="true" aria-hidden="true"></div>
-
-<script defer>
+<div aria-hidden="true" aria-modal="true" class="share-pop" id="share-pop" role="dialog"></div>
+<script defer="">
 /* ====== Config ====== */
-const API_KEY     = "AIzaSyCqPlM0Ab3-_mtFHPmrrgJTS1S4dBCbbMA"; // tu API key
-const PLAYLIST_ID = "PLk3cei5OOiyvTQzg5FGgIRY3xs44F7Wzv";       // tu playlist ID (Uploads o una lista)
-const MAX_RESULTS = 20;
+const API_KEY="AIzaSyCqPlM0Ab3-_mtFHPmrrgJTS1S4dBCbbMA";
+const PLAYLIST_ID="PLk3cei5OOiyvTQzg5FGgIRY3xs44F7Wzv";
+const MAX_RESULTS=20;
 
-const BLOGGER_FEED_HTTPS = "https://portalgamerok.blogspot.com/feeds/posts/summary?alt=json&max-results=6&orderby=published";
-const JINA = "https://r.jina.ai";
-const ALLO = "https://api.allorigins.win/raw";
+const BLOGGER_FEED_HTTPS="https://portalgamerok.blogspot.com/feeds/posts/summary?alt=json&max-results=6&orderby=published";
+const JINA="https://r.jina.ai";
+const ALLO="https://api.allorigins.win/raw";
 
-const $  = (s,p=document)=>p.querySelector(s);
-const $$ = (s,p=document)=>Array.from(p.querySelectorAll(s));
+const $=(s,p=document)=>p.querySelector(s);
+const $$=(s,p=document)=>[...p.querySelectorAll(s)];
 const truncate=(str,n)=> (str||"").length>n ? str.slice(0,n).replace(/\s+\S*$/,'')+"…" : str;
 const words=(x)=>(x||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
 
 /* ===== Limpiador YT ===== */
 function cleanYtDesc(s){
   if(!s) return '';
-  let t=s.replace(/\\r/g,'').replace(/\\u00A0/g,' ').replace(/[\\u200B-\\u200D\\uFEFF]/g,'').normalize('NFKC');
-  const hard=/(▬{2,}|─{3,}|—{3,}|━{3,}|═{3,}|_{3,}|-{3,}|=+|\\*{3,}|#{3,}|[■□▪▫◆◇●○◼◻◾◽]{3,}|[\\u2500-\\u259F]{3,})/u;
+  let t=s.replace(/\r/g,'').replace(/\u00A0/g,' ').replace(/[\u200B-\u200D\uFEFF]/g,'').normalize('NFKC');
+  const hard=/(▬{2,}|─{3,}|—{3,}|━{3,}|═{3,}|_{3,}|-{3,}|=+|\*{3,}|#{3,}|[■□▪▫◆◇●○◼◻◾◽]{3,}|[\u2500-\u259F]{3,})/u;
   const m=t.match(hard); if(m) t=t.slice(0,m.index);
-  const sep=/^([^\\p{L}\\p{N}]{4,}|[-=_*#~•·\\u25A0-\\u25FF\\u2500-\\u259F\\s]+)$/u;
+  const sep=/^([^\p{L}\p{N}]{4,}|[-=_*#~•·\u25A0-\u25FF\u2500-\u259F\s]+)$/u;
   const footer=/(apoya(nos)?|apoyá|sígueme|redes|contacto|patreon|ko-?fi|discord|instagram|twitter|twitch|facebook|instant-?gaming|amazon|suscríbete|subscribe)/i;
   const out=[];
-  for(const raw of t.split('\\n')){
+  for(const raw of t.split('\n')){
     const line=raw.trim(); if(!line) continue;
     if(sep.test(line)||footer.test(line)) break;
-    if(/^https?:\\/\\//i.test(line)) continue;
+    if(/^https?:\/\//i.test(line)) continue;
     out.push(line); if(out.join(' ').length>1200) break;
   }
-  return out.join('\\n').trim();
+  return out.join('\n').trim();
 }
 
-/* ===== YouTube: cards ===== */
-function makeMiniCard(v){
-  const el=document.createElement("article");
-  el.className="card pad filterable"; el.dataset.title=v.title; el.dataset.desc=v.desc;
-  el.innerHTML=\`
-    <div class="videobox">
-      <div class="lite-yt" style="background-image:url(\${v.thumb})">
-        <a class="lite-yt-link" href="https://www.youtube.com/watch?v=\${v.id}" target="_blank" rel="noopener">YouTube</a>
-        <button class="lty-playbtn" aria-label="Abrir \${v.title} en YouTube">
-          <svg viewBox="0 0 68 48"><path d="M66.52 7.02a8 8 0 0 0-5.64-5.66C56.8 0 34 0 34 0S11.2 0 7.12 1.36A8 8 0 0 0 1.48 7.02 83.3 83.3 0 0 0 0 24a83.3 83.3 0 0 0 1.48 16.98 8 8 0 0 0 5.64 5.66C11.2 48 34 48 34 48s22.8 0 26.88-1.36a8 8 0 0 0 5.64-5.66A83.3 83.3 0 0 0 68 24a83.3 83.3 0 0 0-1.48-16.98zM27 34V14l18 10-18 10z"/></svg>
-        </button>
-      </div>
-    </div>
-    <div class="title">\${v.title}</div>
-    <p class="desc">\${truncate(v.desc,360)}</p>
-    <a class="btn brand" href="https://www.youtube.com/watch?v=\${v.id}" target="_blank" rel="noopener">▶ Ver video</a>\`;
-  return el;
-}
-function renderMini(arr){ const grid=$("#mini-grid"); grid.innerHTML=""; arr.forEach(v=>grid.appendChild(makeMiniCard(v))); }
+/* ===== Anti-pixelado Blogger ===== */
+function bloggerToOriginal(u){ if(!u) return ''; return u.replace(/\/s\d+[^/]*\//,'/s0/').replace(/=s\d+[^&?]*/,'=s0');}
+function bloggerFromOriginalSet(u,size){ if(!u) return ''; return u.replace('/s0/','/s'+size+'/').replace('=s0','=s'+size);}
 
-function renderSeries(items){
-  const SERIES={ "Saga Parasite Eve":["parasite eve","koudelka"], "Survival Horror PS1/PS2":["resident evil","silent hill","dino crisis","fear effect","rule of rose","haunting ground"], "JRPG & Square":["final fantasy","chrono","xenogears","vagrant story","valkyrie profile"] };
-  const grid=$("#series-grid"); grid.innerHTML="";
-  for(const [name,keys] of Object.entries(SERIES)){
-    const hits=items.filter(v=>keys.some(k=>words(v.title).includes(k))); if(!hits.length) continue;
-    const top=hits.slice(0,3);
-    const el=document.createElement("article");
-    el.className="card pad filterable"; el.dataset.title=name; el.dataset.desc=top.map(x=>x.title).join(" ");
-    el.innerHTML=\`<div class="title">\${name}</div><p class="muted" style="margin-top:-2px">\${top.length} videos</p>
-      <div class="grid cols-3" style="margin-top:8px">
-        \${top.map(v=>\`<a class="btn" href="https://www.youtube.com/watch?v=\${v.id}" target="_blank" rel="noopener">▶ \${truncate(v.title,38)}</a>\`).join("")}
-      </div>\`;
-    grid.appendChild(el);
+/* ---------- Imagen desde HTML (mejorada) ---------- */
+function pickFromSrcset(srcset){
+  if(!srcset) return "";
+  // toma el candidato de mayor ancho
+  const parts = srcset.split(',').map(s=>s.trim());
+  let best = "", w = 0;
+  for(const p of parts){
+    const [url, desc] = p.split(/\s+/);
+    const m = /(\d+)w/.exec(desc||"");
+    const val = m ? parseInt(m[1],10) : 0;
+    if(val >= w){ w = val; best = url; }
+  }
+  return best || parts[parts.length-1].split(/\s+/)[0];
+}
+function extractImgFromHtml(html){
+  try{
+    const doc = new DOMParser().parseFromString(html||"", "text/html");
+
+    // og/twitter
+    const og = doc.querySelector('meta[property="og:image"],meta[name="og:image"],meta[property="og:image:url"],meta[name="twitter:image"],meta[name="twitter:image:src"]');
+    if(og?.content) return og.content;
+
+    // picture/srcset
+    const srcsetEl = doc.querySelector('source[srcset], img[srcset]');
+    if(srcsetEl){
+      const best = pickFromSrcset(srcsetEl.getAttribute('srcset')||"");
+      if(best) return best;
+    }
+
+    // <img> con data-src etc
+    const img = doc.querySelector('img');
+    if(img){
+      return img.getAttribute('src') ||
+             img.getAttribute('data-src') ||
+             img.getAttribute('data-original') ||
+             img.getAttribute('data-lazy-src') || "";
+    }
+  }catch{}
+
+  // fallback regex
+  const m = (html||"").match(/<img[^>]+(?:src|data-src|data-original|data-lazy-src)=["']([^"']+)["']/i);
+  return m ? m[1] : "";
+}
+
+/* Filtro de placeholders */
+function isPlaceholder(u){
+  if(!u) return true;
+  if(u.startsWith('data:')) return true;
+  if(/blank\.gif|transparent|spacer/i.test(u)) return true;
+  return false;
+}
+
+/* ---------- OG image real desde la página del post ---------- */
+async function fetchOgImageViaProxy(url){
+  try{
+    const prox = `${JINA}/${url}`;
+    const html = await (await fetch(prox, {cache:'no-store'})).text();
+    const doc  = new DOMParser().parseFromString(html, "text/html");
+    const og = doc.querySelector('meta[property="og:image"],meta[name="og:image"],meta[property="og:image:url"],meta[name="twitter:image"],meta[name="twitter:image:src"]');
+    return og?.content || "";
+  }catch{
+    return "";
   }
 }
 
-/* ===== Rotador últimos 4 ===== */
+/* ===== YouTube ===== */
+
+/* ===== Rotador últimos 4 (patch minimal) ===== */
 function renderRotador(arr){
   try{
     const slider = document.getElementById('rotador4');
@@ -313,17 +331,13 @@ function renderRotador(arr){
     let idx=0, timer=null, dur=3500, downX=null, lock=false;
 
     function mkSlide(v){
-      const s=document.createElement('div'); s.className='slide';
-      const lite=document.createElement('div'); lite.className='lite-yt'; lite.style.backgroundImage=\`url(\${v.thumb})\`;
-      // Enlace a YouTube cubriendo toda la imagen
-      const a=document.createElement('a'); a.className='lite-yt-link'; a.href=\`https://www.youtube.com/watch?v=\${v.id}\`; a.target='_blank'; a.rel='noopener'; a.textContent='YouTube';
-      // Botón play (decorativo/clickable también abre YT)
-      const btn=document.createElement('button'); btn.className='lty-playbtn'; btn.type='button'; btn.setAttribute('aria-label', \`Abrir \${v.title} en YouTube\`);
+      const s=document.createElement('div'); s.className='pg-slide';
+      const lite=document.createElement('div'); lite.className='pg-lite'; lite.style.backgroundImage=`url(${v.thumb})`;
+      const a=document.createElement('a'); a.className='pg-link'; a.href=`https://www.youtube.com/watch?v=${v.id}`; a.target='_blank'; a.rel='noopener'; a.textContent='YouTube';
+      const btn=document.createElement('button'); btn.className='pg-play'; btn.type='button'; btn.setAttribute('aria-label', `Abrir ${v.title} en YouTube`);
       btn.innerHTML='<svg viewBox="0 0 68 48"><path d="M66.52 7.02a8 8 0 0 0-5.64-5.66C56.8 0 34 0 34 0S11.2 0 7.12 1.36A8 8 0 0 0 1.48 7.02 83.3 83.3 0 0 0 0 24a83.3 83.3 0 0 0 1.48 16.98 8 8 0 0 0 5.64 5.66C11.2 48 34 48 34 48s22.8 0 26.88-1.36a8 8 0 0 0 5.64-5.66A83.3 83.3 0 0 0 68 24a83.3 83.3 0 0 0-1.48-16.98zM27 34V14l18 10-18 10z"/></svg>';
       btn.addEventListener('click', ()=>{ window.open(a.href, '_blank', 'noopener'); });
-
-      lite.appendChild(a);
-      lite.appendChild(btn);
+      lite.appendChild(a); lite.appendChild(btn);
       s.appendChild(lite);
       return s;
     }
@@ -331,12 +345,12 @@ function renderRotador(arr){
     arr.forEach(v=>track.appendChild(mkSlide(v)));
     arr.forEach((_,i)=>{ const b=document.createElement('button'); b.type='button'; b.className='bar'+(i===0?' active':''); b.addEventListener('click',()=>goTo(i,true)); barsC.appendChild(b); });
 
-    function paintMeta(i){ const v=arr[i]; if(tEl) tEl.textContent=v.title; if(fEl) fEl.textContent=new Date(v.date).toLocaleDateString(); if(lEl) lEl.href=\`https://www.youtube.com/watch?v=\${v.id}\`; }
+    function paintMeta(i){ const v=arr[i]; if(tEl) tEl.textContent=v.title; if(fEl) fEl.textContent=new Date(v.date).toLocaleDateString(); if(lEl) lEl.href=`https://www.youtube.com/watch?v=${v.id}`; }
 
     function goTo(i, user){
       if(lock) return; lock=true;
       idx=(i+arr.length)%arr.length;
-      track.style.transform = \`translateX(-\${idx*100}%)\`;
+      track.style.transform = `translateX(-${idx*100}%)`;
       barsC.querySelectorAll('.bar').forEach((d,j)=>d.classList.toggle('active', j===idx));
       paintMeta(idx);
       setTimeout(()=>lock=false, 520);
@@ -354,17 +368,59 @@ function renderRotador(arr){
     nextBtn.addEventListener('click', ()=>next());
     prevBtn.addEventListener('click', ()=>prev());
 
-    // swipe táctil/ratón
     slider.addEventListener('pointerdown', e=>{ downX=e.clientX; slider.setPointerCapture(e.pointerId); });
     slider.addEventListener('pointerup', e=>{ if(downX==null) return; const dx=e.clientX - downX; downX=null; if(Math.abs(dx)>50){ dx<0?next():prev(); } });
-
   }catch(e){ console.error('Rotador4(slide):', e); }
 }
 
-/* ===== Playlist: carga y pinta ===== */
+function renderUltimo(v){
+  const box=$("#ultimo-lite"); box.className="videobox";
+  const lite=document.createElement("div");
+  lite.className="lite-yt"; lite.style.backgroundImage=`url(${v.thumb})`;
+  lite.innerHTML=`<button class="lty-playbtn" aria-label="Reproducir ${v.title}">
+    <svg viewBox="0 0 68 48"><path d="M66.52 7.02a8 8 0 0 0-5.64-5.66C56.8 0 34 0 34 0S11.2 0 7.12 1.36A8 8 0 0 0 1.48 7.02 83.3 83.3 0 0 0 0 24a83.3 83.3 0 0 0 1.48 16.98 8 8 0 0 0 5.64 5.66C11.2 48 34 48 34 48s22.8 0 26.88-1.36a8 8 0 0 0 5.64-5.66A83.3 83.3 0 0 0 68 24a83.3 83.3 0 0 0-1.48-16.98zM27 34V14l18 10-18 10z"/></svg>
+  </button>`;
+  lite.addEventListener("click",()=>{ box.innerHTML=`<iframe src="https://www.youtube.com/embed/${v.id}?autoplay=1" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="${v.title}"></iframe>`;});
+  box.appendChild(lite);
+  $("#ultimo-titulo").textContent=v.title;
+  $("#ultimo-fecha").textContent=new Date(v.date).toLocaleDateString();
+  $("#ultimo-desc").textContent=truncate(v.desc,420);
+  $("#ultimo-ver").href=`https://www.youtube.com/watch?v=${v.id}`;
+}
+function makeMiniCard(v){
+  const el=document.createElement("article");
+  el.className="card pad filterable"; el.dataset.title=v.title; el.dataset.desc=v.desc;
+  el.innerHTML=`<div class="videobox"><div class="lite-yt" style="background-image:url(${v.thumb})">
+      <button class="lty-playbtn" aria-label="Reproducir ${v.title}">
+      <svg viewBox="0 0 68 48"><path d="M66.52 7.02a8 8 0 0 0-5.64-5.66C56.8 0 34 0 34 0S11.2 0 7.12 1.36A8 8 0 0 0 1.48 7.02 83.3 83.3 0 0 0 0 24a83.3 83.3 0 0 0 1.48 16.98 8 8 0 0 0 5.64 5.66C11.2 48 34 48 34 48s22.8 0 26.88-1.36a8 8 0 0 0 5.64-5.66A83.3 83.3 0 0 0 68 24a83.3 83.3 0 0 0-1.48-16.98zM27 34V14l18 10-18 10z"/></svg></button></div></div>
+    <div class="title">${v.title}</div>
+    <p class="desc">${truncate(v.desc,360)}</p>
+    <a class="btn brand" href="https://www.youtube.com/watch?v=${v.id}" target="_blank" rel="noopener">▶ Ver video</a>`;
+  const thumb=el.querySelector(".videobox");
+  thumb.addEventListener("click",()=>{ thumb.innerHTML=`<iframe src="https://www.youtube.com/embed/${v.id}?autoplay=1" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="${v.title}"></iframe>`;});
+  return el;
+}
+function renderMini(arr){ const grid=$("#mini-grid"); grid.innerHTML=""; arr.forEach(v=>grid.appendChild(makeMiniCard(v))); }
+function renderSeries(items){
+  const SERIES={ "Saga Parasite Eve":["parasite eve","koudelka"], "Survival Horror PS1/PS2":["resident evil","silent hill","dino crisis","fear effect","rule of rose","haunting ground"], "JRPG & Square":["final fantasy","chrono","xenogears","vagrant story","valkyrie profile"] };
+  const grid=$("#series-grid"); grid.innerHTML="";
+  for(const [name,keys] of Object.entries(SERIES)){
+    const hits=items.filter(v=>keys.some(k=>words(v.title).includes(k))); if(!hits.length) continue;
+    const top=hits.slice(0,3);
+    const el=document.createElement("article");
+    el.className="card pad filterable"; el.dataset.title=name; el.dataset.desc=top.map(x=>x.title).join(" ");
+    el.innerHTML=`<div class="title">${name}</div><p class="muted" style="margin-top:-2px">${top.length} videos</p>
+      <div class="grid cols-3" style="margin-top:8px">
+        ${top.map(v=>`<a class="btn" href="https://www.youtube.com/watch?v=${v.id}" target="_blank" rel="noopener">▶ ${truncate(v.title,38)}</a>`).join("")}
+      </div>`;
+    grid.appendChild(el);
+  }
+}
+
+/* ===== Playlist: siempre el más reciente ===== */
 async function loadPlaylist(){
   try{
-    const url = \`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=\${PLAYLIST_ID}&maxResults=\${MAX_RESULTS}&key=\${API_KEY}&_=\${Date.now()}\`;
+    const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${PLAYLIST_ID}&maxResults=${MAX_RESULTS}&key=${API_KEY}&_=${Date.now()}`;
     const r   = await fetch(url, { cache: 'no-store' });
     const data= await r.json();
     if(!Array.isArray(data.items) || !data.items.length) throw new Error("YouTube sin items");
@@ -381,11 +437,10 @@ async function loadPlaylist(){
       }))
       .sort((a,b) => new Date(b.date) - new Date(a.date));
 
-    const top4 = items.slice(0,4);
-    renderRotador(top4);
-    renderMini(items.slice(4, 13));  // resto a "Reseñas"
+    renderUltimo(items[0]);
+    renderMini(items.slice(1,10));
     renderSeries(items);
-    // buscador
+
     const inp=$("#buscador");
     inp.addEventListener("input",()=>{
       const q = words(inp.value);
@@ -396,66 +451,53 @@ async function loadPlaylist(){
     });
   }catch(e){
     console.error("YouTube:",e);
-    $("#rot-titulo").textContent="No se pudo cargar la playlist";
-    $("#rot-fecha").textContent="";
-    $("#rot-ver").removeAttribute('href');
+    $("#ultimo-titulo").textContent="No se pudo cargar la playlist";
+    $("#ultimo-fecha").textContent="";
+    $("#ultimo-desc").textContent="Probá más tarde o visitá el canal.";
+    $("#ultimo-ver").href="https://www.youtube.com/@TuCanal/videos";
   }
 }
 
 /* ===== Noticias ===== */
-function timeAgo(iso){ const d=new Date(iso); const diff=(Date.now()-d.getTime())/1000; const u=[[31536000,'a'],[2592000,'m'],[604800,'sem'],[86400,'d'],[3600,'h'],[60,'min']]; for(const [s,n] of u){ if(diff>=s) return \`\${Math.floor(diff/s)} \${n}\`;} return 'ahora'; }
-
-function pickFromSrcset(srcset){
-  if(!srcset) return "";
-  const parts = srcset.split(',').map(s=>s.trim());
-  let best = "", w = 0;
-  for(const p of parts){
-    const [url, desc] = p.split(/\\s+/);
-    const m = /(\\d+)w/.exec(desc||"");
-    const val = m ? parseInt(m[1],10) : 0;
-    if(val >= w){ w = val; best = url; }
-  }
-  return best || parts[parts.length-1].split(/\\s+/)[0];
+function timeAgo(iso){ const d=new Date(iso); const diff=(Date.now()-d.getTime())/1000; const u=[[31536000,'a'],[2592000,'m'],[604800,'sem'],[86400,'d'],[3600,'h'],[60,'min']]; for(const [s,n] of u){ if(diff>=s) return `${Math.floor(diff/s)} ${n}`;} return 'ahora'; }
+function extractFirstImgOrFallback(rawHtml){
+  const u = extractImgFromHtml(rawHtml);
+  return isPlaceholder(u) ? "" : u;
 }
-function extractImgFromHtml(html){
-  try{
-    const doc = new DOMParser().parseFromString(html||"", "text/html");
-    const og = doc.querySelector('meta[property="og:image"],meta[name="og:image"],meta[property="og:image:url"],meta[name="twitter:image"],meta[name="twitter:image:src"]');
-    if(og?.content) return og.content;
-    const srcsetEl = doc.querySelector('source[srcset], img[srcset]');
-    if(srcsetEl){ const best = pickFromSrcset(srcsetEl.getAttribute('srcset')||""); if(best) return best; }
-    const img = doc.querySelector('img');
-    if(img){ return img.getAttribute('src') || img.getAttribute('data-src') || img.getAttribute('data-original') || img.getAttribute('data-lazy-src') || ""; }
-  }catch{}
-  const m = (html||"").match(/<img[^>]+(?:src|data-src|data-original|data-lazy-src)=["']([^"']+)["']/i);
-  return m ? m[1] : "";
+function newsHref(n){
+  const base=new URL('news.html', location.origin);
+  if(n.id) base.searchParams.set('id', n.id);
+  else if(n.url) base.searchParams.set('u', n.url);
+  return base.toString();
 }
-function isPlaceholder(u){ if(!u) return true; if(u.startsWith('data:')) return true; if(/blank\\.gif|transparent|spacer/i.test(u)) return true; return false; }
-function bloggerToOriginal(u){ if(!u) return ''; return u.replace(/\\/s\\d+[^/]*\\//,'/s0/').replace(/=s\\d+[^&?]*/,'=s0'); }
-function bloggerFromOriginalSet(u,size){ if(!u) return ''; return u.replace('/s0/','/s'+size+'/').replace('=s0','=s'+size); }
-
-function newsHref(n){ const base=new URL('news.html', location.origin); if(n.id) base.searchParams.set('id', n.id); else if(n.url) base.searchParams.set('u', n.url); return base.toString(); }
 function parseBloggerJson(data){
   const entries=data?.feed?.entry||[];
   return entries.map(e=>{
     const raw=e.summary?.$t||e.content?.$t||"";
-    const text=raw.replace(/<[^>]+>/g," ").replace(/\\s+/g,' ').trim();
-    const title=(e.title?.$t||"").trim() || (text?text.split(/\\s+/).slice(0,12).join(" ")+"…":"Sin título");
+    const text=raw.replace(/<[^>]+>/g," ").replace(/\s+/g,' ').trim();
+    const title=(e.title?.$t||"").trim() || (text?text.split(/\s+/).slice(0,12).join(" ")+"…":"Sin título");
     const link=(e.link||[]).find(l=>l.rel==='alternate')?.href || '';
     const date=e.published?.$t || e.updated?.$t || new Date().toISOString();
-    const tRaw=e['media$thumbnail']?.url || extractImgFromHtml(raw) || "";
+    const tRaw=e['media$thumbnail']?.url || extractFirstImgOrFallback(raw) || "";
     const s0=bloggerToOriginal(tRaw);
     const id=(e.id?.$t||"").split("post-").pop();
     return { title, url:link, date, summary:text, image0:s0, id };
   });
 }
-async function fetchOgImageViaProxy(url){
-  try{ const prox = \`\${JINA}/\${url}\`; const html = await (await fetch(prox, {cache:'no-store'})).text(); const doc  = new DOMParser().parseFromString(html, "text/html"); const og = doc.querySelector('meta[property="og:image"],meta[name="og:image"],meta[property="og:image:url"],meta[name="twitter:image"],meta[name="twitter:image:src"]'); return og?.content || ""; }catch{ return ""; }
-}
+
+/* Completa imágenes faltantes usando OG de la página real */
 async function resolveMissingImages(items){
-  for(const it of items){ if(!it.image0 || isPlaceholder(it.image0)){ const og = await fetchOgImageViaProxy(it.url); if(og){ it.image0 = bloggerToOriginal(og) || og; } } }
+  for(const it of items){
+    if(!it.image0 || isPlaceholder(it.image0)){
+      const og = await fetchOgImageViaProxy(it.url);
+      if(og){
+        it.image0 = bloggerToOriginal(og) || og;
+      }
+    }
+  }
   return items;
 }
+
 function renderNews(items){
   const grid=$("#news-grid"); grid.innerHTML="";
   items.forEach(n=>{
@@ -469,63 +511,103 @@ function renderNews(items){
     const card=document.createElement('article');
     card.className="n-card filterable"; card.dataset.title=n.title; card.dataset.desc=n.summary;
 
-    const imgTag = srcBase ? \`
+    const imgTag = srcBase ? `
       <img loading="lazy" decoding="async"
-           src="\${srcBase}"
-           srcset="\${src600?src600:''} 600w, \${src800?src800:''} 800w, \${src1200?src1200:''} 1200w, \${src1600?src1600:''} 1600w"
+           src="${srcBase}"
+           srcset="${src600?src600:''} 600w, ${src800?src800:''} 800w, ${src1200?src1200:''} 1200w, ${src1600?src1600:''} 1600w"
            sizes="(min-width:1200px) 30vw, (min-width:900px) 45vw, 92vw"
            alt="">
-    \` : "";
+    ` : "";
 
-    card.innerHTML=\`
-      <a class="news-thumb" data-nav="news" href="\${href}" aria-label="\${n.title}">\${imgTag}</a>
+    card.innerHTML=`
+      <a class="news-thumb" data-nav="news" href="${href}" aria-label="${n.title}">${imgTag}</a>
       <div class="n-content">
-        <div class="news-meta"><span class="badge">Noticia</span><span>\${timeAgo(n.date)}</span></div>
-        <div class="title">\${n.title}</div>
-        <p class="desc">\${truncate(n.summary,220)}</p>
+        <div class="news-meta"><span class="badge">Noticia</span><span>${timeAgo(n.date)}</span></div>
+        <div class="title">${n.title}</div>
+        <p class="desc">${truncate(n.summary,220)}</p>
         <div class="n-actions">
-          <a class="btn brand" data-nav="news" href="\${href}">Leer</a>
-          <button class="btn black share-btn" type="button" data-url="\${href}" data-title="\${n.title}">Compartir</button>
+          <a class="btn brand" data-nav="news" href="${href}">Leer</a>
+          <button class="btn black share-btn" type="button" data-url="${href}" data-title="${n.title}">Compartir</button>
         </div>
-      </div>\`;
+      </div>`;
     grid.appendChild(card);
   });
 
-  // comparte
+  document.addEventListener('click', (e)=>{
+    const a = e.target.closest('a[data-nav="news"]');
+    if(a){
+      e.preventDefault();
+      window.location.href = a.href;
+    }
+  }, {passive:false});
+
   const pop=$("#share-pop");
   function showPop(url,title){
-    pop.innerHTML = \`
-      <button type="button" onclick="navigator.clipboard.writeText('\${url}'); this.textContent='Copiado'; setTimeout(()=>this.textContent='Copiar',1200)">Copiar</button>
-      <a href="https://twitter.com/intent/tweet?text=\${encodeURIComponent(title)}&url=\${encodeURIComponent(url)}" target="_blank" rel="noopener">Twitter</a>
-      <a href="https://www.facebook.com/sharer/sharer.php?u=\${encodeURIComponent(url)}" target="_blank" rel="noopener">Facebook</a>
-      <button type="button" onclick="document.getElementById('share-pop').classList.remove('show')">Cerrar</button>\`;
+    const u=encodeURIComponent(url), t=encodeURIComponent(title);
+    pop.innerHTML = `
+      <a target="_blank" rel="noopener" href="https://wa.me/?text=${t}%20${u}">WhatsApp</a>
+      <a target="_blank" rel="noopener" href="https://t.me/share/url?url=${u}&text=${t}">Telegram</a>
+      <a target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?url=${u}&text=${t}">X/Twitter</a>
+      <a target="_blank" rel="noopener" href="https://www.facebook.com/sharer/sharer.php?u=${u}">Facebook</a>
+      <button id="copyLink" class="btn">Copiar enlace</button>
+      <button id="closeShare" class="btn">Cerrar</button>
+    `;
     pop.classList.add('show');
-    setTimeout(()=>pop.classList.remove('show'),8000);
+    $("#copyLink",pop).onclick=async()=>{ await navigator.clipboard.writeText(url); $("#copyLink",pop).textContent="Copiado ✅"; };
+    $("#closeShare",pop).onclick=()=>pop.classList.remove('show');
   }
-  document.addEventListener('click', (e)=>{
-    const btn = e.target.closest('.share-btn');
-    if(btn){ showPop(btn.dataset.url, btn.dataset.title); }
+  document.addEventListener('click',e=>{
+    const btn=e.target.closest('.share-btn');
+    if(btn){
+      const url=btn.dataset.url, title=btn.dataset.title||'Noticia';
+      if(navigator.share){ navigator.share({title,url}).catch(()=>showPop(url,title)); }
+      else { showPop(url,title); }
+    }else if(!e.target.closest('#share-pop')){ pop.classList.remove('show'); }
   });
 }
 
-/* ===== Carga noticias ===== */
+async function fetchJson(url){ const r=await fetch(url,{cache:'no-store'}); const txt=await r.text(); try{ return JSON.parse(txt);}catch{return {};} }
+async function getBloggerData(){
+  const urls=[ `${JINA}/http://portalgamerok.blogspot.com/feeds/posts/summary?alt=json&max-results=6&orderby=published`,
+               `${JINA}/https://portalgamerok.blogspot.com/feeds/posts/summary?alt=json&max-results=6&orderby=published`,
+               `${ALLO}?url=${encodeURIComponent(BLOGGER_FEED_HTTPS)}`, BLOGGER_FEED_HTTPS ];
+  for(const u of urls){ try{ const d=await fetchJson(u); if(d?.feed?.entry?.length) return d; }catch{} }
+  throw new Error("No se pudo obtener el feed");
+}
 async function loadNews(){
   try{
-    const r = await fetch(BLOGGER_FEED_HTTPS, {cache:'no-store'});
-    const data = await r.json();
-    let items = parseBloggerJson(data);
-    items = await resolveMissingImages(items);
+    const data=await getBloggerData();
+    let items=parseBloggerJson(data);
+    items = await resolveMissingImages(items);        // 👈 completa imágenes que falten (cualquier autor)
+    if(!items.length) throw new Error("Sin entradas");
     renderNews(items);
   }catch(e){
-    console.error('News:', e);
-    $("#news-grid").innerHTML = '<div class="muted">No se pudieron cargar las noticias.</div>';
+    try{
+      const res=await fetch('/news.json',{cache:'no-store'}); let items=await res.json();
+      items=(items||[]).map(n=>({ ...n, image0:bloggerToOriginal(n.image), id:n.id }));
+      items = await resolveMissingImages(items);      // 👈 también en fallback
+      if(items.length) renderNews(items); else throw new Error('news.json vacío');
+    }catch{ $("#news-grid").innerHTML=`<div class="muted">No se pudieron cargar las noticias.</div>`; }
   }
 }
 
-/* ===== Inicio ===== */
+/* ===== Contacto ===== */
+(function(){
+  const form=$("#contact-form"); if(!form) return;
+  const result=$("#form-result");
+  form.addEventListener('submit',async e=>{
+    e.preventDefault(); result.textContent='Enviando…';
+    try{
+      const r=await fetch(form.action,{method:'POST',body:new FormData(form),headers:{'Accept':'application/json'}});
+      if(r.ok){ result.textContent='¡Mensaje enviado!'; form.reset();}
+      else{ result.textContent='Hubo un error al enviar.';}
+    }catch{ result.textContent='No se pudo enviar. Probá más tarde.';}
+  });
+})();
+
+/* ===== Init ===== */
 loadPlaylist();
 loadNews();
-
 </script>
 </body>
 </html>
