@@ -58,6 +58,34 @@
     .btn.brand{background:var(--brand);border-color:#ff5e1f;color:#111;font-weight:800}
     .btn.black{background:#0e0e0e;border-color:#242424;color:#fff}
 
+    /* Slider (rotador con efecto slide) */
+    .slider{position:relative;overflow:hidden;background:#000;border-bottom:1px solid #262626}
+    .slider-track{display:flex;transition:transform .5s ease;will-change:transform}
+    .slide{min-width:100%;position:relative;padding-top:56.25%;background:#000}
+    .slide .lite-yt{position:absolute;inset:0;background-position:center;background-size:cover;cursor:pointer}
+    .slide iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+    .slider-btn{position:absolute;top:50%;transform:translateY(-50%);width:42px;height:42px;border-radius:50%;border:1px solid #333;background:rgba(0,0,0,.55);color:#fff;display:grid;place-items:center}
+    .slider-btn:hover{background:rgba(0,0,0,.75)}
+    .slider-btn.prev{left:10px}
+    .slider-btn.next{right:10px}
+    .slider-dots{display:flex;gap:8px;justify-content:center;padding:8px 0 10px;background:var(--surface);border-top:1px solid #262626}
+    .slider-dots .dot{width:8px;height:8px;border-radius:999px;background:#444;border:1px solid #666}
+    .slider-dots .dot.active{background:var(--brand);border-color:#ff6a2d}
+
+    /* Slider (rotador con efecto slide) */
+    .slider{position:relative;overflow:hidden;background:#000;border-bottom:1px solid #262626}
+    .slider-track{display:flex;transition:transform .5s ease;will-change:transform}
+    .slide{min-width:100%;position:relative;padding-top:56.25%;background:#000}
+    .slide .lite-yt{position:absolute;inset:0;background-position:center;background-size:cover;cursor:pointer}
+    .slide iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+    .slider-btn{position:absolute;top:50%;transform:translateY(-50%);width:42px;height:42px;border-radius:50%;border:1px solid #333;background:rgba(0,0,0,.55);color:#fff;display:grid;place-items:center}
+    .slider-btn:hover{background:rgba(0,0,0,.75)}
+    .slider-btn.prev{left:10px}
+    .slider-btn.next{right:10px}
+    .slider-bars{position:absolute;top:10px;left:12px;right:12px;display:flex;gap:6px;z-index:2;pointer-events:auto}
+    .slider-bars .bar{flex:1;height:6px;border-radius:999px;background:rgba(255,255,255,.35);border:1px solid rgba(255,255,255,.5)}
+    .slider-bars .bar.active{background:var(--brand);border-color:#ff6a2d}
+
     /* Noticias */
     .n-card{background:var(--surface);border:1px solid #262626;border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;height:100%}
     .news-thumb{position:relative;width:100%;padding-top:100%;background:#0e0e0e;overflow:hidden;border-bottom:1px solid #262626}
@@ -93,7 +121,7 @@
 <header>
   <div class="nav">
     <div class="brand"><img src="mago.png" alt="Logo" />El Portal Gamer</div>
-    <a href="#ultimo">Inicio</a>
+    <a href="#ultimas">Inicio<\/a>
     <a href="#news">Noticias</a>
     <a href="#mini">Reseñas</a>
     <a href="#series">Series</a>
@@ -107,27 +135,18 @@
 
 <main>
   <!-- Último video -->
-  <section id="ultimo">
-    <h2>Último video</h2>
-    <div class="card">
-      <div class="videobox" id="ultimo-lite"></div>
-      <div class="pad">
-        <div class="title" id="ultimo-titulo">Cargando…</div>
-        <div class="muted" id="ultimo-fecha"></div>
-        <p class="desc" id="ultimo-desc"></p>
-        <div class="row">
-          <a id="ultimo-ver" class="btn brand" target="_blank" rel="noopener">▶ Ver en YouTube</a>
-          <a class="btn" href="https://www.instant-gaming.com/es/?igr=portalgamerx" target="_blank" rel="noopener">🎮 Ver Juegos en Oferta</a>
-        </div>
-      </div>
-    </div>
-  </section>
+  
 
   <!-- Rotador últimos 4 -->
-  <section id="ultimos4" style="margin-top:24px">
-    <h2>Últimos 4 videos</h2>
+  <section id="ultimas" style="margin-top:24px">
+    <h2>Últimas Reseñas</h2>
     <div class="card">
-      <div class="videobox" id="rotador4"></div>
+      <div id="rotador4" class="slider">
+        <div class="slider-bars" id="rot-bars"></div>
+        <div class="slider-track" id="rot-track"></div>
+        <button class="slider-btn prev" type="button" aria-label="Anterior">‹</button>
+        <button class="slider-btn next" type="button" aria-label="Siguiente">›</button>
+      </div>
       <div class="pad">
         <div class="title" id="rot-titulo">Cargando…</div>
         <div class="muted" id="rot-fecha"></div>
@@ -286,45 +305,65 @@ function renderSeries(items){
 /* ===== Rotador últimos 4 ===== */
 function renderRotador(arr){
   try{
-    const box = document.getElementById('rotador4');
+    const slider = document.getElementById('rotador4');
+    const track  = document.getElementById('rot-track');
+    const barsC  = document.getElementById('rot-bars');
+    const prevBtn= slider.querySelector('.prev');
+    const nextBtn= slider.querySelector('.next');
     const tEl = document.getElementById('rot-titulo');
     const fEl = document.getElementById('rot-fecha');
     const lEl = document.getElementById('rot-ver');
-    if(!box || !arr?.length) return;
+    if(!slider || !track || !arr?.length) return;
 
-    let i = 0, timer = null, playing = false;
+    track.innerHTML=''; barsC.innerHTML='';
+    let idx=0, playing=false, timer=null, dur=4000, downX=null, lock=false;
 
-    function paint(v){
-      box.className = 'videobox';
-      box.innerHTML = '';
-      const lite = document.createElement('div');
-      lite.className = 'lite-yt';
-      lite.style.backgroundImage = `url(${v.thumb})`;
+    function mkSlide(v){
+      const s=document.createElement('div'); s.className='slide';
+      const lite=document.createElement('div'); lite.className='lite-yt'; lite.style.backgroundImage=`url(${v.thumb})`;
       lite.innerHTML = `
         <button class="lty-playbtn" aria-label="Reproducir ${v.title}">
           <svg viewBox="0 0 68 48"><path d="M66.52 7.02a8 8 0 0 0-5.64-5.66C56.8 0 34 0 34 0S11.2 0 7.12 1.36A8 8 0 0 0 1.48 7.02 83.3 83.3 0 0 0 0 24a83.3 83.3 0 0 0 1.48 16.98 8 8 0 0 0 5.64 5.66C11.2 48 34 48 34 48s22.8 0 26.88-1.36a8 8 0 0 0 5.64-5.66A83.3 83.3 0 0 0 68 24a83.3 83.3 0 0 0-1.48-16.98zM27 34V14l18 10-18 10z"/></svg>
         </button>`;
       lite.addEventListener('click', ()=>{
-        playing = true; if(timer) clearInterval(timer);
-        box.innerHTML = `<iframe src="https://www.youtube.com/embed/${v.id}?autoplay=1" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="${v.title}"></iframe>`;
+        playing=true; stop();
+        s.innerHTML = `<iframe src="https://www.youtube.com/embed/${v.id}?autoplay=1" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="${v.title}"></iframe>`;
       });
-      box.appendChild(lite);
-      if(tEl) tEl.textContent = v.title;
-      if(fEl) fEl.textContent = new Date(v.date).toLocaleDateString();
-      if(lEl){ lEl.href = `https://www.youtube.com/watch?v=${v.id}`; }
+      s.appendChild(lite);
+      return s;
     }
 
-    function next(){ i = (i + 1) % arr.length; if(!playing) paint(arr[i]); }
+    arr.forEach(v=>track.appendChild(mkSlide(v)));
+    arr.forEach((_,i)=>{ const b=document.createElement('button'); b.type='button'; b.className='bar'+(i===0?' active':''); b.addEventListener('click',()=>goTo(i,true)); barsC.appendChild(b); });
 
-    paint(arr[i]);
+    function paintMeta(i){ const v=arr[i]; if(tEl) tEl.textContent=v.title; if(fEl) fEl.textContent=new Date(v.date).toLocaleDateString(); if(lEl) lEl.href=`https://www.youtube.com/watch?v=${v.id}`; }
 
-    const start = ()=>{ if(timer) clearInterval(timer); timer = setInterval(next, 6000); };
-    const stop  = ()=>{ if(timer) clearInterval(timer); };
-    start();
+    function goTo(i, user){
+      if(lock) return; lock=true;
+      idx=(i+arr.length)%arr.length;
+      track.style.transform = `translateX(-${idx*100}%)`;
+      barsC.querySelectorAll('.bar').forEach((d,j)=>d.classList.toggle('active', j===idx));
+      paintMeta(idx);
+      setTimeout(()=>lock=false, 520);
+      if(user){ stop(); start(); }
+    }
+    const next=()=>goTo(idx+1);
+    const prev=()=>goTo(idx-1);
+    function start(){ if(timer) clearInterval(timer); timer=setInterval(next, dur); }
+    function stop(){ if(timer) clearInterval(timer); timer=null; }
 
-    box.addEventListener('mouseenter', stop);
-    box.addEventListener('mouseleave', ()=>{ if(!playing) start(); });
-  }catch(e){ console.error('Rotador4:', e); }
+    paintMeta(0); start();
+
+    slider.addEventListener('mouseenter', stop);
+    slider.addEventListener('mouseleave', ()=>{ if(!playing) start(); });
+    nextBtn.addEventListener('click', ()=>next());
+    prevBtn.addEventListener('click', ()=>prev());
+
+    // swipe táctil/ratón
+    slider.addEventListener('pointerdown', e=>{ downX=e.clientX; slider.setPointerCapture(e.pointerId); });
+    slider.addEventListener('pointerup', e=>{ if(downX==null) return; const dx=e.clientX - downX; downX=null; if(Math.abs(dx)>50){ dx<0?next():prev(); } });
+
+  }catch(e){ console.error('Rotador4(slide):', e); }
 }
 
 /* ===== Noticias ===== */
@@ -490,9 +529,12 @@ async function loadPlaylist(){
       .sort((a,b) => new Date(b.date) - new Date(a.date));
 
     // Render: último + mini + series
-    renderUltimo(items[0]);
+    // renderUltimo(items[0]); // eliminado: ahora el slider reemplaza al "Último video"
     renderMini(items.slice(1,10));
     renderSeries(items);
+
+    // NUEVO: rotador con los 4 más recientes
+    renderRotador(items.slice(0,4));
 
     // NUEVO: rotador con los 4 más recientes
     renderRotador(items.slice(0,4));
