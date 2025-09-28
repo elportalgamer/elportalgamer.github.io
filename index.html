@@ -20,7 +20,7 @@
   <meta name="twitter:image" content="https://www.elportalgamer.com/og.jpg" />
 
   <style>
-    :root{ --bg:#121212; --surface:#1f1f1f; --text:#f0f0f0; --muted:#b5b5b5; --brand:#ff4500; --card:#171717; --radius:14px;}
+    :root{ --bg:#121212; --surface:#1f1f1f; --text:#f0f0f0; --muted:#b5b5b5; --brand:#ff4500; --card:#171717; --radius:14px; }
     *{box-sizing:border-box}
     body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Ubuntu,"Helvetica Neue",Arial;background:var(--bg);color:var(--text)}
     header{position:sticky;top:0;z-index:5;background:#161616;border-bottom:1px solid #242424}
@@ -88,16 +88,6 @@
     .share-pop.show{display:flex;flex-wrap:wrap;justify-content:center}
     .share-pop a,.share-pop button{border:1px solid #333;background:#0e0e0e;color:#fff;border-radius:10px;padding:8px 10px;text-decoration:none}
   </style>
-
-  <!-- Microsoft Clarity -->
-  <script>
-    (function(c,l,a,r,i,t,y){
-      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "CLARITY_ID");
-  </script>
-  <!-- /Microsoft Clarity -->
 </head>
 <body>
 <header>
@@ -133,6 +123,19 @@
     </div>
   </section>
 
+  <!-- Rotador últimos 4 -->
+  <section id="ultimos4" style="margin-top:24px">
+    <h2>Últimos 4 videos</h2>
+    <div class="card">
+      <div class="videobox" id="rotador4"></div>
+      <div class="pad">
+        <div class="title" id="rot-titulo">Cargando…</div>
+        <div class="muted" id="rot-fecha"></div>
+        <a id="rot-ver" class="btn brand" target="_blank" rel="noopener">▶ Ver en YouTube</a>
+      </div>
+    </div>
+  </section>
+
   <div class="divider" aria-hidden="true"></div>
 
   <!-- Noticias -->
@@ -164,31 +167,15 @@
     <h2>Apóyanos</h2>
     <div class="card pad">
       <div class="row">
-        <a class="btn brand" href="https://ko-fi.com/portalgamer" target="_blank" rel="noopener">☕ Invítame un café</a>
-        <a class="btn" href="https://www.instant-gaming.com/es/?igr=portalgamerx" target="_blank" rel="noopener">🎮 Ver Juegos en Oferta</a>
-        <a class="btn" href="https://www.amazon.com/shop/viajealodesconocido" target="_blank" rel="noopener">🛒 Amazon</a>
+        <a class="soc-card" href="https://www.instagram.com/soypaulangel_/?hl=es" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Zm10 2H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3Zm-5 3a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm6.5-.25a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5Z"/></svg>
+          <span>Instagram</span>
+        </a>
+        <a class="soc-card" href="https://www.twitch.tv/soypaulangel" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M4 3h16v10.5l-4 4H12l-2 2H8v-2H4V3Zm2 2v10h4v2h1.5l2-2H16l2-2V5H6Zm8.5 2.5h-2v4h2v-4Zm-5 0h-2v4h2v-4Z"/></svg>
+          <span>Twitch</span>
+        </a>
       </div>
-    </div>
-  </section>
-
-  <div class="divider" aria-hidden="true"></div>
-
-  <!-- Redes -->
-  <section id="redes">
-    <h2>Redes</h2>
-    <div class="socials">
-      <a class="soc-card" href="https://www.facebook.com/ElPortalGamerX" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M22 12.07C22 6.48 17.52 2 11.93 2S2 6.48 2 12.07c0 5.01 3.66 9.16 8.44 9.93v-7.02H7.9v-2.91h2.54V9.41c0-2.5 1.49-3.88 3.77-3.88 1.09 0 2.23.2 2.23.2v2.45h-1.25c-1.23 0-1.61.76-1.61 1.54v1.85h2.74l-.44 2.91h-2.3V22c4.78-.77 8.44-4.92 8.44-9.93z"/></svg>
-        <span>Facebook</span>
-      </a>
-      <a class="soc-card" href="https://www.instagram.com/elportalgamerx" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M12 2.2c3.2 0 3.58.01 4.85.07 1.17.05 1.95.24 2.4.4.6.23 1.03.5 1.48.95.45.45.72.88.95 1.48.16.45.35 1.23.4 2.4.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.24 1.95-.4 2.4-.23.6-.5 1.03-.95 1.48-.45.45-.88.72-1.48.95-.45.16-1.23.35-2.4.4-1.27.06-1.65.07-4.85.07s-3.53-.01-4.85-.07Zm0 3.2a6.8 6.8 0 1 1 0 13.6 6.8 6.8 0 0 1 0-13.6Zm6.9-2.02a1.6 1.6 0 1 1-3.2 0 1.6 1.6 0 0 1 3.2 0Z"/></svg>
-        <span>Instagram</span>
-      </a>
-      <a class="soc-card" href="https://www.twitch.tv/soypaulangel" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M4 3h16v10.5l-4 4H12l-2 2H8v-2H4V3Zm2 2v10h4v2h1.5l2-2H16l2-2V5H6Zm8.5 2.5h-2v4h2v-4Zm-5 0h-2v4h2v-4Z"/></svg>
-        <span>Twitch</span>
-      </a>
     </div>
   </section>
 
@@ -218,18 +205,18 @@
 <!-- Popover compartir -->
 <div id="share-pop" class="share-pop" role="dialog" aria-modal="true" aria-hidden="true"></div>
 
-<script defer>
+<script>
 /* ====== Config ====== */
-const API_KEY="AIzaSyCqPlM0Ab3-_mtFHPmrrgJTS1S4dBCbbMA";
-const PLAYLIST_ID="PLk3cei5OOiyvTQzg5FGgIRY3xs44F7Wzv";
-const MAX_RESULTS=20;
+const API_KEY     = "AIzaSyCqPlM0Ab3-_mtFHPmrrgJTS1S4dBCbbMA"; // tu API key
+const PLAYLIST_ID = "PLk3cei5OOiyvTQzg5FGgIRY3xs44F7Wzv";       // tu playlist ID (Uploads o una lista)
+const MAX_RESULTS = 20;
 
-const BLOGGER_FEED_HTTPS="https://portalgamerok.blogspot.com/feeds/posts/summary?alt=json&max-results=6&orderby=published";
-const JINA="https://r.jina.ai";
-const ALLO="https://api.allorigins.win/raw";
+const BLOGGER_FEED_HTTPS = "https://portalgamerok.blogspot.com/feeds/posts/summary?alt=json&max-results=6&orderby=published";
+const JINA = "https://r.jina.ai";
+const ALLO = "https://api.allorigins.win/raw";
 
-const $=(s,p=document)=>p.querySelector(s);
-const $$=(s,p=document)=>[...p.querySelectorAll(s)];
+const $  = (s,p=document)=>p.querySelector(s);
+const $$ = (s,p=document)=>Array.from(p.querySelectorAll(s));
 const truncate=(str,n)=> (str||"").length>n ? str.slice(0,n).replace(/\s+\S*$/,'')+"…" : str;
 const words=(x)=>(x||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
 
@@ -245,89 +232,18 @@ function cleanYtDesc(s){
   for(const raw of t.split('\n')){
     const line=raw.trim(); if(!line) continue;
     if(sep.test(line)||footer.test(line)) break;
-    if(/^https?:\/\//i.test(line)) continue;
-    out.push(line); if(out.join(' ').length>1200) break;
+    if(/^https?:/i.test(line)) continue;
+    out.push(line);
   }
-  return out.join('\n').trim();
+  return out.join('\n');
 }
 
-/* ===== Anti-pixelado Blogger ===== */
-function bloggerToOriginal(u){ if(!u) return ''; return u.replace(/\/s\d+[^/]*\//,'/s0/').replace(/=s\d+[^&?]*/,'=s0');}
-function bloggerFromOriginalSet(u,size){ if(!u) return ''; return u.replace('/s0/','/s'+size+'/').replace('=s0','=s'+size);}
-
-/* ---------- Imagen desde HTML (mejorada) ---------- */
-function pickFromSrcset(srcset){
-  if(!srcset) return "";
-  // toma el candidato de mayor ancho
-  const parts = srcset.split(',').map(s=>s.trim());
-  let best = "", w = 0;
-  for(const p of parts){
-    const [url, desc] = p.split(/\s+/);
-    const m = /(\d+)w/.exec(desc||"");
-    const val = m ? parseInt(m[1],10) : 0;
-    if(val >= w){ w = val; best = url; }
-  }
-  return best || parts[parts.length-1].split(/\s+/)[0];
-}
-function extractImgFromHtml(html){
-  try{
-    const doc = new DOMParser().parseFromString(html||"", "text/html");
-
-    // og/twitter
-    const og = doc.querySelector('meta[property="og:image"],meta[name="og:image"],meta[property="og:image:url"],meta[name="twitter:image"],meta[name="twitter:image:src"]');
-    if(og?.content) return og.content;
-
-    // picture/srcset
-    const srcsetEl = doc.querySelector('source[srcset], img[srcset]');
-    if(srcsetEl){
-      const best = pickFromSrcset(srcsetEl.getAttribute('srcset')||"");
-      if(best) return best;
-    }
-
-    // <img> con data-src etc
-    const img = doc.querySelector('img');
-    if(img){
-      return img.getAttribute('src') ||
-             img.getAttribute('data-src') ||
-             img.getAttribute('data-original') ||
-             img.getAttribute('data-lazy-src') || "";
-    }
-  }catch{}
-
-  // fallback regex
-  const m = (html||"").match(/<img[^>]+(?:src|data-src|data-original|data-lazy-src)=["']([^"']+)["']/i);
-  return m ? m[1] : "";
-}
-
-/* Filtro de placeholders */
-function isPlaceholder(u){
-  if(!u) return true;
-  if(u.startsWith('data:')) return true;
-  if(/blank\.gif|transparent|spacer/i.test(u)) return true;
-  return false;
-}
-
-/* ---------- OG image real desde la página del post ---------- */
-async function fetchOgImageViaProxy(url){
-  try{
-    const prox = `${JINA}/${url}`;
-    const html = await (await fetch(prox, {cache:'no-store'})).text();
-    const doc  = new DOMParser().parseFromString(html, "text/html");
-    const og = doc.querySelector('meta[property="og:image"],meta[name="og:image"],meta[property="og:image:url"],meta[name="twitter:image"],meta[name="twitter:image:src"]');
-    return og?.content || "";
-  }catch{
-    return "";
-  }
-}
-
-/* ===== YouTube ===== */
+/* ===== YouTube: Último ===== */
 function renderUltimo(v){
   const box=$("#ultimo-lite"); box.className="videobox";
   const lite=document.createElement("div");
   lite.className="lite-yt"; lite.style.backgroundImage=`url(${v.thumb})`;
-  lite.innerHTML=`<button class="lty-playbtn" aria-label="Reproducir ${v.title}">
-    <svg viewBox="0 0 68 48"><path d="M66.52 7.02a8 8 0 0 0-5.64-5.66C56.8 0 34 0 34 0S11.2 0 7.12 1.36A8 8 0 0 0 1.48 7.02 83.3 83.3 0 0 0 0 24a83.3 83.3 0 0 0 1.48 16.98 8 8 0 0 0 5.64 5.66C11.2 48 34 48 34 48s22.8 0 26.88-1.36a8 8 0 0 0 5.64-5.66A83.3 83.3 0 0 0 68 24a83.3 83.3 0 0 0-1.48-16.98zM27 34V14l18 10-18 10z"/></svg>
-  </button>`;
+  lite.innerHTML=`<button class="lty-playbtn" aria-label="Reproducir ${v.title}"><svg viewBox="0 0 68 48"><path d="M66.52 7.02a8 8 0 0 0-5.64-5.66C56.8 0 34 0 34 0S11.2 0 7.12 1.36A8 8 0 0 0 1.48 7.02 83.3 83.3 0 0 0 0 24a83.3 83.3 0 0 0 1.48 16.98 8 8 0 0 0 5.64 5.66C11.2 48 34 48 34 48s22.8 0 26.88-1.36a8 8 0 0 0 5.64-5.66A83.3 83.3 0 0 0 68 24a83.3 83.3 0 0 0-1.48-16.98zM27 34V14l18 10-18 10z"/></svg></button>`;
   lite.addEventListener("click",()=>{ box.innerHTML=`<iframe src="https://www.youtube.com/embed/${v.id}?autoplay=1" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="${v.title}"></iframe>`;});
   box.appendChild(lite);
   $("#ultimo-titulo").textContent=v.title;
@@ -335,6 +251,8 @@ function renderUltimo(v){
   $("#ultimo-desc").textContent=truncate(v.desc,420);
   $("#ultimo-ver").href=`https://www.youtube.com/watch?v=${v.id}`;
 }
+
+/* ===== YouTube: cards ===== */
 function makeMiniCard(v){
   const el=document.createElement("article");
   el.className="card pad filterable"; el.dataset.title=v.title; el.dataset.desc=v.desc;
@@ -365,59 +283,86 @@ function renderSeries(items){
   }
 }
 
-/* ===== Playlist: siempre el más reciente ===== */
-async function loadPlaylist(){
+/* ===== Rotador últimos 4 ===== */
+function renderRotador(arr){
   try{
-    const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${PLAYLIST_ID}&maxResults=${MAX_RESULTS}&key=${API_KEY}&_=${Date.now()}`;
-    const r   = await fetch(url, { cache: 'no-store' });
-    const data= await r.json();
-    if(!Array.isArray(data.items) || !data.items.length) throw new Error("YouTube sin items");
+    const box = document.getElementById('rotador4');
+    const tEl = document.getElementById('rot-titulo');
+    const fEl = document.getElementById('rot-fecha');
+    const lEl = document.getElementById('rot-ver');
+    if(!box || !arr?.length) return;
 
-    const items = data.items
-      .map(i => ({
-        id:    i.snippet.resourceId.videoId,
-        title: i.snippet.title,
-        desc:  cleanYtDesc(i.snippet.description || ""),
-        date:  i.snippet.publishedAt,
-        thumb: (i.snippet.thumbnails?.maxres?.url ||
-                i.snippet.thumbnails?.high?.url   ||
-                i.snippet.thumbnails?.medium?.url || "")
-      }))
-      .sort((a,b) => new Date(b.date) - new Date(a.date));
+    let i = 0, timer = null, playing = false;
 
-    renderUltimo(items[0]);
-    renderMini(items.slice(1,10));
-    renderSeries(items);
+    function paint(v){
+      box.className = 'videobox';
+      box.innerHTML = '';
+      const lite = document.createElement('div');
+      lite.className = 'lite-yt';
+      lite.style.backgroundImage = `url(${v.thumb})`;
+      lite.innerHTML = `
+        <button class="lty-playbtn" aria-label="Reproducir ${v.title}">
+          <svg viewBox="0 0 68 48"><path d="M66.52 7.02a8 8 0 0 0-5.64-5.66C56.8 0 34 0 34 0S11.2 0 7.12 1.36A8 8 0 0 0 1.48 7.02 83.3 83.3 0 0 0 0 24a83.3 83.3 0 0 0 1.48 16.98 8 8 0 0 0 5.64 5.66C11.2 48 34 48 34 48s22.8 0 26.88-1.36a8 8 0 0 0 5.64-5.66A83.3 83.3 0 0 0 68 24a83.3 83.3 0 0 0-1.48-16.98zM27 34V14l18 10-18 10z"/></svg>
+        </button>`;
+      lite.addEventListener('click', ()=>{
+        playing = true; if(timer) clearInterval(timer);
+        box.innerHTML = `<iframe src="https://www.youtube.com/embed/${v.id}?autoplay=1" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="${v.title}"></iframe>`;
+      });
+      box.appendChild(lite);
+      if(tEl) tEl.textContent = v.title;
+      if(fEl) fEl.textContent = new Date(v.date).toLocaleDateString();
+      if(lEl){ lEl.href = `https://www.youtube.com/watch?v=${v.id}`; }
+    }
 
-    const inp=$("#buscador");
-    inp.addEventListener("input",()=>{
-      const q = words(inp.value);
-      for(const card of $$(".filterable")){
-        const hay = words(card.dataset.title+" "+(card.dataset.desc||"")).includes(q);
-        card.style.display = (!q || hay) ? "" : "none";
-      }
-    });
-  }catch(e){
-    console.error("YouTube:",e);
-    $("#ultimo-titulo").textContent="No se pudo cargar la playlist";
-    $("#ultimo-fecha").textContent="";
-    $("#ultimo-desc").textContent="Probá más tarde o visitá el canal.";
-    $("#ultimo-ver").href="https://www.youtube.com/@TuCanal/videos";
-  }
+    function next(){ i = (i + 1) % arr.length; if(!playing) paint(arr[i]); }
+
+    paint(arr[i]);
+
+    const start = ()=>{ if(timer) clearInterval(timer); timer = setInterval(next, 6000); };
+    const stop  = ()=>{ if(timer) clearInterval(timer); };
+    start();
+
+    box.addEventListener('mouseenter', stop);
+    box.addEventListener('mouseleave', ()=>{ if(!playing) start(); });
+  }catch(e){ console.error('Rotador4:', e); }
 }
 
 /* ===== Noticias ===== */
 function timeAgo(iso){ const d=new Date(iso); const diff=(Date.now()-d.getTime())/1000; const u=[[31536000,'a'],[2592000,'m'],[604800,'sem'],[86400,'d'],[3600,'h'],[60,'min']]; for(const [s,n] of u){ if(diff>=s) return `${Math.floor(diff/s)} ${n}`;} return 'ahora'; }
-function extractFirstImgOrFallback(rawHtml){
-  const u = extractImgFromHtml(rawHtml);
-  return isPlaceholder(u) ? "" : u;
+
+function pickFromSrcset(srcset){
+  if(!srcset) return "";
+  const parts = srcset.split(',').map(s=>s.trim());
+  let best = "", w = 0;
+  for(const p of parts){
+    const [url, desc] = p.split(/\s+/);
+    const m = /(\d+)w/.exec(desc||"");
+    const val = m ? parseInt(m[1],10) : 0;
+    if(val >= w){ w = val; best = url; }
+  }
+  return best || parts[parts.length-1].split(/\s+/)[0];
 }
-function newsHref(n){
-  const base=new URL('news.html', location.origin);
-  if(n.id) base.searchParams.set('id', n.id);
-  else if(n.url) base.searchParams.set('u', n.url);
-  return base.toString();
+function extractImgFromHtml(html){
+  try{
+    const doc = new DOMParser().parseFromString(html||"", "text/html");
+    const og = doc.querySelector('meta[property="og:image"],meta[name="og:image"],meta[property="og:image:url"],meta[name="twitter:image"],meta[name="twitter:image:src"]');
+    if(og?.content) return og.content;
+    const srcsetEl = doc.querySelector('source[srcset], img[srcset]');
+    if(srcsetEl){ const best = pickFromSrcset(srcsetEl.getAttribute('srcset')||""); if(best) return best; }
+    const img = doc.querySelector('img');
+    if(img){ return img.getAttribute('src') || img.getAttribute('data-src') || img.getAttribute('data-original') || img.getAttribute('data-lazy-src') || ""; }
+  }catch{}
+  const m = (html||"").match(/<img[^>]+(?:src|data-src|data-original|data-lazy-src)=["']([^"']+)["']/i);
+  return m ? m[1] : "";
 }
+function isPlaceholder(u){ if(!u) return true; if(u.startsWith('data:')) return true; if(/blank\.gif|transparent|spacer/i.test(u)) return true; return false; }
+async function fetchOgImageViaProxy(url){
+  try{ const prox = `${JINA}/${url}`; const html = await (await fetch(prox, {cache:'no-store'})).text(); const doc  = new DOMParser().parseFromString(html, "text/html"); const og = doc.querySelector('meta[property="og:image"],meta[name="og:image"],meta[property="og:image:url"],meta[name="twitter:image"],meta[name="twitter:image:src"]'); return og?.content || ""; }catch{ return ""; }
+}
+function bloggerToOriginal(u){ if(!u) return ''; return u.replace(/\/s(\d+)(?:-c)?\//,'/s0/').replace(/=s\d+(-c)?/,'=s0'); }
+function bloggerFromOriginalSet(u,size){ if(!u) return ''; return u.replace('/s0/','/s'+size+'/').replace('=s0','=s'+size); }
+
+function newsHref(n){ const base=new URL('news.html', location.origin); if(n.id) base.searchParams.set('id', n.id); else if(n.url) base.searchParams.set('u', n.url); return base.toString(); }
 function parseBloggerJson(data){
   const entries=data?.feed?.entry||[];
   return entries.map(e=>{
@@ -426,26 +371,16 @@ function parseBloggerJson(data){
     const title=(e.title?.$t||"").trim() || (text?text.split(/\s+/).slice(0,12).join(" ")+"…":"Sin título");
     const link=(e.link||[]).find(l=>l.rel==='alternate')?.href || '';
     const date=e.published?.$t || e.updated?.$t || new Date().toISOString();
-    const tRaw=e['media$thumbnail']?.url || extractFirstImgOrFallback(raw) || "";
+    const tRaw=e['media$thumbnail']?.url || extractImgFromHtml(raw) || "";
     const s0=bloggerToOriginal(tRaw);
     const id=(e.id?.$t||"").split("post-").pop();
     return { title, url:link, date, summary:text, image0:s0, id };
   });
 }
-
-/* Completa imágenes faltantes usando OG de la página real */
 async function resolveMissingImages(items){
-  for(const it of items){
-    if(!it.image0 || isPlaceholder(it.image0)){
-      const og = await fetchOgImageViaProxy(it.url);
-      if(og){
-        it.image0 = bloggerToOriginal(og) || og;
-      }
-    }
-  }
+  for(const it of items){ if(!it.image0 || isPlaceholder(it.image0)){ const og = await fetchOgImageViaProxy(it.url); if(og){ it.image0 = bloggerToOriginal(og) || og; } } }
   return items;
 }
-
 function renderNews(items){
   const grid=$("#news-grid"); grid.innerHTML="";
   items.forEach(n=>{
@@ -483,10 +418,7 @@ function renderNews(items){
 
   document.addEventListener('click', (e)=>{
     const a = e.target.closest('a[data-nav="news"]');
-    if(a){
-      e.preventDefault();
-      window.location.href = a.href;
-    }
+    if(a){ e.preventDefault(); window.location.href = a.href; }
   }, {passive:false});
 
   const pop=$("#share-pop");
@@ -506,14 +438,12 @@ function renderNews(items){
   }
   document.addEventListener('click',e=>{
     const btn=e.target.closest('.share-btn');
-    if(btn){
-      const url=btn.dataset.url, title=btn.dataset.title||'Noticia';
-      if(navigator.share){ navigator.share({title,url}).catch(()=>showPop(url,title)); }
-      else { showPop(url,title); }
-    }else if(!e.target.closest('#share-pop')){ pop.classList.remove('show'); }
+    if(btn){ const url=btn.dataset.url, title=btn.dataset.title||'Noticia'; if(navigator.share){ navigator.share({title,url}).catch(()=>showPop(url,title)); } else { showPop(url,title); } }
+    else if(!e.target.closest('#share-pop')){ pop.classList.remove('show'); }
   });
 }
 
+/* ===== Data fetchers ===== */
 async function fetchJson(url){ const r=await fetch(url,{cache:'no-store'}); const txt=await r.text(); try{ return JSON.parse(txt);}catch{return {};} }
 async function getBloggerData(){
   const urls=[ `${JINA}/http://portalgamerok.blogspot.com/feeds/posts/summary?alt=json&max-results=6&orderby=published`,
@@ -526,32 +456,64 @@ async function loadNews(){
   try{
     const data=await getBloggerData();
     let items=parseBloggerJson(data);
-    items = await resolveMissingImages(items);        // 👈 completa imágenes que falten (cualquier autor)
+    items = await resolveMissingImages(items);
     if(!items.length) throw new Error("Sin entradas");
     renderNews(items);
   }catch(e){
     try{
       const res=await fetch('/news.json',{cache:'no-store'}); let items=await res.json();
-      items=(items||[]).map(n=>({ ...n, image0:bloggerToOriginal(n.image), id:n.id }));
-      items = await resolveMissingImages(items);      // 👈 también en fallback
+      items=(items||[]).map(n=>({ title:n.title, url:n.url, date:n.date, summary:n.summary, image0:bloggerToOriginal(n.image), id:n.id }));
+      items = await resolveMissingImages(items);
       if(items.length) renderNews(items); else throw new Error('news.json vacío');
     }catch{ $("#news-grid").innerHTML=`<div class="muted">No se pudieron cargar las noticias.</div>`; }
   }
 }
 
-/* ===== Contacto ===== */
-(function(){
-  const form=$("#contact-form"); if(!form) return;
-  const result=$("#form-result");
-  form.addEventListener('submit',async e=>{
-    e.preventDefault(); result.textContent='Enviando…';
-    try{
-      const r=await fetch(form.action,{method:'POST',body:new FormData(form),headers:{'Accept':'application/json'}});
-      if(r.ok){ result.textContent='¡Mensaje enviado!'; form.reset();}
-      else{ result.textContent='Hubo un error al enviar.';}
-    }catch{ result.textContent='No se pudo enviar. Probá más tarde.';}
-  });
-})();
+/* ===== Playlist ===== */
+async function loadPlaylist(){
+  try{
+    const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${PLAYLIST_ID}&maxResults=${MAX_RESULTS}&key=${API_KEY}&_=${Date.now()}`;
+    const r   = await fetch(url, { cache: 'no-store' });
+    const data= await r.json();
+    if(!Array.isArray(data.items) || !data.items.length) throw new Error("YouTube sin items");
+
+    const items = data.items
+      .map(i => ({
+        id:    i.snippet.resourceId.videoId,
+        title: i.snippet.title,
+        desc:  cleanYtDesc(i.snippet.description || ""),
+        date:  i.snippet.publishedAt,
+        thumb: (i.snippet.thumbnails?.maxres?.url ||
+                i.snippet.thumbnails?.high?.url   ||
+                i.snippet.thumbnails?.medium?.url || "")
+      }))
+      .sort((a,b) => new Date(b.date) - new Date(a.date));
+
+    // Render: último + mini + series
+    renderUltimo(items[0]);
+    renderMini(items.slice(1,10));
+    renderSeries(items);
+
+    // NUEVO: rotador con los 4 más recientes
+    renderRotador(items.slice(0,4));
+
+    // Buscador en vivo
+    const inp=$("#buscador");
+    inp.addEventListener("input",()=>{
+      const q = words(inp.value);
+      for(const card of $$(".filterable")){
+        const hay = words((card.dataset.title||"")+" "+(card.dataset.desc||""));
+        card.style.display = (!q || hay.includes(q)) ? "" : "none";
+      }
+    });
+  }catch(e){
+    console.error("YouTube:",e);
+    $("#ultimo-titulo").textContent="No se pudo cargar la playlist";
+    $("#ultimo-fecha").textContent="";
+    $("#ultimo-desc").textContent="Probá más tarde o visitá el canal.";
+    $("#ultimo-ver").href="https://www.youtube.com/@TuCanal/videos";
+  }
+}
 
 /* ===== Init ===== */
 loadPlaylist();
