@@ -263,7 +263,15 @@ function renderUltimo(v){
   const lite=document.createElement("div");
   lite.className="lite-yt"; lite.style.backgroundImage=`url(${v.thumb})`;
   lite.innerHTML=`<button class="lty-playbtn" aria-label="Reproducir ${v.title}"><svg viewBox="0 0 68 48"><path d="M66.52 7.02a8 8 0 0 0-5.64-5.66C56.8 0 34 0 34 0S11.2 0 7.12 1.36A8 8 0 0 0 1.48 7.02 83.3 83.3 0 0 0 0 24a83.3 83.3 0 0 0 1.48 16.98 8 8 0 0 0 5.64 5.66C11.2 48 34 48 34 48s22.8 0 26.88-1.36a8 8 0 0 0 5.64-5.66A83.3 83.3 0 0 0 68 24a83.3 83.3 0 0 0-1.48-16.98zM27 34V14l18 10-18 10z"/></svg></button>`;
-  lite.addEventListener("click",()=>{ box.innerHTML=`<iframe src="https://www.youtube.com/embed/${v.id}?autoplay=1" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="${v.title}"></iframe>`;});
+  lite.addEventListener('click', (e)=>{
+        const play = e.target.closest('.lty-playbtn');
+        if(play){
+          playing = true; stop();
+          s.innerHTML = `<iframe src="https://www.youtube.com/embed/${v.id}?autoplay=1" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="${v.title}"></iframe>`;
+        }else{
+          window.open(`https://www.youtube.com/watch?v=${v.id}`, '_blank', 'noopener');
+        }
+      });
   box.appendChild(lite);
   $("#ultimo-titulo").textContent=v.title;
   $("#ultimo-fecha").textContent=new Date(v.date).toLocaleDateString();
@@ -282,7 +290,14 @@ function makeMiniCard(v){
     <p class="desc">${truncate(v.desc,360)}</p>
     <a class="btn brand" href="https://www.youtube.com/watch?v=${v.id}" target="_blank" rel="noopener">▶ Ver video</a>`;
   const thumb=el.querySelector(".videobox");
-  thumb.addEventListener("click",()=>{ thumb.innerHTML=`<iframe src="https://www.youtube.com/embed/${v.id}?autoplay=1" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="${v.title}"></iframe>`;});
+  thumb.addEventListener("click",(e)=>{
+    const play=e.target.closest('.lty-playbtn');
+    if(play){
+      thumb.innerHTML=`<iframe src="https://www.youtube.com/embed/${v.id}?autoplay=1" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="${v.title}"></iframe>`;
+    }else{
+      window.open(`https://www.youtube.com/watch?v=${v.id}`,'_blank','noopener');
+    }
+  });
   return el;
 }
 function renderMini(arr){ const grid=$("#mini-grid"); grid.innerHTML=""; arr.forEach(v=>grid.appendChild(makeMiniCard(v))); }
@@ -325,9 +340,14 @@ function renderRotador(arr){
         <button class="lty-playbtn" aria-label="Reproducir ${v.title}">
           <svg viewBox="0 0 68 48"><path d="M66.52 7.02a8 8 0 0 0-5.64-5.66C56.8 0 34 0 34 0S11.2 0 7.12 1.36A8 8 0 0 0 1.48 7.02 83.3 83.3 0 0 0 0 24a83.3 83.3 0 0 0 1.48 16.98 8 8 0 0 0 5.64 5.66C11.2 48 34 48 34 48s22.8 0 26.88-1.36a8 8 0 0 0 5.64-5.66A83.3 83.3 0 0 0 68 24a83.3 83.3 0 0 0-1.48-16.98zM27 34V14l18 10-18 10z"/></svg>
         </button>`;
-      lite.addEventListener('click', ()=>{
-        playing=true; stop();
-        s.innerHTML = `<iframe src="https://www.youtube.com/embed/${v.id}?autoplay=1" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="${v.title}"></iframe>`;
+      lite.addEventListener('click', (e)=>{
+        const play = e.target.closest('.lty-playbtn');
+        if(play){
+          playing = true; stop();
+          s.innerHTML = `<iframe src="https://www.youtube.com/embed/${v.id}?autoplay=1" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="${v.title}"></iframe>`;
+        }else{
+          window.open(`https://www.youtube.com/watch?v=${v.id}`, '_blank', 'noopener');
+        }
       });
       s.appendChild(lite);
       return s;
