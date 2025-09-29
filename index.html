@@ -90,17 +90,19 @@
   
 /* --- Patch: slider de últimos 4 en #ultimo-lite (PGS) --- */
 .slider-pgs{position:relative;overflow:hidden;background:#000}
-.pgs-track{display:flex;transition:transform .5s ease;will-change:transform}
-.pgs-slide{min-width:100%;position:relative;padding-top:56.25%;background:#000}
+/* track debe ocupar todo el alto del .videobox (que ya define altura con padding-top) */
+.pgs-track{position:absolute;inset:0;display:flex;transition:transform .5s ease;will-change:transform}
+/* cada slide ocupa 100% del ancho y alto; sin padding-top extra para evitar el "bloque negro" */
+.pgs-slide{min-width:100%;height:100%;position:relative;background:#000}
 .pgs-lite{position:absolute;inset:0;background-position:center;background-size:cover}
 .pgs-link{position:absolute;inset:0;display:block;text-indent:-9999px}
 .pgs-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:72px;height:52px;border:0;border-radius:10px;background:rgba(0,0,0,.6);display:grid;place-items:center;box-shadow:0 8px 20px rgba(0,0,0,.45)}
 .pgs-play svg{width:28px;height:28px;fill:#fff}
-.pgs-btn{position:absolute;top:50%;transform:translateY(-50%);width:42px;height:42px;border-radius:50%;border:1px solid #333;background:rgba(0,0,0,.55);color:#fff;display:grid;place-items:center;cursor:pointer;z-index:4}
+.pgs-btn{position:absolute;top:50%;transform:translateY(-50%);width:42px;height:42px;border-radius:50%;border:1px solid #333;background:rgba(0,0,0,.55);color:#fff;display:grid;place-items:center;cursor:pointer;z-index:9}
 .pgs-btn:hover{background:rgba(0,0,0,.75)}
 .pgs-btn.prev{left:10px}
 .pgs-btn.next{right:10px}
-.pgs-bars{position:absolute;top:10px;left:12px;right:12px;display:flex;gap:6px;z-index:3;pointer-events:auto}
+.pgs-bars{position:absolute;top:10px;left:12px;right:12px;display:flex;gap:6px;z-index:9;pointer-events:auto}
 .pgs-bars .bar{flex:1;height:6px;border-radius:999px;background:rgba(255,255,255,.35);border:1px solid rgba(255,255,255,.5);cursor:pointer}
 .pgs-bars .bar.active{background:var(--brand);border-color:#ff6a2d}
 
@@ -351,8 +353,8 @@ function renderUltimos4(arr){
   box.innerHTML = "";
   const bars = document.createElement("div"); bars.className = "pgs-bars"; bars.id = "pgs-bars";
   const track= document.createElement("div"); track.className= "pgs-track"; track.id = "pgs-track";
-  const btnPrev = document.createElement("button"); btnPrev.type="button"; btnPrev.className="pgs-btn prev"; btnPrev.textContent="‹";
-  const btnNext = document.createElement("button"); btnNext.type="button"; btnNext.className="pgs-btn next"; btnNext.textContent="›";
+  const btnPrev = document.createElement("button"); btnPrev.type="button"; btnPrev.className="pgs-btn prev"; btnPrev.setAttribute("aria-label","Anterior"); btnPrev.textContent="‹";
+  const btnNext = document.createElement("button"); btnNext.type="button"; btnNext.className="pgs-btn next"; btnNext.setAttribute("aria-label","Siguiente"); btnNext.textContent="›";
   box.appendChild(bars); box.appendChild(track); box.appendChild(btnPrev); box.appendChild(btnNext);
 
   function mkSlide(v){
@@ -376,10 +378,10 @@ function renderUltimos4(arr){
   function stop(){ if(timer) clearInterval(timer); timer=null; }
 
   paintMeta(0); start();
-  box.addEventListener("mouseenter", stop); box.addEventListener("mouseleave", start);
+  // Eventos (poner z-index alto en flechas/barras; evitar que el swipe las tape)
   btnNext.addEventListener("click", next); btnPrev.addEventListener("click", prev);
-  box.addEventListener("pointerdown", e=>{ downX=e.clientX; box.setPointerCapture(e.pointerId); });
-  box.addEventListener("pointerup", e=>{ if(downX==null) return; const dx=e.clientX - downX; downX=null; if(Math.abs(dx)>50){ dx<0?next():prev(); } });
+  box.addEventListener("pointerdown", e=>{ if(e.target.closest('.pgs-btn')) return; downX=e.clientX; box.setPointerCapture(e.pointerId); });
+  box.addEventListener("pointerup", e=>{ if(e.target.closest('.pgs-btn')) return; if(downX==null) return; const dx=e.clientX - downX; downX=null; if(Math.abs(dx)>50){ dx<0?next():prev(); } });
 }
 function makeMiniCard(v){
   const el=document.createElement("article");
