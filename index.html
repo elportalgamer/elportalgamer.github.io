@@ -90,9 +90,7 @@
   
 /* --- Patch: slider de últimos 4 en #ultimo-lite (PGS) --- */
 .slider-pgs{position:relative;overflow:hidden;background:#000}
-/* track debe ocupar todo el alto del .videobox (que ya define altura con padding-top) */
 .pgs-track{position:absolute;inset:0;display:flex;transition:transform .5s ease;will-change:transform}
-/* cada slide ocupa 100% del ancho y alto; sin padding-top extra para evitar el "bloque negro" */
 .pgs-slide{min-width:100%;height:100%;position:relative;background:#000}
 .pgs-lite{position:absolute;inset:0;background-position:center;background-size:cover}
 .pgs-link{position:absolute;inset:0;display:block;text-indent:-9999px}
@@ -370,15 +368,29 @@ function renderUltimos4(arr){
   arr.forEach(v => track.appendChild(mkSlide(v)));
   arr.forEach((_,i)=>{ const b=document.createElement("button"); b.type="button"; b.className="bar"+(i===0?' active':''); b.addEventListener("click",()=>goTo(i,true)); bars.appendChild(b); });
 
+  const tEl = document.getElementById("ultimo-titulo");
   let idx=0, timer=null, dur=3500, lock=false, downX=null;
-  function paintMeta(i){ const v=arr[i]; $("#ultimo-titulo").textContent=v.title; $("#ultimo-fecha").textContent=new Date(v.date).toLocaleDateString(); $("#ultimo-desc").textContent=truncate(v.desc,420); $("#ultimo-ver").href=`https://www.youtube.com/watch?v=${v.id}`; }
+  function paintMeta(i){
+    const v=arr[i];
+    if(tEl){
+      tEl.textContent=v.title;
+      // Hacer clic en el título => mismo link que 'Ver en YouTube'
+      tEl.style.cursor='pointer';
+      tEl.setAttribute('role','link'); tEl.setAttribute('tabindex','0');
+      const href = `https://www.youtube.com/watch?v=${v.id}`;
+      tEl.onclick = ()=> window.open(href,'_blank','noopener');
+      tEl.onkeydown = (ev)=>{ if(ev.key==='Enter'||ev.key===' ') tEl.onclick(); };
+    }
+    $("#ultimo-fecha").textContent=new Date(v.date).toLocaleDateString();
+    $("#ultimo-desc").textContent=truncate(v.desc,420);
+    $("#ultimo-ver").href=`https://www.youtube.com/watch?v=${v.id}`;
+  }
   function goTo(i,user){ if(lock) return; lock=true; idx=(i+arr.length)%arr.length; track.style.transform=`translateX(-${idx*100}%)`; bars.querySelectorAll(".bar").forEach((d,j)=>d.classList.toggle("active", j===idx)); paintMeta(idx); setTimeout(()=>lock=false,520); if(user){ stop(); start(); } }
   const next=()=>goTo(idx+1); const prev=()=>goTo(idx-1);
   function start(){ if(timer) clearInterval(timer); if(dur>0) timer=setInterval(next, dur); }
   function stop(){ if(timer) clearInterval(timer); timer=null; }
 
   paintMeta(0); start();
-  // Eventos (poner z-index alto en flechas/barras; evitar que el swipe las tape)
   btnNext.addEventListener("click", next); btnPrev.addEventListener("click", prev);
   box.addEventListener("pointerdown", e=>{ if(e.target.closest('.pgs-btn')) return; downX=e.clientX; box.setPointerCapture(e.pointerId); });
   box.addEventListener("pointerup", e=>{ if(e.target.closest('.pgs-btn')) return; if(downX==null) return; const dx=e.clientX - downX; downX=null; if(Math.abs(dx)>50){ dx<0?next():prev(); } });
