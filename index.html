@@ -1,23 +1,25 @@
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>El Portal Gamer — Reseñas y retro</title>
-<link href="https://www.elportalgamer.com/" rel="canonical"/>
-<link href="mago.png" rel="icon" type="image/png"/>
-<meta content="Reseñas sinceras, retro y rarezas: PS1, PS2, Dreamcast, JRPG y survival horror. Videos y reseñas en El Portal Gamer." name="description"/>
-<meta content="El Portal Gamer — Reseñas y retro" property="og:title"/>
-<meta content="Reseñas sinceras, retro y rarezas: PS1, PS2, Dreamcast, JRPG y survival horror." property="og:description"/>
-<meta content="website" property="og:type"/>
-<meta content="https://www.elportalgamer.com/" property="og:url"/>
-<meta content="https://www.elportalgamer.com/og.jpg" property="og:image"/>
-<meta content="summary_large_image" name="twitter:card"/>
-<meta content="El Portal Gamer — Reseñas y retro" name="twitter:title"/>
-<meta content="Reseñas sinceras, retro y rarezas: PS1, PS2, Dreamcast, JRPG y survival horror." name="twitter:description"/>
-<meta content="https://www.elportalgamer.com/og.jpg" name="twitter:image"/>
-<style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>El Portal Gamer — Reseñas y retro</title>
+
+  <link rel="canonical" href="https://www.elportalgamer.com/" />
+  <link rel="icon" type="image/png" href="mago.png" />
+
+  <meta name="description" content="Reseñas sinceras, retro y rarezas: PS1, PS2, Dreamcast, JRPG y survival horror. Videos y reseñas en El Portal Gamer." />
+  <meta property="og:title" content="El Portal Gamer — Reseñas y retro" />
+  <meta property="og:description" content="Reseñas sinceras, retro y rarezas: PS1, PS2, Dreamcast, JRPG y survival horror." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.elportalgamer.com/" />
+  <meta property="og:image" content="https://www.elportalgamer.com/og.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="El Portal Gamer — Reseñas y retro" />
+  <meta name="twitter:description" content="Reseñas sinceras, retro y rarezas: PS1, PS2, Dreamcast, JRPG y survival horror." />
+  <meta name="twitter:image" content="https://www.elportalgamer.com/og.jpg" />
+
+  <style>
     :root{ --bg:#121212; --surface:#1f1f1f; --text:#f0f0f0; --muted:#b5b5b5; --brand:#ff4500; --card:#171717; --radius:14px;}
     *{box-sizing:border-box}
     body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Ubuntu,"Helvetica Neue",Arial;background:var(--bg);color:var(--text)}
@@ -86,131 +88,144 @@
     .share-pop.show{display:flex;flex-wrap:wrap;justify-content:center}
     .share-pop a,.share-pop button{border:1px solid #333;background:#0e0e0e;color:#fff;border-radius:10px;padding:8px 10px;text-decoration:none}
   
+/* --- Patch: slider de últimos 4 en #ultimo-lite (PGS) --- */
+.slider-pgs{position:relative;overflow:hidden;background:#000}
+.pgs-track{display:flex;transition:transform .5s ease;will-change:transform}
+.pgs-slide{min-width:100%;position:relative;padding-top:56.25%;background:#000}
+.pgs-lite{position:absolute;inset:0;background-position:center;background-size:cover}
+.pgs-link{position:absolute;inset:0;display:block;text-indent:-9999px}
+.pgs-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:72px;height:52px;border:0;border-radius:10px;background:rgba(0,0,0,.6);display:grid;place-items:center;box-shadow:0 8px 20px rgba(0,0,0,.45)}
+.pgs-play svg{width:28px;height:28px;fill:#fff}
+.pgs-btn{position:absolute;top:50%;transform:translateY(-50%);width:42px;height:42px;border-radius:50%;border:1px solid #333;background:rgba(0,0,0,.55);color:#fff;display:grid;place-items:center;cursor:pointer;z-index:4}
+.pgs-btn:hover{background:rgba(0,0,0,.75)}
+.pgs-btn.prev{left:10px}
+.pgs-btn.next{right:10px}
+.pgs-bars{position:absolute;top:10px;left:12px;right:12px;display:flex;gap:6px;z-index:3;pointer-events:auto}
+.pgs-bars .bar{flex:1;height:6px;border-radius:999px;background:rgba(255,255,255,.35);border:1px solid rgba(255,255,255,.5);cursor:pointer}
+.pgs-bars .bar.active{background:var(--brand);border-color:#ff6a2d}
 
-/* --- Slider últimos 4 (patch minimal) --- */
-.pg-slider{position:relative;overflow:hidden;background:#000;border-bottom:1px solid #262626}
-.pg-track{display:flex;transition:transform .5s ease;will-change:transform}
-.pg-slide{min-width:100%;position:relative;padding-top:56.25%;background:#000}
-.pg-lite{position:absolute;inset:0;background-position:center;background-size:cover}
-.pg-link{position:absolute;inset:0;display:block;text-indent:-9999px}
-.pg-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:72px;height:52px;border:0;border-radius:10px;background:rgba(0,0,0,.6);display:grid;place-items:center;box-shadow:0 8px 20px rgba(0,0,0,.45)}
-.pg-play svg{width:28px;height:28px;fill:#fff}
-.pg-btn{position:absolute;top:50%;transform:translateY(-50%);width:42px;height:42px;border-radius:50%;border:1px solid #333;background:rgba(0,0,0,.55);color:#fff;display:grid;place-items:center;cursor:pointer;z-index:4}
-.pg-btn:hover{background:rgba(0,0,0,.75)}
-.pg-btn.prev{left:10px}
-.pg-btn.next{right:10px}
-.pg-bars{position:absolute;top:10px;left:12px;right:12px;display:flex;gap:6px;z-index:3;pointer-events:auto}
-.pg-bars .bar{flex:1;height:6px;border-radius:999px;background:rgba(255,255,255,.35);border:1px solid rgba(255,255,255,.5)}
-.pg-bars .bar.active{background:var(--brand);border-color:#ff6a2d}
 </style>
 </head>
 <body>
 <header>
-<div class="nav">
-<div class="brand"><img alt="Logo" src="mago.png"/>El Portal Gamer</div>
-<a href="#ultimo">Inicio</a>
-<a href="#news">Noticias</a>
-<a href="#mini">Reseñas</a>
-<a href="#series">Series</a>
-<a href="videos.html">Videos</a>
-<a href="#apoya">Apóyanos</a>
-<a href="#contacto">Contacto</a>
-<div class="spacer"></div>
-<input class="search" id="buscador" placeholder="Buscar video, reseña o noticia…" type="search"/>
-</div>
+  <div class="nav">
+    <div class="brand"><img src="mago.png" alt="Logo" />El Portal Gamer</div>
+    <a href="#ultimo">Inicio</a>
+    <a href="#news">Noticias</a>
+    <a href="#mini">Reseñas</a>
+    <a href="#series">Series</a>
+    <a href="videos.html">Videos</a>
+    <a href="#apoya">Apóyanos</a>
+    <a href="#contacto">Contacto</a>
+    <div class="spacer"></div>
+    <input id="buscador" class="search" type="search" placeholder="Buscar video, reseña o noticia…" />
+  </div>
 </header>
+
 <main>
-<!-- Último video -->
+  <!-- Último video -->
+  <section id="ultimo">
+    <h2>Últimas Reseñas</h2>
+    <div class="card">
+      <div class="videobox" id="ultimo-lite"></div>
+      <div class="pad">
+        <div class="title" id="ultimo-titulo">Cargando…</div>
+        <div class="muted" id="ultimo-fecha"></div>
+        <p class="desc" id="ultimo-desc"></p>
+        <div class="row">
+          <a id="ultimo-ver" class="btn brand" target="_blank" rel="noopener">▶ Ver en YouTube</a>
+          <a class="btn" href="https://www.instant-gaming.com/es/?igr=portalgamerx" target="_blank" rel="noopener">🎮 Ver Juegos en Oferta</a>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<section id="ultimo">
-<h2>Últimas Reseñas</h2>
-<div class="card">
-<div aria-roledescription="carrusel" class="pg-slider" id="rotador4">
-<div class="pg-bars" id="rot-bars"></div>
-<div class="pg-track" id="rot-track"></div>
-<button aria-label="Anterior" class="pg-btn prev" type="button">‹</button>
-<button aria-label="Siguiente" class="pg-btn next" type="button">›</button>
-</div>
-<div class="pad">
-<div class="title" id="rot-titulo">Cargando…</div>
-<div class="muted" id="rot-fecha"></div>
-<a class="btn brand" id="rot-ver" rel="noopener" target="_blank">▶ Ver en YouTube</a>
-</div>
-</div>
-</section>
+  <div class="divider" aria-hidden="true"></div>
 
-<div aria-hidden="true" class="divider"></div>
-<!-- Noticias -->
-<section id="news">
-<h2>Noticias</h2>
-<div class="grid cols-3" id="news-grid"><div class="muted">Cargando noticias…</div></div>
-</section>
-<div aria-hidden="true" class="divider"></div>
-<!-- Reseñas -->
-<section id="mini">
-<h2>Reseñas</h2>
-<div class="grid cols-3" id="mini-grid"></div>
-</section>
-<div aria-hidden="true" class="divider"></div>
-<!-- Series -->
-<section id="series">
-<h2>Series</h2>
-<div class="grid cols-2" id="series-grid"></div>
-</section>
-<div aria-hidden="true" class="divider"></div>
-<!-- Apóyanos -->
-<section id="apoya">
-<h2>Apóyanos</h2>
-<div class="card pad">
-<div class="row">
-<a class="btn brand" href="https://ko-fi.com/portalgamer" rel="noopener" target="_blank">☕ Invítame un café</a>
-<a class="btn" href="https://www.instant-gaming.com/es/?igr=portalgamerx" rel="noopener" target="_blank">🎮 Ver Juegos en Oferta</a>
-<a class="btn" href="https://www.amazon.com/shop/viajealodesconocido" rel="noopener" target="_blank">🛒 Amazon</a>
-</div>
-</div>
-</section>
-<div aria-hidden="true" class="divider"></div>
-<!-- Redes -->
-<section id="redes">
-<h2>Redes</h2>
-<div class="socials">
-<a class="soc-card" href="https://www.facebook.com/ElPortalGamerX" rel="noopener" target="_blank">
-<svg aria-hidden="true" fill="#fff" viewbox="0 0 24 24"><path d="M22 12.07C22 6.48 17.52 2 11.93 2S2 6.48 2 12.07c0 5.01 3.66 9.16 8.44 9.93v-7.02H7.9v-2.91h2.54V9.41c0-2.5 1.49-3.88 3.77-3.88 1.09 0 2.23.2 2.23.2v2.45h-1.25c-1.23 0-1.61.76-1.61 1.54v1.85h2.74l-.44 2.91h-2.3V22c4.78-.77 8.44-4.92 8.44-9.93z"></path></svg>
-<span>Facebook</span>
-</a>
-<a class="soc-card" href="https://www.instagram.com/elportalgamerx" rel="noopener" target="_blank">
-<svg aria-hidden="true" fill="#fff" viewbox="0 0 24 24"><path d="M12 2.2c3.2 0 3.58.01 4.85.07 1.17.05 1.95.24 2.4.4.6.23 1.03.5 1.48.95.45.45.72.88.95 1.48.16.45.35 1.23.4 2.4.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.24 1.95-.4 2.4-.23.6-.5 1.03-.95 1.48-.45.45-.88.72-1.48.95-.45.16-1.23.35-2.4.4-1.27.06-1.65.07-4.85.07s-3.53-.01-4.85-.07Zm0 3.2a6.8 6.8 0 1 1 0 13.6 6.8 6.8 0 0 1 0-13.6Zm6.9-2.02a1.6 1.6 0 1 1-3.2 0 1.6 1.6 0 0 1 3.2 0Z"></path></svg>
-<span>Instagram</span>
-</a>
-<a class="soc-card" href="https://www.twitch.tv/soypaulangel" rel="noopener" target="_blank">
-<svg aria-hidden="true" fill="#fff" viewbox="0 0 24 24"><path d="M4 3h16v10.5l-4 4H12l-2 2H8v-2H4V3Zm2 2v10h4v2h1.5l2-2H16l2-2V5H6Zm8.5 2.5h-2v4h2v-4Zm-5 0h-2v4h2v-4Z"></path></svg>
-<span>Twitch</span>
-</a>
-</div>
-</section>
-<div aria-hidden="true" class="divider"></div>
-<!-- Contacto -->
-<section id="contacto">
-<h2>Contacto</h2>
-<div class="card pad">
-<form action="https://formspree.io/f/mjkejwvg" id="contact-form" method="POST" novalidate="">
-<div class="form-grid">
-<label>Nombre <input name="name" placeholder="Tu nombre" required="" type="text"/></label>
-<label>Email <input name="_replyto" placeholder="tu@email.com" required="" type="email"/></label>
-</div>
-<label>Asunto <input name="subject" placeholder="Propuesta, sugerencia, colaboración…" type="text"/></label>
-<label>Mensaje <textarea name="message" placeholder="Contame en qué te puedo ayudar" required="" rows="6"></textarea></label>
-<input autocomplete="off" name="_gotcha" style="display:none" tabindex="-1" type="text"/>
-<div class="row"><button class="btn brand" type="submit">📨 Enviar</button></div>
-<p aria-live="polite" class="muted" id="form-result"></p>
-</form>
-</div>
-</section>
+  <!-- Noticias -->
+  <section id="news">
+    <h2>Noticias</h2>
+    <div class="grid cols-3" id="news-grid"><div class="muted">Cargando noticias…</div></div>
+  </section>
+
+  <div class="divider" aria-hidden="true"></div>
+
+  <!-- Reseñas -->
+  <section id="mini">
+    <h2>Reseñas</h2>
+    <div class="grid cols-3" id="mini-grid"></div>
+  </section>
+
+  <div class="divider" aria-hidden="true"></div>
+
+  <!-- Series -->
+  <section id="series">
+    <h2>Series</h2>
+    <div class="grid cols-2" id="series-grid"></div>
+  </section>
+
+  <div class="divider" aria-hidden="true"></div>
+
+  <!-- Apóyanos -->
+  <section id="apoya">
+    <h2>Apóyanos</h2>
+    <div class="card pad">
+      <div class="row">
+        <a class="btn brand" href="https://ko-fi.com/portalgamer" target="_blank" rel="noopener">☕ Invítame un café</a>
+        <a class="btn" href="https://www.instant-gaming.com/es/?igr=portalgamerx" target="_blank" rel="noopener">🎮 Ver Juegos en Oferta</a>
+        <a class="btn" href="https://www.amazon.com/shop/viajealodesconocido" target="_blank" rel="noopener">🛒 Amazon</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider" aria-hidden="true"></div>
+
+  <!-- Redes -->
+  <section id="redes">
+    <h2>Redes</h2>
+    <div class="socials">
+      <a class="soc-card" href="https://www.facebook.com/ElPortalGamerX" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M22 12.07C22 6.48 17.52 2 11.93 2S2 6.48 2 12.07c0 5.01 3.66 9.16 8.44 9.93v-7.02H7.9v-2.91h2.54V9.41c0-2.5 1.49-3.88 3.77-3.88 1.09 0 2.23.2 2.23.2v2.45h-1.25c-1.23 0-1.61.76-1.61 1.54v1.85h2.74l-.44 2.91h-2.3V22c4.78-.77 8.44-4.92 8.44-9.93z"/></svg>
+        <span>Facebook</span>
+      </a>
+      <a class="soc-card" href="https://www.instagram.com/elportalgamerx" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M12 2.2c3.2 0 3.58.01 4.85.07 1.17.05 1.95.24 2.4.4.6.23 1.03.5 1.48.95.45.45.72.88.95 1.48.16.45.35 1.23.4 2.4.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.24 1.95-.4 2.4-.23.6-.5 1.03-.95 1.48-.45.45-.88.72-1.48.95-.45.16-1.23.35-2.4.4-1.27.06-1.65.07-4.85.07s-3.53-.01-4.85-.07Zm0 3.2a6.8 6.8 0 1 1 0 13.6 6.8 6.8 0 0 1 0-13.6Zm6.9-2.02a1.6 1.6 0 1 1-3.2 0 1.6 1.6 0 0 1 3.2 0Z"/></svg>
+        <span>Instagram</span>
+      </a>
+      <a class="soc-card" href="https://www.twitch.tv/soypaulangel" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M4 3h16v10.5l-4 4H12l-2 2H8v-2H4V3Zm2 2v10h4v2h1.5l2-2H16l2-2V5H6Zm8.5 2.5h-2v4h2v-4Zm-5 0h-2v4h2v-4Z"/></svg>
+        <span>Twitch</span>
+      </a>
+    </div>
+  </section>
+
+  <div class="divider" aria-hidden="true"></div>
+
+  <!-- Contacto -->
+  <section id="contacto">
+    <h2>Contacto</h2>
+    <div class="card pad">
+      <form id="contact-form" action="https://formspree.io/f/mjkejwvg" method="POST" novalidate>
+        <div class="form-grid">
+          <label>Nombre <input type="text" name="name" placeholder="Tu nombre" required></label>
+          <label>Email <input type="email" name="_replyto" placeholder="tu@email.com" required></label>
+        </div>
+        <label>Asunto <input type="text" name="subject" placeholder="Propuesta, sugerencia, colaboración…"></label>
+        <label>Mensaje <textarea name="message" rows="6" placeholder="Contame en qué te puedo ayudar" required></textarea></label>
+        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+        <div class="row"><button type="submit" class="btn brand">📨 Enviar</button></div>
+        <p id="form-result" class="muted" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
 </main>
+
 <footer>© 2025 El Portal Gamer</footer>
+
 <!-- Popover compartir -->
-<div aria-hidden="true" aria-modal="true" class="share-pop" id="share-pop" role="dialog"></div>
-<script defer="">
+<div id="share-pop" class="share-pop" role="dialog" aria-modal="true" aria-hidden="true"></div>
+
+<script defer>
 /* ====== Config ====== */
 const API_KEY="AIzaSyCqPlM0Ab3-_mtFHPmrrgJTS1S4dBCbbMA";
 const PLAYLIST_ID="PLk3cei5OOiyvTQzg5FGgIRY3xs44F7Wzv";
@@ -313,66 +328,6 @@ async function fetchOgImageViaProxy(url){
 }
 
 /* ===== YouTube ===== */
-
-/* ===== Rotador últimos 4 (patch minimal) ===== */
-function renderRotador(arr){
-  try{
-    const slider = document.getElementById('rotador4');
-    const track  = document.getElementById('rot-track');
-    const barsC  = document.getElementById('rot-bars');
-    const prevBtn= slider.querySelector('.prev');
-    const nextBtn= slider.querySelector('.next');
-    const tEl = document.getElementById('rot-titulo');
-    const fEl = document.getElementById('rot-fecha');
-    const lEl = document.getElementById('rot-ver');
-    if(!slider || !track || !arr?.length) return;
-
-    track.innerHTML=''; barsC.innerHTML='';
-    let idx=0, timer=null, dur=3500, downX=null, lock=false;
-
-    function mkSlide(v){
-      const s=document.createElement('div'); s.className='pg-slide';
-      const lite=document.createElement('div'); lite.className='pg-lite'; lite.style.backgroundImage=`url(${v.thumb})`;
-      const a=document.createElement('a'); a.className='pg-link'; a.href=`https://www.youtube.com/watch?v=${v.id}`; a.target='_blank'; a.rel='noopener'; a.textContent='YouTube';
-      const btn=document.createElement('button'); btn.className='pg-play'; btn.type='button'; btn.setAttribute('aria-label', `Abrir ${v.title} en YouTube`);
-      btn.innerHTML='<svg viewBox="0 0 68 48"><path d="M66.52 7.02a8 8 0 0 0-5.64-5.66C56.8 0 34 0 34 0S11.2 0 7.12 1.36A8 8 0 0 0 1.48 7.02 83.3 83.3 0 0 0 0 24a83.3 83.3 0 0 0 1.48 16.98 8 8 0 0 0 5.64 5.66C11.2 48 34 48 34 48s22.8 0 26.88-1.36a8 8 0 0 0 5.64-5.66A83.3 83.3 0 0 0 68 24a83.3 83.3 0 0 0-1.48-16.98zM27 34V14l18 10-18 10z"/></svg>';
-      btn.addEventListener('click', ()=>{ window.open(a.href, '_blank', 'noopener'); });
-      lite.appendChild(a); lite.appendChild(btn);
-      s.appendChild(lite);
-      return s;
-    }
-
-    arr.forEach(v=>track.appendChild(mkSlide(v)));
-    arr.forEach((_,i)=>{ const b=document.createElement('button'); b.type='button'; b.className='bar'+(i===0?' active':''); b.addEventListener('click',()=>goTo(i,true)); barsC.appendChild(b); });
-
-    function paintMeta(i){ const v=arr[i]; if(tEl) tEl.textContent=v.title; if(fEl) fEl.textContent=new Date(v.date).toLocaleDateString(); if(lEl) lEl.href=`https://www.youtube.com/watch?v=${v.id}`; }
-
-    function goTo(i, user){
-      if(lock) return; lock=true;
-      idx=(i+arr.length)%arr.length;
-      track.style.transform = `translateX(-${idx*100}%)`;
-      barsC.querySelectorAll('.bar').forEach((d,j)=>d.classList.toggle('active', j===idx));
-      paintMeta(idx);
-      setTimeout(()=>lock=false, 520);
-      if(user){ stop(); start(); }
-    }
-    const next=()=>goTo(idx+1);
-    const prev=()=>goTo(idx-1);
-    function start(){ if(timer) clearInterval(timer); timer=setInterval(next, dur); }
-    function stop(){ if(timer) clearInterval(timer); timer=null; }
-
-    paintMeta(0); start();
-
-    slider.addEventListener('mouseenter', stop);
-    slider.addEventListener('mouseleave', start);
-    nextBtn.addEventListener('click', ()=>next());
-    prevBtn.addEventListener('click', ()=>prev());
-
-    slider.addEventListener('pointerdown', e=>{ downX=e.clientX; slider.setPointerCapture(e.pointerId); });
-    slider.addEventListener('pointerup', e=>{ if(downX==null) return; const dx=e.clientX - downX; downX=null; if(Math.abs(dx)>50){ dx<0?next():prev(); } });
-  }catch(e){ console.error('Rotador4(slide):', e); }
-}
-
 function renderUltimo(v){
   const box=$("#ultimo-lite"); box.className="videobox";
   const lite=document.createElement("div");
@@ -386,6 +341,46 @@ function renderUltimo(v){
   $("#ultimo-fecha").textContent=new Date(v.date).toLocaleDateString();
   $("#ultimo-desc").textContent=truncate(v.desc,420);
   $("#ultimo-ver").href=`https://www.youtube.com/watch?v=${v.id}`;
+}
+
+/* ===== Patch: carrusel de los últimos 4 en #ultimo-lite ===== */
+function renderUltimos4(arr){
+  if(!arr || !arr.length) return;
+  const box = $("#ultimo-lite");
+  box.className = "videobox slider-pgs";
+  box.innerHTML = "";
+  // Controles y estructura
+  const bars = document.createElement("div"); bars.className = "pgs-bars"; bars.id = "pgs-bars";
+  const track= document.createElement("div"); track.className= "pgs-track"; track.id = "pgs-track";
+  const btnPrev = document.createElement("button"); btnPrev.type="button"; btnPrev.className="pgs-btn prev"; btnPrev.textContent="‹";
+  const btnNext = document.createElement("button"); btnNext.type="button"; btnNext.className="pgs-btn next"; btnNext.textContent="›";
+  box.appendChild(bars); box.appendChild(track); box.appendChild(btnPrev); box.appendChild(btnNext);
+
+  function mkSlide(v){
+    const s = document.createElement("div"); s.className="pgs-slide";
+    const lite = document.createElement("div"); lite.className="pgs-lite"; lite.style.backgroundImage=`url(${v.thumb})`;
+    const a = document.createElement("a"); a.className="pgs-link"; a.href=`https://www.youtube.com/watch?v=${v.id}`; a.target="_blank"; a.rel="noopener"; a.textContent="YouTube";
+    const btn=document.createElement("button"); btn.className="pgs-play"; btn.type="button"; btn.setAttribute("aria-label", `Abrir ${v.title} en YouTube`);
+    btn.innerHTML='<svg viewBox="0 0 68 48"><path d="M66.52 7.02a8 8 0 0 0-5.64-5.66C56.8 0 34 0 34 0S11.2 0 7.12 1.36A8 8 0 0 0 1.48 7.02 83.3 83.3 0 0 0 0 24a83.3 83.3 0 0 0 1.48 16.98 8 8 0 0 0 5.64 5.66C11.2 48 34 48 34 48s22.8 0 26.88-1.36a8 8 0 0 0 5.64-5.66A83.3 83.3 0 0 0 68 24a83.3 83.3 0 0 0-1.48-16.98zM27 34V14l18 10-18 10z"/></svg>';
+    btn.addEventListener("click", ()=>{ window.open(a.href, "_blank", "noopener"); });
+    lite.appendChild(a); lite.appendChild(btn); s.appendChild(lite);
+    return s;
+  }
+  arr.forEach(v => track.appendChild(mkSlide(v)));
+  arr.forEach((_,i)=>{ const b=document.createElement("button"); b.type="button"; b.className="bar"+(i===0?' active':''); b.addEventListener("click",()=>goTo(i,true)); bars.appendChild(b); });
+
+  let idx=0, timer=null, dur=3500, lock=false, downX=null;
+  function paintMeta(i){ const v=arr[i]; $("#ultimo-titulo").textContent=v.title; $("#ultimo-fecha").textContent=new Date(v.date).toLocaleDateString(); $("#ultimo-desc").textContent=truncate(v.desc,420); $("#ultimo-ver").href=`https://www.youtube.com/watch?v=${v.id}`; }
+  function goTo(i,user){ if(lock) return; lock=true; idx=(i+arr.length)%arr.length; track.style.transform=`translateX(-${idx*100}%)`; bars.querySelectorAll(".bar").forEach((d,j)=>d.classList.toggle("active", j===idx)); paintMeta(idx); setTimeout(()=>lock=false,520); if(user){ stop(); start(); } }
+  const next=()=>goTo(idx+1); const prev=()=>goTo(idx-1);
+  function start(){ if(timer) clearInterval(timer); if(dur>0) timer=setInterval(next, dur); }
+  function stop(){ if(timer) clearInterval(timer); timer=null; }
+
+  paintMeta(0); start();
+  box.addEventListener("mouseenter", stop); box.addEventListener("mouseleave", start);
+  btnNext.addEventListener("click", next); btnPrev.addEventListener("click", prev);
+  box.addEventListener("pointerdown", e=>{ downX=e.clientX; box.setPointerCapture(e.pointerId); });
+  box.addEventListener("pointerup", e=>{ if(downX==null) return; const dx=e.clientX - downX; downX=null; if(Math.abs(dx)>50){ dx<0?next():prev(); } });
 }
 function makeMiniCard(v){
   const el=document.createElement("article");
