@@ -349,7 +349,6 @@ function renderUltimos4(arr){
   const box = $("#ultimo-lite");
   box.className = "videobox slider-pgs";
   box.innerHTML = "";
-  // Controles y estructura
   const bars = document.createElement("div"); bars.className = "pgs-bars"; bars.id = "pgs-bars";
   const track= document.createElement("div"); track.className= "pgs-track"; track.id = "pgs-track";
   const btnPrev = document.createElement("button"); btnPrev.type="button"; btnPrev.className="pgs-btn prev"; btnPrev.textContent="‹";
@@ -432,8 +431,8 @@ async function loadPlaylist(){
       }))
       .sort((a,b) => new Date(b.date) - new Date(a.date));
 
-    renderUltimo(items[0]);
-    renderMini(items.slice(1,10));
+    renderUltimos4(items.slice(0,4));
+    renderMini(items.slice(4,10));
     renderSeries(items);
 
     const inp=$("#buscador");
