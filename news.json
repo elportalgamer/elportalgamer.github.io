@@ -1,19 +1,18 @@
-{
-  "items": [
-    {
-      "id": "b2256de565193002",
-      "title": "Silent Scope y Thrill Drive reaparecen en registros de Konami, sin juegos anunciados",
-      "body": "Silent Scope y Thrill Drive vuelven a aparecer en la documentación de Konami, aunque por ahora eso no significa que regresen con un juego nuevo. Según informa Vandal, la compañía presentó registros de ambas marcas ante la oficina europea EUIPO el 11 de noviembre.\n\nLas dos series tienen sus raíces en las recreativas: Thrill Drive apostaba por las carreras y Silent Scope por el disparo. Los trámites abarcan distintas clases de productos y servicios vinculados a los videojuegos. La información publicada también señala que ya existían registros anteriores que todavía no habían vencido.\n\nLa distinción es importante: proteger o actualizar una marca no confirma un lanzamiento. Konami no ha anunciado nuevas entregas ni conversiones para plataformas actuales de estas dos sagas. Por ahora, lo concreto es el movimiento administrativo; cualquier regreso jugable sigue sin confirmación.",
-      "summary": "Konami ha presentado registros europeos para dos de sus sagas de recreativa. El trámite no viene acompañado de nuevos juegos confirmados.",
-      "category": "retro",
-      "sourceName": "Vandal",
-      "sourceUrl": "https://vandal.elespanol.com/noticia/2026323035/konami-registra-las-marcas-de-dos-de-sus-sagas-olvidadas/",
-      "sourceId": "vandal",
-      "sourcePublishedAt": "2026-11-19T13:07:00.000Z",
-      "publishedAt": "2026-11-19T15:22:55.467Z",
-      "expiresAt": "2027-05-19T15:22:55.467Z",
-      "image": "news-images/b2256de565193002.png",
-      "imageKind": "illustration"
-    }
-  ]
-}
+[
+  {
+    "id": "b2256de565193002",
+    "title": "Silent Scope y Thrill Drive reaparecen en registros de Konami, sin juegos anunciados",
+    "body": "Un movimiento en el catálogo de marcas de Konami ha vuelto a poner bajo el foco a Silent Scope y Thrill Drive. La compañía presentó solicitudes para las dos series ante la Oficina de Propiedad Intelectual de la Unión Europea, con fecha del 11 de noviembre. Es una novedad para dos nombres ligados a las recreativas, aunque todavía no viene acompañada de un proyecto anunciado.\n\nLos expedientes incluyen las clases 09, 28 y 41, que abarcan distintos productos y servicios relacionados con videojuegos. Ambas sagas ya contaban con registros anteriores y aún quedaban años para su vencimiento. En Thrill Drive se actualizó una descripción antigua; en Silent Scope se modificó la redacción de las categorías que ya estaban contempladas. Ese contexto aconseja separar el trámite de cualquier expectativa de lanzamiento.\n\nThrill Drive nació en los salones arcade en 1998 con una propuesta de carreras tridimensionales. La serie sumó otras dos entregas para recreativas, aunque la tercera permaneció en Japón. Su identidad estaba vinculada a la conducción rápida y a los peligros de la carretera, dentro del formato directo de aquellas máquinas.\n\nSilent Scope, por su parte, debutó en recreativas en 1999 y después pasó por consolas y móviles. Su propuesta de disparos en primera persona tuvo varias continuaciones; la última de las citadas en esta información llegó en 2004. También existió un intento de reinicio que terminó cancelado, otro antecedente que ayuda a entender el interés por cualquier movimiento alrededor del nombre.\n\nLo confirmado ahora sigue siendo el registro de las marcas. Konami no ha presentado nuevas entregas ni versiones de estos juegos para PC o consolas actuales. Para hablar de un regreso haría falta un anuncio adicional: estos documentos, por sí solos, no permiten darlo por hecho.",
+    "summary": "Konami ha presentado registros europeos para dos de sus sagas de recreativa. El trámite no viene acompañado de nuevos juegos confirmados.",
+    "category": "retro",
+    "sourceName": "Vandal",
+    "sourceUrl": "https://vandal.elespanol.com/noticia/2026323035/konami-registra-las-marcas-de-dos-de-sus-sagas-olvidadas/",
+    "sourceId": "vandal",
+    "sourcePublishedAt": "2026-11-19T13:07:00.000Z",
+    "publishedAt": "2026-11-19T15:22:55.467Z",
+    "expiresAt": "2027-05-19T15:22:55.467Z",
+    "image": "news-images/b2256de565193002-v2.png",
+    "imageKind": "illustration",
+    "imageAlt": "Collage dadaísta de un coche de Thrill Drive y una mira de Silent Scope"
+  }
+]

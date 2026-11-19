@@ -15,7 +15,7 @@
   function element(tag,cls,text){const node=document.createElement(tag);if(cls)node.className=cls;if(text)node.textContent=text;return node;}
   async function json(url){const r=await fetch(url,{cache:'no-store',signal:AbortSignal.timeout(12000)});if(!r.ok)throw Error('News unavailable');return r.json();}
   function imageURL(story){return story.image?safeURL(story.image):state.api?state.api+'/image/'+encodeURIComponent(story.id):null;}
-  function image(story,cls){const box=element('div',cls);const url=imageURL(story);if(url){const img=element('img');img.src=url;img.alt='Ilustración editorial de la noticia';img.loading='lazy';img.width=800;img.height=800;img.addEventListener('error',()=>{img.remove();box.classList.add('news-image-fallback');box.append(element('span','','El Portal Gamer'));},{once:true});box.append(img);}else{box.classList.add('news-image-fallback');box.append(element('span','','El Portal Gamer'));}return box;}
+  function image(story,cls){const box=element('div',cls);const url=imageURL(story);if(url){const img=element('img');img.src=url;img.alt=story.imageAlt||('Collage dadaísta: '+story.title);img.loading='lazy';img.width=800;img.height=800;img.addEventListener('error',()=>{img.remove();box.classList.add('news-image-fallback');box.append(element('span','','El Portal Gamer'));},{once:true});box.append(img);}else{box.classList.add('news-image-fallback');box.append(element('span','','El Portal Gamer'));}return box;}
   function storyURL(story){const url=new URL('news.html',location.href);url.searchParams.set('id',story.id);return url.href;}
   async function share(story,button){const url=storyURL(story);try{if(navigator.share)await navigator.share({title:story.title,url});else{await navigator.clipboard.writeText(url);button.textContent='Enlace copiado';}}catch(error){if(error.name!=='AbortError'){button.textContent='Copiá la dirección de esta noticia';}}}
   function card(story){
@@ -26,8 +26,7 @@
     const date=element('time','',dateFormat.format(new Date(story.publishedAt||story.date)));date.dateTime=story.publishedAt||story.date;meta.append(date);
     const title=element('h3','title'),link=element('a','',story.title);link.href=storyURL(story);title.append(link);
     const actions=element('div','n-actions'),read=element('a','btn brand','Leer noticia');read.href=storyURL(story);
-    const source=element('a','news-source','Fuente');source.href=safeURL(story.sourceUrl||story.url)||'#';source.target='_blank';source.rel='noopener noreferrer';source.setAttribute('aria-label','Fuente: '+(story.sourceName||'medio original'));
-    actions.append(read,source);content.append(meta,title,element('p','desc',(story.summary||story.body||'').slice(0,210)+'…'),actions);article.append(photoLink,content);return article;
+    actions.append(read);content.append(meta,title,element('p','desc',(story.summary||story.body||'').slice(0,210)+'…'),actions);article.append(photoLink,content);return article;
   }
   function fallback(){const list=state.seed.filter(current).filter(x=>(!state.month||(x.publishedAt||x.date).startsWith(state.month))&&(!state.query||normalize(x.title+' '+x.summary).includes(normalize(state.query))));const size=archive?9:3;const pages=Math.max(1,Math.ceil(list.length/size));state.page=Math.min(state.page,pages);return {items:list.slice((state.page-1)*size,state.page*size),total:list.length,page:state.page,totalPages:pages,months:[...new Set(state.seed.filter(current).map(x=>(x.publishedAt||x.date).slice(0,7)))]};}
   function render(data){
@@ -46,13 +45,12 @@
     const meta=$('a-meta');meta.replaceChildren(element('span','badge',labels[story.category]||'Noticias'),element('time','',dateFormat.format(new Date(story.publishedAt||story.date))));
     $('article-hero').replaceChildren(image(story,'article-square-image'));
     const body=$('a-body');body.replaceChildren();String(story.body||story.summary||'').split(/\n\s*\n/).filter(Boolean).forEach(text=>body.append(element('p','',text)));
-    $('a-source').href=safeURL(story.sourceUrl||story.url)||'#';$('a-source').textContent='Fuente: '+(story.sourceName||'medio original');
-    $('image-credit').textContent=story.imageKind==='illustration'?'Ilustración editorial · No es una captura del juego.':'';
+    $('image-credit').textContent=story.imageKind==='illustration'?'Ilustración del portal inspirada en el juego.':'';
     $('share-article').onclick=()=>share(story,$('share-article'));
   }
-  async function article(){let story=state.seed.find(x=>x.id===articleId&&current(x));if(story)renderArticle(story);if(state.api)try{const data=await json(state.api+'/article/'+encodeURIComponent(articleId));if(current(data))story=data;}catch{}if(story){renderArticle(story);return;}$('list-view').hidden=true;$('article-view').hidden=false;$('a-title').textContent='Esta noticia ya no está en el archivo';$('a-body').textContent='El archivo conserva las publicaciones de los últimos seis meses. Podés consultar las noticias vigentes desde el botón de abajo.';$('a-source').hidden=true;$('share-article').hidden=true;}
+  async function article(){let story=state.seed.find(x=>x.id===articleId&&current(x));if(story)renderArticle(story);if(state.api)try{const data=await json(state.api+'/article/'+encodeURIComponent(articleId));if(current(data))story=data;}catch{}if(story){renderArticle(story);return;}$('list-view').hidden=true;$('article-view').hidden=false;$('a-title').textContent='Esta noticia ya no está en el archivo';$('a-body').textContent='El archivo conserva las publicaciones de los últimos seis meses. Podés consultar las noticias vigentes desde el botón de abajo.';$('share-article').hidden=true;}
   async function init(){
-    const results=await Promise.allSettled([json('news-config.json?v=20261119b'),json('news.json?v=20261119b')]);
+    const results=await Promise.allSettled([json('news-config.json?v=20261119c'),json('news.json?v=20261119c')]);
     if(results[0].status==='fulfilled'){const api=results[0].value.apiBase;state.api=api?safeURL(api)?.replace(/\/$/,'')||'':'';}
     if(results[1].status==='fulfilled'){const data=results[1].value;state.seed=(Array.isArray(data)?data:data.items||[]).filter(current);}
     if(articleId){await article();return;}load();
