@@ -1,25 +1,21 @@
-name: Update news.json from Blogger
-
+name: Clean expired news backup
 on:
-  workflow_dispatch:       # para lanzarlo a mano
+  workflow_dispatch:
   schedule:
-    - cron: "0 */6 * * *"  # cada 6 horas
-
+    - cron: '30 11 * * *'
 permissions:
   contents: write
-
 jobs:
-  build:
+  cleanup:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
-      - name: Build news.json
-        run: node scripts/build-news.mjs
-      - name: Commit & push
-        uses: stefanzweifel/git-auto-commit-action@v5
+          node-version: 22
+      - name: Remove expired seed stories and images
+        run: node scripts/cleanup-news.mjs
+      - uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "chore: update news.json from Blogger"
-          branch: main
+          commit_message: 'chore: remove expired news backup'
+          file_pattern: 'news.json news-images/'
