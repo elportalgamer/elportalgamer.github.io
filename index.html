@@ -24,7 +24,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="portal-theme.css?v=20261119b">
+<link rel="stylesheet" href="portal-theme.css?v=20261119d">
 <script src="portal-ui.js?v=20261119b" defer></script>
 <script src="portal-news.js?v=20261119c" defer></script>
 </head>
@@ -34,7 +34,7 @@
   <a class="brand" href="index.html" aria-label="El Portal Gamer, inicio"><img src="portal-logo.png" alt="" width="60" height="60"><span class="brand-type">EL PORTAL<strong>GAMER<span class="brand-point">.</span></strong></span></a>
   <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-menu">Menú <span aria-hidden="true">☰</span></button>
   <nav class="site-menu" id="site-menu" aria-label="Principal">
-    <a href="#mini">Reseñas</a><a href="news.html">Noticias</a><a href="#series">Series</a><a href="videos.html">Videos</a><a href="#contacto">Contacto</a>
+    <a href="#mini">Reseñas</a><a href="news.html">Noticias</a><a href="videos.html">Videos</a><a href="#contacto">Contacto</a>
   </nav>
   <label class="header-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><input id="buscador" class="search" type="search" placeholder="Buscar reseña, juego o noticia…" aria-label="Buscar reseña, juego o noticia…"></label>
 </div></header>
@@ -44,9 +44,9 @@
   <h1 id="portal-title">OTRA<br><span class="cut-word">FORMA</span><br>DE JUGAR<span class="brand-point">.</span></h1>
   <p class="hero-intro">Juegos que dejaron huella.<br>Reseñas para mirarlos de nuevo.</p>
   <div class="hero-actions"><a class="btn brand" href="#mini">Explorar reseñas</a><a class="text-link" href="https://www.youtube.com/@elportalgamer" target="_blank" rel="noopener">El canal en YouTube</a></div></div>
-  <div class="hero-art"><img class="collage" src="wizard-collage.png" alt="El maguito de El Portal Gamer como protagonista de un collage con controles, cartuchos y una recreativa" width="1536" height="1024" fetchpriority="high"><span class="art-stamp">UNA PARTIDA<br>MÁS.</span><span class="author-tag">Por Paul Angel</span></div>
+  <div class="hero-art"><img class="collage" src="wizard-collage.png" alt="El maguito de El Portal Gamer como protagonista de un collage con controles, cartuchos y una recreativa" width="1536" height="1024" fetchpriority="high"><span class="art-stamp">UNA PARTIDA<br>MÁS.</span><span class="author-tag">Con Nash y Paul Angel</span></div>
 </section>
-<div class="editorial-strip" aria-label="Temas del canal"><span>SURVIVAL HORROR</span><b aria-hidden="true">✳</b><span>JRPG</span><b aria-hidden="true">✳</b><span>RETRO</span><b aria-hidden="true">✳</b><span>JOYAS OCULTAS</span><b aria-hidden="true">✳</b><span>RESEÑAS EN VIDEO</span></div>
+
   <!-- Último video -->
   <section id="ultimo">
     <div class="section-heading"><div><p class="section-note">RECIÉN JUGADO</p><h2>Lo último en el canal</h2></div><a class="section-link" href="videos.html">Todos los videos</a></div>
@@ -58,7 +58,7 @@
         <p class="desc" id="ultimo-desc"></p>
         <div class="row">
           <a id="ultimo-ver" class="btn brand" target="_blank" rel="noopener">Ver en YouTube</a>
-          <a class="btn" href="https://www.instant-gaming.com/es/?igr=portalgamerx" target="_blank" rel="noopener">Juegos en oferta</a>
+          <button class="btn offers-pending" type="button" disabled>Juegos en oferta</button>
         </div>
       </div>
     </div>
@@ -82,13 +82,7 @@
 
   <div class="divider" aria-hidden="true"></div>
 
-  <!-- Series -->
-  <section id="series">
-    <div class="section-heading"><div><p class="section-note">UNIVERSOS PARA EXPLORAR</p><h2>Seguí el hilo</h2></div></div>
-    <div class="grid cols-2" id="series-grid"></div>
-  </section>
-
-  <div class="divider" aria-hidden="true"></div>
+  
 
   <!-- Apóyanos -->
   <section id="apoya">
@@ -96,8 +90,7 @@
     <div class="card pad">
       <div class="row">
         <a class="btn brand" href="https://ko-fi.com/portalgamer" target="_blank" rel="noopener">Invitame un café</a>
-        <a class="btn" href="https://www.instant-gaming.com/es/?igr=portalgamerx" target="_blank" rel="noopener">Juegos en oferta</a>
-        <a class="btn" href="https://www.amazon.com/shop/viajealodesconocido" target="_blank" rel="noopener">Tienda en Amazon</a>
+        <button class="btn offers-pending" type="button" disabled>Juegos en oferta</button>
       </div>
     </div>
   </section>
@@ -126,10 +119,17 @@
   <div class="divider" aria-hidden="true"></div>
 
   <!-- Contacto -->
-  <section id="contacto">
-    <div class="section-heading"><div><p class="section-note">PROPUESTAS, IDEAS Y COLABORACIONES</p><h2>Hablemos.</h2></div></div>
-    <div class="card pad">
-      <form id="contact-form" action="https://formspree.io/f/mjkejwvg" method="POST">
+  <section id="contacto" aria-labelledby="contact-title">
+    <div class="contact-panel">
+      <div class="contact-copy">
+        <div><p class="section-note">PROPUESTAS, IDEAS Y COLABORACIONES</p>
+        <h2 id="contact-title">Hablemos<span>.</span></h2>
+        <p class="contact-intro">La próxima buena charla puede empezar acá.</p>
+        <p class="contact-description">¿Una propuesta para el canal, una recomendación o un juego que no podemos dejar pasar? Contanos.</p>
+        <div class="contact-topics"><span>Ideas</span><span>Prensa</span><span>Colaboraciones</span></div></div>
+        <div class="contact-signature"><img src="portal-logo.png" alt="" width="94" height="104" loading="lazy"><div><span>DEL OTRO LADO</span><strong>Nash +<br>Paul Angel</strong></div><span class="contact-arrow" aria-hidden="true">↗</span></div>
+      </div>
+      <div class="contact-form-panel"><form id="contact-form" action="https://formspree.io/f/mjkejwvg" method="POST">
         <div class="form-grid">
           <label>Nombre <input type="text" name="name" placeholder="Tu nombre" required></label>
           <label>Email <input type="email" name="_replyto" placeholder="tu@email.com" required></label>
@@ -139,12 +139,12 @@
         <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
         <div class="row"><button type="submit" class="btn brand">Enviar mensaje</button></div>
         <p id="form-result" class="muted" aria-live="polite"></p>
-      </form>
+      </form></div>
     </div>
   </section>
 </main>
 
-<footer class="site-footer"><a class="footer-wordmark" href="index.html">EL PORTAL <span>GAMER.</span></a><p>Reseñas, retro y rarezas. Con Paul Angel.</p><div><a href="https://www.youtube.com/@elportalgamer" target="_blank" rel="noopener">YouTube</a><a href="https://www.instagram.com/elportalgamerx" target="_blank" rel="noopener">Instagram</a><a href="index.html#contacto">Contacto</a><span>© <span data-year>2026</span> El Portal Gamer</span></div></footer>
+<footer class="site-footer"><a class="footer-wordmark" href="index.html">EL PORTAL <span>GAMER.</span></a><p>Reseñas, retro y rarezas. Con Nash y Paul Angel.</p><div><a href="https://www.youtube.com/@elportalgamer" target="_blank" rel="noopener">YouTube</a><a href="https://www.instagram.com/elportalgamerx" target="_blank" rel="noopener">Instagram</a><a href="index.html#contacto">Contacto</a><span>© <span data-year>2026</span> El Portal Gamer</span></div></footer>
 
 <!-- Popover compartir -->
 <div id="share-pop" class="share-pop" role="dialog" aria-modal="true" aria-hidden="true"></div>
@@ -333,22 +333,6 @@ function makeMiniCard(v){
   return el;
 }
 function renderMini(arr){ const grid=$("#mini-grid"); grid.innerHTML=""; arr.forEach(v=>grid.appendChild(makeMiniCard(v))); }
-function renderSeries(items){
-  const SERIES={ "Saga Parasite Eve":["parasite eve","koudelka"], "Survival Horror PS1/PS2":["resident evil","silent hill","dino crisis","fear effect","rule of rose","haunting ground"], "JRPG & Square":["final fantasy","chrono","xenogears","vagrant story","valkyrie profile"] };
-  const grid=$("#series-grid"); grid.innerHTML="";
-  for(const [name,keys] of Object.entries(SERIES)){
-    const hits=items.filter(v=>keys.some(k=>words(v.title+' '+v.desc).includes(k))); if(!hits.length) continue;
-    const top=hits.slice(0,3);
-    const el=document.createElement("article");
-    el.className="card pad filterable"; el.dataset.title=name; el.dataset.desc=top.map(x=>x.title).join(" ");
-    el.innerHTML=`<div class="title">${name}</div><p class="muted" style="margin-top:-2px">${top.length} videos</p>
-      <div class="grid cols-3" style="margin-top:8px">
-        ${top.map(v=>`<a class="btn" href="https://www.youtube.com/watch?v=${v.id}" target="_blank" rel="noopener">▶ ${truncate(v.title,38)}</a>`).join("")}
-      </div>`;
-    grid.appendChild(el);
-  }
-}
-
 /* ===== Playlist: siempre el más reciente ===== */
 async function loadPlaylist(){
   try{
@@ -377,7 +361,6 @@ async function loadPlaylist(){
 
     renderUltimos4(items.slice(0,4));
     renderMini(items.slice(4,10));
-    renderSeries(items);
 
     const inp=$("#buscador");
     inp.addEventListener("input",()=>{
