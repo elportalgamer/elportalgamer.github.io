@@ -24,7 +24,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="portal-theme.css?v=20261119d">
+<link rel="stylesheet" href="portal-theme.css?v=20261119e">
 <script src="portal-ui.js?v=20261119b" defer></script>
 <script src="portal-news.js?v=20261119c" defer></script>
 </head>
@@ -252,10 +252,19 @@ async function fetchOgImageViaProxy(url){
 }
 
 /* ===== YouTube ===== */
+function setFeaturedThumbnail(element,video){
+  // YouTube's medium poster is 16:9; the high poster often includes 4:3 letterboxing.
+  const base='https://i.ytimg.com/vi/'+encodeURIComponent(video.id)+'/';
+  element.style.backgroundImage='url("'+base+'mqdefault.jpg")';
+  const poster=new Image();
+  poster.onload=()=>{if(poster.naturalWidth>=640&&poster.naturalWidth/poster.naturalHeight>1.7)element.style.backgroundImage='url("'+poster.src+'")';};
+  poster.src=base+'maxresdefault.jpg';
+}
+
 function renderUltimo(v){
   const box=$("#ultimo-lite"); box.className="videobox";
   const lite=document.createElement("div");
-  lite.className="lite-yt"; lite.style.backgroundImage=`url(${v.thumb})`;
+  lite.className="lite-yt"; setFeaturedThumbnail(lite,v);
   lite.innerHTML=`<button class="lty-playbtn" aria-label="Reproducir ${v.title}">
     <svg viewBox="0 0 68 48"><path d="M66.52 7.02a8 8 0 0 0-5.64-5.66C56.8 0 34 0 34 0S11.2 0 7.12 1.36A8 8 0 0 0 1.48 7.02 83.3 83.3 0 0 0 0 24a83.3 83.3 0 0 0 1.48 16.98 8 8 0 0 0 5.64 5.66C11.2 48 34 48 34 48s22.8 0 26.88-1.36a8 8 0 0 0 5.64-5.66A83.3 83.3 0 0 0 68 24a83.3 83.3 0 0 0-1.48-16.98zM27 34V14l18 10-18 10z"/></svg>
   </button>`;
@@ -281,7 +290,7 @@ function renderUltimos4(arr){
 
   function mkSlide(v){
     const s = document.createElement("div"); s.className="pgs-slide";
-    const lite = document.createElement("div"); lite.className="pgs-lite"; lite.style.backgroundImage=`url(${v.thumb})`;
+    const lite = document.createElement("div"); lite.className="pgs-lite"; setFeaturedThumbnail(lite,v);
     const a = document.createElement("a"); a.className="pgs-link"; a.href=`https://www.youtube.com/watch?v=${v.id}`; a.target="_blank"; a.rel="noopener"; a.textContent="YouTube";
     const btn=document.createElement("button"); btn.className="pgs-play"; btn.type="button"; btn.setAttribute("aria-label", `Abrir ${v.title} en YouTube`);
     btn.innerHTML='<svg viewBox="0 0 68 48"><path d="M66.52 7.02a8 8 0 0 0-5.64-5.66C56.8 0 34 0 34 0S11.2 0 7.12 1.36A8 8 0 0 0 1.48 7.02 83.3 83.3 0 0 0 0 24a83.3 83.3 0 0 0 1.48 16.98 8 8 0 0 0 5.64 5.66C11.2 48 34 48 34 48s22.8 0 26.88-1.36a8 8 0 0 0 5.64-5.66A83.3 83.3 0 0 0 68 24a83.3 83.3 0 0 0-1.48-16.98zM27 34V14l18 10-18 10z"/></svg>';
