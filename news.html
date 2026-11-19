@@ -7,340 +7,39 @@
   <meta name="description" content="Noticias de videojuegos de El Portal Gamer." />
   <link rel="icon" href="mago.png" />
 
-  <style>
-    :root{
-      --bg:#121212; --surface:#1f1f1f; --text:#f0f0f0; --muted:#bbb; --brand:#ff4500;
-      --card:#171717; --radius:14px;
-    }
-    *{box-sizing:border-box}
-    body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Roboto,Ubuntu,Arial}
-    header{position:sticky;top:0;z-index:10;background:#161616;border-bottom:1px solid #242424}
-    .nav{max-width:1100px;margin:0 auto;padding:12px 16px;display:flex;align-items:center;gap:16px}
-    .brand{display:flex;align-items:center;gap:10px;font-weight:800;color:var(--brand)}
-    .brand img{height:34px;border-radius:6px}
-    .nav a{color:#eaeaea;text-decoration:none;opacity:.9;padding:6px 8px;border-radius:10px}
-    .nav a:hover{opacity:1;background:#1b1b1b}
-    .spacer{flex:1}
-    .search{width:320px;max-width:55vw;padding:10px 12px;border-radius:10px;border:1px solid #2a2a2a;background:#0f0f0f;color:#fff}
+  
 
-    main{max-width:1100px;margin:20px auto;padding:0 16px}
-    h1,h2{margin:10px 0 12px}
-    .divider{height:8px;border-radius:999px;background:linear-gradient(90deg,#ff6a00,#ff3b00,#ff6a00);margin:18px 0}
 
-    .grid{display:grid;gap:16px}
-    .grid.cols-3{grid-template-columns:repeat(auto-fill,minmax(280px,1fr))}
-    .card{background:var(--surface);border:1px solid #262626;border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column}
-    .pad{padding:14px}
-    .news-thumb{position:relative;width:100%;padding-top:100%;background:#0e0e0e;overflow:hidden}
-    .news-thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;image-rendering:auto}
-    .news-meta{display:flex;gap:10px;align-items:center;color:#cfcfcf;font-size:.9rem;margin:6px 0 10px}
-    .badge{font-size:.75rem;border:1px solid #333;padding:4px 8px;border-radius:999px;color:#ffcfbd;background:#1b0f0a}
-    .title{font-weight:800;font-size:1.05rem;margin:6px 0}
-    .desc{color:#cfcfcf;line-height:1.45}
 
-    .actions{margin-top:auto;padding:12px 14px;display:flex;gap:10px;justify-content:center;border-top:1px solid #2a2a2a}
-    .btn{display:inline-flex;gap:8px;align-items:center;padding:10px 14px;border-radius:10px;border:1px solid #333;background:#151515;color:#fff;text-decoration:none}
-    .btn.brand{background:var(--brand);border-color:#ff5e1f;color:#111;font-weight:800}
-    .btn.ghost{background:#0f0f0f}
-    .muted{color:var(--muted)}
-
-    /* Vista artículo */
-    .hero{border-radius:16px;overflow:hidden;border:1px solid #262626;background:#0e0e0e}
-    .hero img{width:100%;height:auto;display:block}
-    .article{background:var(--surface);border:1px solid #262626;border-radius:var(--radius);padding:16px}
-    .article h1{margin:6px 0 12px}
-    .article .meta{color:#cfcfcf;margin:0 0 12px}
-    .article .body{line-height:1.6}
-    .article .body img{max-width:100%;height:auto;border-radius:12px;display:block;margin:10px auto}
-    .article .actions{justify-content:flex-start}
-  </style>
-
-  <!-- Microsoft Clarity -->
-  <script>
-    (function(c,l,a,r,i,t,y){
-      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "CLARITY_ID");
-  </script>
-  <!-- /Microsoft Clarity -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="portal-theme.css?v=20261119b">
+<script src="portal-ui.js?v=20261119b" defer></script>
+<script src="portal-news.js?v=20261119b" defer></script>
 </head>
-<body>
-<header>
-  <div class="nav">
-    <div class="brand"><img src="mago.png" alt="Logo"/>El Portal Gamer</div>
-    <a href="index.html#ultimo">Inicio</a>
-    <a href="index.html#news" aria-current="page">Noticias</a>
-    <a href="index.html#mini">Reseñas</a>
-    <a href="index.html#series">Series</a>
-    <a href="videos.html">Videos</a>
-    <a href="index.html#apoya">Apóyanos</a>
-    <a href="index.html#contacto">Contacto</a>
-    <div class="spacer"></div>
-    <input class="search" type="search" placeholder="Buscar noticia…" id="q"/>
-  </div>
-</header>
+<body data-news-archive>
 
-<main>
-  <h1>Noticias</h1>
-  <div class="divider" aria-hidden="true"></div>
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+<header class="site-header"><div class="nav">
+  <a class="brand" href="index.html" aria-label="El Portal Gamer, inicio"><img src="portal-logo.png" alt="" width="60" height="60"><span class="brand-type">EL PORTAL<strong>GAMER<span class="brand-point">.</span></strong></span></a>
+  <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-menu">Menú <span aria-hidden="true">☰</span></button>
+  <nav class="site-menu" id="site-menu" aria-label="Principal">
+    <a href="index.html#mini">Reseñas</a><a href="news.html">Noticias</a><a href="index.html#series">Series</a><a href="videos.html">Videos</a><a href="index.html#contacto">Contacto</a>
+  </nav>
+  <label class="header-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><input id="q" class="search" type="search" placeholder="Buscar noticia…" aria-label="Buscar noticia…"></label>
+</div></header>
 
-  <!-- Vista LISTA -->
-  <section id="list-view">
-    <div class="grid cols-3" id="news-grid">
-      <div class="muted">Cargando noticias…</div>
-    </div>
-    <div class="actions">
-      <button id="prev" class="btn ghost">◀ Anteriores</button>
-      <span id="pageInfo" class="muted"></span>
-      <button id="next" class="btn ghost">Siguientes ▶</button>
-    </div>
-  </section>
 
-  <!-- Vista ARTÍCULO -->
-  <section id="article-view" style="display:none">
-    <div id="article-hero" class="hero" aria-hidden="true"></div>
-    <article class="article">
-      <h1 id="a-title">Título</h1>
-      <p class="meta" id="a-meta"></p>
-      <div id="a-body" class="body"></div>
-      <div class="actions">
-        <a class="btn brand" href="news.html">⬅ Volver</a>
-        <button id="share-article" class="btn ghost">🔗 Compartir</button>
-      </div>
-    </article>
-  </section>
-</main>
-
-<footer class="muted" style="text-align:center;margin:40px 0">© 2025 El Portal Gamer</footer>
-
-<script>
-/* ========= Config ========= */
-const BLOG = 'https://portalgamerok.blogspot.com';
-const FEED_SUMMARY = `${BLOG}/feeds/posts/summary`;
-const FEED_DEFAULT = `${BLOG}/feeds/posts/default`;
-const JINA = 'https://r.jina.ai';
-const ALLO = 'https://api.allorigins.win/raw';
-
-/* ========= Utilidades ========= */
-const $  = (s,p=document)=>p.querySelector(s);
-const $$ = (s,p=document)=>[...p.querySelectorAll(s)];
-const fmtDate = iso => new Date(iso).toLocaleDateString();
-
-function upsizeBlogger(url, size=1200){
-  if(!url) return '';
-  return url
-    .replace(/\/s\d+(-c)?\//g, `/s${size}/`)
-    .replace(/=s\d+(-c)?/g, `=s${size}`)
-    .replace(/\/w\d+-h\d+(-c)?\//g, `/s${size}/`)
-    .replace(/\/s\d+(-c)?$/g, `/s${size}`);
-}
-function srcsetFor(url){
-  const u400 = upsizeBlogger(url, 400);
-  const u800 = upsizeBlogger(url, 800);
-  const u1200= upsizeBlogger(url,1200);
-  return `${u400} 400w, ${u800} 800w, ${u1200} 1200w`;
-}
-function rewriteImgsInHtml(html){
-  return (html||'')
-    .replace(/\/s\d+(-c)?\//g,'/s1600/')
-    .replace(/=s\d+(-c)?/g,'=s1600')
-    .replace(/\/w\d+-h\d+(-c)?\//g,'/s1600/');
-}
-function stripHtml(x){ const d=document.createElement('div'); d.innerHTML=x||''; return d.textContent||d.innerText||''; }
-
-/* ========= Parsers ========= */
-function parseEntrySummary(e){
-  const rawHtml = e.summary?.$t || e.content?.$t || '';
-  const textOnly = stripHtml(rawHtml).replace(/\s+/g,' ').trim();
-  const title = (e.title?.$t||'Sin título').trim();
-  const link  = (e.link||[]).find(l=>l.rel==='alternate')?.href || '#';
-  const date  = e.published?.$t || e.updated?.$t || new Date().toISOString();
-  const thumbRaw = e['media$thumbnail']?.url || (/src=['"]([^'"]+)['"]/i.exec(rawHtml)?.[1]) || '';
-  const image = upsizeBlogger(thumbRaw, 1200);
-  const id = (e.id?.$t||'').split('post-').pop() || '';
-  return { id, title, url: link, date, summary: textOnly, image };
-}
-function parseEntryFull(e){
-  const title = (e.title?.$t||'Sin título').trim();
-  const link  = (e.link||[]).find(l=>l.rel==='alternate')?.href || '#';
-  const date  = e.published?.$t || e.updated?.$t || new Date().toISOString();
-  const contentHtml = rewriteImgsInHtml(e.content?.$t || e.summary?.$t || '');
-  // Héroe: primera imagen del contenido o miniatura
-  const firstImg = (/src=['"]([^'"]+)['"]/i.exec(contentHtml)?.[1]) || e['media$thumbnail']?.url || '';
-  const hero = upsizeBlogger(firstImg, 1600);
-  const id = (e.id?.$t||'').split('post-').pop() || '';
-  return { id, title, url: link, date, hero, html: contentHtml };
-}
-
-/* ========= Fetch helpers ========= */
-async function fetchJson(url){
-  const r = await fetch(url, {cache:'no-store'});
-  const t = await r.text();
-  try{ return JSON.parse(t); }catch{ return {}; }
-}
-async function fetchFeedList(startIndex=1, max=9){
-  const qs = `?alt=json&orderby=published&start-index=${startIndex}&max-results=${max}`;
-  const urls = [
-    `${JINA}/${FEED_SUMMARY}${qs}`,
-    `${ALLO}?url=${encodeURIComponent(FEED_SUMMARY+qs)}`,
-    `${FEED_SUMMARY}${qs}`
-  ];
-  for(const u of urls){
-    try{
-      const d = await fetchJson(u);
-      if(d?.feed?.entry?.length) return d.feed.entry.map(parseEntrySummary);
-    }catch{}
-  }
-  // Fallback local
-  try{
-    const local = await fetch('news.json',{cache:'no-store'}).then(r=>r.json());
-    return (local||[]).map(x=>({id:x.id||'', title:x.title, url:x.url, date:x.date, summary:x.summary, image:x.image}));
-  }catch{ return []; }
-}
-async function fetchPostById(id){
-  const qs = `/${id}?alt=json`;
-  const urls = [
-    `${JINA}/${FEED_DEFAULT}${qs}`,
-    `${ALLO}?url=${encodeURIComponent(FEED_DEFAULT+qs)}`,
-    `${FEED_DEFAULT}${qs}`
-  ];
-  for(const u of urls){
-    try{
-      const data = await fetchJson(u);
-      const entry = data?.entry; 
-      if(entry) return parseEntryFull(entry);
-    }catch{}
-  }
-  // fallback: buscar en listado grande y luego abrir por url
-  const list = await fetchFeedList(1, 30);
-  const hit = list.find(x=>x.id===id);
-  if(hit){
-    // intentamos traer el HTML de la nota por su URL (a través de Jina) y armar un artículo básico
-    const prox = `${JINA}/${hit.url}`;
-    try{
-      const html = await fetch(prox).then(r=>r.text());
-      const body = /<article[\s\S]*?>([\s\S]*?)<\/article>/i.exec(html)?.[1] 
-                || /<div class=['"]post-body[\s\S]*?>([\s\S]*?)<\/div>/i.exec(html)?.[1]
-                || '';
-      return {
-        id: hit.id,
-        title: hit.title,
-        url: hit.url,
-        date: hit.date,
-        hero: hit.image,
-        html: rewriteImgsInHtml(body)
-      };
-    }catch{}
-  }
-  throw new Error('No se pudo obtener el post');
-}
-
-/* ========= Render ========= */
-function cardHTML(n){
-  const img = n.image ? `
-    <img loading="lazy" decoding="async"
-         src="${upsizeBlogger(n.image, 800)}"
-         srcset="${srcsetFor(n.image)}"
-         sizes="(min-width:1100px) 30vw, (min-width:700px) 45vw, 92vw"
-         alt="">
-  ` : '';
-  return `
-  <article class="card">
-    <a class="news-thumb" href="news.html?id=${n.id}">${img}</a>
-    <div class="pad">
-      <div class="news-meta"><span class="badge">Noticia</span><span>${fmtDate(n.date)}</span></div>
-      <div class="title"><a href="news.html?id=${n.id}" style="color:inherit;text-decoration:none">${n.title}</a></div>
-      <p class="desc">${(n.summary||'').slice(0,260)}${(n.summary||'').length>260?'…':''}</p>
-    </div>
-    <div class="actions">
-      <a class="btn brand" href="news.html?id=${n.id}">📰 Leer</a>
-      <button class="btn ghost" data-share="${location.origin}/news.html?id=${n.id}">🔗 Compartir</button>
-    </div>
-  </article>`;
-}
-async function renderList(){
-  const grid = $('#news-grid'); grid.innerHTML = '<div class="muted">Cargando…</div>';
-  const items = await fetchFeedList(window._startIndex||1, 9);
-  grid.innerHTML = items.map(cardHTML).join('') || '<div class="muted">Sin noticias.</div>';
-  // compartir
-  $$('button[data-share]').forEach(b=>{
-    b.addEventListener('click', async ()=>{
-      const url = b.getAttribute('data-share');
-      const title='El Portal Gamer — Noticias';
-      try{
-        if(navigator.share){ await navigator.share({title,url}); }
-        else{
-          await navigator.clipboard.writeText(url);
-          b.textContent='✅ Copiado';
-          setTimeout(()=>b.textContent='🔗 Compartir',1200);
-        }
-      }catch{}
-    });
-  });
-}
-function renderArticle(a){
-  $('#list-view').style.display='none';
-  $('#article-view').style.display='';
-  const hero = a.hero || '';
-  $('#article-hero').innerHTML = hero ? `<img src="${upsizeBlogger(hero,1600)}" alt="">` : '';
-  $('#a-title').textContent = a.title;
-  $('#a-meta').textContent  = fmtDate(a.date);
-  $('#a-body').innerHTML    = a.html || '<p class="muted">Sin contenido.</p>';
-  // compartir
-  $('#share-article').onclick = async ()=>{
-    const url = location.href;
-    try{
-      if(navigator.share){ await navigator.share({title:a.title,url}); }
-      else{
-        await navigator.clipboard.writeText(url);
-        $('#share-article').textContent='✅ Copiado';
-        setTimeout(()=>$('#share-article').textContent='🔗 Compartir',1200);
-      }
-    }catch{}
-  };
-}
-
-/* ========= Router ========= */
-(async function init(){
-  const params = new URLSearchParams(location.search);
-  const id = params.get('id');
-
-  if(id){ // vista artículo
-    try{
-      const post = await fetchPostById(id);
-      renderArticle(post);
-    }catch(e){
-      console.warn(e);
-      $('#article-view').style.display='';
-      $('#list-view').style.display='none';
-      $('#article-hero').innerHTML='';
-      $('#a-title').textContent = 'No se pudo cargar la noticia';
-      $('#a-meta').textContent  = '';
-      $('#a-body').innerHTML    = `<p class="muted">Probá volver a la <a href="news.html">lista de noticias</a>.</p>`;
-    }
-    return;
-  }
-
-  // vista listado
-  window._startIndex = 1;
-  await renderList();
-  const pageInfo = $('#pageInfo');
-  const updateInfo = ()=> pageInfo.textContent = `Página ${(window._startIndex-1)/9+1}`;
-  updateInfo();
-
-  $('#next').onclick = async()=>{ window._startIndex+=9; await renderList(); updateInfo(); window.scrollTo({top:0,behavior:'smooth'}); };
-  $('#prev').onclick = async()=>{ window._startIndex=Math.max(1, window._startIndex-9); await renderList(); updateInfo(); window.scrollTo({top:0,behavior:'smooth'}); };
-
-  // filtro simple
-  $('#q').addEventListener('input', e=>{
-    const q = e.target.value.trim().toLowerCase();
-    for(const card of $$('.card')){
-      const txt = card.textContent.toLowerCase();
-      card.style.display = (!q || txt.includes(q)) ? '' : 'none';
-    }
-  });
-})();
-</script>
-</body>
-</html>
+<main id="contenido" class="news-page">
+<div class="page-heading" id="archive-heading"><p class="eyebrow">EL PORTAL GAMER · NOTICIAS</p><h1>Fuera de<br><span>la partida.</span></h1><p>Noticias de videojuegos con una mirada propia.</p></div>
+<section id="list-view">
+  <div class="archive-toolbar"><div><strong id="news-count" aria-live="polite">Noticias</strong><p>El archivo conserva los últimos seis meses.</p></div><label>Filtrar por mes<select id="news-month"><option value="">Todos los meses</option></select></label></div>
+  <div class="grid cols-3" id="news-grid" aria-live="polite"><p class="news-empty">Cargando noticias…</p></div>
+  <nav class="actions" aria-label="Páginas de noticias"><button id="prev" class="btn ghost" disabled>Anteriores</button><span id="pageInfo" class="muted" aria-live="polite"></span><button id="next" class="btn ghost" disabled>Siguientes</button></nav>
+</section>
+<section id="article-view" hidden>
+  <div class="news-article-layout"><div><div id="article-hero"></div><p id="image-credit" class="image-credit"></p></div><article class="article"><div class="news-meta" id="a-meta"></div><h1 id="a-title"></h1><div id="a-body" class="body"></div><a id="a-source" class="news-source" target="_blank" rel="noopener noreferrer"></a><div class="actions"><a class="btn brand" href="news.html">Volver a noticias</a><button id="share-article" class="btn ghost">Compartir</button></div></article></div>
+</section></main>
+<footer class="site-footer"><a class="footer-wordmark" href="index.html">EL PORTAL <span>GAMER.</span></a><p>Reseñas, retro y rarezas. Con Paul Angel.</p><div><a href="https://www.youtube.com/@elportalgamer" target="_blank" rel="noopener">YouTube</a><a href="https://www.instagram.com/elportalgamerx" target="_blank" rel="noopener">Instagram</a><a href="index.html#contacto">Contacto</a><span>© <span data-year>2026</span> El Portal Gamer</span></div></footer>
+</body></html>

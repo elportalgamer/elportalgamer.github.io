@@ -6,182 +6,33 @@
   <title>Videos - El Portal Gamer</title>
   <!-- Favicon para la pestaña -->
   <link rel="icon" type="image/png" href="mago.png">
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: #121212;
-      color: #f0f0f0;
-    }
-    header {
-      background: #1f1f1f;
-      padding: 15px 20px;
-      font-size: 2rem;
-      font-weight: bold;
-      color: #ff4500;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    header img {
-      height: 40px;
-      width: auto;
-      margin-right: 10px;
-    }
-    .logo-container {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    nav a {
-      margin-left: 20px;
-      color: #f0f0f0;
-      text-decoration: none;
-      font-size: 1rem;
-      font-weight: normal;
-      transition: color 0.2s;
-    }
-    nav a:hover {
-      color: #ff4500;
-    }
-    section {
-      padding: 20px;
-    }
-    h2 {
-      border-bottom: 2px solid #ff4500;
-      padding-bottom: 10px;
-      margin-bottom: 15px;
-    }
-    .video-card {
-      background: #1f1f1f;
-      border-radius: 10px;
-      padding: 10px;
-      margin: 10px 0;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
-      transition: transform 0.2s;
-      flex: 0 0 300px; /* ancho fijo */
-      scroll-snap-align: start;
-    }
-    .video-card:hover {
-      transform: scale(1.03);
-    }
-    .video-wrapper {
-      position: relative;
-      width: 100%;
-      padding-top: 56.25%;
-    }
-    .video-wrapper iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border-radius: 10px;
-    }
-    footer {
-      text-align: center;
-      padding: 15px;
-      background: #1f1f1f;
-      margin-top: 20px;
-      color: #888;
-    }
-    .video-title {
-      margin-top: 8px;
-      font-weight: bold;
-      font-size: 1rem;
-      color: #fff;
-    }
-    .video-description {
-      font-size: 0.9rem;
-      color: #ccc;
-      max-height: 60px;
-      overflow: hidden;
-      transition: max-height 0.3s ease;
-    }
-    .video-description.expanded {
-      max-height: 500px;
-    }
-    .toggle-btn {
-      background: none;
-      border: none;
-      color: #ff4500;
-      cursor: pointer;
-      font-size: 0.9rem;
-      padding: 0;
-      margin-top: 5px;
-    }
-    #buscador {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 20px;
-      font-size: 1rem;
-      border-radius: 5px;
-      border: none;
-    }
+  
 
-    /* Carrusel */
-    .video-carousel-container {
-      position: relative;
-      overflow: hidden;
-    }
-    .video-carousel {
-      display: flex;
-      gap: 15px;
-      overflow-x: auto;
-      scroll-behavior: smooth;
-      scroll-snap-type: x mandatory;
-      padding: 10px 0;
-    }
-    .video-carousel::-webkit-scrollbar {
-      display: none;
-    }
-    .carousel-btn {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(0,0,0,0.5);
-      border: none;
-      color: white;
-      font-size: 2rem;
-      cursor: pointer;
-      padding: 10px;
-      border-radius: 50%;
-      z-index: 2;
-    }
-    .carousel-btn.left {
-      left: 10px;
-    }
-    .carousel-btn.right {
-      right: 10px;
-    }
-  </style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="portal-theme.css?v=20261119b">
+<script src="portal-ui.js?v=20261119b" defer></script>
 </head>
 <body>
 
-  <header>
-    <div class="logo-container">
-      <img src="mago.png" alt="Logo El Portal Gamer">
-      El Portal Gamer
-    </div>
-    <nav>
-      <a href="index.html">Inicio</a> <!-- LINK AQUI -->
-      <a href="noticias.html">Noticias</a> <!-- LINK AQUI -->
-      <a href="videos.html">Videos</a> <!-- LINK AQUI -->
-      <a href="reseñas.html">Reseñas</a> <!-- LINK AQUI -->
-      <a href="series.html">Series</a> <!-- LINK AQUI -->
-      <a href="apoyo.html">Apoya el canal</a> <!-- LINK AQUI -->
-    </nav>
-  </header>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+<header class="site-header"><div class="nav">
+  <a class="brand" href="index.html" aria-label="El Portal Gamer, inicio"><img src="portal-logo.png" alt="" width="60" height="60"><span class="brand-type">EL PORTAL<strong>GAMER<span class="brand-point">.</span></strong></span></a>
+  <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-menu">Menú <span aria-hidden="true">☰</span></button>
+  <nav class="site-menu" id="site-menu" aria-label="Principal">
+    <a href="index.html#mini">Reseñas</a><a href="news.html">Noticias</a><a href="index.html#series">Series</a><a href="videos.html">Videos</a><a href="index.html#contacto">Contacto</a>
+  </nav>
+  <label class="header-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><input id="buscador" class="search" type="search" placeholder="Buscar video…" aria-label="Buscar video…"></label>
+</div></header><main id="contenido" class="videos-page"><div class="page-heading"><p class="eyebrow">EL PORTAL GAMER · EL ARCHIVO</p><h1>Una partida<br><span>más.</span></h1><p>Reseñas, historias y juegos para volver a descubrir.</p></div>
+
+  
 
   <section>
-    <input type="text" id="buscador" placeholder="Buscar video...">
-  </section>
-
-  <section>
-    <h2>Último Video</h2>
+    <div class="section-heading"><div><p class="section-note">RECIÉN JUGADO</p><h2>Lo último en el canal</h2></div></div>
     <div class="video-card">
       <div class="video-wrapper">
-        <iframe id="ultimo-video" src="" frameborder="0" allowfullscreen></iframe>
+        <iframe title="Última reseña de El Portal Gamer" id="ultimo-video" src="" frameborder="0" allowfullscreen></iframe>
       </div>
       <p class="video-title" id="ultimo-titulo"></p>
       <p class="video-description" id="ultimo-desc"></p>
@@ -190,15 +41,15 @@
   </section>
 
   <section>
-    <h2>Videos anteriores</h2>
+    <div class="section-heading"><div><p class="section-note">TODAS LAS RESEÑAS</p><h2>El archivo</h2></div></div>
     <div class="video-carousel-container">
-      <button class="carousel-btn left" onclick="moverCarrusel(-1)">&#10094;</button>
+      <button class="carousel-btn left" aria-label="Videos anteriores" onclick="moverCarrusel(-1)">&#10094;</button>
       <div id="videos-recientes" class="video-carousel"></div>
-      <button class="carousel-btn right" onclick="moverCarrusel(1)">&#10095;</button>
+      <button class="carousel-btn right" aria-label="Videos siguientes" onclick="moverCarrusel(1)">&#10095;</button>
     </div>
   </section>
 
-  <footer>© 2024 El Portal Gamer</footer>
+  </main><footer class="site-footer"><a class="footer-wordmark" href="index.html">EL PORTAL <span>GAMER.</span></a><p>Reseñas, retro y rarezas. Con Paul Angel.</p><div><a href="https://www.youtube.com/@elportalgamer" target="_blank" rel="noopener">YouTube</a><a href="https://www.instagram.com/elportalgamerx" target="_blank" rel="noopener">Instagram</a><a href="index.html#contacto">Contacto</a><span>© <span data-year>2026</span> El Portal Gamer</span></div></footer>
 
   <script>
     const API_KEY = "AIzaSyCqPlM0Ab3-_mtFHPmrrgJTS1S4dBCbbMA";  
@@ -207,8 +58,14 @@
 
     async function cargarVideos() {
       let url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${PLAYLIST_ID}&maxResults=${MAX_RESULTS}&key=${API_KEY}`;
-      let resp = await fetch(url);
-      let data = await resp.json();
+      let data;
+      try {
+        const resp=await fetch(url,{signal:AbortSignal.timeout(10000)});
+        data=await resp.json();
+        if(!data.items?.length)throw Error('Playlist unavailable');
+      } catch {
+        data=await fetch('reviews-snapshot.json',{cache:'no-store'}).then(r=>r.json());
+      }
 
       if (!data.items) {
         console.error("Error al cargar la playlist:", data);
@@ -239,7 +96,7 @@
 
         card.innerHTML = `
           <div class="video-wrapper">
-            <iframe src="https://www.youtube.com/embed/${snippet.resourceId.videoId}" frameborder="0" allowfullscreen></iframe>
+            <iframe loading="lazy" title="Reseña de El Portal Gamer" src="https://www.youtube.com/embed/${snippet.resourceId.videoId}" frameborder="0" allowfullscreen></iframe>
           </div>
           <p class="video-title">${snippet.title}</p>
           <p class="video-description">${snippet.description}</p>
@@ -257,19 +114,16 @@
       });
 
       // Duplicar contenido para efecto infinito
-      contenedor.innerHTML += contenedor.innerHTML;
+      // Each review appears once in the archive.
 
       // Reiniciar scroll al llegar a la mitad
-      contenedor.addEventListener("scroll", () => {
-        if (contenedor.scrollLeft >= contenedor.scrollWidth / 2) {
-          contenedor.scrollLeft = 0;
-        }
-      });
+
     }
 
     function moverCarrusel(direccion) {
       const contenedor = document.getElementById("videos-recientes");
-      const cardWidth = contenedor.querySelector(".video-card").offsetWidth + 15;
+      const firstCard = contenedor.querySelector(".video-card"); if (!firstCard) return;
+      const cardWidth = firstCard.offsetWidth + 24;
       contenedor.scrollBy({ left: direccion * cardWidth, behavior: "smooth" });
     }
 
